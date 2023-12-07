@@ -5,6 +5,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "./utils/theme";
 
 const App = () => {
+
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
