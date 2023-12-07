@@ -12,3 +12,18 @@ export const getMemberAPI = async (memberId) => {
     console.log(err);
   }
 };
+
+/*
+export const findByNickname = async (nickname) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/users/nickname/${nickname}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch user data');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error while fetching user data:', error);
+    throw error;
+  }
+};*/
