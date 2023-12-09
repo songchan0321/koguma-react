@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -9,6 +8,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
 import { CardHeader, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
+import { Fragment, useEffect, useState } from "react";
+import { getMemberAPI } from "../../apis/api/member";
+import { getMemberAPIService } from "../../apis/services/member";
+import { getPaymentAPIService } from "../../apis/services/payment";
 
 const bull = (
   <Box
@@ -20,7 +23,7 @@ const bull = (
 );
 const UnregistedPaymentCard = () => {
   return (
-    <React.Fragment>
+    <Fragment>
       <CardContent sx={{ mt: 0.3 }}>
         <Typography variant="h5" component="div">
           고구마 페이가 등록되어 있지 않습니다.
@@ -40,19 +43,29 @@ const UnregistedPaymentCard = () => {
         </Button>
         {/* <Button size="small">Learn More</Button> */}
       </CardActions>
-    </React.Fragment>
+    </Fragment>
   );
 };
 const PaymentCard = () => {
-  const [payment, setPayment] = React.useState({});
+  const [payment, setPayment] = useState({});
+  // const [member, setMember] = useState({});
+  useEffect(() => {
+    (async () => {
+      await getMemberAPI(1)
+        .then(getPaymentAPIService)
+        .then((data) => setPayment(data))
+        .catch((err) => console.log(err));
+    })();
+  }, []);
   return (
-    <React.Fragment>
+    <Fragment>
       <CardContent sx={{ mt: 0.3 }}>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           고구마 포인트
         </Typography>
         <Typography variant="h5" component="div">
-          1,000원
+          {payment.balance}
+          {/* 1,000원 */}
           {/* 데이터로 받아야함 멤버 */}
         </Typography>
       </CardContent>
@@ -66,7 +79,7 @@ const PaymentCard = () => {
         </Button>
         {/* <Button size="small">Learn More</Button> */}
       </CardActions>
-    </React.Fragment>
+    </Fragment>
   );
 };
 <DeleteIcon
