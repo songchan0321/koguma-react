@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Routes } from "react-router-dom";
+import ProductList from './ProductList';
 
 const ProductRouter = () => {
     return(
@@ -8,6 +9,7 @@ const ProductRouter = () => {
             <Route />
             <Route path="/form" element={<ProductForm />} />
             <Route path="/main" element={<Main />}/> */}
+            <Route path="/list" element={<ProductList />}/>
         </Routes>
     );
 };
