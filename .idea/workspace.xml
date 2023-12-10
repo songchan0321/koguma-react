@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d9194628-c3e2-496e-8bab-64cb2d20ca51" name="Changes" comment="">
+    <list default="true" id="d9194628-c3e2-496e-8bab-64cb2d20ca51" name="Changes" comment="feat : listPost 구현 중 &#10;&#10;발표를 위해 진행&#10;&#10;2023.12.7 / 21:19 / HSC">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppRouter.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppRouter.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,11 +68,27 @@
       <option name="presentableId" value="Default" />
       <updated>1701928469777</updated>
       <workItem from="1701928470953" duration="4509000" />
+      <workItem from="1701951465023" duration="900000" />
+      <workItem from="1701994586918" duration="737000" />
+      <workItem from="1702207591064" duration="536000" />
     </task>
+    <task id="LOCAL-00001" summary="feat : listPost 구현 중 &#10;&#10;발표를 위해 진행&#10;&#10;2023.12.7 / 21:19 / HSC">
+      <option name="closed" value="true" />
+      <created>1701951607028</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1701951607028</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat : listPost 구현 중 &#10;&#10;발표를 위해 진행&#10;&#10;2023.12.7 / 21:19 / HSC" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat : listPost 구현 중 &#10;&#10;발표를 위해 진행&#10;&#10;2023.12.7 / 21:19 / HSC" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
