@@ -7,10 +7,10 @@ import AddPost from "./pages/community/AddPost";
 import ChatRouter from "./pages/chat/ChatRouter";
 import ClubRouter from "./pages/club/ClubRouter";
 import CommonRouter from "./pages/common/CommonRouter";
-import CommunityRouter from "./pages/community/Community";
 import MemberRouter from "./pages/member/MemberRouter";
 import PaymentRouter from "./pages/payment/PaymentRouter";
 import ProductRouter from "./pages/product/ProductRouter";
+import CommunityRouter from "./pages/community/CommunityRouter";
 
 const AppRouter = () => {
   return (
