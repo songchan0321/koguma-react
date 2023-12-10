@@ -15,7 +15,6 @@ import CommunityRouter from "./pages/community/CommunityRouter";
 const AppRouter = () => {
   return (
     <Routes>
-      
       {/* <Route path="/post/list" element={<ListPost />} />   community/post ? */}
       {/* <Route path="/post/add" element={<AddPost />} /> */}
 

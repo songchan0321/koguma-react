@@ -3,9 +3,10 @@ import { BrowserRouter } from "react-router-dom";
 import AppRouter from "./AppRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./utils/theme";
+import { useEffect } from "react";
 
 const App = () => {
-
+  useEffect(() => {});
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>

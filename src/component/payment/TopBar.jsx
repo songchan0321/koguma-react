@@ -1,14 +1,16 @@
 import { Typography } from "@mui/material";
 
-const TopBar = () => {
+const TopBar = ({ children, color = "none" }) => {
   return (
     <Typography
       variant="h6"
-      color="secondary"
+      color={color}
+      // ...option
       component="h2"
       sx={{ textAlign: "center", mb: 1.5 }}
     >
-      <i>Pay</i>
+      {/* <i>Pay</i> */}
+      {children}
     </Typography>
   );
 };

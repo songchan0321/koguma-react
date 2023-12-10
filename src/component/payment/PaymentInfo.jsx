@@ -13,14 +13,6 @@ import { getMemberAPI } from "../../apis/api/member";
 import { getMemberAPIService } from "../../apis/services/member";
 import { getPaymentAPIService } from "../../apis/services/payment";
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
 const UnregistedPaymentCard = () => {
   return (
     <Fragment>
@@ -51,7 +43,7 @@ const PaymentCard = () => {
   // const [member, setMember] = useState({});
   useEffect(() => {
     (async () => {
-      await getMemberAPI(1)
+      await getMemberAPI(3)
         .then(getPaymentAPIService)
         .then((data) => setPayment(data))
         .catch((err) => console.log(err));
@@ -70,7 +62,13 @@ const PaymentCard = () => {
         </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: "space-around", mb: 2.0 }}>
-        <Button variant="contained" color="secondary" size="large">
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          component={Link}
+          to="/payment/charge"
+        >
           <AddIcon />
           &nbsp;충전
         </Button>
