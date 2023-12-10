@@ -1,20 +1,31 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./component/product/Home";
-import GetPayment from "./pages/payment/GetPayment";
-import AddPayment from "./pages/payment/AddPayment";
-import ListPost from "./pages/community/ListPost";
-import AddPost from "./pages/community/AddPost";
+
+// import ListPost from "./pages/community/ListPost";
+// import AddPost from "./pages/community/AddPost";
+
+import ChatRouter from "./pages/chat/ChatRouter";
+import ClubRouter from "./pages/club/ClubRouter";
+import CommonRouter from "./pages/common/CommonRouter";
+import MemberRouter from "./pages/member/MemberRouter";
+import PaymentRouter from "./pages/payment/PaymentRouter";
+import ProductRouter from "./pages/product/ProductRouter";
+import CommunityRouter from "./pages/community/CommunityRouter";
 
 const AppRouter = () => {
   return (
     <Routes>
-      {/* <Route path="/product/list" element={<Home />} /> */}
+      
+      {/* <Route path="/post/list" element={<ListPost />} />   community/post ? */}
+      {/* <Route path="/post/add" element={<AddPost />} /> */}
 
-      <Route path="/payment/get" element={<GetPayment />} />
-      <Route path="/payment/add" element={<AddPayment />} />
-
-      <Route path="/post/list" element={<ListPost />} />
-      <Route path="/post/add" element={<AddPost />} />
+      <Route path="/chat/*" element={<ChatRouter />} />
+      <Route path="/club/*" element={<ClubRouter />} />
+      <Route path="/common/*" element={<CommonRouter />} />
+      <Route path="/comunity/*" element={<CommunityRouter />} />
+      <Route path="/member/*" element={<MemberRouter />} />
+      <Route path="/payment/*" element={<PaymentRouter />} />
+      <Route path="/product/*" element={<ProductRouter />} />
     </Routes>
   );
 };
