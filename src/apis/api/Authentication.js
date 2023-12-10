@@ -1,12 +1,13 @@
 import { defaultInstance } from "../utils/instance";
 
 const PAYMENT_API_URI = "/auth";
-export const loginAPI = async (id,pw) => {
+export const loginAPI = async (id, pw) => {
   try {
-    const response = await defaultInstance.post(`${PAYMENT_API_URI}/login`, 
-        JSON.stringify({
-            id,
-            pw,
+    const response = await defaultInstance.post(
+      `${PAYMENT_API_URI}/login`,
+      JSON.stringify({
+        id,
+        pw,
       }),
       {
         headers: {
@@ -14,23 +15,25 @@ export const loginAPI = async (id,pw) => {
         },
       }
     );
-    console.log(response)
-    const authorizationHeader = response.headers['authorization'];
+    console.log(response);
+    const authorizationHeader = response.headers["authorization"];
+    localStorage.setItem("token", authorizationHeader);
+    console.log("Authorization Header:", authorizationHeader);
 
-    console.log('Authorization Header:', authorizationHeader);
-
-    return response; 
+    return authorizationHeader;
   } catch (err) {
     throw err;
   }
 };
 
 export const kakaoLoginAPI = async () => {
-    const code = new URL(window.location.href).searchParams.get("code");
-    
-        const response = await defaultInstance.get(`http://localhost:3000/common/kakao/callback/?code=${code}`)
-    
-    return response; 
+  const code = new URL(window.location.href).searchParams.get("code");
+
+  const response = await defaultInstance.get(
+    `http://localhost:3000/common/kakao/callback/?code=${code}`
+  );
+
+  return response;
 };
 
 // export const checkAccountNameAPI = async (name, account, code) => {

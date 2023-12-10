@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const BASE_URL = "http://127.0.0.1:8080";
 // const BASE_URL = "https://5quys.com";
@@ -15,13 +15,26 @@ const axiosApi = (url, options) => {
 // jwt 정보 필요 o
 const axiosAuthApi = (url, options) => {
   // const token = "JWT?";
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   const instance = axios.create({
     baseURL: url,
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { Authorization: `${token}` },
     ...options,
   });
 
+  instance.interceptors.request.use(
+    function (config) {
+      const accessToken = localStorage.getItem("token");
+
+      if (accessToken) {
+        config.headers.Authorization = `${accessToken}`;
+      }
+      return config;
+    },
+    function (error) {
+      return Promise.reject(error);
+    }
+  );
   instance.interceptors.response.use(
     (response) => response, // 성공한 응답은 그대로 반환
     (error) => {
