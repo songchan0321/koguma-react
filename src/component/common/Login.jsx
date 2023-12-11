@@ -15,8 +15,9 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { loginAPI } from "../../apis/api/authentication";
+
 import { useNavigate } from "react-router-dom";
+import { loginAPI } from "../../apis/api/authentication";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -30,10 +31,16 @@ const Login = () => {
     (async () => {
       try {
         setLoading(true);
+        const currentQuery = window.location.search;
         const data = await loginAPI(form.get("id"), form.get("password"));
 
         alert("로그인 성공");
-        navigator("/product/list");
+        if (currentQuery) {
+          navigator(currentQuery);
+        } else {
+          // 이전 주소가 없다면 기본 주소로 이동
+          navigator("/product/list");
+        }
       } catch (err) {
         console.error(err);
         alert("로그인 실패");
