@@ -1,79 +1,34 @@
-import React, { useState } from "react";
-import { Alert, AlertTitle, Box, Button, Grid, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Grid, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AddMemberForm from "../../component/member/AddMemberForm";
+import {authInstance} from "../../apis/utils/instance";
 
 const AddMember = () => {
-    const [nickname, setNickname] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [phone, setPhone] = useState("");
-    const [verificationCode, setVerificationCode] = useState("");
-    const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+    const handleAddMemberSubmit = async (memberDTO) => {
+        try {
+            const response = await authInstance.post("/member/add", {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(memberDTO),
+            });
 
-    const handleNicknameChange = (event) => {
-        setNickname(event.target.value);
-    };
-
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    };
-
-    const handleConfirmPasswordChange = (event) => {
-        setConfirmPassword(event.target.value);
-    };
-
-    const handlePhoneChange = (event) => {
-        setPhone(event.target.value);
-    };
-
-    const handleVerificationCodeChange = (event) => {
-        setVerificationCode(event.target.value);
-    };
-
-    const handleCheckNickname = () => {
-        console.log(`Checking nickname: ${nickname}`);
-    };
-
-    const handleRequestVerificationCode = () => {
-        console.log(`Requesting verification code for phone: ${phone}`);
-    };
-
-    const handleVerifyPhone = () => {
-        console.log(`Verifying phone: ${verificationCode}`);
-        setIsPhoneVerified(true);
-    };
-
-    const handleSignUp = () => {
-        console.log("Signing up...");
+            if (response.ok) {
+                console.log('회원 가입 성공!');
+            } else {
+                console.error('회원 가입 실패.');
+            }
+        } catch (error) {
+            console.error('가입 중 오류 발생:', error);
+        }
     };
 
     return (
-        <Box p={3}>
-            <Typography variant="h4" gutterBottom sx={{ marginTop: '60px' }}>
-                회원 가입
-            </Typography>
-
-            <Grid container spacing={2}>
-                <AddMemberForm
-                    nickname={nickname}
-                    password={password}
-                    confirmPassword={confirmPassword}
-                    phone={phone}
-                    verificationCode={verificationCode}
-                    isPhoneVerified={isPhoneVerified}
-                    onNicknameChange={handleNicknameChange}
-                    onPasswordChange={handlePasswordChange}
-                    onConfirmPasswordChange={handleConfirmPasswordChange}
-                    onPhoneChange={handlePhoneChange}
-                    onVerificationCodeChange={handleVerificationCodeChange}
-                    onCheckNickname={handleCheckNickname}
-                    onRequestVerificationCode={handleRequestVerificationCode}
-                    onVerifyPhone={handleVerifyPhone}
-                    onSignUp={handleSignUp}
-                />
-            </Grid>
-        </Box>
+        <div>
+            <h1>회원 가입 페이지</h1>
+            <AddMemberForm onSubmit={handleAddMemberSubmit} />
+        </div>
     );
 };
 

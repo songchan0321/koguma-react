@@ -1,6 +1,7 @@
-import React from "react";
-import { TextField, Button } from "@mui/material";
-import {useNavigate} from "react-router-dom";
+import React from 'react';
+import { Button, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import {authInstance} from "../../apis/utils/instance";
 
 const AddMemberForm = ({
                            nickname,
@@ -8,24 +9,32 @@ const AddMemberForm = ({
                            confirmPassword,
                            phone,
                            verificationCode,
-                           isPhoneVerified,
+                           email,
+                           onCheckNickname,
                            onNicknameChange,
                            onPasswordChange,
                            onConfirmPasswordChange,
                            onPhoneChange,
-                           onVerificationCodeChange,
-                           onCheckNickname,
                            onRequestVerificationCode,
                            onVerifyPhone,
-                           onSignUp,
+                           onVerificationCodeChange,
+                           onEmailChange,
+                           onAddMember,
                        }) => {
     const navigate = useNavigate();
 
-    const handleAddMember = async () =>{
-        //가입 신청 로직
-        //db에 정보 등록하는 로직
-        navigate("/member/add/complete");
+    const handleAddMember = async () => {
+        try{
+            const response = await authInstance.post("/member/add", {
+                headers: {
+                    Accept: "application/json",
+                },
+            });
+        } catch (error){
+            console.error("오류 발생:", error);
+        }
     };
+
     return (
         <form>
             <div style={{ marginBottom: '10px' }}>
@@ -44,7 +53,6 @@ const AddMemberForm = ({
                     중복 확인
                 </Button>
             </div>
-
             <div style={{ marginBottom: '10px' }}>
                 <TextField
                     label="비밀번호"
@@ -63,8 +71,6 @@ const AddMemberForm = ({
                     onChange={onConfirmPasswordChange}
                 />
             </div>
-
-
             <div style={{ marginBottom: '10px' }}>
                 <TextField
                     label="휴대폰 번호"
@@ -84,7 +90,7 @@ const AddMemberForm = ({
                     label="인증 번호"
                     sx={{ width: '200px', marginRight: '10px', marginTop: '10px' }}
                     value={verificationCode}
-                    onChange={onPhoneChange}
+                    onChange={onVerificationCodeChange}
                 />
                 <Button
                     variant="contained"
@@ -94,32 +100,16 @@ const AddMemberForm = ({
                 >
                     인증 확인
                 </Button>
-
-            </div>
-
-            {isPhoneVerified && (
-                <>
-                    <TextField
-                        label="휴대폰 번호 인증"
-                        fullWidth
-                        value={verificationCode}
-                        onChange={onVerificationCodeChange}
-                    />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={onVerifyPhone}
-                    >
-                        확인
-                    </Button>
-                </>
-            )}
-
-            <div style={{ marginTop: '10px' }}>
+                <TextField
+                    label="이메일"
+                    sx={{ width: '200px', marginRight: '10px', marginTop: '10px' }}
+                    value={email}
+                    onChange={onEmailChange}
+                />
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={onSignUp}
+                    onClick={handleAddMember}
                     sx={{ marginTop: '100px', marginLeft: '115px', width: '150px', height: '50px' }}
                 >
                     가입 신청
