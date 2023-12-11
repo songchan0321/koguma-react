@@ -2,13 +2,12 @@ import { authInstance } from "../utils/instance";
 
 const MEMBER_API_URI = "/member";
 
-export const getMemberAPI = async (memberId) => {
+export const getMemberAPI = async () => {
   try {
-    const { data } = await authInstance.get(
-      `${MEMBER_API_URI}/get/${memberId}`
-    );
+    const { data } = await authInstance.get(`${MEMBER_API_URI}/get`);
     return data;
   } catch (err) {
+    alert("페이 정보를 가져올 수 없습니다.");
     console.log(err);
   }
 };

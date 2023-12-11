@@ -4,46 +4,31 @@ import TopBar from "../../component/payment/TopBar";
 import { useEffect, useState } from "react";
 import { existPaymentAPI } from "../../apis/api/payment";
 import { getMemberAPI } from "../../apis/api/member";
+import { useNavigate } from "react-router-dom";
+import LoadingProgress from "../../component/common/LoadingProgress";
 
 const GetPayment = () => {
+  const navigator = useNavigate();
   const [existPayment, setExistPayment] = useState(false);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     (async () => {
-      await existPaymentAPI(3)
-        .then(({ result }) => {
-          setExistPayment(result);
-          return result;
-        })
-        .then((result) => {
-          if (result) {
-            (async () => {
-              await getMemberAPI(3)
-                .then((data) => console.log(data))
-                .catch((err) => console.log(err));
-            })();
-          }
-        })
-        .then(() => setLoading(false))
-        .catch((err) => console.log(err));
+      await existPaymentAPI().then(({ result }) => {
+        setExistPayment(result);
+        setLoading(false);
+      });
     })();
   }, []);
   return (
     <Container fixed>
       {loading ? (
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            minHeight: "100vh",
-          }}
-        >
-          <CircularProgress color="secondary" />
-        </Box>
+        <LoadingProgress />
       ) : (
         <>
-          <TopBar />
+          <TopBar color="secondary">
+            <i>Pay</i>
+          </TopBar>
           <PaymentInfo registered={existPayment} />
         </>
       )}

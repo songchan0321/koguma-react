@@ -1,9 +1,7 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const BASE_URL = "http://127.0.0.1:8080";
-// const BASE_URL = "https://5quys.com";
-// const BASE_URL = "http://192.168.0.9:8080";
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 // jwt 정보 필요 x
 const axiosApi = (url, options) => {
