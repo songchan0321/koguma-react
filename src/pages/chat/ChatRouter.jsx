@@ -1,13 +1,21 @@
-import React from 'react';
-import { Route, Routes } from "react-router-dom";
+import React from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { useIsLoginState } from "../../context/LoginContextProvider";
+import ChatRoomList from "./ChatRoomList";
 
 const ChatRouter = () => {
-    return(
-        <Routes>
-            {/* <Route path="/post/list" element={<ListPost />} />
+  const isLogin = useIsLoginState();
+  return (
+    <Routes>
+      <Route
+        path="/list"
+        element={isLogin ? <ChatRoomList /> : <Navigate to="/auth/login" />}
+      />
+
+      {/* <Route path="/post/list" element={<ListPost />} />
             <Route path="/post/add" element={<AddPost />} /> */}
-        </Routes>
-    );
+    </Routes>
+  );
 };
 
 export default ChatRouter;
