@@ -1,121 +1,86 @@
-import React from 'react';
-import { Button, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import {authInstance} from "../../apis/utils/instance";
+import React, { useState } from "react";
+import { TextField, Button } from "@mui/material";
+import { authInstance } from "../../apis/utils/instance";
 
-const AddMemberForm = ({
-                           nickname,
-                           password,
-                           confirmPassword,
-                           phone,
-                           verificationCode,
-                           email,
-                           onCheckNickname,
-                           onNicknameChange,
-                           onPasswordChange,
-                           onConfirmPasswordChange,
-                           onPhoneChange,
-                           onRequestVerificationCode,
-                           onVerifyPhone,
-                           onVerificationCodeChange,
-                           onEmailChange,
-                           onAddMember,
-                       }) => {
-    const navigate = useNavigate();
+const AddMemberForm = ({ onSubmit }) => {
+    const [nickname, setNickname] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [phone, setPhone] = useState("");
+    const [email, setEmail] = useState("");
 
-    const handleAddMember = async () => {
-        try{
+    const handleNicknameChange = (e) => {
+        setNickname(e.target.value);
+    };
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+    };
+
+    const handleConfirmPasswordChange = (e) => {
+        setConfirmPassword(e.target.value);
+    };
+
+    const handlePhoneChange = (e) => {
+        setPhone(e.target.value);
+    };
+
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+    };
+
+    const handleSubmit = async () => {
+        try {
+            // 패스워드 일치 여부 확인
+            if (password !== confirmPassword) {
+                console.error("비밀번호가 일치하지 않습니다.");
+                return;
+            }
+
+            // API 호출
             const response = await authInstance.post("/member/add", {
-                headers: {
-                    Accept: "application/json",
-                },
+                nickname,
+                pw: password,
+                phone,
+                email,
             });
-        } catch (error){
-            console.error("오류 발생:", error);
+
+            if (response.ok) {
+                console.log("회원 가입 성공!");
+                // 부모 컴포넌트에 성공을 알림
+                onSubmit();
+            } else {
+                console.error("회원 가입 실패.");
+            }
+        } catch (error) {
+            console.error("가입 중 오류 발생:", error);
         }
     };
 
     return (
-        <form>
-            <div style={{ marginBottom: '10px' }}>
-                <TextField
-                    label="닉네임"
-                    sx={{ width: '200px', marginRight: '10px', marginTop: '80px' }}
-                    value={nickname}
-                    onChange={onNicknameChange}
-                />
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={onCheckNickname}
-                    sx={{ marginTop: '90px', marginLeft: '20px' }}
-                >
-                    중복 확인
+        <div>
+            <TextField label="닉네임" value={nickname} onChange={handleNicknameChange} />
+            <TextField
+                label="비밀번호"
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+            />
+            <TextField
+                label="비밀번호 확인"
+                type="password"
+                value={confirmPassword}
+                onChange={handleConfirmPasswordChange}
+            />
+            <TextField label="휴대폰 번호" value={phone} onChange={handlePhoneChange} />
+            <TextField label="이메일" value={email} onChange={handleEmailChange} />
+
+            <div style={{ marginTop: 10 }}>
+                <Button variant="contained" color="primary" onClick={handleSubmit}>
+                    가입하기
                 </Button>
             </div>
-            <div style={{ marginBottom: '10px' }}>
-                <TextField
-                    label="비밀번호"
-                    type="password"
-                    sx={{ width: '200px', marginRight: '10px' }}
-                    value={password}
-                    onChange={onPasswordChange}
-                />
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-                <TextField
-                    label="비밀번호 확인"
-                    type="password"
-                    sx={{ width: '200px', marginRight: '10px' }}
-                    value={confirmPassword}
-                    onChange={onConfirmPasswordChange}
-                />
-            </div>
-            <div style={{ marginBottom: '10px' }}>
-                <TextField
-                    label="휴대폰 번호"
-                    sx={{ width: '200px', marginRight: '10px' }}
-                    value={phone}
-                    onChange={onPhoneChange}
-                />
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={onRequestVerificationCode}
-                    sx={{ marginTop: '10px', marginLeft: '20px' }}
-                >
-                    인증 요청
-                </Button>
-                <TextField
-                    label="인증 번호"
-                    sx={{ width: '200px', marginRight: '10px', marginTop: '10px' }}
-                    value={verificationCode}
-                    onChange={onVerificationCodeChange}
-                />
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={onVerifyPhone}
-                    sx={{ marginTop: '20px', marginLeft: '20px' }}
-                >
-                    인증 확인
-                </Button>
-                <TextField
-                    label="이메일"
-                    sx={{ width: '200px', marginRight: '10px', marginTop: '10px' }}
-                    value={email}
-                    onChange={onEmailChange}
-                />
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleAddMember}
-                    sx={{ marginTop: '100px', marginLeft: '115px', width: '150px', height: '50px' }}
-                >
-                    가입 신청
-                </Button>
-            </div>
-        </form>
+        </div>
     );
 };
 
