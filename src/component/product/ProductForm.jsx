@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Button,
   CssBaseline,
@@ -22,6 +22,8 @@ import {
 
 import { formatMoney } from "../../apis/services/product";
 import ImageList from "../common/ImageList";
+import { addImageAPI } from "../../apis/api/common";
+import { addProductAPI } from "../../apis/api/Product";
 
 const ProductForm = ({ text }) => {
   const categorys = [
@@ -46,18 +48,29 @@ const ProductForm = ({ text }) => {
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
 
+  const imageRegHandler = (images) => {
+    setFormData((prev) => ({ ...prev, images: images }));
+  };
+  const imageDelHandler = (id) => {
+    setFormData((prev) => ({
+      ...prev,
+      images: prev.images.filter((_, index) => index !== id),
+    }));
+  };
   const [formData, setFormData] = useState({
     title: "",
-    category: "",
-    price: "",
+    categoryName: "",
+    categoryId: 0,
+    price: 0,
     suggest: false,
     content: "",
-    image: images,
+    // image: images,
+    images: [],
   });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-
+    console.log(formData);
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: type === "checkbox" ? checked : value,
@@ -80,7 +93,8 @@ const ProductForm = ({ text }) => {
     }
     setFormData({
       ...formData,
-      price: formatMoney(inputValue),
+      // price: formatMoney(inputValue),
+      price: inputValue,
     });
   };
   const ITEM_HEIGHT = 48;
@@ -94,38 +108,43 @@ const ProductForm = ({ text }) => {
     },
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
+
     const updatedFormData = {
       title: form.get("title"),
-      category: form.get("category"),
-      price: form.get("price"),
-      suggest: form.get("suggest") === "on", // suggest가 체크박스인 경우
+      categoryName: formData.categoryName,
+      categoryId: formData.categoryId,
+      price: parseInt(form.get("price").replace(/,/g, ""), 10),
+      suggest: form.get("suggest") === "on",
       content: form.get("content"),
+      images: formData.images,
     };
 
-    setFormData(updatedFormData);
-    console.log(formData);
-    // (async () => {
-    //   try {
-    //     setLoading(true);
-    //     const data = await loginAPI(form.get("id"), form.get("password"));
+    setFormData({ ...updatedFormData });
+    console.log(updatedFormData);
 
-    //     alert("로그인 성공");
-    //     navigator("/product/list");
-    //   } catch (err) {
-    //     console.error(err);
-    //     alert("로그인 실패");
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // })();
+    const imageList = new FormData();
+    updatedFormData.images.forEach((el) => {
+      imageList.append("file", el);
+    });
+
+    try {
+      const { data } = await addProductAPI(updatedFormData);
+      console.log(data);
+      // const dto = {        //
+      //   productDTO: data,
+      //   file: imageList,
+      // };
+
+      // // await addImageAPI(imageList);
+      // await addImageAPI(dto);
+    } catch (error) {
+      console.error("Error in addProductAPI:", error);
+      // Handle the error appropriately
+    }
   };
-  useEffect(() => {
-    console.log(images);
-    setImages(images);
-  }, [images]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -149,7 +168,12 @@ const ProductForm = ({ text }) => {
           </Typography>
           <br />
 
-          <ImageList images={images} setImages={setImages} />
+          <ImageList
+            images={images}
+            setImages={setImages}
+            imageRegHandler={imageRegHandler}
+            imageDelHandler={imageDelHandler}
+          />
 
           <Box
             component="form"
@@ -177,16 +201,27 @@ const ProductForm = ({ text }) => {
                   <Select
                     labelId="category"
                     id="category"
-                    value={formData.category || ""}
-                    label="카테고리  "
+                    value={formData.categoryName || ""}
+                    label="카테고리"
                     onChange={(event) => {
-                      setFormData({
-                        ...formData,
-                        category: event.target.value,
-                      });
+                      const selectedCategory = event.target.value;
+                      const categoryIndex = categorys.indexOf(selectedCategory);
+                      console.log(
+                        `Selected Category: ${selectedCategory}, Category Number: ${
+                          categoryIndex + 1
+                        }`
+                      );
+                      setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        categoryName: selectedCategory,
+                        categoryId: categoryIndex + 1,
+                      }));
                     }}
                     MenuProps={MenuProps}
                   >
+                    <MenuItem value="" disabled>
+                      카테고리 선택
+                    </MenuItem>
                     {categorys.map((category) => (
                       <MenuItem key={category} value={category}>
                         {category}
@@ -202,7 +237,7 @@ const ProductForm = ({ text }) => {
               fullWidth
               id="price"
               name="price"
-              type="text" // type을 "text"로 변경
+              type="number" // type을 "text"로 변경
               label="상품 가격"
               value={formData.price} // 표시할 때 포맷팅된 값을 사용
               onChange={handlePriceChange}
@@ -217,7 +252,7 @@ const ProductForm = ({ text }) => {
             <FormControlLabel
               control={
                 <Checkbox
-                  value={formData.suggest}
+                  checked={formData.suggest}
                   name="suggest"
                   color="secondary"
                   onChange={handleChange}

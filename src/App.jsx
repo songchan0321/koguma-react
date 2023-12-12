@@ -11,7 +11,7 @@ const App = () => {
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <AppRouter />
-        <BottomBar />
+        {/* <BottomBar /> */}
       </ThemeProvider>
     </BrowserRouter>
   );

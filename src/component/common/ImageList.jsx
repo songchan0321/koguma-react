@@ -5,13 +5,18 @@ import Grid from "@mui/material/Card";
 import { Button } from "@mui/material";
 import styled from "styled-components";
 import { ReactComponent as Delete } from "../../delete.svg";
+import { addImageAPI } from "../../apis/api/common";
 
-const ImageList = ({ images, setImages }) => {
+const ImageList = ({ images, setImages, imageRegHandler, imageDelHandler }) => {
   // 이미지 상대경로 저장
   const handleAddImages = (event) => {
     const imageLists = event.target.files;
     let imageUrlLists = [...images];
-
+    // console.log(imageLists);
+    imageRegHandler(
+      Object.keys(event.target.files).map((key) => event.target.files[key])
+    );
+    // imageRegHandler(imageLists);
     for (let i = 0; i < imageLists.length; i++) {
       const currentImageUrl = URL.createObjectURL(imageLists[i]);
       imageUrlLists.push(currentImageUrl);
@@ -27,6 +32,7 @@ const ImageList = ({ images, setImages }) => {
   // X버튼 클릭 시 이미지 삭제
   const handleDeleteImage = (id) => {
     setImages(images.filter((_, index) => index !== id));
+    imageDelHandler(id);
   };
   const selectFile = useRef("");
 
