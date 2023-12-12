@@ -8,7 +8,7 @@ import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Badge, Paper } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 // 테마 생성
 const theme = createTheme({
@@ -20,7 +20,8 @@ const theme = createTheme({
 });
 
 const BottomBar = () => {
-  const [value, setValue] = useState("product");
+  const location = useLocation();
+  const [value, setValue] = useState(location.pathname.split("/")[1]);
   return (
     <ThemeProvider theme={theme}>
       <Paper

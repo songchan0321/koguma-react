@@ -1,23 +1,28 @@
-import { Box, CircularProgress, Container } from "@mui/material";
+import { Box, Button, CircularProgress, Container } from "@mui/material";
 import PaymentInfo from "../../component/payment/PaymentInfo";
 import TopBar from "../../component/payment/TopBar";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { existPaymentAPI } from "../../apis/api/payment";
 import { getMemberAPI } from "../../apis/api/member";
 import { useNavigate } from "react-router-dom";
 import LoadingProgress from "../../component/common/LoadingProgress";
+import { IsLoginContext } from "../../context/LoginContextProvider";
 
 const GetPayment = () => {
-  const navigator = useNavigate();
+  const { setIsLogin } = useContext(IsLoginContext);
   const [existPayment, setExistPayment] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      await existPaymentAPI().then(({ result }) => {
-        setExistPayment(result);
-        setLoading(false);
-      });
+      try {
+        await existPaymentAPI().then(({ result }) => {
+          setExistPayment(result);
+          setLoading(false);
+        });
+      } catch (err) {
+        console.log(err);
+      }
     })();
   }, []);
   return (
@@ -26,6 +31,7 @@ const GetPayment = () => {
         <LoadingProgress />
       ) : (
         <>
+          <Button onClick={() => setIsLogin(false)}>Logout</Button>
           <TopBar color="secondary">
             <i>Pay</i>
           </TopBar>

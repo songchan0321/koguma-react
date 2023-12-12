@@ -2,12 +2,8 @@ import { authInstance } from "../utils/instance";
 
 const PAYMENT_API_URI = "/payment";
 export const existPaymentAPI = async () => {
-  try {
-    const { data } = await authInstance.get(`${PAYMENT_API_URI}/exist`);
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
+  const { data } = await authInstance.get(`${PAYMENT_API_URI}/exist`);
+  return data;
 };
 
 export const checkAccountNameAPI = async (name, account, code) => {

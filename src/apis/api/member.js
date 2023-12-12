@@ -7,7 +7,7 @@ export const getMemberAPI = async () => {
     const { data } = await authInstance.get(`${MEMBER_API_URI}/get`);
     return data;
   } catch (err) {
-    alert("페이 정보를 가져올 수 없습니다.");
+    alert("회원 정보를 가져올 수 없습니다.");
     console.log(err);
   }
 };
