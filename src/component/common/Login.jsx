@@ -17,13 +17,14 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 import { useNavigate } from "react-router-dom";
-import { loginAPI } from "../../apis/api/authentication";
+import { IsLoginContext } from "../../context/LoginContextProvider";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const defaultTheme = createTheme();
   const navigator = useNavigate();
+  const { setIsLogin } = React.useContext(IsLoginContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -35,12 +36,8 @@ const Login = () => {
         const data = await loginAPI(form.get("id"), form.get("password"));
 
         alert("로그인 성공");
-        if (currentQuery) {
-          navigator(currentQuery);
-        } else {
-          // 이전 주소가 없다면 기본 주소로 이동
-          navigator("/product/list");
-        }
+        setIsLogin(true);
+        navigator("/product/list");
       } catch (err) {
         console.error(err);
         alert("로그인 실패");
