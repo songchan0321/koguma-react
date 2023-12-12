@@ -7,7 +7,6 @@ const AddMemberForm = ({ onSubmit }) => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [phone, setPhone] = useState("");
-    const [email, setEmail] = useState("");
 
     const handleNicknameChange = (e) => {
         setNickname(e.target.value);
@@ -25,9 +24,8 @@ const AddMemberForm = ({ onSubmit }) => {
         setPhone(e.target.value);
     };
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
+
+
 
     const handleSubmit = async () => {
         try {
@@ -42,7 +40,16 @@ const AddMemberForm = ({ onSubmit }) => {
                 nickname,
                 pw: password,
                 phone,
-                email,
+                email: null,
+                imageId: null,
+                score: 36.5,
+                roleFlag: false,
+                socialFlag: false,
+                paymentAccount: null,
+                paymentBank: null,
+                paymentBalance: null,
+                paymentPw: null,
+                memberRoleType: "MEMBER",
             });
 
             if (response.ok) {
@@ -73,7 +80,6 @@ const AddMemberForm = ({ onSubmit }) => {
                 onChange={handleConfirmPasswordChange}
             />
             <TextField label="휴대폰 번호" value={phone} onChange={handlePhoneChange} />
-            <TextField label="이메일" value={email} onChange={handleEmailChange} />
 
             <div style={{ marginTop: 10 }}>
                 <Button variant="contained" color="primary" onClick={handleSubmit}>
