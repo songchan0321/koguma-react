@@ -26,16 +26,13 @@ import ProductTopBar from "../../component/product/ProductTopBar";
 import AddFloatingButton from "../../component/common/AddFloatingButton";
 import ListContainingProduct from "../../component/product/ListContainingProduct";
 
-const ProductList = () => {
+const RaiseProduct = () => {
   const navigator = useNavigate();
 
   return (
     <>
-      <ProductTopBar />
-      <BottomBar />
-      <AddFloatingButton arrival={"/product/add"} />
       <ListContainingProduct />
     </>
   );
 };
-export default ProductList;
+export default RaiseProduct;
