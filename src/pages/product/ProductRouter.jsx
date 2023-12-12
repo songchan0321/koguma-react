@@ -5,6 +5,7 @@ import ProductAdd from "./ProductAdd";
 import ProductGet from "./ProductGet";
 import ProductUpdate from "./ProductUpdate";
 import SuggestPrice from "./SuggestPrice";
+import MySaleProduct from "./MySaleProduct";
 
 const ProductRouter = () => {
   return (
@@ -18,6 +19,7 @@ const ProductRouter = () => {
       <Route path="/list" element={<ProductList />} />
       <Route path="/add" element={<ProductAdd />} />
       <Route path="/suggest/:prodNo" element={<SuggestPrice />} />
+      <Route path="/list/my" element={<MySaleProduct />} />
     </Routes>
   );
 };

@@ -21,7 +21,11 @@ const theme = createTheme({
 
 const BottomBar = () => {
   const location = useLocation();
-  const [value, setValue] = useState(location.pathname.split("/")[1]);
+  const [value, setValue] = useState(
+    location.pathname.split("/")[1] === ""
+      ? "product"
+      : location.pathname.split("/")[1]
+  );
   return (
     <ThemeProvider theme={theme}>
       <Paper
