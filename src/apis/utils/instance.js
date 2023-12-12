@@ -23,9 +23,10 @@ const axiosAuthApi = (url, options) => {
   instance.interceptors.request.use(
     function (config) {
       const accessToken = localStorage.getItem("token");
-
       if (accessToken) {
         config.headers.Authorization = `${accessToken}`;
+      } else {
+        window.location.href = "/common/login";
       }
       return config;
     },

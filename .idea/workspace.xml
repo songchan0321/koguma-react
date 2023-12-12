@@ -4,16 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d9194628-c3e2-496e-8bab-64cb2d20ca51" name="Changes" comment="feat : listPost 구현 중 &#10;&#10;발표를 위해 진행&#10;&#10;2023.12.7 / 21:19 / HSC">
+    <list default="true" id="d9194628-c3e2-496e-8bab-64cb2d20ca51" name="Changes" comment="feat : UpdateMember 페이지 추가&#10;&#10;페이지 추가 및 로직 추가&#10;&#10;2023.12.11 / 21:22 / SIC">
+      <change afterPath="$PROJECT_DIR$/src/component/member/AddBlockForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/component/member/AddFollowingForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/component/member/DeleteMemberForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/component/member/GetBlockForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/component/member/GetFollowingForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/component/member/ListBlockForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/component/member/ListFollowingForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/member/AddBlock.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/member/AddFollowing.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/member/DeleteMember.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/member/GetBlock.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/member/GetFollowing.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/member/ListBlock.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/member/ListFollowing.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/member/AddMemberForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/member/AddMemberForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/member/AddMember.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/member/AddMember.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/member/MemberRouter.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/member/MemberRouter.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -32,14 +61,17 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;hsc&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/jackintheboxx101/git/koguma-react&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/intelliJWorkspace/koguma-react&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.typescriptcompiler&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/Applications/IntelliJ IDEA.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -68,27 +100,46 @@
       <option name="presentableId" value="Default" />
       <updated>1701928469777</updated>
       <workItem from="1701928470953" duration="4509000" />
-      <workItem from="1701951465023" duration="900000" />
-      <workItem from="1701994586918" duration="737000" />
-      <workItem from="1702207591064" duration="536000" />
+      <workItem from="1702254249900" duration="30764000" />
+      <workItem from="1702341052226" duration="11754000" />
     </task>
-    <task id="LOCAL-00001" summary="feat : listPost 구현 중 &#10;&#10;발표를 위해 진행&#10;&#10;2023.12.7 / 21:19 / HSC">
+    <task id="LOCAL-00001" summary="feat : AddMember, Profile, AddMemberComplete 페이지 추가&#10;&#10;페이지 추가 및 Form 추가&#10;&#10;2023.12.11 / 16:19 / SIC">
       <option name="closed" value="true" />
-      <created>1701951607028</created>
+      <created>1702279170599</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1701951607028</updated>
+      <updated>1702279170599</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="feat : UpdateMember 페이지 추가&#10;&#10;페이지 추가 및 로직 추가&#10;&#10;2023.12.11 / 21:22 / SIC">
+      <option name="closed" value="true" />
+      <created>1702297338851</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1702297338851</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat : listPost 구현 중 &#10;&#10;발표를 위해 진행&#10;&#10;2023.12.7 / 21:19 / HSC" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat : listPost 구현 중 &#10;&#10;발표를 위해 진행&#10;&#10;2023.12.7 / 21:19 / HSC" />
+    <MESSAGE value="feat : AddMember, Profile, AddMemberComplete 페이지 추가&#10;&#10;페이지 추가 및 Form 추가&#10;&#10;2023.12.11 / 16:19 / SIC" />
+    <MESSAGE value="feat : UpdateMember 페이지 추가&#10;&#10;페이지 추가 및 로직 추가&#10;&#10;2023.12.11 / 21:22 / SIC" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat : UpdateMember 페이지 추가&#10;&#10;페이지 추가 및 로직 추가&#10;&#10;2023.12.11 / 21:22 / SIC" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

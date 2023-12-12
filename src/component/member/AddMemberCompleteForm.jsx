@@ -1,20 +1,24 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import SignUpPage from "./SignUpPage";
-import SignUpCompletePage from "./SignUpCompletePage";
-import LoginPage from "./LoginPage";
+// AddMemberComplete.jsx
 
-const App = () => {
+import React from "react";
+import {Box, Button, Typography} from "@mui/material";
+
+const AddMemberCompleteForm = ({ navigate }) => {
+    const handleNavigate = (url) => {
+        navigate(url);
+    };
     return (
-        <Router>
-            <Switch>
-                <Route path="/signup" component={SignUpPage} />
-                <Route path="/signup-complete" component={SignUpCompletePage} />
-                <Route path="/login" component={LoginPage} />
-                {/* 다른 페이지들의 Route도 필요에 따라 추가 */}
-            </Switch>
-        </Router>
+        <Box>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleNavigate("/common/login")}
+                style={{ marginLeft: 10, marginTop: 300 }}
+            >
+                로그인
+            </Button>
+        </Box>
     );
 };
 
-export default App;
+export default AddMemberCompleteForm;

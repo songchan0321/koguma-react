@@ -1,147 +1,25 @@
-import React, { useState } from "react";
-import {
-    Alert,
-    AlertTitle,
-    Box,
-    Button,
-    Grid,
-    TextField,
-    Typography,
-} from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { Box, Typography } from "@mui/material";
+import AddMemberForm from "../../component/member/AddMemberForm";
 
-const AddMemberPage = () => {
-    const [nickname, setNickname] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [phone, setPhone] = useState("");
-    const [verificationCode, setVerificationCode] = useState("");
-    const [isPhoneVerified, setIsPhoneVerified] = useState(false);
-
-    const handleNicknameChange = (event) => {
-        setNickname(event.target.value);
-    };
-
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    };
-
-    const handleConfirmPasswordChange = (event) => {
-        setConfirmPassword(event.target.value);
-    };
-
-    const handlePhoneChange = (event) => {
-        setPhone(event.target.value);
-    };
-
-    const handleVerificationCodeChange = (event) => {
-        setVerificationCode(event.target.value);
-    };
-
-    const handleCheckNickname = () => {
-        console.log(`Checking nickname: ${nickname}`);
-    };
-
-    const handleRequestVerificationCode = () => {
-        console.log(`Requesting verification code for phone: ${phone}`);
-    };
-
-    const handleVerifyPhone = () => {
-        console.log(`Verifying phone: ${verificationCode}`);
-        setIsPhoneVerified(true);
-    };
-
-    const handleSignUp = () => {
-        console.log("Signing up...");
+const AddMember = () => {
+    const handleAddMemberSubmit = async (memberDTO) => {
+        try {
+            // AddMemberForm 컴포넌트에서 직접 API 호출을 수행하므로 여기서는 추가 작업 필요 없음
+            console.log("회원 등록 정보:", memberDTO);
+        } catch (error) {
+            console.error('가입 중 오류 발생:', error);
+        }
     };
 
     return (
-        <Box p={3}>
+        <Box p={3} sx={{ overflowY: 'auto', maxHeight: 'calc(100vh - 64px)' }}>
             <Typography variant="h4" gutterBottom>
-                회원 가입
+                고구마 회원 등록
             </Typography>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <TextField
-                        label="닉네임"
-                        sx={{ width: '200px', margin: 'normal' }}
-                        value={nickname}
-                        onChange={handleNicknameChange}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleCheckNickname}
-                        sx={{ marginLeft: '60px' }} // 왼쪽 마진 추가
-                    >
-                        중복 확인
-                    </Button>
-                </Grid>
-
-                <Grid item xs={12}>
-                    <TextField
-                        label="비밀번호"
-                        type="password"
-                        sx={{ width: '200px', margin: 'normal' }}
-                        value={password}
-                        onChange={handlePasswordChange}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <TextField
-                        label="비밀번호 확인"
-                        type="password"
-                        sx={{ width: '200px', margin: 'normal' }}
-                        value={confirmPassword}
-                        onChange={handleConfirmPasswordChange}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <TextField
-                        label="휴대폰 번호"
-                        sx={{ width: '200px', margin: 'normal' }}
-                        value={phone}
-                        onChange={handlePhoneChange}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleCheckNickname}
-                        sx={{ marginLeft: '60px' }} // 왼쪽 마진 추가
-                    >
-                        인증 요청
-                    </Button>
-                </Grid>
-                {isPhoneVerified && (
-                    <Grid item xs={12}>
-                        <TextField
-                            label="휴대폰 번호 인증"
-                            fullWidth
-                            value={verificationCode}
-                            onChange={handleVerificationCodeChange}
-                        />
-                        <Button variant="contained" color="primary" onClick={handleVerifyPhone}>
-                            확인
-                        </Button>
-                    </Grid>
-                )}
-                <Grid item xs={12}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleCheckNickname}
-                        sx={{ marginLeft: '60px' }} // 왼쪽 마진 추가
-                    >
-                        가입 신청
-                    </Button>
-                </Grid>
-            </Grid>
+            <AddMemberForm onSubmit={handleAddMemberSubmit} />
         </Box>
     );
 };
 
-export default AddMemberPage;
+export default AddMember;
