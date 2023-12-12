@@ -6,3 +6,8 @@ export const chatRoomListAPI = async () => {
   const { data } = await authInstance.get(`${CHAT_API_URI}/list`);
   return data;
 };
+
+export const getChatRoomAPI = async (roomId) => {
+  const { data } = await authInstance.get(`${CHAT_API_URI}/get/${roomId}`);
+  return data;
+};

@@ -1,18 +1,27 @@
 import BottomBar from "./component/common/BottomBar";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Link } from "react-router-dom";
 import AppRouter from "./AppRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./utils/theme";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import LoginContextProvider, {
+  IsLoginContext,
+} from "./context/LoginContextProvider";
+import { SocketContext, socket } from "./context/socket";
 
 const App = () => {
-  useEffect(() => {});
+  const { setIsLogin } = useContext(IsLoginContext);
+
   return (
     <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <AppRouter />
-        <BottomBar />
-      </ThemeProvider>
+      <SocketContext.Provider value={socket}>
+        <ThemeProvider theme={theme}>
+          <LoginContextProvider>
+            <AppRouter />
+          </LoginContextProvider>
+          {/* <BottomBar /> */}
+        </ThemeProvider>
+      </SocketContext.Provider>
     </BrowserRouter>
   );
 };

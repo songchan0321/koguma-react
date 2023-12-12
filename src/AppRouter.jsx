@@ -11,8 +11,20 @@ import MemberRouter from "./pages/member/MemberRouter";
 import PaymentRouter from "./pages/payment/PaymentRouter";
 import ProductRouter from "./pages/product/ProductRouter";
 import CommunityRouter from "./pages/community/CommunityRouter";
+import { useContext, useEffect } from "react";
+import { CHAT_EVENT, SocketContext } from "./context/socket";
 
 const AppRouter = () => {
+  const socket = useContext(SocketContext);
+  useEffect(() => {
+    socket.emit(CHAT_EVENT.FIRST_CONNECT, {
+      token: `${localStorage.token}`,
+    });
+    socket.on(CHAT_EVENT.EVENT_ALERT, (message) => {
+      console.log("알림 발생!");
+      console.log(message);
+    });
+  }, []);
   return (
     <Routes>
       {/* <Route path="/post/list" element={<ListPost />} />   community/post ? */}
