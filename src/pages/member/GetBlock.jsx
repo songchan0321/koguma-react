@@ -5,7 +5,7 @@ const GetBlock = () => {
     return (
         <div>
             <h1>차단 상세 정보</h1>
-            <GetBlock />
+            <GetBlockForm />
         </div>
     );
 };

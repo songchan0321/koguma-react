@@ -2,7 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const BASE_URL = process.env.REACT_APP_API_URL;
-
+const CHAT_BASE_URL = process.env.REACT_APP_CHAT_URL;
 // jwt 정보 필요 x
 const axiosApi = (url, options) => {
   const instance = axios.create({ baseURL: url, ...options });
@@ -49,3 +49,4 @@ const axiosAuthApi = (url, options) => {
 
 export const defaultInstance = axiosApi(BASE_URL);
 export const authInstance = axiosAuthApi(BASE_URL);
+export const authNodeInstance = axiosAuthApi(CHAT_BASE_URL);

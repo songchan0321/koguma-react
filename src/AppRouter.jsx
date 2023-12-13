@@ -37,7 +37,7 @@ const AppRouter = () => {
       {/* <Route path="/post/add" element={<AddPost />} /> */}
       <Route
         path="/"
-        element={isLogin ? <ProductList /> : <Navigate to="/auth/login" />}
+        element={isLogin ? <ProductList /> : <Navigate to="/common/login" />}
       />
       <Route path="/chat/*" element={<ChatRouter />} />
       <Route path="/club/*" element={<ClubRouter />} />

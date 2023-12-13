@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import { authInstance } from "../../apis/utils/instance";
+import { useNavigate } from "react-router-dom";
 
 const AddMemberForm = ({ onSubmit }) => {
     const [nickname, setNickname] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [phone, setPhone] = useState("");
+
+    const navigate = useNavigate();
 
     const handleNicknameChange = (e) => {
         setNickname(e.target.value);
@@ -36,7 +39,7 @@ const AddMemberForm = ({ onSubmit }) => {
             }
 
             // API 호출
-            const response = await authInstance.post("/member/add", {
+            const response = await authInstance.post("/auth/member/add", {
                 nickname,
                 pw: password,
                 phone,
@@ -51,10 +54,12 @@ const AddMemberForm = ({ onSubmit }) => {
                 paymentPw: null,
                 memberRoleType: "MEMBER",
             });
+            console.log("응답 상태 코드:", response.status);
+            console.log("응답 내용:", response.data);
 
             if (response.ok) {
-                console.log("회원 가입 성공!");
-                // 부모 컴포넌트에 성공을 알림
+                // 회원 가입 성공 시 "/member/add/complete" 경로로 이동
+                navigate("/member/add/complete");
                 onSubmit();
             } else {
                 console.error("회원 가입 실패.");

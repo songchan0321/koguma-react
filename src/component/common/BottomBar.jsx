@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useLayoutEffect, useState } from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
@@ -9,6 +9,8 @@ import Diversity3Icon from "@mui/icons-material/Diversity3";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Badge, Paper } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
+import { CHAT_EVENT, SocketContext } from "../../context/socket";
+import { getAllUnreadCount, getUnreadCount } from "../../apis/api/chat";
 
 // 테마 생성
 const theme = createTheme({
@@ -21,11 +23,25 @@ const theme = createTheme({
 
 const BottomBar = () => {
   const location = useLocation();
+  const socket = useContext(SocketContext);
   const [value, setValue] = useState(
     location.pathname.split("/")[1] === ""
       ? "product"
       : location.pathname.split("/")[1]
   );
+  const [count, setCount] = useState(0);
+  useLayoutEffect(() => {
+    socket.on(CHAT_EVENT.EVENT_BOTTOM_ALERT, (message) => {
+      setCount((count) => count + 1);
+    });
+    (async () => {
+      const data = await getAllUnreadCount();
+      setCount(data);
+    })();
+    return () => {
+      socket.off(CHAT_EVENT.EVENT_BOTTOM_ALERT);
+    };
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <Paper
@@ -64,7 +80,7 @@ const BottomBar = () => {
             label="채팅"
             value="chat"
             icon={
-              <Badge color="secondary" badgeContent={2} max={99}>
+              <Badge color="secondary" badgeContent={count} max={99}>
                 <ChatBubbleIcon sx={{ fontSize: "1.5rem" }} />
               </Badge>
             }
@@ -73,7 +89,7 @@ const BottomBar = () => {
           />
           <BottomNavigationAction
             label="프로필"
-            value="profile"
+            value="member"
             icon={<InsertEmoticonIcon sx={{ fontSize: "1.5rem" }} />}
             component={Link}
             to="/member/profile"

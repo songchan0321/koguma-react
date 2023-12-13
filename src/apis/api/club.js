@@ -77,13 +77,83 @@ export const listMeetUpAPI = async (clubId) => {
   }
 };
 
-export const addMeetUpAPI = async (meetUp) => {
+export const addMeetUpAPI = async (
+  clubId,
+  title,
+  content,
+  maxCapacity,
+  roadAddr
+) => {
+  alert(title);
   try {
-    await axios.post(`${CLUB_API_URI}/meet-up/add`, JSON.stringify({}), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    await authInstance.post(
+      `${CLUB_API_URI}/add/meet-up`,
+
+      JSON.stringify({
+        clubDTO: {
+          id: 4,
+        },
+        title: title,
+        content: content,
+        maxCapacity: maxCapacity,
+        meetDate: null, // 서버에서 설정하거나 적절한 값으로 가정
+        roadAddr: roadAddr,
+      }),
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getClubMeetUp = async (meetUpId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/meet-up/${meetUpId}`
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const listJoinMeetUpMemberAPI = async (meetUpId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/meet-up/${meetUpId}`
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const checkJoinMeetUpAPI = async (clubId, meetUpId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/meet-up/check/join?clubId=${clubId}&meetUpId=${meetUpId}`
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const joinMeetUpCancelAPI = async (clubId, meetUpId, isJoined) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/meet-up/cancel`,
+      JSON.stringify({
+        clubId: clubId,
+        meetUpId: meetUpId,
+        isJoined: isJoined,
+      })
+    );
   } catch (err) {
     console.log(err);
   }

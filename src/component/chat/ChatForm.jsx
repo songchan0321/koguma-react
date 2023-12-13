@@ -2,18 +2,30 @@ import AddIcon from "@mui/icons-material/Add";
 import SendIcon from "@mui/icons-material/Send";
 import { Divider, IconButton, InputBase, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
-const ChatForm = ({ sendTextMessageHandler, textEvent }) => {
+const ChatForm = ({
+  roomId,
+  sendTextMessageHandler,
+  textEvent,
+  newSendTextMessageHandler,
+  product,
+}) => {
   const [text, setText] = useState("");
   useEffect(() => {
-    if (text === "") {
-      textEvent(false);
-    } else {
-      textEvent(true);
+    if (textEvent) {
+      if (text === "") {
+        textEvent(false);
+      } else {
+        textEvent(true);
+      }
     }
   }, [text]);
   const onClickHandler = () => {
     if (text !== "") {
-      sendTextMessageHandler(text);
+      if (roomId != null) {
+        sendTextMessageHandler(text, roomId);
+      } else {
+        newSendTextMessageHandler(text, product);
+      }
       setText("");
     }
   };
@@ -54,6 +66,7 @@ const ChatForm = ({ sendTextMessageHandler, textEvent }) => {
           color="secondary"
           sx={{ p: "10px" }}
           aria-label="directions"
+          onClick={onClickHandler}
         >
           <SendIcon />
         </IconButton>

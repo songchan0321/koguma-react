@@ -27,3 +27,24 @@ export const addProductAPI = async (product) => {
     console.log(err);
   }
 };
+
+export const getProductAPI = async (productId) => {
+  const { data } = await authInstance.get(
+    `${PRODUCT_API_URI}/get/${productId}`
+  );
+  return data;
+};
+export const ListProductAPI = async (page, keyword) => {
+  try {
+    const response = await authInstance.get(
+      `${PRODUCT_API_URI}/list?page=${page}&keyword=${keyword || ""}`
+    );
+    console.log(response);
+    return {
+      result: response.data.content,
+      isLast: response.data.last,
+    };
+  } catch (err) {
+    console.log(err);
+  }
+};

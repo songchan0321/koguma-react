@@ -19,9 +19,11 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useNavigate } from "react-router-dom";
 import { IsLoginContext } from "../../context/LoginContextProvider";
 import { loginAPI } from "../../apis/api/authentication";
+import { CHAT_EVENT, SocketContext } from "../../context/socket";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
+  const socket = React.useContext(SocketContext);
   const [error, setError] = useState("");
   const defaultTheme = createTheme();
   const navigator = useNavigate();
@@ -37,6 +39,9 @@ const Login = () => {
         const data = await loginAPI(form.get("id"), form.get("password"));
 
         alert("로그인 성공");
+        socket.emit(CHAT_EVENT.FIRST_CONNECT, {
+          token: `${localStorage.getItem("token")}`,
+        });
         setIsLogin(true);
         navigator("/product/list");
       } catch (err) {

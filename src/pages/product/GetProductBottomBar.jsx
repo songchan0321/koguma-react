@@ -2,11 +2,8 @@ import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
 import { Badge, Paper } from "@mui/material";
-import { Link } from "react-router-dom";
-import FavoriteIcon from "@mui/icons-material/Favorite"; //채워진 하트
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"; // 안채워진 하트
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Link, useNavigate } from "react-router-dom";
+import LikeCheckButton from "../../component/common/LikeCheckButton";
 import {
   Card,
   CardHeader,
@@ -33,7 +30,8 @@ const StyledCardActions = styled(CardActions)({
   justifyContent: "space-between",
 });
 
-const GetProductBottomBar = () => {
+const GetProductBottomBar = ({ productId }) => {
+  const navigator = useNavigate();
   return (
     <ThemeProvider theme={theme}>
       <Paper
@@ -43,7 +41,7 @@ const GetProductBottomBar = () => {
         <StyledCardActions>
           <div>
             <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
+              <LikeCheckButton />
             </IconButton>
             <span>상품 가격 : 10000원</span>
           </div>
@@ -51,7 +49,7 @@ const GetProductBottomBar = () => {
             color="secondary"
             variant="contained"
             sx={{}}
-            onClick={() => console.log("가격제안로 이동")}
+            onClick={() => navigator(`/product/suggest/${productId}`)}
           >
             가격제안
           </Button>
@@ -59,7 +57,7 @@ const GetProductBottomBar = () => {
             color="secondary"
             variant="contained"
             sx={{}}
-            onClick={() => console.log("채팅하기로 이동")}
+            onClick={navigator(`/chat/get/new/${productId}`)}
           >
             채팅하기
           </Button>
