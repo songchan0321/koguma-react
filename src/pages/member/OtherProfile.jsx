@@ -1,10 +1,10 @@
-import React from 'react';
-import OtherProfileForm from '../../components/OtherProfileForm';
+import React from "react";
+import OtherProfileForm from "../../component/member/OtherProfileForm";
 
 const OtherProfile = () => {
     return (
         <div>
-            <h2>Other Member Profile Page</h2>
+            <h2>타 회원 프로필 조회</h2>
             <OtherProfileForm />
         </div>
     );
