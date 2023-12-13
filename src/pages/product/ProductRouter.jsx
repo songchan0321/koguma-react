@@ -18,11 +18,11 @@ const ProductRouter = () => {
             <Route />
             <Route path="/form" element={<ProductForm />} />
             <Route path="/main" element={<Main />}/> */}
-      <Route path="/get/:prodNo" element={<ProductGet />} />
-      <Route path="/update/:prodNo" element={<ProductUpdate />} />
+      <Route path="/get/:productId" element={<ProductGet />} />
+      <Route path="/update/:productId" element={<ProductUpdate />} />
       <Route path="/list" element={<ProductList />} />
       <Route path="/add" element={<ProductAdd />} />
-      <Route path="/suggest/:prodNo" element={<SuggestPrice />} />
+      <Route path="/suggest/:productId" element={<SuggestPrice />} />
       <Route path="/list/sale" element={<MySaleProduct />} />
       <Route path="/list/buy" element={<MyBuyProduct />} />
       <Route path="/list/like" element={<LikeProductList />} />

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
+import { useNavigate, NavLink } from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -31,10 +32,17 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const ListContainingProduct = ({ data, type }) => {
+const ListContainingProduct = ({ data, lastItemRef, index, type }) => {
+  const navigate = useNavigate();
+
+  const getProduct = (productId) => {
+    navigate(`/product/get/${productId}`);
+  };
+
   return (
     <>
-      <Card id={data} sx={{ maxWidth: "100%" }}>
+      {/* {data.content.map((item, idx) => ( */}
+      <Card id={data} sx={{ maxWidth: "100%" }} onClick={() => getProduct(1)}>
         <CardHeader
           avatar={
             <CardMedia
@@ -94,6 +102,7 @@ const ListContainingProduct = ({ data, type }) => {
           }
         />
       </Card>
+      {/*  ))} */}
     </>
   );
 };

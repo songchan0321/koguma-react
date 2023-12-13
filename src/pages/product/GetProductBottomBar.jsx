@@ -30,7 +30,7 @@ const StyledCardActions = styled(CardActions)({
   justifyContent: "space-between",
 });
 
-const GetProductBottomBar = () => {
+const GetProductBottomBar = ({ productId }) => {
   const navigator = useNavigate();
   return (
     <ThemeProvider theme={theme}>
@@ -49,7 +49,7 @@ const GetProductBottomBar = () => {
             color="secondary"
             variant="contained"
             sx={{}}
-            onClick={() => navigator("/product/suggest")}
+            onClick={() => navigator(`/product/suggest/${productId}`)}
           >
             가격제안
           </Button>
@@ -57,7 +57,7 @@ const GetProductBottomBar = () => {
             color="secondary"
             variant="contained"
             sx={{}}
-            onClick={() => console.log("채팅하기로 이동")}
+            onClick={navigator(`/chat/get/new/${productId}`)}
           >
             채팅하기
           </Button>
