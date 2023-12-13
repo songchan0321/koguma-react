@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+import Back from "../common/Back";
 
 const TopBar = ({ children, color = "none" }) => {
   return (
@@ -9,6 +10,7 @@ const TopBar = ({ children, color = "none" }) => {
       component="h2"
       sx={{ textAlign: "center", mb: 1.5 }}
     >
+      <Back />
       {/* <i>Pay</i> */}
       {children}
     </Typography>

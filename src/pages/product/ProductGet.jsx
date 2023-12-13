@@ -33,10 +33,9 @@ const ExpandMore = styled((props) => {
 }));
 
 const ProductGet = () => {
-  const productId = useParams();
+  const { productId } = useParams();
   return (
     <>
-      <TopReturnBar title="상품 조회" />
       <Card sx={{ maxWidth: "100%" }}>
         <CardMedia
           component="img"

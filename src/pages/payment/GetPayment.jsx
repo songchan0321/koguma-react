@@ -31,7 +31,6 @@ const GetPayment = () => {
         <LoadingProgress />
       ) : (
         <>
-          <Button onClick={() => setIsLogin(false)}>Logout</Button>
           <TopBar color="secondary">
             <i>Pay</i>
           </TopBar>

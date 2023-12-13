@@ -113,11 +113,12 @@ const Login = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
                 <Button
-                  type="submit"
+                  // type="submit"
                   fullWidth
                   color="secondary"
                   variant="contained"
                   sx={{ height: "100%" }} // 높이 조절
+                  onClick={() => navigator("/member/add")}
                 >
                   회원가입
                 </Button>

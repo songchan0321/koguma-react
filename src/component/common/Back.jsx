@@ -11,8 +11,11 @@ const Back = () => {
   };
 
   return (
-    <Button style={{ position: "absolute", left: "10" }} onClick={goBack}>
-      <ArrowBackIosNewIcon color="secondary" />
+    <Button
+      style={{ position: "absolute", left: "-0.6rem", top: "0.4rem" }}
+      onClick={goBack}
+    >
+      <ArrowBackIosNewIcon sx={{ color: "#000000" }} />
     </Button>
   );
 };
