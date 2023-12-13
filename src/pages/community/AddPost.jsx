@@ -1,18 +1,23 @@
-import React from "react";
-import AddPostTopBar from "../../component/community/AddPostTopBar";
+import React, { useEffect, useState } from "react";
 import { Fragment } from "react";
-import BottomBar from "../../component/common/BottomBar";
 import { useLocation } from "react-router-dom";
+import PostForm from "../../component/community/PostForm";
+import { addPostAPI } from "../../apis/api/community";
 
 const AddPost = () => {
   const location = useLocation();
+  const [addPost, setAddPost] = useState([]);
 
+  // useEffect(() => {
+  //   async () => {
+  //     await addPostAPI().then(({ result }) => {
+  //       setAddPost(result);
+  //     });
+  //   };
+  // });
   return (
     <Fragment>
-      <AddPostTopBar />
-
-      {/* addPost에만 하단바 제거하고 싶은데 안됨 */}
-      {location.pathname.toLowerCase() !== "/add-post" && <BottomBar />}
+      <PostForm />
     </Fragment>
   );
 };
