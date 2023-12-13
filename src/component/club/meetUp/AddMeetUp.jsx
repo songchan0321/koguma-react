@@ -1,8 +1,10 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { addMeetUpAPI } from "../../../apis/api/club";
+import { useNavigate } from "react-router-dom";
 
 const AddMeetUp = ({ clubId }) => {
+  const navigator = useNavigate();
   const [meetUp, setMeetUp] = useState({
     title: "",
     content: "",
@@ -22,6 +24,7 @@ const AddMeetUp = ({ clubId }) => {
   const handleInput = (event) => {
     const { name, value } = event.target;
     const regexp = /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+
     if (value !== "" && name === "name" && regexp.test(value)) {
       return;
     }
@@ -35,14 +38,24 @@ const AddMeetUp = ({ clubId }) => {
     ) {
       return;
     }
+
     setMeetUp({ ...meetUp, [name]: value });
   };
 
-  const handleSubmit = async (meetUp) => {
+  const handleSubmit = async () => {
+    console.log(meetUp.title);
+    console.log(clubId);
     try {
-      await addMeetUpAPI(meetUp);
+      await addMeetUpAPI(
+        clubId,
+        meetUp.title,
+        meetUp.content,
+        meetUp.maxCapacity,
+        meetUp.roadAddr
+      );
+      navigator("/club/" + clubId);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 

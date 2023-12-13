@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { getMeetUpAPI, listMeetUpAPI } from "../../../apis/api/club";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ClubHomeMeetUp = ({ clubId }) => {
+  // const clubId = useSelector((state)=> {return state.club.id})
   const [meetUp, setMeetUp] = useState({});
   const [selectedMenu, setSelectedMenu] = useState("예정된 일정");
   const meetUpMenu = ["예정된 일정", "종료된 일정"];
@@ -27,7 +29,7 @@ const ClubHomeMeetUp = ({ clubId }) => {
   return (
     <div>
       <div>
-        <Link to="/club/meet-up/add">
+        <Link to="/club/meet-up/add/">
           <Button
             variant="contained"
             color="secondary"
@@ -84,7 +86,18 @@ const MeetUpList = ({ clubId, selectedMenu }) => {
   return (
     <div>
       {meetUpList &&
-        meetUpList.map((meetUp) => <div key={meetUp.id}>{meetUp.title}</div>)}
+        meetUpList.map((meetUp) => (
+          <div key={meetUp.id}>
+            <Link
+              to={{
+                pathname: `/club/meet-up/${meetUp.id}`,
+                state: { clubId: clubId },
+              }}
+            >
+              <div>{meetUp.title}</div>
+            </Link>
+          </div>
+        ))}
     </div>
   );
 };
