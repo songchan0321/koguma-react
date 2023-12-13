@@ -20,12 +20,12 @@ const MemberRouter = () => {
             <Route path="/add/complete" element={<AddMemberComplete/>} />
             <Route path="/update" element={<UpdateMember/>} />
             <Route path="/delete" element={<DeleteMember/>} />
-            <Route path="/member/relationship/block/list" element={<ListBlock/>}/>
-            <Route path="/member/relationship/following/list" element={<ListFollowing/>}/>
-            <Route path="/member/relationship/block/add" element={<AddBlock/>}/>
-            <Route path="/member/relationship/following/add" element={<AddFollowing/>}/>
-            <Route path="/member/relationship/block/get:targetMemberId" element={<GetBlock/>}/>
-            <Route path="/member/relationship/following/get:targetMemberId" element={<GetFollowing/>}/>
+            <Route path="/relationship/block/list" element={<ListBlock/>}/>
+            <Route path="/relationship/following/list" element={<ListFollowing/>}/>
+            <Route path="/relationship/block/add" element={<AddBlock/>}/>
+            <Route path="/relationship/following/add" element={<AddFollowing/>}/>
+            <Route path="/relationship/block/get:targetMemberId" element={<GetBlock/>}/>
+            <Route path="/relationship/following/get:targetMemberId" element={<GetFollowing/>}/>
 
         </Routes>
     );

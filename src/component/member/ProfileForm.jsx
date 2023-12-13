@@ -48,10 +48,20 @@ const ProfileForm = ({ navigate }) => {
                     <Button
                         variant="contained"
                         color="secondary"
-                        onClick={() => handleNavigate("/product/my")}
+                        onClick={() => handleNavigate("/product/list/sale")}
                         fullWidth
+                        style={{ marginTop: 10 }}
                     >
-                        내 상품
+                        내 판매내역
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => handleNavigate("/product/list/buy")}
+                        fullWidth
+                        style={{ marginTop: 10 }}
+                    >
+                        구매 내역
                     </Button>
                     <Button
                         variant="contained"
@@ -62,33 +72,8 @@ const ProfileForm = ({ navigate }) => {
                     >
                         관심 상품
                     </Button>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => handleNavigate("/product/like/list")}
-                        fullWidth
-                        style={{ marginTop: 10 }}
-                    >
-                        즐겨찾는 상품 카테고리
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => handleNavigate("/product/")}
-                        fullWidth
-                        style={{ marginTop: 10 }}
-                    >
-                        판매 내역
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => handleNavigate("/product/")}
-                        fullWidth
-                        style={{ marginTop: 10 }}
-                    >
-                        구매 내역
-                    </Button>
+
+
                 </Grid>
                 {/* 동네생활 */}
                 <Grid item xs={12} md={8}>
