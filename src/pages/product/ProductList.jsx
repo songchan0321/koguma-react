@@ -34,7 +34,7 @@ const ProductList = () => {
       <ProductTopBar />
       <BottomBar />
       <AddFloatingButton arrival={"/product/add"} />
-      <ListContainingProduct />
+      <ListContainingProduct type="report" />
     </>
   );
 };

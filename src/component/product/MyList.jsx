@@ -16,7 +16,7 @@ import {
 import FavoriteIcon from "@mui/icons-material/Favorite"; //채워진 하트
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"; // 안채워진 하트
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -35,7 +35,8 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const MyList = ({ buttonNm }) => {
+const MyList = ({ buttonNM, selectedActions }) => {
+  console.log(selectedActions);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -93,22 +94,25 @@ const MyList = ({ buttonNm }) => {
             color="secondary"
             style={{ flex: 6, marginLeft: "10px" }}
           >
-            {buttonNm}
+            {buttonNM}
           </Button>
           <Button
             variant="outlined"
             color="secondary"
+            onClick={handleModalOpen}
             style={{ flex: 1, marginLeft: "10px", marginRight: "10px" }}
           >
-            <MoreVertIcon />
+            <MoreHorizIcon />
           </Button>
         </div>
       </Card>
       <Dialog open={isModalOpen} onClose={handleModalClose}>
-        <DialogTitle>게시글 카테고리</DialogTitle>
+        <DialogTitle>상품 설정</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            <MenuItem>분실/실종</MenuItem>
+            {selectedActions.name.map((selectedAction, idx) => (
+              <MenuItem key={idx}>{selectedAction}</MenuItem>
+            ))}
           </DialogContentText>
         </DialogContent>
       </Dialog>

@@ -13,11 +13,12 @@ import {
   Typography,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 
+import FeedbackIcon from "@mui/icons-material/Feedback";
 import FavoriteIcon from "@mui/icons-material/Favorite"; //채워진 하트
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"; // 안채워진 하트
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import LikeCheckButton from "../../component/common/LikeCheckButton";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -30,7 +31,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const ListContainingProduct = (data) => {
+const ListContainingProduct = ({ data, type }) => {
   return (
     <>
       <Card id={data} sx={{ maxWidth: "100%" }}>
@@ -44,10 +45,21 @@ const ListContainingProduct = (data) => {
             />
           }
           action={
-            //하트넣기
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
+            type === "report" ? (
+              <IconButton
+                aria-label="settings"
+                onClick={() => console.log("이 상품 신고하기")}
+              >
+                <FeedbackIcon />
+              </IconButton>
+            ) : (
+              <IconButton
+                aria-label="settings"
+                onClick={() => console.log("좋아요 추가 취소")}
+              >
+                <LikeCheckButton />
+              </IconButton>
+            )
           }
           title={
             <Box>

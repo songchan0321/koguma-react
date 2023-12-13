@@ -18,6 +18,24 @@ import DialogContentText from "@mui/material/DialogContentText";
 const ProductTopBar = () => {
   const [dong, setDong] = React.useState("");
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const categorys = [
+    "디지털 기기",
+    "인테리어",
+    "유아",
+    "의류",
+    "생활가전",
+    "주방용품",
+    "가공식품",
+    "스포츠",
+    "게임",
+    "뷰티",
+    "식물",
+    "반려용품",
+    "티켓",
+    "도서",
+    "유아도서",
+    "기타",
+  ];
 
   const handleChange = (event) => {
     setDong(event.target.value);
@@ -78,16 +96,14 @@ const ProductTopBar = () => {
 
       {/* Modal */}
       <Dialog open={isModalOpen} onClose={handleModalClose}>
-        <DialogTitle>게시글 카테고리</DialogTitle>
-        <DialogContent>
+        <DialogTitle>카테고리 선택</DialogTitle>
+        <DialogContent sx={{ overflowY: "auto", maxHeight: "300px" }}>
           <DialogContentText>
-            <MenuItem>인기글</MenuItem>
-            <MenuItem>동네소식</MenuItem>
-            <MenuItem>동네맛집</MenuItem>
-            <MenuItem>동네질문</MenuItem>
-            <MenuItem>취미생활</MenuItem>
-            <MenuItem>일상</MenuItem>
-            <MenuItem>분실/실종</MenuItem>
+            {categorys.map((category) => (
+              <MenuItem key={category} value={category}>
+                {category}
+              </MenuItem>
+            ))}
           </DialogContentText>
         </DialogContent>
       </Dialog>

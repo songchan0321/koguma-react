@@ -6,6 +6,10 @@ import ProductGet from "./ProductGet";
 import ProductUpdate from "./ProductUpdate";
 import SuggestPrice from "./SuggestPrice";
 import MySaleProduct from "./MySaleProduct";
+import MyBuyProduct from "./MyBuyProduct";
+import LikeProductList from "./LikeProductList";
+import ProductReviewAdd from "./ProductReviewAdd";
+import ProductReviewGet from "./ProductReviewGet";
 
 const ProductRouter = () => {
   return (
@@ -19,7 +23,11 @@ const ProductRouter = () => {
       <Route path="/list" element={<ProductList />} />
       <Route path="/add" element={<ProductAdd />} />
       <Route path="/suggest/:prodNo" element={<SuggestPrice />} />
-      <Route path="/list/my" element={<MySaleProduct />} />
+      <Route path="/list/sale" element={<MySaleProduct />} />
+      <Route path="/list/buy" element={<MyBuyProduct />} />
+      <Route path="/list/like" element={<LikeProductList />} />
+      <Route path="/review/add" element={<ProductReviewAdd />} />
+      <Route path="/review/get" element={<ProductReviewGet />} />
     </Routes>
   );
 };

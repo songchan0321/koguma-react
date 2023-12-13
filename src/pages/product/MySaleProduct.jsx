@@ -14,13 +14,16 @@ import MyList from "../../component/product/MyList";
 const MySaleProduct = () => {
   //   const { clubId } = useParams();
   const [product, setProduct] = useState({});
-  //   const [selectedActionm,setSelectedAction] = useState([
-  //         {name: ['예약중','거래완료','게시글 수정','숨기기','삭제']
-  //          action:[]
-  //         },
-  //         {name: ['판매중','게시글 수정','숨기기','삭제']},
-  //         {name: ['게시글 수정', '삭제']}
-  //     ])
+  const [selectedAction, setSelectedAction] = useState([
+    {
+      name: ["예약중", "거래완료", "게시글 수정", "숨기기", "삭제"],
+      //    action:[handleReservation(),
+      //            '2','3','4','5,'
+      //     ]
+    },
+    { name: ["판매중", "게시글 수정", "숨기기", "삭제"] },
+    { name: ["게시글 수정", "삭제"] },
+  ]);
   const [selectedMenu, setSelectedMenu] = useState("판매 중");
   const menuList = ["판매 중", "판매 완료", "숨김 중"];
 
@@ -37,6 +40,7 @@ const MySaleProduct = () => {
   //     fetchData();
   //   }, [clubId]); // clubId가 변경될 때마다 데이터를 다시 가져오도록
 
+  const selectActionHandler = () => {};
   const handleMenuClick = (menu) => {
     setSelectedMenu(menu);
   };
@@ -68,10 +72,16 @@ const MySaleProduct = () => {
       </div>
       <hr></hr>
 
-      {selectedMenu === "판매 중" && <MyList buttonNm="끌어올리기" />}
+      {selectedMenu === "판매 중" && selectedAction && (
+        <MyList buttonNM="끌어올리기" selectedActions={selectedAction[0]} />
+      )}
       {/* {selectedMenu === "meetUp" && <ClubHomeMeetUp clubId={clubId} />} */}
-      {selectedMenu === "판매 완료" && <MyList buttonNm="받은 후기 보기" />}
-      {selectedMenu === "숨김 중" && <MyList buttonNm="숨기기 해제" />}
+      {selectedMenu === "판매 완료" && selectedAction && (
+        <MyList buttonNM="받은 후기 보기" selectedActions={selectedAction[1]} />
+      )}
+      {selectedMenu === "숨김 중" && selectedAction && (
+        <MyList buttonNM="숨기기 해제" selectedActions={selectedAction[2]} />
+      )}
     </>
   );
 };
