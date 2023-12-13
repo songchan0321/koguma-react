@@ -1,5 +1,6 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
+import { useParams } from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -32,6 +33,7 @@ const ExpandMore = styled((props) => {
 }));
 
 const ProductGet = () => {
+  const productId = useParams();
   return (
     <>
       <TopReturnBar title="상품 조회" />
@@ -74,7 +76,7 @@ const ProductGet = () => {
           본문
         </Typography>
       </CardContent>
-      <GetProductBottomBar />
+      <GetProductBottomBar productId={productId} />
     </>
   );
 };
