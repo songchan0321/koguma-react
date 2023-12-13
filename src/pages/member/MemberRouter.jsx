@@ -24,8 +24,8 @@ const MemberRouter = () => {
             <Route path="/relationship/following/list" element={<ListFollowing/>}/>
             <Route path="/relationship/block/add" element={<AddBlock/>}/>
             <Route path="/relationship/following/add" element={<AddFollowing/>}/>
-            <Route path="/relationship/block/get:targetMemberId" element={<GetBlock/>}/>
-            <Route path="/relationship/following/get:targetMemberId" element={<GetFollowing/>}/>
+            <Route path="/relationship/block/get/:targetMemberId" element={<GetBlock/>}/>
+            <Route path="/relationship/following/get/:targetMemberId" element={<GetFollowing/>}/>
 
         </Routes>
     );
