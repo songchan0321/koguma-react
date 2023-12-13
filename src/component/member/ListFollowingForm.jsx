@@ -11,15 +11,18 @@ const ListFollowingForm = () => {
         const fetchFollowingList = async () => {
             try {
                 const response = await authInstance.get('/member/relationship/following/list');
+                console.log('Response:', response); // 응답 전체를 출력
+                console.log('Data:', response.data); // 응답에서 데이터만 출력
                 setFollowingList(response.data);
                 setLoading(false);
             } catch (error) {
-                console.error('데이터를 불러오는 중 오류가 발생했습니다:', error);
+                console.error('Error fetching data:', error);
                 setLoading(false);
             }
         };
 
         fetchFollowingList();
+
     }, []);
 
     const handleNavigateToFollowingDetail = (targetMemberId) => {
@@ -29,7 +32,6 @@ const ListFollowingForm = () => {
 
     return (
         <div>
-            <h2>팔로잉 목록</h2>
             {loading ? (
                 <p>데이터를 불러오는 중입니다...</p>
             ) : (
@@ -38,7 +40,7 @@ const ListFollowingForm = () => {
                         <li key={following.id}>
                             {following.targetMember.nickname}
                             {' '}
-                            <button onClick={() => handleNavigateToFollowingDetail(following.id)}>
+                            <button onClick={() => handleNavigateToFollowingDetail(following.targetMember.id)}>
                                 팔로잉 상세
                             </button>
                         </li>

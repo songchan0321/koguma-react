@@ -27,3 +27,10 @@ export const addProductAPI = async (product) => {
     console.log(err);
   }
 };
+
+export const getProductAPI = async (productId) => {
+  const { data } = await authInstance.get(
+    `${PRODUCT_API_URI}/get/${productId}`
+  );
+  return data;
+};

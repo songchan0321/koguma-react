@@ -1,17 +1,16 @@
+// DeleteMemberForm.jsx
+
 import React, { useState } from "react";
-import { Box, Button, Grid, Typography, TextField } from "@mui/material";
+import { TextField, Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { authInstance } from "../../apis/utils/instance";
 
-
-const DeleteMemberForm = () => {
+const DeleteMemberForm = ({ onSubmit }) => {
     const navigate = useNavigate();
     const [phone, setPhone] = useState("");
     const [confirmationCode, setConfirmationCode] = useState("");
     const [isConfirmationSent, setIsConfirmationSent] = useState(false);
 
-    const handleNavigate = (url) => {
-        navigate(url);
-    };
     const handleSendConfirmation = async () => {
         try {
             // TODO: 서버에 휴대폰 번호로 인증 코드 요청하는 API 호출
@@ -28,16 +27,27 @@ const DeleteMemberForm = () => {
         }
     };
 
-    const handleDeleteMember = () => {
-        // 회원 탈퇴 버튼 클릭 시 '/member/delete'로 이동
-        handleNavigate("/member/delete");
+    const handleDeleteMember = async () => {
+        try {
+            // TODO: 서버에 회원 탈퇴 요청하는 API 호출
+             const response = await authInstance.put("/member/delete", { phone, confirmationCode });
+
+            // 간단한 시뮬레이션으로 확인 메시지를 띄우고, 사용자가 확인을 누르면 회원 탈퇴가 진행된 것으로 가정
+            const confirmed = window.confirm("정말로 회원 탈퇴하시겠습니까?");
+            if (confirmed) {
+                // 성공 시 부모 컴포넌트에서 전달받은 onSubmit 함수 호출
+                onSubmit();
+            }
+        } catch (error) {
+            console.error("오류 발생:", error);
+        }
     };
 
     return (
-        <Box p={3}>
-            <Grid item xs={12} md={8}>
-                {!isConfirmationSent ? (
-                    <>
+        <Grid container spacing={2}>
+            {!isConfirmationSent ? (
+                <>
+                    <Grid item xs={12}>
                         <TextField
                             label="휴대폰 번호"
                             variant="outlined"
@@ -45,39 +55,42 @@ const DeleteMemberForm = () => {
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
                         />
+                    </Grid>
+                    <Grid item xs={12}>
                         <Button
                             variant="contained"
                             color="secondary"
                             onClick={handleSendConfirmation}
                             fullWidth
-                            style={{ marginTop: 10 }}
                         >
                             인증 코드 전송
                         </Button>
-                    </>
-                ) : (
-                    <>
+                    </Grid>
+                </>
+            ) : (
+                <>
+                    <Grid item xs={12}>
                         <TextField
                             label="인증 코드"
                             variant="outlined"
                             fullWidth
                             value={confirmationCode}
                             onChange={(e) => setConfirmationCode(e.target.value)}
-                            style={{ marginTop: 10 }}
                         />
+                    </Grid>
+                    <Grid item xs={12}>
                         <Button
                             variant="contained"
                             color="secondary"
                             onClick={handleDeleteMember}
                             fullWidth
-                            style={{ marginTop: 10 }}
                         >
                             회원 탈퇴
                         </Button>
-                    </>
-                )}
-            </Grid>
-        </Box>
+                    </Grid>
+                </>
+            )}
+        </Grid>
     );
 };
 
