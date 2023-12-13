@@ -66,14 +66,14 @@ const MessageBubble = ({ msg, isOwnMessage }) => {
           alignItems: isOwnMessage ? "flex-end" : "flex-start",
         }}
       >
-        {isOwnMessage && (
+        {/* {isOwnMessage && (
           <Typography
             variant="caption"
             color={msg.readFlag ? "textSecondary" : "primary"}
           >
             {!msg.readFlag && "안읽음"}
           </Typography>
-        )}
+        )} */}
       </div>
     </div>
   );
