@@ -4,9 +4,12 @@ import { getClubAPI } from "../../apis/api/club";
 import { Button } from "@mui/material";
 import ClubHome from "../../component/club/ClubHome";
 import ClubHomeMeetUp from "../../component/club/meetUp/ClubHomeMeetUp";
+import { useDispatch } from "react-redux";
+import { changeClubId } from "../../store";
 
 const GetClub = () => {
   const { clubId } = useParams();
+  const dispatch = useDispatch();
   const [club, setClub] = useState({});
   const [selectedMenu, setSelectedMenu] = useState("home");
   const menuList = ["home", "board", "meetUp", "chatRoom"];
@@ -16,6 +19,7 @@ const GetClub = () => {
       try {
         const data = await getClubAPI(clubId);
         setClub(data);
+        // dispatch(changeClubId(clubId));
         console.log(data.title);
       } catch (err) {
         console.log(err);
