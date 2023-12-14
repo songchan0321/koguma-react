@@ -11,6 +11,7 @@ import TopBar from "../../component/payment/TopBar";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 import { Chip } from "@mui/material";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
+import Back from "../../component/common/Back";
 const GetChatRoom = () => {
   const { urlRoomId, productId } = useParams();
   const [roomId, setRoomId] = useState(urlRoomId);
@@ -96,7 +97,8 @@ const GetChatRoom = () => {
     <LoadingProgress />
   ) : (
     <>
-      <div style={{ position: "fixed", right: 6, top: 12, zIndex: 2000000 }}>
+      <Back />
+      <div style={{ position: "fixed", right: 6, top: 12, zIndex: 1005 }}>
         {console.log(chatRoom)}
         <Chip
           icon={<ThermostatIcon fontSize="small" />}

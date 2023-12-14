@@ -72,7 +72,13 @@ const PaymentCard = () => {
           <AddIcon />
           &nbsp;충전
         </Button>
-        <Button variant="contained" color="secondary" size="large">
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          component={Link}
+          to="/payment/requestRefund"
+        >
           환급 요청
         </Button>
         {/* <Button size="small">Learn More</Button> */}

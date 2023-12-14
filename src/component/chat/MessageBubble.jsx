@@ -45,7 +45,11 @@ const MessageBubble = ({ msg, isOwnMessage }) => {
             borderRadius: "8px",
           }}
         >
-          <Typography variant="body2">{msg.content}</Typography>
+          <Typography variant="body2">
+            {msg.type === "LOCATION"
+              ? `장소 공유\n${msg.content}`
+              : msg.content}
+          </Typography>
         </Paper>
         {!isOwnMessage && (
           <Typography

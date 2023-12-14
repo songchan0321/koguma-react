@@ -6,15 +6,21 @@ import TopBar from "../../component/payment/TopBar";
 import { useNavigate } from "react-router-dom";
 import uuid from "react-uuid";
 import MarginEmpty from "../../component/payment/MarginEmpty";
+import Back from "../../component/common/Back";
 
 const ChargePoint = () => {
   const navigator = useNavigate();
   const [balance, setBalance] = useState(null);
   const [point, setPoint] = useState(0);
+  const [nickname, setNickname] = useState(null);
   const [pointString, setPointString] = useState("");
   useEffect(() => {
     (async () => {
       await getMemberAPI()
+        .then((data) => {
+          setNickname(data.nickname);
+          return data;
+        })
         .then((data) => setBalance(Number(data.paymentBalance)))
         .catch((err) => console.log(err));
     })();
@@ -54,7 +60,7 @@ const ChargePoint = () => {
         merchant_uid: `${makeMerchantUid}`, //상점에서 생성한 고유 주문번호 (임시로 시간으로...)
         name: "고구마 포인트 충전",
         amount: point,
-        buyer_name: "test1",
+        buyer_name: nickname,
         m_redirect_url: process.env.REACT_APP_KAKAO_PAY_REDIRECT_URL,
       },
       function (rsp) {
@@ -75,6 +81,7 @@ const ChargePoint = () => {
   return (
     <Container fixed>
       <TopBar>충전하기</TopBar>
+      <Back />
       <MarginEmpty value={"70px"} />
       {balance === null ? (
         <LoadingProgress />

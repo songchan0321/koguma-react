@@ -18,31 +18,33 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import TodayIcon from "@mui/icons-material/Today";
-const ChatPlusButton = () => {
-  const [state, setState] = useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
+import AddShareLocation from "./AddShareLocation";
+const ChatPlusButton = ({ roomId, product }) => {
+  const [state, setState] = useState(false);
+  const [locationModalOpen, setLocationModalOpen] = useState(false);
+  const handleLocationModalClickOpen = () => {
+    setLocationModalOpen(true);
+  };
 
-  const toggleDrawer = (anchor, open) => (event) => {
+  const handleLocationModalClose = () => {
+    setLocationModalOpen(false);
+  };
+  const toggleDrawer = (open) => (event) => {
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
     ) {
       return;
     }
-
-    setState({ ...state, [anchor]: open });
+    setState(open);
   };
 
-  const list = (anchor) => (
+  const list = () => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      sx={{ width: "auto" }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
     >
       <List>
         {["송금하기", "송금요청하기"].map((text, index) => (
@@ -76,7 +78,10 @@ const ChatPlusButton = () => {
                     <Avatar sx={{ width: 34, height: 34, bgcolor: "#C0392B" }}>
                       <TodayIcon sx={{ color: "#F5F5DC" }} />
                     </Avatar>,
-                    <Avatar sx={{ width: 34, height: 34, bgcolor: "#318F23" }}>
+                    <Avatar
+                      sx={{ width: 34, height: 34, bgcolor: "#318F23" }}
+                      onClick={handleLocationModalClickOpen}
+                    >
                       <LocationOnIcon sx={{ color: "#F5F5DC" }} />
                     </Avatar>,
                     <Avatar sx={{ width: 34, height: 34, bgcolor: "gray" }}>
@@ -85,7 +90,10 @@ const ChatPlusButton = () => {
                   ][index]
                 }
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText
+                onClick={[() => {}, handleLocationModalClickOpen][index]}
+                primary={text}
+              />
             </ListItemButton>
           </ListItem>
         ))}
@@ -98,19 +106,21 @@ const ChatPlusButton = () => {
       <Fragment key={"bottom"}>
         {/* <Button >{"bottom"}</Button> */}
         <IconButton
-          onClick={toggleDrawer("bottom", true)}
+          onClick={toggleDrawer(true)}
           sx={{ p: "10px" }}
           aria-label="menu"
         >
           <AddIcon />
         </IconButton>
-        <Drawer
-          anchor={"bottom"}
-          open={state["bottom"]}
-          onClose={toggleDrawer("bottom", false)}
-        >
-          {list("bottom")}
+        <Drawer anchor={"bottom"} open={state} onClose={toggleDrawer(false)}>
+          {list()}
         </Drawer>
+        <AddShareLocation
+          roomId={roomId}
+          product={product}
+          open={locationModalOpen}
+          handleClose={handleLocationModalClose}
+        />
       </Fragment>
     </div>
   );

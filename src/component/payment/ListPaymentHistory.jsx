@@ -42,7 +42,7 @@ const ListPaymentHistory = ({ type }) => {
               {/* {formatCommaNumber(payment.price) + "원"} */}
             </div>
             <ListItemText
-              primary={payment.type === "CHARGE" ? "카카오 페이" : ""}
+              primary={payment.info}
               secondary={
                 <Fragment>
                   {/* <Typography

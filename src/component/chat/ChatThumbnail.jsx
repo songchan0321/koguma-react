@@ -49,7 +49,9 @@ const ChatThumbnail = ({ room }) => {
                   //   variant="h6"
                   style={{ position: "relative", display: "inline-block" }}
                 >
-                  {room.latestMessage.content}
+                  {room.latestMessage.type === "LOCATION"
+                    ? "장소가 공유되었어요!"
+                    : room.latestMessage.content}
                   &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
                   <Badge
                     color="warning"

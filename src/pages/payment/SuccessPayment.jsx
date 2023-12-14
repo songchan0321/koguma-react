@@ -16,6 +16,7 @@ const SuccessPayment = () => {
   const [searchParams] = useSearchParams();
   const imp_uid = searchParams.get("imp_uid");
   const merchant_uid = searchParams.get("merchant_uid");
+  const point = searchParams.get("point");
   const [loading, setLoading] = useState(false);
   const [balance, setBalance] = useState(null);
   const [data, setData] = useState("");
@@ -38,6 +39,16 @@ const SuccessPayment = () => {
           alert(error);
           navigator("/payment/charge");
         }
+      })();
+    } else if (type === "refund") {
+      (async () => {
+        await getMemberAPI()
+          .then(getPaymentAPIService)
+          .then(({ balance }) => {
+            setBalance(balance);
+            setData("환급 요청이 완료되었습니다.");
+            setLoading(false);
+          });
       })();
     }
     setLoading(false);

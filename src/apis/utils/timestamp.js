@@ -1,7 +1,7 @@
 export const absoulte_timestamp = (timestamp, yearFlag) => {
   const [year, month, day] = timestamp.split("T")[0].split("-");
   const [hour, sec] = timestamp.split("T")[1].split(":");
-  return `${yearFlag && year + "년 "}${month}월 ${day}일 ${hour}:${sec}`;
+  return `${yearFlag ? year + "년 " : ""}${month}월 ${day}일 ${hour}:${sec}`;
 };
 
 export const formatTimeAgo = (dateTimeString) => {

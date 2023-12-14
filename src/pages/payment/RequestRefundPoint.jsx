@@ -5,6 +5,9 @@ import LoadingProgress from "../../component/common/LoadingProgress";
 import TopBar from "../../component/payment/TopBar";
 import { useNavigate } from "react-router-dom";
 import uuid from "react-uuid";
+import MarginEmpty from "../../component/payment/MarginEmpty";
+import Back from "../../component/common/Back";
+import { requestRefundPointAPI } from "../../apis/api/payment";
 
 const RequestRefundPoint = () => {
   const navigator = useNavigate();
@@ -42,38 +45,21 @@ const RequestRefundPoint = () => {
   };
 
   const buttonClickHandler = () => {
-    const IMP = window.IMP;
-    const makeMerchantUid = uuid();
-    console.log(makeMerchantUid);
-    IMP.init(process.env.REACT_APP_IMP_ID);
-    IMP.request_pay(
-      {
-        pg: "kakaopay.TC0ONETIME",
-        pay_method: "trans",
-        merchant_uid: `${makeMerchantUid}`, //상점에서 생성한 고유 주문번호 (임시로 시간으로...)
-        name: "고구마 포인트 충전",
-        amount: point,
-        buyer_name: "test3",
-        m_redirect_url: process.env.REACT_APP_KAKAO_PAY_REDIRECT_URL,
-      },
-      function (rsp) {
-        if (!rsp.success) {
-          //결제 시작 페이지로 리디렉션되기 전에 오류가 난 경우
-          var msg = "오류로 인하여 결제가 시작되지 못하였습니다.";
-          msg += "에러내용 : " + rsp.error_msg;
-          alert(msg);
-        } else {
-          navigator(
-            `/payment/success/charge?imp_uid=${rsp.imp_uid}&merchant_uid=${rsp.merchant_uid}&imp_success=true`
-          );
-        }
+    (async () => {
+      try {
+        await requestRefundPointAPI(point);
+        navigator("/success/refund");
+      } catch (err) {
+        console.log(err);
       }
-    );
+    })();
   };
 
   return (
     <Container fixed>
-      <TopBar>충전하기</TopBar>
+      <TopBar>환급하기</TopBar>
+      <Back />
+      <MarginEmpty value={"70px"} />
       {balance === null ? (
         <LoadingProgress />
       ) : (
@@ -93,7 +79,7 @@ const RequestRefundPoint = () => {
             value={pointString}
             onChange={pointInputHandler}
             color="secondary"
-            error={point >= 3000000}
+            error={balance - point < 0}
             inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
             label="충전할 금액을 입력해주세요"
             helperText={
@@ -101,23 +87,23 @@ const RequestRefundPoint = () => {
                 ? `고구마 포인트 잔액: ${
                     balance.toLocaleString("ko-KR") + "원"
                   }`
-                : point >= 3000000
-                ? `충전은 3,000,000원 이상할 수 없어요...`
-                : `충전 후 잔액: ${
-                    (balance + point).toLocaleString("ko-KR") + "원"
+                : balance - point < 0
+                ? `환급은 0원 이상할 수 있어요...`
+                : `환급 후 잔액: ${
+                    (balance - point).toLocaleString("ko-KR") + "원"
                   }`
             }
           />
           <Box sx={{ textAlign: "center" }}>
             <Button
-              disabled={point <= 0 || point >= 3000000}
+              disabled={balance - point < 0 || point <= 0}
               sx={{ mt: 1 }}
               size="large"
               variant="contained"
               color="secondary"
               onClick={buttonClickHandler}
             >
-              충전하기
+              환급하기
             </Button>
           </Box>
         </Box>

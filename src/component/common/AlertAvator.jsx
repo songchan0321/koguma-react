@@ -1,6 +1,7 @@
 import { Avatar, Chip } from "@mui/material";
 import zIndex from "@mui/material/styles/zIndex";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 const centerChipStyle = {
   position: "fixed",
@@ -11,7 +12,7 @@ const centerChipStyle = {
 
 const AlertAvator = ({ message }) => {
   // react-spring을 사용하여 애니메이션 효과 추가
-
+  const navigator = useNavigate();
   const animation = useSpring({
     opacity: Object.keys(message).length > 0 ? 1 : 0,
     transform:
@@ -33,10 +34,13 @@ const AlertAvator = ({ message }) => {
   return (
     <animated.div style={{ ...centerChipStyle, ...animation }}>
       <Chip
-        sx={{ zIndex: 1000, backgroundColor: "#D070FB", color: "white" }}
+        sx={{ zIndex: 500000, backgroundColor: "#D070FB", color: "white" }}
         // avatar={<Avatar alt="" src="/static/images/avatar/1.jpg" />}
-        label={message.content}
+        label={
+          message.type === "LOCATION" ? "장소가 공유되었어요." : message.content
+        }
         variant="outlined"
+        onClick={() => navigator(`/chat/get/${message.roomId}`)}
         // onDelete={() => setIsVisible(false)} // 삭제 버튼 클릭 시 상태 업데이트
       />
     </animated.div>

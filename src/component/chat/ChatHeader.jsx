@@ -13,7 +13,7 @@ const ChatHeader = ({ product }) => {
           backgroundColor: "#F5F5DC",
           height: "115px",
           width: "100%",
-          zIndex: "1000",
+          zIndex: "500",
         }}
       ></div>
       <Box
