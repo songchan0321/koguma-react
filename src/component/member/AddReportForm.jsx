@@ -28,6 +28,7 @@ const AddReportForm = ({ onSubmit }) => {
                 reportTitle,
                 reportContent,
                 categoryName,
+                categoryId: "17",
             });
 
             console.log("응답 상태 코드:", response.status);
