@@ -30,16 +30,23 @@ const DeleteMemberForm = ({ onSubmit }) => {
     const handleDeleteMember = async () => {
         try {
             // TODO: 서버에 회원 탈퇴 요청하는 API 호출
-             const response = await authInstance.put("/member/delete", { phone, confirmationCode });
-
-            // 간단한 시뮬레이션으로 확인 메시지를 띄우고, 사용자가 확인을 누르면 회원 탈퇴가 진행된 것으로 가정
             const confirmed = window.confirm("정말로 회원 탈퇴하시겠습니까?");
             if (confirmed) {
-                // 성공 시 부모 컴포넌트에서 전달받은 onSubmit 함수 호출
-                onSubmit();
+                const response = await authInstance.put("/member/delete", { phone, confirmationCode });
+
+                // 실제로는 서버 응답에 따른 로직을 추가해야 합니다.
+                if (response.status === 200) {
+                    // 성공 시 부모 컴포넌트에서 전달받은 onSubmit 함수 호출
+                    await onSubmit();
+                } else {
+                    // 실패 시 에러 처리
+                    console.error("회원 탈퇴 실패:", response.statusText);
+                    window.alert("회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
+                }
             }
         } catch (error) {
             console.error("오류 발생:", error);
+            window.alert("회원 탈퇴 중 오류가 발생했습니다.");
         }
     };
 
