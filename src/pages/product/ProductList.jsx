@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useInfiniteQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -9,60 +9,40 @@ import ProductTopBar from "../../component/product/ProductTopBar";
 import AddFloatingButton from "../../component/common/AddFloatingButton";
 import ListContainingProduct from "../../component/product/ListContainingProduct";
 import { ListProductAPI } from "../../apis/api/Product";
+import LoadingProgress from "../../component/common/LoadingProgress";
 
 const ProductList = () => {
-  // const navigator = useNavigate();
-  // const [ref, inView] = useInView();
-  // const queryClient = useQueryClient();
+  const navigator = useNavigate();
+  const [data, setData] = useState(null);
 
-  // const { data, status, fetchNextPage, hasNextPage, isFetchingNextPage } =
-  //   useInfiniteQuery("purchases", ({ pageParam = 0 }) => getList(pageParam), {
-  //     select: (data) => ({
-  //       pages: data.pages,
-  //       nextPage: data.pages.length + 1,
-  //       pageParam: data.pageParams,
-  //     }),
-  //     getNextPageParam: (lastPage, allPages) => {
-  //       const nextPage = allPages.length;
-  //       return lastPage.nextPage === 0 ? undefined : nextPage;
-  //     },
-  //   });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await ListProductAPI();
+        setData(result.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-  // async function getList(page, keyword) {
-  //   await ListProductAPI(page, keyword);
-  // }
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   queryClient.removeQueries("products");
-  //   fetchNextPage({ pageParam: 0 });
-  // };
-  // useEffect(() => {
-  //   if (inView && hasNextPage) {
-  //     fetchNextPage({
-  //       page: data.nextPage,
-  //     });
-  //   }
-  // }, [inView, hasNextPage]);
+    fetchData();
+  }, []);
   return (
     <>
       <ProductTopBar />
+      <br />
+      <br />
+      <br />
       <BottomBar />
       <AddFloatingButton arrival={"/product/add"} />
-      <ListContainingProduct type="report" />
-      {/* {data ? (
-        data.pages.map((item) =>
-          item.result.map((list, idx) => (
-            <ListContainingProduct
-              type="report"
-              lastItemRef={idx === item.result.length - 1 ? ref : null}
-              index={idx}
-              data={list}
-            />
-          ))
-        )
+
+      {data ? (
+        <ListContainingProduct type="report" data={data} />
       ) : (
-        <div>Loading...</div>
-      )} */}
+        <LoadingProgress />
+      )}
+      <br />
+      <br />
     </>
   );
 };

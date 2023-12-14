@@ -14,7 +14,7 @@ export const addProductAPI = async (product) => {
   try {
     const response = await authInstance.post(
       `${PRODUCT_API_URI}/new`,
-      product,
+      JSON.stringify(product),
       {
         headers: {
           "Content-Type": "application/json",
@@ -37,12 +37,22 @@ export const getProductAPI = async (productId) => {
 export const ListProductAPI = async (page, keyword) => {
   try {
     const response = await authInstance.get(
-      `${PRODUCT_API_URI}/list?page=${page}&keyword=${keyword || ""}`
+      `${PRODUCT_API_URI}/list?keyword=${keyword || ""}`
+    );
+    console.log(response);
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const ListProductHIAPI = async (page, keyword) => {
+  try {
+    const response = await authInstance.get(
+      `${PRODUCT_API_URI}/list/hi?page=${page}&keyword=${keyword || ""}`
     );
     console.log(response);
     return {
-      result: response.data.content,
-      isLast: response.data.last,
+      response,
     };
   } catch (err) {
     console.log(err);

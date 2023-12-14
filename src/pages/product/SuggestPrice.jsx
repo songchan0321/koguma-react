@@ -29,12 +29,14 @@ import ListContainingProduct from "../../component/product/ListContainingProduct
 import { useParams } from "react-router-dom";
 import TopReturnBar from "./TopReturnBar";
 import ContainingProduct from "../../component/product/ContainingProduct";
+import TopBar from "../../component/payment/TopBar";
 const SuggestPrice = () => {
   const navigator = useNavigate();
   const { params } = useParams();
   return (
     <>
       <TopReturnBar title="상품 가격 제안" />
+      <TopBar children={"상품 조회"} />
       <Box
         sx={{
           display: "flex",

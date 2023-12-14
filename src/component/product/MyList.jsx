@@ -22,6 +22,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import MenuItem from "@mui/material/MenuItem";
+import { useNavigate } from "react-router-dom";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -35,9 +36,9 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const MyList = ({ buttonNM, selectedActions }) => {
-  console.log(selectedActions);
+const MyList = ({ buttonNM, selectedActions, onClick }) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const navigate = useNavigate();
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
@@ -93,6 +94,7 @@ const MyList = ({ buttonNM, selectedActions }) => {
             variant="outlined"
             color="secondary"
             style={{ flex: 6, marginLeft: "10px" }}
+            onClick={onClick}
           >
             {buttonNM}
           </Button>
@@ -111,7 +113,12 @@ const MyList = ({ buttonNM, selectedActions }) => {
         <DialogContent>
           <DialogContentText>
             {selectedActions.name.map((selectedAction, idx) => (
-              <MenuItem key={idx}>{selectedAction}</MenuItem>
+              <MenuItem
+                key={idx}
+                onClick={() => navigate("/product/review/add")}
+              >
+                {selectedAction}
+              </MenuItem>
             ))}
           </DialogContentText>
         </DialogContent>

@@ -24,6 +24,7 @@ import { formatMoney } from "../../apis/services/product";
 import ImageList from "../common/ImageList";
 import { addImageAPI } from "../../apis/api/common";
 import { addProductAPI } from "../../apis/api/Product";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const ProductForm = ({ text }) => {
   const categorys = [
@@ -47,7 +48,7 @@ const ProductForm = ({ text }) => {
   const defaultTheme = createTheme();
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
-
+  const navigate = useNavigate();
   const imageRegHandler = (images) => {
     setFormData((prev) => ({ ...prev, images: images }));
   };
@@ -62,7 +63,7 @@ const ProductForm = ({ text }) => {
     categoryName: "",
     categoryId: 0,
     price: 0,
-    suggest: false,
+
     content: "",
     // image: images,
     images: [],
@@ -108,7 +109,7 @@ const ProductForm = ({ text }) => {
     },
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
 
@@ -117,7 +118,7 @@ const ProductForm = ({ text }) => {
       categoryName: formData.categoryName,
       categoryId: formData.categoryId,
       price: parseInt(form.get("price").replace(/,/g, ""), 10),
-      suggest: form.get("suggest") === "on",
+
       content: form.get("content"),
       images: formData.images,
     };
@@ -129,21 +130,39 @@ const ProductForm = ({ text }) => {
     updatedFormData.images.forEach((el) => {
       imageList.append("file", el);
     });
+    (async () => {
+      try {
+        // const { data } = await addProductAPI(dto);
+        // console.log(data);
 
-    try {
-      const { data } = await addProductAPI(updatedFormData);
-      console.log(data);
-      // const dto = {        //
-      //   productDTO: data,
-      //   file: imageList,
-      // };
-
-      // // await addImageAPI(imageList);
-      // await addImageAPI(dto);
-    } catch (error) {
-      console.error("Error in addProductAPI:", error);
-      // Handle the error appropriately
-    }
+        const imageUrlList = await addImageAPI(imageList);
+        console.log(imageUrlList);
+        const dto = {
+          productDTO: {
+            title: form.get("title"),
+            categoryName: formData.categoryName,
+            categoryId: formData.categoryId,
+            price: parseInt(form.get("price").replace(/,/g, ""), 10),
+            content: form.get("content"),
+            images: imageUrlList,
+          },
+        };
+        console.log(dto);
+        await addProductAPI(dto.productDTO)
+          .then((response) => {
+            console.log(response);
+            navigate(`/product/get/${response.data.id}`, { replace: true });
+          })
+          .catch((error) => {
+            console.error("Error in addProductAPI:", error);
+            // Handle the error appropriately
+          });
+      } catch (error) {
+        alert("등록 실패입니다.");
+        console.log(error);
+        // Handle the error appropriately
+      }
+    })();
   };
 
   return (
@@ -163,9 +182,6 @@ const ProductForm = ({ text }) => {
             height: "100vh",
           }}
         >
-          <Typography component="h1" variant="h5">
-            {text}
-          </Typography>
           <br />
 
           <ImageList
@@ -249,17 +265,7 @@ const ProductForm = ({ text }) => {
               }}
               autoComplete="price"
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={formData.suggest}
-                  name="suggest"
-                  color="secondary"
-                  onChange={handleChange}
-                />
-              }
-              label="거래 제안 받기"
-            />
+
             <Grid mt={2}>
               <TextField
                 label="상품 내용"
