@@ -10,7 +10,6 @@ const ClubHome = ({ club }) => {
       <div>
         <p>{club.content}</p>
       </div>
-      <hr />
     </>
   );
 };

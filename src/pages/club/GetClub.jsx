@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getClubAPI } from "../../apis/api/club";
-import { Button } from "@mui/material";
+import { Link, useParams } from "react-router-dom";
+import { checkClubMemberAPI, getClubAPI } from "../../apis/api/club";
+import { Box, Button, CardMedia } from "@mui/material";
 import ClubHome from "../../component/club/ClubHome";
 import ClubHomeMeetUp from "../../component/club/meetUp/ClubHomeMeetUp";
-import { useDispatch } from "react-redux";
-import { changeClubId } from "../../store";
+import ClubHomeClubMember from "../../component/club/clubMember/ClubHomeClubMember";
 
 const GetClub = () => {
   const { clubId } = useParams();
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const [club, setClub] = useState({});
+  const [clubMember, setClubMember] = useState({});
   const [selectedMenu, setSelectedMenu] = useState("home");
   const menuList = ["home", "board", "meetUp", "chatRoom"];
 
@@ -19,8 +19,9 @@ const GetClub = () => {
       try {
         const data = await getClubAPI(clubId);
         setClub(data);
-        // dispatch(changeClubId(clubId));
-        console.log(data.title);
+        const checkClubMember = await checkClubMemberAPI(clubId);
+        setClubMember(checkClubMember);
+        console.log(checkClubMember);
       } catch (err) {
         console.log(err);
       }
@@ -28,12 +29,25 @@ const GetClub = () => {
     fetchData();
   }, [clubId]); // clubId가 변경될 때마다 데이터를 다시 가져오도록
 
-  const handleMenuClick = (menu) => {
+  const handleMenuClick = async (menu) => {
+    if (menu !== "home" && clubMember.activeFlag === null) {
+      alert("모임원만 이용할 수 있습니다.");
+      return;
+    }
+
     setSelectedMenu(menu);
   };
 
   return (
-    <>
+    <Box sx={{ overflowY: "auto", maxHeight: "calc(100vh - 80px)" }}>
+      <Box>
+        <CardMedia
+          component="img"
+          height="120"
+          image="/photo.png"
+          alt="Paella dish"
+        />
+      </Box>
       <hr></hr>
       <div>
         <h1>{club.title}</h1>
@@ -52,27 +66,61 @@ const GetClub = () => {
           </Button>
         ))}
       </div>
-      <hr></hr>
-
-      {selectedMenu === "home" && (
-        <div>
+      <div>
+        {selectedMenu === "home" && (
           <div>
-            <ClubHome club={club} />
+            <div style={backgroundStyle}>
+              <ClubHome club={club} />
+            </div>
+            <div style={backgroundStyle}>
+              <ClubHomeMeetUp
+                clubId={clubId}
+                clubMember={clubMember}
+                selectedMenu={selectedMenu}
+              />
+            </div>
+            <div style={backgroundStyle}>
+              <ClubHomeClubMember clubId={clubId} clubMember={clubMember} />
+            </div>
           </div>
-          <div>
-            <ClubHomeMeetUp clubId={clubId} />
-            <hr />
-          </div>
-          <div>
-            <p>게시글 정보 들어갈 예정 ClubHome에 다 때려넣자</p>
-          </div>
-        </div>
+        )}
+        {selectedMenu === "board" && <div>게시판 컴포넌트</div>}
+        {selectedMenu === "meetUp" && (
+          <ClubHomeMeetUp
+            clubId={clubId}
+            clubMember={clubMember}
+            selectedMenu={selectedMenu}
+          />
+        )}
+        {selectedMenu === "chatRoom" && <div>채팅 컴포넌트</div>}
+      </div>
+      {!clubMember.activeFlag === true && (
+        <Link to={"/club/join/request"} state={{ clubId: clubId }}>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={fixedButtonStyle}
+          >
+            모임 가입하기
+          </Button>
+        </Link>
       )}
-      {selectedMenu === "board" && <div>게시판 컴포넌트</div>}
-      {selectedMenu === "meetUp" && <ClubHomeMeetUp clubId={clubId} />}
-      {selectedMenu === "chatRoom" && <div>채팅 컴포넌트</div>}
-    </>
+    </Box>
   );
 };
 
 export default GetClub;
+
+const fixedButtonStyle = {
+  position: "fixed",
+  bottom: 10,
+  left: 20,
+  width: "90%",
+  padding: "5px",
+  textAlign: "center",
+};
+
+const backgroundStyle = {
+  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+  padding: "20px",
+};
