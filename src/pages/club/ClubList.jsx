@@ -4,6 +4,8 @@ import ClubListByCategory from "../../component/club/ClubListByCategory";
 import { Button } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Link } from "react-router-dom";
+import TopBarClub from "../../component/club/common/TopbarClub";
+import TopBar from "../../component/payment/TopBar";
 
 function ClubList() {
   const [selectedCategoryId, setSelectedCategoryId] = useState(29);
@@ -28,6 +30,9 @@ function ClubList() {
 
   return (
     <>
+      <div position="fixed" sx={{ textAlign: "center", mb: 1.5 }}>
+        <TopBarClub>모임 리스트 </TopBarClub>
+      </div>
       <div>
         <div
           style={{

@@ -28,7 +28,7 @@ const CategoryList = ({ onCategorySelect }) => {
 
   return (
     <div>
-      <CardView>
+      <CardView position="fixed">
         {category &&
           category.map((item) => (
             <span key={item.id}>

@@ -1,11 +1,13 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { addMeetUpAPI } from "../../../apis/api/club";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TopBar from "../../payment/TopBar";
 
-const AddMeetUp = ({ clubId }) => {
+const AddMeetUp = () => {
+  const { clubId } = useParams();
   const navigator = useNavigate();
+
   const [meetUp, setMeetUp] = useState({
     title: "",
     content: "",

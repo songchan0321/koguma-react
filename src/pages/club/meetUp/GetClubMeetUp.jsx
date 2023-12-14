@@ -3,7 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { getClubMeetUp } from "../../../apis/api/club";
 import { Box } from "@mui/material";
 import JoinedMeetUpMember from "../../../component/club/meetUp/JoinedMeetUpMember";
-import TopBar from "../../../component/payment/TopBar";
+import TopBarClub from "../../../component/club/common/TopbarClub";
 
 const GetClubMeetUp = () => {
   const { meetUpId } = useParams();
@@ -40,7 +40,7 @@ const GetClubMeetUp = () => {
 
   return (
     <>
-      <TopBar>일정 상세 정보</TopBar>
+      <TopBarClub>일정 상세 정보</TopBarClub>
       <Box>
         <div style={divStyle}>
           <h2>{meetUp && meetUp.title}</h2>

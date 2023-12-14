@@ -5,6 +5,7 @@ import { Box, Button, CardMedia } from "@mui/material";
 import ClubHome from "../../component/club/ClubHome";
 import ClubHomeMeetUp from "../../component/club/meetUp/ClubHomeMeetUp";
 import ClubHomeClubMember from "../../component/club/clubMember/ClubHomeClubMember";
+import TopBarClub from "../../component/club/common/TopbarClub";
 
 const GetClub = () => {
   const { clubId } = useParams();
@@ -39,73 +40,76 @@ const GetClub = () => {
   };
 
   return (
-    <Box sx={{ overflowY: "auto", maxHeight: "calc(100vh - 80px)" }}>
-      <Box>
-        <CardMedia
-          component="img"
-          height="120"
-          image="/photo.png"
-          alt="Paella dish"
-        />
-      </Box>
-      <hr></hr>
-      <div>
-        <h1>{club.title}</h1>
-      </div>
-
-      <div style={{ display: "flex", width: "100%" }}>
-        {menuList.map((menu) => (
-          <Button
-            key={menu}
-            onClick={() => handleMenuClick(menu)}
-            variant={selectedMenu === menu ? "contained" : "outlined"}
-            color="secondary"
-            style={{ flex: 1 }}
-          >
-            {menu}
-          </Button>
-        ))}
-      </div>
-      <div>
-        {selectedMenu === "home" && (
-          <div>
-            <div style={backgroundStyle}>
-              <ClubHome club={club} />
-            </div>
-            <div style={backgroundStyle}>
-              <ClubHomeMeetUp
-                clubId={clubId}
-                clubMember={clubMember}
-                selectedMenu={selectedMenu}
-              />
-            </div>
-            <div style={backgroundStyle}>
-              <ClubHomeClubMember clubId={clubId} clubMember={clubMember} />
-            </div>
-          </div>
-        )}
-        {selectedMenu === "board" && <div>게시판 컴포넌트</div>}
-        {selectedMenu === "meetUp" && (
-          <ClubHomeMeetUp
-            clubId={clubId}
-            clubMember={clubMember}
-            selectedMenu={selectedMenu}
+    <>
+      <TopBarClub children={"asd"}>{club.title}</TopBarClub>
+      <Box sx={{ overflowY: "auto", maxHeight: "calc(100vh - 80px)" }}>
+        <Box>
+          <CardMedia
+            component="img"
+            height="120"
+            image="/photo.png"
+            alt="Paella dish"
           />
+        </Box>
+        <hr></hr>
+        <div>
+          <h1>{club.title}</h1>
+        </div>
+
+        <div style={{ display: "flex", width: "100%" }}>
+          {menuList.map((menu) => (
+            <Button
+              key={menu}
+              onClick={() => handleMenuClick(menu)}
+              variant={selectedMenu === menu ? "contained" : "outlined"}
+              color="secondary"
+              style={{ flex: 1 }}
+            >
+              {menu}
+            </Button>
+          ))}
+        </div>
+        <div>
+          {selectedMenu === "home" && (
+            <div>
+              <div style={backgroundStyle}>
+                <ClubHome club={club} />
+              </div>
+              <div style={backgroundStyle}>
+                <ClubHomeMeetUp
+                  clubId={clubId}
+                  clubMember={clubMember}
+                  selectedMenu={selectedMenu}
+                />
+              </div>
+              <div style={backgroundStyle}>
+                <ClubHomeClubMember clubId={clubId} clubMember={clubMember} />
+              </div>
+            </div>
+          )}
+          {selectedMenu === "board" && <div>게시판 컴포넌트</div>}
+          {selectedMenu === "meetUp" && (
+            <ClubHomeMeetUp
+              clubId={clubId}
+              clubMember={clubMember}
+              selectedMenu={selectedMenu}
+            />
+          )}
+          {selectedMenu === "chatRoom" && <div>채팅 컴포넌트</div>}
+        </div>
+        {!clubMember.activeFlag === true && (
+          <Link to={"/club/join/request"} state={{ clubId: clubId }}>
+            <Button
+              variant="contained"
+              color="secondary"
+              style={fixedButtonStyle}
+            >
+              모임 가입하기
+            </Button>
+          </Link>
         )}
-        {selectedMenu === "chatRoom" && <div>채팅 컴포넌트</div>}
-      </div>
-      {!clubMember.activeFlag === true && (
-        <Link to={"/club/join/request"} state={{ clubId: clubId }}>
-          <Button
-            variant="contained"
-            color="secondary"
-            style={fixedButtonStyle}
-          >
-            모임 가입하기
-          </Button>
-        </Link>
-      )}
-    </Box>
+      </Box>
+    </>
   );
 };
 

@@ -17,7 +17,7 @@ const ClubRouter = () => {
       <Route path="/list" element={<ClubList />}></Route>
       <Route path="/add" element={<AddClub />}></Route>
       <Route path="/:clubId" element={<GetClub />}></Route>
-      <Route path="/meet-up/add" element={<AddMeetUp />}></Route>
+      <Route path="/meet-up/add/:clubId" element={<AddMeetUp />}></Route>
       <Route path="/meet-up/:meetUpId" element={<GetClubMeetUp />} />
       <Route path="/join/request" element={<JoinRequest />} />
       <Route path="/members/:clubId" element={<ListClubMember />} />
