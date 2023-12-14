@@ -7,7 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
 import { CardHeader, IconButton } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
 import { getMemberAPI } from "../../apis/api/member";
 import { getMemberAPIService } from "../../apis/services/member";
@@ -88,6 +88,7 @@ const PaymentCard = () => {
   }}
 />;
 const PaymentInfo = ({ registered }) => {
+  const navigator = useNavigate();
   return (
     <Box sx={{ minWidth: 275 }}>
       <Card
@@ -98,6 +99,7 @@ const PaymentInfo = ({ registered }) => {
           <IconButton
             sx={{ position: "absolute", top: "10px", right: "10px" }}
             aria-label="delete"
+            onClick={() => navigator("/payment/delete")}
           >
             <DeleteIcon color="warning" />
           </IconButton>

@@ -27,6 +27,21 @@ export const checkAccountNameAPI = async (name, account, code) => {
   }
 };
 
+export const checkPaymentPasswordAPI = async (password) => {
+  const { data } = await authInstance.post(
+    `${PAYMENT_API_URI}/checkPw`,
+    JSON.stringify({
+      paymentPw: password,
+    }),
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return data;
+};
+
 export const addPaymentAPI = async (memberId, account, bankName, password) => {
   try {
     const { data } = await authInstance.post(
@@ -66,5 +81,26 @@ export const chargePointAPI = async (imp_uid, merchant_uid) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+export const deletePaymentAPI = async (password) => {
+  const { data } = await authInstance.post(
+    `${PAYMENT_API_URI}/delete`,
+    JSON.stringify({
+      paymentPw: password,
+    }),
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return data;
+};
+export const listPaymentHistoryAPI = async (type) => {
+  const { data } = await authInstance.get(
+    `${PAYMENT_API_URI}/history/list${type && "?type=" + type}`
+  );
+  return data;
 };
 // export const addPaymentAPI = authInstance.post(`${PAYMENT_API_URI}/add`, {})

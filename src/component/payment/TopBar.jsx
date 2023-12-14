@@ -1,19 +1,29 @@
-import { Typography } from "@mui/material";
+import { AppBar, Toolbar, Typography } from "@mui/material";
 import Back from "../common/Back";
 
-const TopBar = ({ children, color = "none" }) => {
+const TopBar = ({ children, color }) => {
   return (
-    <Typography
-      variant="h6"
-      color={color}
-      // ...option
-      component="h2"
-      sx={{ textAlign: "center", mb: 1.5 }}
-    >
-      <Back />
-      {/* <i>Pay</i> */}
-      {children}
-    </Typography>
+    <>
+      {/* <Back /> */}
+      <AppBar
+        position="fixed"
+        style={{
+          backgroundColor: "#f0f0f0",
+          zIndex: 1000,
+        }}
+      >
+        <Toolbar style={{ display: "flex", justifyContent: "center" }}>
+          <Typography
+            variant="h6"
+            component="div"
+            color={color ? color : "black"}
+            // sx={{ color: color ? color : "black" }}
+          >
+            {children}
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    </>
   );
 };
 

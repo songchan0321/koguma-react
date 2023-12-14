@@ -22,22 +22,18 @@ export const getChatRoomAPI = async (roomId) => {
 };
 
 export const addChatRoom = async (productId) => {
-  try {
-    const { data } = await authInstance.post(
-      `${CHAT_API_URI}/add`,
-      JSON.stringify({
-        productId,
-      }),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
+  const { data } = await authInstance.post(
+    `${CHAT_API_URI}/add`,
+    JSON.stringify({
+      productId,
+    }),
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return data;
 };
 
 export const getUnreadCount = async (roomId) => {

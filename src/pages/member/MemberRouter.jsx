@@ -14,7 +14,6 @@ import GetFollowing from "./GetFollowing";
 import GetReport from "./GetReport";
 import ListReport from "./ListReport";
 import AddReport from "./AddReport";
-import DeleteReport from "./DeleteReport";
 import OtherProfile from "./OtherProfile";
 
 const MemberRouter = () => {
@@ -34,8 +33,7 @@ const MemberRouter = () => {
             <Route path="/report/get" element={<GetReport/>} />
             <Route path="/report/list" element={<ListReport/>} />
             <Route path="/report/add" element={<AddReport/>} />
-            <Route path="/report/delete" element={<DeleteReport/>} />
-                <Route path="/other/get/:id" element={<OtherProfile/>}/>
+            <Route path="/other/get/:id" element={<OtherProfile/>}/>
 
         </Routes>
     );

@@ -3,7 +3,7 @@ import { authInstance, defaultInstance } from "../utils/instance";
 
 const CLUB_API_URI = `/club`;
 
-//== 1. 모임 2. 만남 3. 모임원 ==//
+//== 1. 모임 2. 모임원 3. 만남  ==//
 
 //-- 1. 모임 -- //
 export const getClubAPI = async (clubId) => {
@@ -53,18 +53,86 @@ export const listMyClubAPI = async () => {
   }
 };
 
-//--2. 모임 일정-- //
-
-export const getMeetUpAPI = async (clubId) => {
+//--2. 모임원 -- //
+export const checkClubMemberAPI = async (clubId) => {
   try {
     const { data } = await authInstance.get(
-      `${CLUB_API_URI}/meet-up/${clubId}`
+      `${CLUB_API_URI}/member/check/${clubId}`
     );
     return data;
   } catch (err) {
     console.log(err);
   }
 };
+
+export const joinRequestAPI = async (clubId, joinProfile) => {
+  try {
+    alert(joinProfile.nickname);
+    const { data } = await authInstance.post(
+      `${CLUB_API_URI}/join/request`,
+      JSON.stringify({
+        clubDTO: {
+          id: clubId,
+        },
+        nickname: joinProfile.nickname,
+        content: joinProfile.content,
+      }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const listClubMemberAPI = async (clubId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/members/${clubId}`
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getClubMemberAPI = async (clubMemberId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/member/profile/${clubMemberId}`
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const listClubJoinRequest = async (clubId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/join/requests/${clubId}`
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//--3. 모임 일정-- //
+// export const getMeetUpAPI = async (clubId) => {
+//   try {
+//     const { data } = await authInstance.get(
+//       `${CLUB_API_URI}/meet-up/${clubId}`
+//     );
+//     return data;
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
 export const listMeetUpAPI = async (clubId) => {
   try {

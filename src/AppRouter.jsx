@@ -19,16 +19,16 @@ import {
 } from "./context/LoginContextProvider";
 import ProductList from "./pages/product/ProductList";
 
-const AppRouter = () => {
+const AppRouter = ({ messageAlertHandler }) => {
   const socket = useContext(SocketContext);
   const isLogin = useIsLoginState(IsLoginContext);
   useEffect(() => {
+    console.log("AppRouter mount");
     socket.emit(CHAT_EVENT.FIRST_CONNECT, {
       token: `${localStorage.token}`,
     });
     socket.on(CHAT_EVENT.EVENT_ALERT, (message) => {
-      console.log("알림 발생!");
-      console.log(message);
+      messageAlertHandler(message);
     });
   }, []);
   return (

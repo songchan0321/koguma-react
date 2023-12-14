@@ -6,6 +6,7 @@ import ChargePoint from "./ChargePoint";
 import SuccessPayment from "./SuccessPayment";
 import { useIsLoginState } from "../../context/LoginContextProvider";
 import Login from "../../component/common/Login";
+import DeletePayment from "./DeletePayment";
 
 const PaymentRouter = () => {
   const isLogin = useIsLoginState();
@@ -26,6 +27,10 @@ const PaymentRouter = () => {
       <Route
         path="/success/:type"
         element={isLogin ? <SuccessPayment /> : <Navigate to="/common/login" />}
+      />
+      <Route
+        path="/delete"
+        element={isLogin ? <DeletePayment /> : <Navigate to="/common/login" />}
       />
     </Routes>
   );
