@@ -14,6 +14,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
+import { Badge, Paper } from "@mui/material";
 
 const ProductTopBar = () => {
   const [dong, setDong] = React.useState("");
@@ -50,71 +51,78 @@ const ProductTopBar = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        "& > *": {
-          m: 1,
-        },
-      }}
+    <Paper
+      sx={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1100 }}
+      elevation={3}
     >
-      <FormControl sx={{ minWidth: 120 }}>
-        {/* <InputLabel htmlFor="demo-simple-select-label">내 동네</InputLabel> */}
-        <Select
-          //  multiple
-          displayEmpty
-          // labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={dong}
-          onChange={handleChange}
-          input={<OutlinedInput label="대표동" id="demo-simple-select-label" />}
-          sx={{
-            fontSize: 14,
-            padding: "0px",
-            "& .MuiSelect-outlined": { borderBottom: "none" },
-          }}
-          // inputProps={{ maxLength: 5 }} // 최대 5글자 설정
-          // MenuProps={MenuProps}
-          inputProps={{ "aria-label": "Without label", maxLength: 5 }}
-        >
-          <MenuItem disabled value="">
-            <em>홍제동</em>
-          </MenuItem>
-          <MenuItem value={"인헌동"}>인헌동</MenuItem>
-          <MenuItem value={"역삼동"}>역삼동</MenuItem>
-          <MenuItem value={"홍제동"}>홍제동</MenuItem>
-          <MenuItem value={"동네 설정"}>동네 설정</MenuItem>
-        </Select>
-      </FormControl>
-      <ButtonGroup variant="text" aria-label="text button group">
-        <Button onClick={handleModalOpen}>
-          <MenuOpenIcon sx={{ fontSize: 30 }} color="secondary" />
-        </Button>
-        {/* 통합 검색 완성 후  Navi */}
-        <Button>
-          <SearchIcon sx={{ fontSize: 30 }} color="secondary" />
-        </Button>
-        <Button>
-          <NotificationsNoneIcon sx={{ fontSize: 30 }} color="secondary" />
-        </Button>
-      </ButtonGroup>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          "& > *": {
+            m: 1,
+          },
+        }}
+      >
+        <FormControl sx={{ minWidth: 120 }}>
+          {/* <InputLabel htmlFor="demo-simple-select-label">내 동네</InputLabel> */}
+          <Select
+            //  multiple
+            displayEmpty
+            // labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={dong}
+            onChange={handleChange}
+            input={
+              <OutlinedInput label="대표동" id="demo-simple-select-label" />
+            }
+            sx={{
+              fontSize: 14,
+              padding: "0px",
+              "& .MuiSelect-outlined": { borderBottom: "none" },
+            }}
+            // inputProps={{ maxLength: 5 }} // 최대 5글자 설정
+            // MenuProps={MenuProps}
+            inputProps={{ "aria-label": "Without label", maxLength: 5 }}
+          >
+            <MenuItem disabled value="">
+              <em>홍제동</em>
+            </MenuItem>
+            <MenuItem value={"인헌동"}>인헌동</MenuItem>
+            <MenuItem value={"역삼동"}>역삼동</MenuItem>
+            <MenuItem value={"홍제동"}>홍제동</MenuItem>
+            <MenuItem value={"동네 설정"}>동네 설정</MenuItem>
+          </Select>
+        </FormControl>
+        <ButtonGroup variant="text" aria-label="text button group">
+          <Button onClick={handleModalOpen}>
+            <MenuOpenIcon sx={{ fontSize: 30 }} color="secondary" />
+          </Button>
+          {/* 통합 검색 완성 후  Navi */}
+          <Button>
+            <SearchIcon sx={{ fontSize: 30 }} color="secondary" />
+          </Button>
+          <Button>
+            <NotificationsNoneIcon sx={{ fontSize: 30 }} color="secondary" />
+          </Button>
+        </ButtonGroup>
 
-      {/* Modal */}
-      <Dialog open={isModalOpen} onClose={handleModalClose}>
-        <DialogTitle>카테고리 선택</DialogTitle>
-        <DialogContent sx={{ overflowY: "auto", maxHeight: "300px" }}>
-          <DialogContentText>
-            {categorys.map((category) => (
-              <MenuItem key={category} value={category}>
-                {category}
-              </MenuItem>
-            ))}
-          </DialogContentText>
-        </DialogContent>
-      </Dialog>
-    </Box>
+        {/* Modal */}
+        <Dialog open={isModalOpen} onClose={handleModalClose}>
+          <DialogTitle>카테고리 선택</DialogTitle>
+          <DialogContent sx={{ overflowY: "auto", maxHeight: "300px" }}>
+            <DialogContentText>
+              {categorys.map((category) => (
+                <MenuItem key={category} value={category}>
+                  {category}
+                </MenuItem>
+              ))}
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
+      </Box>
+    </Paper>
   );
 };
 

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const AddFloatingButton = ({ arrival }) => {
   return (
-    <div style={{ position: "absolute", bottom: "80px", right: "30px" }}>
+    <div style={{ position: "fixed", bottom: "80px", right: "30px" }}>
       <Fab
         variant="contained"
         color="secondary"

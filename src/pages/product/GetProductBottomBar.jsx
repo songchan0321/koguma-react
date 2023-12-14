@@ -15,6 +15,7 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
+import { formatMoney } from "../../apis/services/product";
 
 // 테마 생성
 const theme = createTheme({
@@ -30,7 +31,7 @@ const StyledCardActions = styled(CardActions)({
   justifyContent: "space-between",
 });
 
-const GetProductBottomBar = ({ productId }) => {
+const GetProductBottomBar = ({ data }) => {
   const navigator = useNavigate();
   return (
     <ThemeProvider theme={theme}>
@@ -43,13 +44,13 @@ const GetProductBottomBar = ({ productId }) => {
             <IconButton aria-label="add to favorites">
               <LikeCheckButton />
             </IconButton>
-            <span>상품 가격 : 10000원</span>
+            <span>{formatMoney(data.price)}원</span>
           </div>
           <Button
             color="secondary"
             variant="contained"
             sx={{}}
-            onClick={() => navigator(`/product/suggest/${productId}`)}
+            onClick={() => navigator(`/product/suggest/${data.id}`)}
           >
             가격제안
           </Button>
@@ -57,7 +58,7 @@ const GetProductBottomBar = ({ productId }) => {
             color="secondary"
             variant="contained"
             sx={{}}
-            onClick={() => navigator(`/chat/get/new/${productId}`)}
+            onClick={() => navigator(`/chat/get/new/${data.id}`)}
           >
             채팅하기
           </Button>
