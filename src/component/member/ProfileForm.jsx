@@ -139,7 +139,7 @@ const ProfileForm = ({ navigate }) => {
                     <Button
                         variant="contained"
                         color="secondary"
-                        onClick={() => handleNavigate("/common/report/list")}
+                        onClick={() => handleNavigate("/member/report/list")}
                         fullWidth
                     >
                         문의 및 신고

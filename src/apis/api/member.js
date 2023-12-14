@@ -100,6 +100,26 @@ export const deleteFollowingAPI = async (targetMemberId) => {
   }
 };
 
+export const getReportAPI = async () => {
+  try {
+    const response = await authInstance.get('/member/report/get', {});
+    return response.data;
+  } catch (error) {
+    alert('신고 정보를 가져올 수 없습니다.');
+    console.log(error);
+  }
+};
+
+export const deleteReportAPI = async () => {
+  try {
+    const response = await authInstance.delete('/member/report/delete', {  });
+    return response.data;
+  } catch (error) {
+    alert('신고를 삭제할 수 없습니다.');
+    console.log(error);
+  }
+};
+
 /*
 export const getBlockAPI = async () => {
   try {

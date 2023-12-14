@@ -35,7 +35,7 @@ const MemberRouter = () => {
             <Route path="/report/list" element={<ListReport/>} />
             <Route path="/report/add" element={<AddReport/>} />
             <Route path="/report/delete" element={<DeleteReport/>} />
-                <Route path="/other/get/:id" element={<OtherProfile/>}/>
+            <Route path="/other/get/:id" element={<OtherProfile/>}/>
 
         </Routes>
     );
