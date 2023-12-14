@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { listClubMemberAPI } from "../../../apis/api/club";
 import { Box, Button, CardMedia, List } from "@mui/material";
-import TopBar from "../../payment/TopBar";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ListClubJoinRequest from "./ListClubJoinRequest";
+import TopBarClub from "../common/TopbarClub";
 
 const ListClubMember = () => {
   const { clubId } = useParams();
@@ -37,7 +37,7 @@ const ListClubMember = () => {
 
   return (
     <>
-      <TopBar>모임원</TopBar>
+      <TopBarClub>모임원</TopBarClub>
 
       {clubMember.memberRole ? (
         <Box sx={{ overflowY: "auto", maxHeight: "calc(100vh - 80px)" }}>

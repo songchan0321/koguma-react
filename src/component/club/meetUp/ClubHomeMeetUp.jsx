@@ -32,7 +32,7 @@ const ClubHomeMeetUp = ({ clubId, clubMember, selectedMenu }) => {
       {selectedMenu === "meetUp" ? (
         <div>
           <div>
-            <Link to="/club/meet-up/add/">
+            <Link to={`/club/meet-up/add/${clubId}`}>
               <Button
                 variant="contained"
                 color="secondary"
