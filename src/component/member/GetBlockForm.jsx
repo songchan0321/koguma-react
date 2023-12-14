@@ -15,8 +15,6 @@ const GetBlockForm = () => {
                 await deleteBlockAPI(targetMemberId);
                 alert('차단이 해제되었습니다.');
 
-
-
                 navigate('/member/relationship/block/list');
             } catch (error) {
                 console.error('Error deleting block:', error);

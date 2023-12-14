@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { authInstance } from "../../apis/utils/instance";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ListReportForm = () => {
+    const { id } = useParams();
     const [reportList, setReportList] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
@@ -22,12 +23,15 @@ const ListReportForm = () => {
         };
 
         fetchReportList();
-
     }, []);
 
-    const handleNavigateToReportDetail = () => {
+    const handleNavigateToReportDetail = (reportTitle) => {
         // 신고 상세 페이지로 이동
         navigate(`/member/report/get`);
+    };
+
+    const handleAddReportButtonClick = () => {
+        navigate('/member/report/add');
     };
 
     return (
@@ -47,6 +51,7 @@ const ListReportForm = () => {
                     ))}
                 </ul>
             )}
+            <button onClick={handleAddReportButtonClick}>문의 및 신고 추가</button>
         </div>
     );
 };

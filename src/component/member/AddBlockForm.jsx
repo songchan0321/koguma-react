@@ -29,7 +29,7 @@ const AddBlockForm = ({ onSubmit }) => {
             console.log("응답 상태 코드:", response.status);
             console.log("응답 내용:", response.data);
 
-            if (response.status == 200) {
+            if (response.status === 200) {
                 // 차단 추가 성공 시 리스트로 이동
                 onSubmit();
                 window.alert("회원을 차단했습니다.");
