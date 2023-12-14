@@ -1,28 +1,16 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CHAT_EVENT, SocketContext } from "../../context/socket";
-import ChatMessage from "../../component/chat/ChatMessage";
-import {
-  Avatar,
-  Button,
-  Chip,
-  Divider,
-  IconButton,
-  InputBase,
-  List,
-  ListItem,
-  ListItemText,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
 import { getMemberAPI } from "../../apis/api/member";
-import { addChatRoom, getChatRoomAPI } from "../../apis/api/chat";
-import MessageBubble from "../../component/chat/MessageBubble";
-import ChatForm from "../../component/chat/ChatForm";
-import HorizontalScrollChips from "../../component/chat/HorizontalScrollChips";
+import { getChatRoomAPI } from "../../apis/api/chat";
 import { getProductAPI } from "../../apis/api/Product";
-
+import LoadingProgress from "../../component/common/LoadingProgress";
+import ChatMessageList from "../../component/chat/ChatMessageList";
+import ChatHeader from "../../component/chat/ChatHeader";
+import TopBar from "../../component/payment/TopBar";
+import MarginEmpty from "../../component/payment/MarginEmpty";
+import { Chip } from "@mui/material";
+import ThermostatIcon from "@mui/icons-material/Thermostat";
 const GetChatRoom = () => {
   const { urlRoomId, productId } = useParams();
   const [roomId, setRoomId] = useState(urlRoomId);
@@ -34,8 +22,9 @@ const GetChatRoom = () => {
   //     navigator(`/product/get/${productId}`);
   //   }
   const socket = useContext(SocketContext);
-  const [memberId, setMemberId] = useState(null);
-  const [chatRoom, setChatRoom] = useState({});
+  // const [memberId, setMemberId] = useState(null);
+  const [member, setMember] = useState(null);
+  const [chatRoom, setChatRoom] = useState(null);
   const [product, setProduct] = useState(null);
   const [messages, setMessages] = useState([]);
   const [isWriting, setIsWriting] = useState(false);
@@ -57,9 +46,15 @@ const GetChatRoom = () => {
       token: `${localStorage.getItem("token")}`,
     });
   };
+  // useEffect(() => {
+  //   (async () => {
+  //     console.log("scroll event");
+  //     window.scrollTo(0, document.body.scrollHeight);
+  //   })();
+  // }, [messages]);
   useEffect(() => {
     (async () => {
-      await getMemberAPI().then((data) => setMemberId(data.id));
+      await getMemberAPI().then((data) => setMember(data));
       if (productId != null) {
         await getProductAPI(productId).then((data) => setProduct(data));
       }
@@ -68,7 +63,6 @@ const GetChatRoom = () => {
       setIsWriting(flag);
     });
     socket.on(CHAT_EVENT.MESSAGE_LIST, (messages) => {
-      console.log("new message");
       setMessages(messages);
     });
     socket.on(CHAT_EVENT.RECEIVED_MESSAGE, (message) => {
@@ -76,13 +70,9 @@ const GetChatRoom = () => {
     });
   }, []);
   useEffect(() => {
-    console.log(roomId != null);
     if (roomId != null) {
-      console.log("event 걸게");
       (async () => {
-        // await getMemberAPI().then((data) => setMemberId(data.id));
         await getChatRoomAPI(roomId).then((data) => setChatRoom(data));
-        // await getProductAPI(productId).then((data) => setProduct(data));
       })();
       socket.emit(CHAT_EVENT.JOIN_ROOM, {
         roomId: roomId,
@@ -102,70 +92,39 @@ const GetChatRoom = () => {
       }
     };
   }, [roomId]);
-  return (
-    <List
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "10px",
-        // paddingBottom: "125px",
-        paddingBottom: roomId ? "60px" : "125px",
-      }}
-    >
-      {messages.map((msg, index) => {
-        const isOwnMessage = memberId === msg.senderId;
-
-        return (
-          <ListItem
-            key={index}
-            style={{
-              display: "flex",
-              flexDirection: isOwnMessage ? "row-reverse" : "row",
-              alignItems: "flex-start",
-            }}
-          >
-            {!isOwnMessage && (
-              <Avatar
-                src={
-                  isOwnMessage
-                    ? "/path/to/own-avatar.png"
-                    : "/path/to/other-avatar.png"
-                }
-                alt=""
-              />
-            )}
-
-            <MessageBubble msg={msg} isOwnMessage={isOwnMessage} />
-          </ListItem>
-        );
-      })}
-      {isWriting && (
-        <div
-          style={{
-            position: "fixed",
-            bottom: 60,
-            width: "100%",
-            height: "25px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "rgba(200, 200, 200, 0.7)", // Gray color with 0.7 opacity
-            zIndex: 1, // Ensure it stays above other content
-          }}
-        >
-          <Typography variant="body2" color="primary">
-            상대방이 채팅을 입력중이에요...
-          </Typography>
-        </div>
-      )}
-      <ChatForm
-        roomId={roomId}
-        sendTextMessageHandler={sendTextMessageHandler}
+  return !member || !chatRoom ? (
+    <LoadingProgress />
+  ) : (
+    <>
+      <div style={{ position: "fixed", right: 6, top: 12, zIndex: 2000000 }}>
+        {console.log(chatRoom)}
+        <Chip
+          icon={<ThermostatIcon fontSize="small" />}
+          color="primary"
+          label={
+            (chatRoom.buyerDTO.id === member.id
+              ? chatRoom.productDTO.sellerDTO.score
+              : chatRoom.buyerDTO.score) + "°C"
+          }
+        />
+      </div>
+      <TopBar>
+        {chatRoom.buyerDTO.id === member.id
+          ? chatRoom.productDTO.sellerDTO.nickname
+          : chatRoom.buyerDTO.nickname}
+      </TopBar>
+      <MarginEmpty />
+      <ChatHeader product={chatRoom.productDTO} />
+      <ChatMessageList
         textEvent={textEvent}
+        sendTextMessageHandler={sendTextMessageHandler}
+        member={member}
         product={product}
+        roomId={roomId}
+        messages={messages}
+        isWriting={isWriting}
       />
-    </List>
+    </>
   );
   //   return messages.map((message, idx) => {
   //     return <ChatMessage />;

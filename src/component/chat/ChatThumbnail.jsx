@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Fragment } from "react";
+import { formatTimeAgo } from "../../apis/utils/timestamp";
 const ChatThumbnail = ({ room }) => {
   console.log(room);
   return (
@@ -38,7 +39,8 @@ const ChatThumbnail = ({ room }) => {
                   fontSize="0.7rem"
                   color="text.disabled"
                 >
-                  {room.dong}
+                  {room.dong}&nbsp;&nbsp;&nbsp;
+                  {formatTimeAgo(room.latestMessage.timestamp)}
                 </Typography>
               </Fragment>
               <br />

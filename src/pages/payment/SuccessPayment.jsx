@@ -7,6 +7,7 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import { getMemberAPI } from "../../apis/api/member";
 import { getPaymentAPIService } from "../../apis/services/payment";
 import LoadingProgress from "../../component/common/LoadingProgress";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const SuccessPayment = () => {
   //   const navigator = useNavigate();
@@ -53,6 +54,7 @@ const SuccessPayment = () => {
           <TopBar>
             {{ charge: "충전", transfer: "송금", refund: "환급 요청" }[type]}
           </TopBar>
+          <MarginEmpty value={"70px"} />
           <Typography
             variant="h6"
             component="h2"

@@ -13,6 +13,7 @@ export const CHAT_EVENT = {
   JOIN_ROOM: "join room",
   LEAVE_ROOM: "leave room",
   IS_WRITING: "is writing",
+  EVENT_ALERT: "event alert",
   EVENT_CHAT_LIST_ALERT: "event alert1",
   EVENT_BOTTOM_ALERT: "event alert2",
   NEW_MESSAGE: "new message",

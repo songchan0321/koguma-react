@@ -2,6 +2,7 @@ import AddIcon from "@mui/icons-material/Add";
 import SendIcon from "@mui/icons-material/Send";
 import { Divider, IconButton, InputBase, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
+import ChatPlusButton from "./ChatPlusButton";
 const ChatForm = ({
   roomId,
   sendTextMessageHandler,
@@ -50,9 +51,7 @@ const ChatForm = ({
           backgroundColor: "#E7E3E3",
         }}
       >
-        <IconButton sx={{ p: "10px" }} aria-label="menu">
-          <AddIcon />
-        </IconButton>
+        <ChatPlusButton />
         <Divider sx={{ height: 40, m: 0.5 }} orientation="vertical" />
         <InputBase
           sx={{ ml: 1, flex: 1 }}

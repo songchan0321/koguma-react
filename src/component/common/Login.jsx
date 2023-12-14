@@ -46,6 +46,7 @@ const Login = () => {
         navigator("/product/list");
       } catch (err) {
         console.error(err);
+        alert(err);
         alert("로그인 실패");
       } finally {
         setLoading(false);

@@ -60,10 +60,12 @@ const ProductTopBar = () => {
         },
       }}
     >
-      <FormControl fullWidth sx={{ minWidth: 120 }}>
-        <InputLabel htmlFor="demo-simple-select-label">내 동네</InputLabel>
+      <FormControl sx={{ minWidth: 120 }}>
+        {/* <InputLabel htmlFor="demo-simple-select-label">내 동네</InputLabel> */}
         <Select
-          labelId="demo-simple-select-label"
+          //  multiple
+          displayEmpty
+          // labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={dong}
           onChange={handleChange}
@@ -73,8 +75,13 @@ const ProductTopBar = () => {
             padding: "0px",
             "& .MuiSelect-outlined": { borderBottom: "none" },
           }}
-          inputProps={{ maxLength: 5 }} // 최대 5글자 설정
+          // inputProps={{ maxLength: 5 }} // 최대 5글자 설정
+          // MenuProps={MenuProps}
+          inputProps={{ "aria-label": "Without label", maxLength: 5 }}
         >
+          <MenuItem disabled value="">
+            <em>홍제동</em>
+          </MenuItem>
           <MenuItem value={"인헌동"}>인헌동</MenuItem>
           <MenuItem value={"역삼동"}>역삼동</MenuItem>
           <MenuItem value={"홍제동"}>홍제동</MenuItem>

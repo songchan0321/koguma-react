@@ -12,7 +12,7 @@ const Back = () => {
 
   return (
     <Button
-      style={{ position: "absolute", left: "-0.6rem", top: "0.4rem" }}
+      style={{ position: "fixed", top: "8px", left: "-10px", zIndex: 10000 }}
       onClick={goBack}
     >
       <ArrowBackIosNewIcon sx={{ color: "#000000" }} />

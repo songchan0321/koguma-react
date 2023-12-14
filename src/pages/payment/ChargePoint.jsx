@@ -5,6 +5,7 @@ import LoadingProgress from "../../component/common/LoadingProgress";
 import TopBar from "../../component/payment/TopBar";
 import { useNavigate } from "react-router-dom";
 import uuid from "react-uuid";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const ChargePoint = () => {
   const navigator = useNavigate();
@@ -74,6 +75,7 @@ const ChargePoint = () => {
   return (
     <Container fixed>
       <TopBar>충전하기</TopBar>
+      <MarginEmpty value={"70px"} />
       {balance === null ? (
         <LoadingProgress />
       ) : (

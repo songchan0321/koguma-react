@@ -9,6 +9,7 @@ import ChatThumbnail from "../../component/chat/ChatThumbnail";
 import { useNavigate } from "react-router-dom";
 import BottomBar from "../../component/common/BottomBar";
 import { CHAT_EVENT, SocketContext } from "../../context/socket";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const ListChatRoom = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -74,6 +75,7 @@ const ListChatRoom = () => {
   ) : (
     <>
       <TopBar>채팅</TopBar>
+      <MarginEmpty />
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
         {rooms.map((room, idx) => {
           console.log(room.id);
