@@ -15,9 +15,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import { Badge, Paper } from "@mui/material";
+import LocationBox from "../location/LocationBox";
 
-const ProductTopBar = () => {
-  const [dong, setDong] = React.useState("");
+import { useState, useEffect } from "react";
+const ProductTopBar = ({ location, setLocation }) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const categorys = [
     "디지털 기기",
@@ -37,10 +38,6 @@ const ProductTopBar = () => {
     "유아도서",
     "기타",
   ];
-
-  const handleChange = (event) => {
-    setDong(event.target.value);
-  };
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -65,36 +62,7 @@ const ProductTopBar = () => {
           },
         }}
       >
-        <FormControl sx={{ minWidth: 120 }}>
-          {/* <InputLabel htmlFor="demo-simple-select-label">내 동네</InputLabel> */}
-          <Select
-            //  multiple
-            displayEmpty
-            // labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={dong}
-            onChange={handleChange}
-            input={
-              <OutlinedInput label="대표동" id="demo-simple-select-label" />
-            }
-            sx={{
-              fontSize: 14,
-              padding: "0px",
-              "& .MuiSelect-outlined": { borderBottom: "none" },
-            }}
-            // inputProps={{ maxLength: 5 }} // 최대 5글자 설정
-            // MenuProps={MenuProps}
-            inputProps={{ "aria-label": "Without label", maxLength: 5 }}
-          >
-            <MenuItem disabled value="">
-              <em>홍제동</em>
-            </MenuItem>
-            <MenuItem value={"인헌동"}>인헌동</MenuItem>
-            <MenuItem value={"역삼동"}>역삼동</MenuItem>
-            <MenuItem value={"홍제동"}>홍제동</MenuItem>
-            <MenuItem value={"동네 설정"}>동네 설정</MenuItem>
-          </Select>
-        </FormControl>
+        <LocationBox location={location} setLocation={setLocation} />
         <ButtonGroup variant="text" aria-label="text button group">
           <Button onClick={handleModalOpen}>
             <MenuOpenIcon sx={{ fontSize: 30 }} color="secondary" />
