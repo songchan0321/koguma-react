@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import { authInstance } from "../../apis/utils/instance";
 import { useNavigate } from "react-router-dom";
 
@@ -17,12 +17,19 @@ const AddReportForm = ({ onSubmit }) => {
         setReportContent(e.target.value);
     };
 
-    const handleCategoryNameChange = (e) => {
+    const handleCategoryChange = (e) => {
         setCategoryName(e.target.value);
     };
 
     const handleSubmit = async () => {
         try {
+            // 확인 창 표시
+            const confirmed = window.confirm("정말로 등록하시겠습니까?");
+            if (!confirmed) {
+                // 사용자가 취소한 경우
+                return;
+            }
+
             // API 호출
             const response = await authInstance.post(`/member/report/add`, {
                 reportTitle,
@@ -49,15 +56,54 @@ const AddReportForm = ({ onSubmit }) => {
     };
 
     return (
-        <div>
-            <TextField label="신고 제목" value={reportTitle} onChange={handleReportTitleChange} />
-            <TextField label="신고 카테고리" value={categoryName} onChange={handleCategoryNameChange} />
-            <TextField label="신고 사유" value={reportContent} onChange={handleReportContentChange} />
-            <div style={{ marginTop: 10 }}>
-                <Button variant="contained" color="primary" onClick={handleSubmit}>
-                    신고 등록
-                </Button>
-            </div>
+        <div style={{ maxWidth: "400px", margin: "auto" }}>
+            <TextField
+                label="제목"
+                variant="outlined"
+                fullWidth
+                value={reportTitle}
+                onChange={handleReportTitleChange}
+                sx={{ marginBottom: 2 }}
+                color="secondary" // Changing text field color to purple
+            />
+
+            <FormControl variant="outlined" fullWidth sx={{ marginBottom: 2 }}>
+                <InputLabel>카테고리</InputLabel>
+                <Select
+                    value={categoryName}
+                    onChange={handleCategoryChange}
+                    label="카테고리"
+                    color="secondary" // Changing select color to purple
+                >
+                    <MenuItem value="회원">회원</MenuItem>
+                    <MenuItem value="상품">상품</MenuItem>
+                    <MenuItem value="모임">모임</MenuItem>
+                    <MenuItem value="채팅">채팅</MenuItem>
+                    <MenuItem value="거래">거래</MenuItem>
+                </Select>
+            </FormControl>
+
+            <TextField
+                label="내용"
+                variant="outlined"
+                fullWidth
+                multiline
+                rows={4}
+                value={reportContent}
+                onChange={handleReportContentChange}
+                sx={{ marginBottom: 2 }}
+                color="secondary" // Changing text field color to purple
+            />
+
+            <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                onClick={handleSubmit}
+                sx={{ backgroundColor: "#8a2be2" }} // Changing button color to purple
+            >
+                등록
+            </Button>
         </div>
     );
 };
