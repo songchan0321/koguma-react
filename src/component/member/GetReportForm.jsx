@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import {deleteReportAPI, getReportAPI} from '../../apis/api/member';
+import { deleteReportAPI, getReportAPI } from '../../apis/api/member';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import {
+    Paper,
+    Typography,
+    Button,
+    CircularProgress,
+} from '@mui/material';
 
 const GetReportForm = () => {
     const { reporterId } = useParams();
@@ -14,10 +21,7 @@ const GetReportForm = () => {
             try {
                 await deleteReportAPI();
                 alert('신고가 삭제되었습니다.');
-                alert('신고 목록으로 돌아갑니다.')
-
-
-
+                alert('신고 목록으로 돌아갑니다.');
                 navigate('/member/report/list');
             } catch (error) {
                 console.error('Error deleting report:', error);
@@ -27,7 +31,6 @@ const GetReportForm = () => {
 
     useEffect(() => {
         const fetchGetReport = async () => {
-
             try {
                 const reportData = await getReportAPI();
                 console.log('Report Data:', reportData);
@@ -42,19 +45,50 @@ const GetReportForm = () => {
         fetchGetReport();
     }, []);
 
+    const theme = createTheme({
+        palette: {
+            primary: {
+                main: '#8a2be2', // 보라색
+            },
+        },
+    });
+
     return (
-        <div>
-            {loading ? (
-                <p>데이터를 불러오는 중입니다...</p>
-            ) : (
-                <div>
-                    <p>신고 제목: {getReport.reportTitle}</p>
-                    <p>신고 내용: {getReport.reportContent}</p>
-                    <p>신고 일시: {getReport.regDate}</p>
-                    <button onClick={handleDeleteReport}>신고 삭제</button>
-                </div>
-            )}
-        </div>
+        <ThemeProvider theme={theme}>
+            <Paper
+                elevation={3}
+                style={{
+                    maxWidth: '400px',
+                    margin: 'auto',
+                    padding: '20px',
+                    marginTop: '20px',
+                }}
+            >
+                {loading ? (
+                    <CircularProgress color="primary" />
+                ) : (
+                    <div>
+                        <Typography variant="h5" color="primary" gutterBottom>
+                            신고 제목: {getReport.reportTitle}
+                        </Typography>
+                        <Typography variant="body1" color="primary" paragraph>
+                            신고 내용: {getReport.reportContent}
+                        </Typography>
+                        <Typography variant="body2" color="primary">
+                            신고 일시: {getReport.regDate}
+                        </Typography>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleDeleteReport}
+                            style={{ marginTop: '10px' }}
+                        >
+                            신고 삭제
+                        </Button>
+                    </div>
+                )}
+            </Paper>
+        </ThemeProvider>
     );
 };
 

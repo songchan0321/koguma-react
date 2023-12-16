@@ -16,6 +16,7 @@ const SuccessPayment = () => {
   const [searchParams] = useSearchParams();
   const imp_uid = searchParams.get("imp_uid");
   const merchant_uid = searchParams.get("merchant_uid");
+  const roomId = searchParams.get("roomId");
   const point = searchParams.get("point");
   const [loading, setLoading] = useState(false);
   const [balance, setBalance] = useState(null);
@@ -47,6 +48,16 @@ const SuccessPayment = () => {
           .then(({ balance }) => {
             setBalance(balance);
             setData("환급 요청이 완료되었습니다.");
+            setLoading(false);
+          });
+      })();
+    } else if (type === "transfer") {
+      (async () => {
+        await getMemberAPI()
+          .then(getPaymentAPIService)
+          .then(({ balance }) => {
+            setBalance(balance);
+            setData("송금이 완료되었습니다.");
             setLoading(false);
           });
       })();
@@ -94,7 +105,11 @@ const SuccessPayment = () => {
               size="large"
               variant="contained"
               color="secondary"
-              onClick={() => navigator("/payment/get")}
+              onClick={
+                type === "transfer"
+                  ? () => navigator(`/chat/get/${roomId}`)
+                  : () => navigator("/payment/get")
+              }
             >
               완료
             </Button>

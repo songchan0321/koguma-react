@@ -16,6 +16,38 @@ export const chatRoomListAPI = async () => {
   return results;
 };
 
+export const chatRoomListBySellerAPI = async (productId) => {
+  const { data } = await authInstance.get(`${CHAT_API_URI}/list/${productId}`);
+  return data;
+};
+
+export const existChatRoomByProductAPI = async (productId) => {
+  const { data } = await authInstance.get(`${CHAT_API_URI}/exist/${productId}`);
+  return data;
+};
+
+export const existChatRoomByProductAndBuyerAPI = async (productId, buyerId) => {
+  const { data } = await authInstance.get(
+    `${CHAT_API_URI}/exist/${productId}/${buyerId}`
+  );
+  return data;
+};
+
+export const updateChatRoomBySuggestAPI = async (roomId, price) => {
+  const { data } = await authInstance.post(
+    `${CHAT_API_URI}/update/${roomId}`,
+    JSON.stringify({
+      price: `${price}`,
+    }),
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return data;
+};
+
 export const getChatRoomAPI = async (roomId) => {
   const { data } = await authInstance.get(`${CHAT_API_URI}/get/${roomId}`);
   return data;
@@ -25,7 +57,7 @@ export const addChatRoom = async (productId) => {
   const { data } = await authInstance.post(
     `${CHAT_API_URI}/add`,
     JSON.stringify({
-      productId,
+      productId: `${productId}`,
     }),
     {
       headers: {
@@ -33,6 +65,15 @@ export const addChatRoom = async (productId) => {
       },
     }
   );
+  return data;
+};
+
+export const leaveChatRoomAPI = async (roomId) => {
+  await authInstance.post(`${CHAT_API_URI}/leave/${roomId}`);
+};
+
+export const enterChatRoomAPI = async (roomId) => {
+  const { data } = await authInstance.post(`${CHAT_API_URI}/enter/${roomId}`);
   return data;
 };
 
@@ -59,6 +100,30 @@ export const getLatestMessage = async (roomId) => {
     const { data } = await authNodeInstance.get(`/latestMessage/${roomId}`);
     console.log(data.latestMessage);
     return data.latestMessage;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getChatRoomByProductAndMember = async (productId, buyerId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CHAT_API_URI}/get/${productId}/${buyerId}`
+    );
+
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const countProductChatRoom = async (productId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CHAT_API_URI}/count/${productId}`
+    );
+
+    return data;
   } catch (err) {
     console.log(err);
   }

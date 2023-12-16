@@ -1,6 +1,10 @@
 import { Chip, Paper } from "@mui/material";
 
-const HorizontalScrollChips = ({ newSendTextMessageHandler, product }) => {
+const HorizontalScrollChips = ({
+  newSendTextMessageHandler,
+  product,
+  suggested,
+}) => {
   const chipContainerStyle = {
     display: "flex",
     overflowX: "auto",
@@ -14,11 +18,19 @@ const HorizontalScrollChips = ({ newSendTextMessageHandler, product }) => {
     margin: "6px", // Adjust as needed
   };
 
-  const items = [
-    "상품 구매를 원해요!",
-    "상품 정보를 더 얻고 싶어요!",
-    "직거래 장소가 궁금해요!",
-  ];
+  const items = suggested
+    ? [
+        "상품 판매를 원해요!",
+        "제안된 가격이 좋아요!",
+        "직거래 장소가 궁금해요!",
+        "거래 가능한 시간을 알고 싶어요!",
+      ]
+    : [
+        "상품 구매를 원해요!",
+        "상품 정보를 더 얻고 싶어요!",
+        "직거래 장소가 궁금해요!",
+        "거래 가능한 시간을 알고 싶어요!",
+      ];
 
   return (
     <Paper elevation={0} style={chipContainerStyle}>

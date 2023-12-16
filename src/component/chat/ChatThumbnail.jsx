@@ -40,7 +40,7 @@ const ChatThumbnail = ({ room }) => {
                   color="text.disabled"
                 >
                   {room.dong}&nbsp;&nbsp;&nbsp;
-                  {formatTimeAgo(room.latestMessage.timestamp)}
+                  {formatTimeAgo(room.latestMessage.timestamp, true)}
                 </Typography>
               </Fragment>
               <br />
@@ -51,6 +51,10 @@ const ChatThumbnail = ({ room }) => {
                 >
                   {room.latestMessage.type === "LOCATION"
                     ? "장소가 공유되었어요!"
+                    : room.latestMessage.type === "PLAN"
+                    ? "약속이 잡혔어요!"
+                    : room.latestMessage.type === "TRANSFER"
+                    ? "송금을 했어요!"
                     : room.latestMessage.content}
                   &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
                   <Badge

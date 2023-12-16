@@ -20,13 +20,10 @@ const NewChatRoom = () => {
       await socket.emit(CHAT_EVENT.SEND_MESSAGE, {
         roomId: data.id,
         toId: product.sellerDTO.id,
-        //   chatRoom.productDTO.sellerDTO.id === memberId
-        //     ? chatRoom.buyerDTO.id
-        //     : chatRoom.productDTO.sellerDTO.id,
         token: `${localStorage.getItem("token")}`,
         message: text,
       });
-      navigator(`/chat/get/${data.id}`);
+      setTimeout(() => navigator(`/chat/get/${data.id}`), 200);
     })();
   };
   useEffect(() => {

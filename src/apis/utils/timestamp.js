@@ -3,11 +3,31 @@ export const absoulte_timestamp = (timestamp, yearFlag) => {
   const [hour, sec] = timestamp.split("T")[1].split(":");
   return `${yearFlag ? year + "년 " : ""}${month}월 ${day}일 ${hour}:${sec}`;
 };
+export const absoulte_timestamp_new_date = (date) => {
+  const options = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false, // 24시간 형식 사용
+    timeZone: "Asia/Seoul", // 시간대 설정
+  };
 
-export const formatTimeAgo = (dateTimeString) => {
+  const formatter = new Intl.DateTimeFormat("ko-KR", options);
+  const formattedString = formatter.format(date);
+
+  return formattedString.replace(
+    /(\d+)\/(\d+)\/(\d+), (\d+):(\d+)/,
+    "$3-$1-$2 $4:$5"
+  );
+};
+
+export const formatTimeAgo = (dateTimeString, utc) => {
   const inputDate = new Date(dateTimeString);
   const currentDate = new Date();
-  const timeDifference = currentDate - inputDate;
+  const timeDifference =
+    currentDate - inputDate + (utc ? 60 * 60 * 9 * 1000 : 0);
 
   const seconds = Math.floor(timeDifference / 1000);
   const minutes = Math.floor(seconds / 60);

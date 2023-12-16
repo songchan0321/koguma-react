@@ -18,17 +18,28 @@ const ListChatRoom = () => {
   const navigator = useNavigate();
   //   const [memberId, setMemberId] = useState(null);
   const memberId = useRef();
+  const [flag, setFlag] = useState(false);
   const changeAlert = (message) => {
+    if (rooms.filter((room) => room.id === message.roomId).length === 0) {
+      setFlag((flag) => !flag);
+      return;
+    }
     setRooms((rooms) => {
-      const updatedChatRooms = rooms.map((room) =>
-        room.id === message.roomId
-          ? {
-              ...room,
-              count: room.count + 1,
-              latestMessage: message,
-            }
-          : room
-      );
+      const updatedChatRooms = rooms
+        .map((room) =>
+          room.id === message.roomId
+            ? {
+                ...room,
+                count: room.count + 1,
+                latestMessage: message,
+              }
+            : room
+        )
+        .sort(
+          (a, b) =>
+            new Date(b.latestMessage.timestamp) -
+            new Date(a.latestMessage.timestamp)
+        );
       return updatedChatRooms;
     });
     // console.log(rooms);
@@ -45,12 +56,25 @@ const ListChatRoom = () => {
     socket.on(CHAT_EVENT.EVENT_CHAT_LIST_ALERT, (message) => {
       changeAlert(message);
     });
+    return () => {
+      socket.off(CHAT_EVENT.EVENT_CHAT_LIST_ALERT);
+    };
+  });
+  useEffect(() => {
     (async () => {
       try {
         await getMemberAPI().then((data) => (memberId.current = data.id));
         await chatRoomListAPI()
           .then((data) => chatRoomListService(data, memberId.current))
-          .then((data) => setRooms(data));
+          .then((data) =>
+            setRooms(
+              data.sort(
+                (a, b) =>
+                  new Date(b.latestMessage.timestamp) -
+                  new Date(a.latestMessage.timestamp)
+              )
+            )
+          );
         // .then((data) => setRooms(data));
         setIsLoading(false);
       } catch (err) {
@@ -59,9 +83,8 @@ const ListChatRoom = () => {
     })();
     return () => {
       console.log("listChatRoom socket bye");
-      socket.off(CHAT_EVENT.EVENT_CHAT_LIST_ALERT);
     };
-  }, []);
+  }, [flag]);
   // useEffect(() => {
   //   if (Object.keys(rooms).length > 0) {
 
@@ -87,6 +110,7 @@ const ListChatRoom = () => {
         })}
       </List>
       <BottomBar />
+      <MarginEmpty />
     </>
   );
 };

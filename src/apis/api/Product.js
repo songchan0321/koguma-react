@@ -83,3 +83,9 @@ export const addSuggestPriceAPI = async (suggest) => {
     alert(err.response.data.content);
   }
 };
+export const listSuggestPriceAPI = async (productId) => {
+  const { data } = await authInstance.get(
+    `${PRODUCT_API_URI}/suggest/list/${productId}`
+  );
+  return data;
+};
