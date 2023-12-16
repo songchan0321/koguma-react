@@ -104,3 +104,27 @@ export const getLatestMessage = async (roomId) => {
     console.log(err);
   }
 };
+
+export const getChatRoomByProductAndMember = async (productId, buyerId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CHAT_API_URI}/get/${productId}/${buyerId}`
+    );
+
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const countProductChatRoom = async (productId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CHAT_API_URI}/count/${productId}`
+    );
+
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};

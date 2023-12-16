@@ -12,7 +12,7 @@ const ImageList = ({ images, setImages, imageRegHandler, imageDelHandler }) => {
   const handleAddImages = (event) => {
     const imageLists = event.target.files;
     let imageUrlLists = [...images];
-    // console.log(imageLists);
+    console.log(imageLists);
     imageRegHandler(
       Object.keys(event.target.files).map((key) => event.target.files[key])
     );

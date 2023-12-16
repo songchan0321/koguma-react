@@ -58,3 +58,34 @@ export const ListProductHIAPI = async (page, keyword) => {
     console.log(err);
   }
 };
+export const validProductAPI = async (productId) => {
+  const { data } = await authInstance.get(
+    `${PRODUCT_API_URI}/valid/${productId}`
+  );
+  return data;
+};
+
+export const addSuggestPriceAPI = async (suggest) => {
+  try {
+    console.log(suggest);
+    const response = await authInstance.post(
+      `${PRODUCT_API_URI}/suggest`,
+      JSON.stringify(suggest),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response);
+    return response;
+  } catch (err) {
+    alert(err.response.data.content);
+  }
+};
+export const listSuggestPriceAPI = async (productId) => {
+  const { data } = await authInstance.get(
+    `${PRODUCT_API_URI}/suggest/list/${productId}`
+  );
+  return data;
+};

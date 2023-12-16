@@ -10,29 +10,45 @@ import AddFloatingButton from "../../component/common/AddFloatingButton";
 import ListContainingProduct from "../../component/product/ListContainingProduct";
 import { ListProductAPI } from "../../apis/api/Product";
 import LoadingProgress from "../../component/common/LoadingProgress";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const ProductList = () => {
   const navigator = useNavigate();
   const [data, setData] = useState(null);
-
+  const [location, setLocation] = useState();
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await ListProductAPI();
         setData(result.data);
+        console.log(location);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [location]);
+  useEffect(() => {
+    // dong이 변경된 후에 실행될 작업
+    console.log(location);
+
+    // dong이 변경된 후에 데이터를 다시 불러와서 처리
+    const fetchDataAfterDongUpdate = async () => {
+      try {
+        const result = await ListProductAPI();
+        setData(result.data);
+      } catch (error) {
+        console.error("Error fetching data after dong update:", error);
+      }
+    };
+
+    fetchDataAfterDongUpdate();
+  }, [location]);
   return (
     <>
-      <ProductTopBar />
-      <br />
-      <br />
-      <br />
+      <ProductTopBar location={location} setLocation={setLocation} />
+      <MarginEmpty />
       <BottomBar />
       <AddFloatingButton arrival={"/product/add"} />
 
