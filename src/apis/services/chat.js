@@ -13,6 +13,10 @@ export const chatRoomListService = (data, memberId) => {
         ? room.productDTO.sellerDTO.imageId
         : room.buyerDTO.imageId;
       const dong = room.productDTO.dong;
+      room.latestMessage.content = truncatedText(
+        room.latestMessage.content,
+        30
+      );
       return {
         id: room.id,
         nickname,
@@ -25,4 +29,10 @@ export const chatRoomListService = (data, memberId) => {
   } else {
     return [];
   }
+};
+
+const truncatedText = (longText, maxTextLength) => {
+  return longText.length > maxTextLength
+    ? longText.slice(0, maxTextLength) + "..." // 일정 길이 이상이면 생략 부호 추가
+    : longText;
 };

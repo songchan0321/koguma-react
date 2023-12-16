@@ -13,21 +13,52 @@ import { Fragment, useState } from "react";
 import { Avatar, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import PhotoIcon from "@mui/icons-material/Photo";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import LogoutIcon from "@mui/icons-material/Logout";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import TodayIcon from "@mui/icons-material/Today";
 import AddShareLocation from "./AddShareLocation";
+import AddPlan from "./AddPlan";
+import { useNavigate } from "react-router-dom";
+import RequestTransferForm from "./RequstTransferForm";
+import LeaveCheck from "./LeaveCheck";
 const ChatPlusButton = ({ roomId, product }) => {
+  const navigator = useNavigate();
   const [state, setState] = useState(false);
   const [locationModalOpen, setLocationModalOpen] = useState(false);
+  const [planModalOpen, setPlanModalOpen] = useState(false);
+  const [requestModalOpen, setRequestModalOpen] = useState(false);
+  const [leaveModalOpen, setLeaveModalOpen] = useState(false);
   const handleLocationModalClickOpen = () => {
     setLocationModalOpen(true);
   };
 
   const handleLocationModalClose = () => {
     setLocationModalOpen(false);
+  };
+  const handlePlanModalClickOpen = () => {
+    setPlanModalOpen(true);
+  };
+
+  const handlePlanModalClose = () => {
+    setPlanModalOpen(false);
+  };
+  const handleRequestModalClickOpen = () => {
+    setRequestModalOpen(true);
+  };
+
+  const handleRequestModalClose = (pointResetHandler) => {
+    pointResetHandler();
+    setRequestModalOpen(false);
+  };
+
+  const handleLeaveModalClickOpen = () => {
+    setLeaveModalOpen(true);
+  };
+
+  const handleLeaveModalClose = () => {
+    setLeaveModalOpen(false);
   };
   const toggleDrawer = (open) => (event) => {
     if (
@@ -53,16 +84,37 @@ const ChatPlusButton = ({ roomId, product }) => {
               <ListItemIcon>
                 {
                   [
-                    <Avatar sx={{ width: 34, height: 34, bgcolor: "#F3C73C" }}>
+                    <Avatar
+                      sx={{ width: 34, height: 34, bgcolor: "#F3C73C" }}
+                      onClick={() =>
+                        navigator("/payment/transfer", {
+                          state: { roomId: roomId },
+                        })
+                      }
+                    >
                       <AttachMoneyIcon sx={{ color: "#ffffff" }} />
                     </Avatar>,
-                    <Avatar sx={{ width: 34, height: 34, bgcolor: "#318F23" }}>
+                    <Avatar
+                      sx={{ width: 34, height: 34, bgcolor: "#318F23" }}
+                      onClick={handleRequestModalClickOpen}
+                    >
                       <CurrencyExchangeIcon sx={{ color: "#ffffff" }} />
                     </Avatar>,
                   ][index]
                 }
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText
+                primary={text}
+                onClick={
+                  [
+                    () =>
+                      navigator("/payment/transfer", {
+                        state: { roomId: roomId },
+                      }),
+                    handleRequestModalClickOpen,
+                  ][index]
+                }
+              />
             </ListItemButton>
           </ListItem>
         ))}
@@ -75,7 +127,10 @@ const ChatPlusButton = ({ roomId, product }) => {
               <ListItemIcon>
                 {
                   [
-                    <Avatar sx={{ width: 34, height: 34, bgcolor: "#C0392B" }}>
+                    <Avatar
+                      sx={{ width: 34, height: 34, bgcolor: "#C0392B" }}
+                      onClick={handlePlanModalClickOpen}
+                    >
                       <TodayIcon sx={{ color: "#F5F5DC" }} />
                     </Avatar>,
                     <Avatar
@@ -91,12 +146,39 @@ const ChatPlusButton = ({ roomId, product }) => {
                 }
               </ListItemIcon>
               <ListItemText
-                onClick={[() => {}, handleLocationModalClickOpen][index]}
+                onClick={
+                  [handlePlanModalClickOpen, handleLocationModalClickOpen][
+                    index
+                  ]
+                }
                 primary={text}
               />
             </ListItemButton>
           </ListItem>
         ))}
+      </List>
+      <Divider />
+      <List>
+        {
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {
+                  <Avatar
+                    sx={{ width: 34, height: 34, bgcolor: "#C0392B" }}
+                    onClick={handleLeaveModalClickOpen}
+                  >
+                    <LogoutIcon sx={{ color: "#F5F5DC" }} />
+                  </Avatar>
+                }
+              </ListItemIcon>
+              <ListItemText
+                onClick={handleLeaveModalClickOpen}
+                primary={"채팅방 나가기"}
+              />
+            </ListItemButton>
+          </ListItem>
+        }
       </List>
     </Box>
   );
@@ -120,6 +202,20 @@ const ChatPlusButton = ({ roomId, product }) => {
           product={product}
           open={locationModalOpen}
           handleClose={handleLocationModalClose}
+        />
+        <AddPlan
+          roomId={roomId}
+          open={planModalOpen}
+          handleClose={handlePlanModalClose}
+        />
+        <RequestTransferForm
+          open={requestModalOpen}
+          handleClose={handleRequestModalClose}
+        />
+        <LeaveCheck
+          roomId={roomId}
+          open={leaveModalOpen}
+          handleClose={handleLeaveModalClose}
         />
       </Fragment>
     </div>

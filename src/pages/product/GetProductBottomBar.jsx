@@ -58,7 +58,7 @@ const GetProductBottomBar = ({ data }) => {
             color="secondary"
             variant="contained"
             sx={{}}
-            onClick={() => navigator(`/chat/get/new/${data.id}`)}
+            onClick={() => navigator(`/chat/new/${data.id}`)}
           >
             채팅하기
           </Button>

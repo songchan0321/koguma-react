@@ -43,12 +43,17 @@ const MessageBubble = ({ msg, isOwnMessage }) => {
             backgroundColor: isOwnMessage ? "#D070FB" : "#EAFF4D",
             color: isOwnMessage ? "#ffffff" : "#000000",
             borderRadius: "8px",
+            whiteSpace: "pre-wrap",
           }}
         >
           <Typography variant="body2">
             {msg.type === "LOCATION"
               ? `장소 공유\n${msg.content}`
-              : msg.content}
+              : msg.type === "PLAN"
+              ? `약속 잡기\n${msg.content}`
+              : msg.type === "TRANSFER"
+              ? `송금 하기\n${msg.content}`
+              : addLineBreaks(msg.content, 14)}
           </Typography>
         </Paper>
         {!isOwnMessage && (
@@ -81,6 +86,34 @@ const MessageBubble = ({ msg, isOwnMessage }) => {
       </div>
     </div>
   );
+};
+
+const addLineBreaks = (text, maxLength) => {
+  if (
+    typeof text !== "string" ||
+    typeof maxLength !== "number" ||
+    maxLength <= 0
+  ) {
+    console.error(
+      "Invalid input. Please provide a valid string and a positive maxLength."
+    );
+    return text;
+  }
+
+  let result = "";
+  let currentLength = 0;
+
+  for (let i = 0; i < text.length; i++) {
+    result += text[i];
+    currentLength++;
+
+    if (currentLength === maxLength) {
+      result += "\n";
+      currentLength = 0;
+    }
+  }
+
+  return result;
 };
 
 export default MessageBubble;

@@ -16,7 +16,7 @@ const RequestRefundPoint = () => {
   const [pointString, setPointString] = useState("");
   useEffect(() => {
     (async () => {
-      await getMemberAPI(3)
+      await getMemberAPI()
         .then((data) => setBalance(Number(data.paymentBalance)))
         .catch((err) => console.log(err));
     })();
@@ -81,7 +81,7 @@ const RequestRefundPoint = () => {
             color="secondary"
             error={balance - point < 0}
             inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-            label="충전할 금액을 입력해주세요"
+            label="환급 요청할 금액을 입력해주세요"
             helperText={
               point <= 0
                 ? `고구마 포인트 잔액: ${

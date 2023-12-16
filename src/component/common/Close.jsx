@@ -1,9 +1,9 @@
 import React from "react";
 import Button from "@mui/material/Button";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 
-const Back = ({ url }) => {
+const Close = ({ url }) => {
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -15,9 +15,9 @@ const Back = ({ url }) => {
       style={{ position: "fixed", top: "8px", left: "-10px", zIndex: 1002 }}
       onClick={goBack}
     >
-      <ArrowBackIosNewIcon sx={{ color: "#000000" }} />
+      <CloseIcon sx={{ color: "#000000" }} />
     </Button>
   );
 };
 
-export default Back;
+export default Close;

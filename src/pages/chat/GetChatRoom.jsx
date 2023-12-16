@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CHAT_EVENT, SocketContext } from "../../context/socket";
 import { getMemberAPI } from "../../apis/api/member";
-import { getChatRoomAPI } from "../../apis/api/chat";
+import { enterChatRoomAPI, getChatRoomAPI } from "../../apis/api/chat";
 import { getProductAPI } from "../../apis/api/Product";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import ChatMessageList from "../../component/chat/ChatMessageList";
@@ -30,15 +30,37 @@ const GetChatRoom = () => {
   const [messages, setMessages] = useState([]);
   const [isWriting, setIsWriting] = useState(false);
   const sendTextMessageHandler = async (text, roomId, toId) => {
-    await socket.emit(CHAT_EVENT.SEND_MESSAGE, {
-      roomId: roomId,
-      toId: toId,
-      //   chatRoom.productDTO.sellerDTO.id === memberId
-      //     ? chatRoom.buyerDTO.id
-      //     : chatRoom.productDTO.sellerDTO.id,
-      token: `${localStorage.getItem("token")}`,
-      message: text,
+    // 차단 여부 check true:
+    // 나간 여부 check 그냥 emit 후 서버에서 알림 발송 x
+    // 차단 여부 check false: emit하기 전에
+    // enter_date 설정, emit 후 서버에서 알림 발송
+    await enterChatRoomAPI(roomId).then((data) => {
+      if (data.result) {
+        (async () => {
+          const updateChatroom = await getChatRoomAPI(roomId);
+          socket.emit(CHAT_EVENT.SEND_MESSAGE, {
+            roomId: roomId,
+            toId: toId,
+            token: `${localStorage.getItem("token")}`,
+            enter_date:
+              updateChatroom.buyerDTO.id === member.id
+                ? updateChatroom.sellerEnterDate
+                : updateChatroom.buyerEnterDate,
+            message: text,
+          });
+        })();
+      } else {
+        socket.emit(CHAT_EVENT.SEND_MESSAGE, {
+          roomId: roomId,
+          toId: toId,
+          token: `${localStorage.getItem("token")}`,
+          message: text,
+        });
+      }
     });
+    // setTimeout(() => {
+
+    // }, 500);
   };
   const textEvent = (flag) => {
     socket.emit(CHAT_EVENT.IS_WRITING, {
@@ -64,40 +86,48 @@ const GetChatRoom = () => {
       setIsWriting(flag);
     });
     socket.on(CHAT_EVENT.MESSAGE_LIST, (messages) => {
+      console.log("MESSAGE_LIST EVENT!");
       setMessages(messages);
     });
     socket.on(CHAT_EVENT.RECEIVED_MESSAGE, (message) => {
+      console.log("RECEIVED_MESSAGE EVENT!");
+      console.log(message);
       setMessages((prev) => [...prev, message]);
     });
   }, []);
   useEffect(() => {
-    if (roomId != null) {
-      (async () => {
-        await getChatRoomAPI(roomId).then((data) => setChatRoom(data));
-      })();
+    if (chatRoom != null) {
       socket.emit(CHAT_EVENT.JOIN_ROOM, {
         roomId: roomId,
         token: `${localStorage.token}`,
       });
     }
+  }, [chatRoom]);
+  useEffect(() => {
+    try {
+      (async () => {
+        await getChatRoomAPI(roomId).then((data) => setChatRoom(data));
+      })();
+    } catch (err) {
+      alert(err.content);
+    }
+
     return () => {
-      if (roomId != null) {
-        console.log("컴퍼넌트 언마운트");
-        socket.emit(CHAT_EVENT.LEAVE_ROOM, {
-          roomId: roomId,
-          token: `${localStorage.getItem("token")}`,
-        });
-        socket.off(CHAT_EVENT.IS_WRITING);
-        socket.off(CHAT_EVENT.RECEIVED_MESSAGE);
-        socket.off(CHAT_EVENT.MESSAGE_LIST);
-      }
+      console.log("컴퍼넌트 언마운트");
+      socket.emit(CHAT_EVENT.LEAVE_ROOM, {
+        roomId: roomId,
+        token: `${localStorage.getItem("token")}`,
+      });
+      socket.off(CHAT_EVENT.IS_WRITING);
+      socket.off(CHAT_EVENT.RECEIVED_MESSAGE);
+      socket.off(CHAT_EVENT.MESSAGE_LIST);
     };
   }, [roomId]);
   return !member || !chatRoom ? (
     <LoadingProgress />
   ) : (
     <>
-      <Back />
+      <Back url={`/chat/list`} />
       <div style={{ position: "fixed", right: 6, top: 12, zIndex: 1005 }}>
         {console.log(chatRoom)}
         <Chip
@@ -122,7 +152,7 @@ const GetChatRoom = () => {
         sendTextMessageHandler={sendTextMessageHandler}
         member={member}
         product={product}
-        roomId={roomId}
+        room={chatRoom}
         messages={messages}
         isWriting={isWriting}
       />

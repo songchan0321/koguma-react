@@ -98,6 +98,23 @@ export const requestRefundPointAPI = async (point) => {
   return data;
 };
 
+export const transferPointAPI = async (point, member, chatRoom) => {
+  const { data } = await authInstance.post(
+    `${PAYMENT_API_URI}/transfer`,
+    JSON.stringify({
+      point: `${point}`,
+      receiverMemberId: `${member.id}`,
+      chatroomId: `${chatRoom.id}`,
+    }),
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return data;
+};
+
 export const deletePaymentAPI = async (password) => {
   const { data } = await authInstance.post(
     `${PAYMENT_API_URI}/delete`,

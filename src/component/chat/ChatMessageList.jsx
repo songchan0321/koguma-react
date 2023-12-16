@@ -10,7 +10,7 @@ const ChatMessageList = ({
   isWriting,
   messages,
   member,
-  roomId,
+  room,
   sendTextMessageHandler,
   product,
   textEvent,
@@ -18,14 +18,19 @@ const ChatMessageList = ({
   const [viewFlag, setViewFlag] = useState(false);
   const navigate = useNavigate();
   const avatorClickHandler = () => {
-    navigate(`/member/other/get/${member.id}`);
+    navigate(
+      `/member/other/get/${
+        room.buyerDTO.id === member.id
+          ? room.productDTO.sellerDTO.id
+          : room.buyerDTO.id
+      }`
+    );
   };
   const viewMessageList = () => {
     setViewFlag(true);
   };
   useEffect(() => {
     (async () => {
-      console.log("scroll event");
       if (!viewFlag || messages[messages.length - 1].senderId === member.id) {
         window.scrollTo(0, document.body.scrollHeight);
       }
@@ -42,37 +47,47 @@ const ChatMessageList = ({
           flexDirection: "column",
           gap: "10px",
           // paddingBottom: "125px",
-          paddingBottom: roomId ? "60px" : "125px",
+          paddingBottom: room.id ? "60px" : "125px",
         }}
       >
-        {messages.map((msg, index) => {
-          const isOwnMessage = member.id === msg.senderId;
+        {console.log(messages)}
+        {messages
+          .filter((msg) => {
+            return (
+              msg.timestamp >=
+              (room.buyerDTO.id === member.id
+                ? room.buyerEnterDate
+                : room.sellerEnterDate)
+            );
+          })
+          .map((msg, index) => {
+            const isOwnMessage = member.id === msg.senderId;
 
-          return (
-            <ListItem
-              key={index}
-              style={{
-                display: "flex",
-                flexDirection: isOwnMessage ? "row-reverse" : "row",
-                alignItems: "flex-start",
-              }}
-            >
-              {!isOwnMessage && (
-                <Avatar
-                  onClick={avatorClickHandler}
-                  src={
-                    isOwnMessage
-                      ? "/path/to/own-avatar.png"
-                      : "/path/to/other-avatar.png"
-                  }
-                  alt=""
-                />
-              )}
+            return (
+              <ListItem
+                key={index}
+                style={{
+                  display: "flex",
+                  flexDirection: isOwnMessage ? "row-reverse" : "row",
+                  alignItems: "flex-start",
+                }}
+              >
+                {!isOwnMessage && (
+                  <Avatar
+                    onClick={avatorClickHandler}
+                    src={
+                      isOwnMessage
+                        ? "/path/to/own-avatar.png"
+                        : "/path/to/other-avatar.png"
+                    }
+                    alt=""
+                  />
+                )}
 
-              <MessageBubble msg={msg} isOwnMessage={isOwnMessage} />
-            </ListItem>
-          );
-        })}
+                <MessageBubble msg={msg} isOwnMessage={isOwnMessage} />
+              </ListItem>
+            );
+          })}
         {isWriting && (
           <div
             style={{
@@ -94,7 +109,7 @@ const ChatMessageList = ({
           </div>
         )}
         <ChatForm
-          roomId={roomId}
+          roomId={room.id}
           sendTextMessageHandler={sendTextMessageHandler}
           textEvent={textEvent}
           product={product}
