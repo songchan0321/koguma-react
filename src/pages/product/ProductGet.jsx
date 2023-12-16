@@ -14,16 +14,13 @@ import {
   Typography,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import GetProductBottomBar from "./GetProductBottomBar";
-import TopReturnBar from "./TopReturnBar";
-import Carousel from "react-material-ui-carousel";
-import TopBar from "../../component/payment/TopBar";
-import { getProductAPI } from "../../apis/api/Product";
+import { getProductAPI, validProductAPI } from "../../apis/api/Product";
 import LoadingProgress from "../../component/common/LoadingProgress";
+import Back from "../../component/common/Back";
+import TopBar from "../../component/payment/TopBar";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -39,6 +36,7 @@ const ExpandMore = styled((props) => {
 const ProductGet = () => {
   const { productId } = useParams();
   const [data, setData] = useState(null);
+  const [isMine, setIsMine] = useState();
   const navigate = useNavigate();
 
   const getMember = (memberId) => {
@@ -51,6 +49,8 @@ const ProductGet = () => {
         const result = await getProductAPI(productId);
         setData(result);
         console.log(result);
+        const valid = await validProductAPI(productId);
+        setIsMine(valid);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -60,7 +60,9 @@ const ProductGet = () => {
   }, []);
   return (
     <>
-      <TopBar children={"상품 조회"} />
+      <Back />
+      <TopBar>상품 조회</TopBar>
+      <MarginEmpty />
       {data ? (
         <>
           <Card sx={{ maxWidth: "100%" }}>
@@ -107,7 +109,7 @@ const ProductGet = () => {
               {data.content}
             </Typography>
           </CardContent>
-          <GetProductBottomBar data={data} />
+          <GetProductBottomBar data={data} isMine={isMine} />
         </>
       ) : (
         <LoadingProgress />

@@ -21,7 +21,10 @@ const ProfileForm = ({ navigate }) => {
         <Button
           variant="contained"
           color="secondary"
-          onClick={() => handleNavigate("/common/logout")}
+          onClick={() => {
+            localStorage.removeItem("token");
+            handleNavigate("/common/login");
+          }}
           style={{ marginLeft: 10 }}
         >
           로그아웃

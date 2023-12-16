@@ -12,6 +12,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"; // 안채워진 하트
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import { formatMoney } from "../../apis/services/product";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -24,35 +25,40 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const ContainingProduct = (data) => {
+const ContainingProduct = ({ data }) => {
+  console.log(data);
   return (
     <>
-      <Card id={data} sx={{ maxWidth: "100%" }}>
+      <Card id={data.id} sx={{ maxWidth: "100%" }}>
         <CardHeader
           avatar={
             <CardMedia
               component="img"
               height="120"
-              image="/photo.png"
-              alt="Paella dish"
+              image={
+                data.imageDTO && data.imageDTO.length > 0
+                  ? data.imageDTO[0].url
+                  : "/photo.png"
+              }
+              alt="/photo.png"
             />
           }
           title={
             <Box>
               <Typography variant="h6" color="textSecondary">
-                상품 이름
+                {data.title}
               </Typography>
             </Box>
           }
           subheader={
             <>
               <Typography variant="subtitle2" color="textSecondary">
-                동 이름, 끌어올린 시간
+                {data.dong}
               </Typography>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <div>
                   <Typography variant="h6" color="textSecondary">
-                    상품 가격
+                    {formatMoney(data.price)}원
                   </Typography>
                 </div>
               </Box>

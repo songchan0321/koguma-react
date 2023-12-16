@@ -22,15 +22,20 @@ import BottomBar from "../../component/common/BottomBar";
 import ProductTopBar from "../../component/product/ProductTopBar";
 import AddFloatingButton from "../../component/common/AddFloatingButton";
 import ListContainingProduct from "../../component/product/ListContainingProduct";
-import TopBar from "../../component/payment/TopBar";
+
 import { formatMoney } from "../../apis/services/product";
+import Back from "../../component/common/Back";
+import TopBar from "../../component/payment/TopBar";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const ProductList = () => {
   const navigator = useNavigate();
 
   return (
     <>
-      <TopBar children={"가격제안 리스트"} />
+      <Back />
+      <TopBar>가격제안 리스트</TopBar>
+      <MarginEmpty />
 
       <Card sx={{ maxWidth: "100%" }}>
         <CardHeader

@@ -25,6 +25,10 @@ import {
 import { Circle, Map, MapMarker } from "react-kakao-maps-sdk";
 import SearchSlider from "../../component/location/SearchSlider";
 import MapComponent from "../../component/location/MapComponent";
+import Back from "../../component/common/Back";
+import TopBar from "../../component/payment/TopBar";
+import MarginEmpty from "../../component/payment/MarginEmpty";
+
 import {
   addLocationAPI,
   deleteLocationAPI,
@@ -33,7 +37,6 @@ import {
   updateRepLocationAPI,
   updateSearchRangeAPI,
 } from "../../apis/api/common";
-import TopBar from "../../component/common/TopBar";
 
 const AuthLocation = () => {
   const [level, setLevel] = useState(7);
@@ -153,9 +156,9 @@ const AuthLocation = () => {
 
   return (
     <Fragment>
-      <AppBar sx={{ position: "relative" }}>
-        <TopBar>내 동네 설정</TopBar>
-      </AppBar>
+      <Back />
+      <TopBar>내 동네 설정</TopBar>
+      <MarginEmpty />
       <List>
         <MapComponent
           key={mapKey}

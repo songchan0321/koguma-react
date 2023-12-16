@@ -31,7 +31,7 @@ const StyledCardActions = styled(CardActions)({
   justifyContent: "space-between",
 });
 
-const GetProductBottomBar = ({ data }) => {
+const GetProductBottomBar = ({ data, isMine }) => {
   const navigator = useNavigate();
   return (
     <ThemeProvider theme={theme}>
@@ -46,22 +46,40 @@ const GetProductBottomBar = ({ data }) => {
             </IconButton>
             <span>{formatMoney(data.price)}원</span>
           </div>
-          <Button
-            color="secondary"
-            variant="contained"
-            sx={{}}
-            onClick={() => navigator(`/product/suggest/${data.id}`)}
-          >
-            가격제안
-          </Button>
-          <Button
-            color="secondary"
-            variant="contained"
-            sx={{}}
-            onClick={() => navigator(`/chat/get/new/${data.id}`)}
-          >
-            채팅하기
-          </Button>
+          {isMine ? (
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={() => navigator(`/product/suggest/list`)}
+            >
+              가격제안 1명
+            </Button>
+          ) : (
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={() => navigator(`/product/suggest/${data.id}`)}
+            >
+              가격 제안하기
+            </Button>
+          )}
+          {isMine ? (
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={() => navigator(`/chat/get/new/${data.id}`)}
+            >
+              대화중인 채팅방 1
+            </Button>
+          ) : (
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={() => navigator(`/chat/get/new/${data.id}`)}
+            >
+              채팅하기
+            </Button>
+          )}
         </StyledCardActions>
       </Paper>
     </ThemeProvider>

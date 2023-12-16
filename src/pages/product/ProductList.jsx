@@ -10,6 +10,7 @@ import AddFloatingButton from "../../component/common/AddFloatingButton";
 import ListContainingProduct from "../../component/product/ListContainingProduct";
 import { ListProductAPI } from "../../apis/api/Product";
 import LoadingProgress from "../../component/common/LoadingProgress";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const ProductList = () => {
   const navigator = useNavigate();
@@ -47,9 +48,7 @@ const ProductList = () => {
   return (
     <>
       <ProductTopBar location={location} setLocation={setLocation} />
-      <br />
-      <br />
-      <br />
+      <MarginEmpty />
       <BottomBar />
       <AddFloatingButton arrival={"/product/add"} />
 
