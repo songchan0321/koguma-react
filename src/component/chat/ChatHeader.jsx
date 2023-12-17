@@ -1,15 +1,39 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import { formatKoreanNumber } from "../../apis/utils/price";
-
-const ChatHeader = ({ product }) => {
+import { useNavigate } from "react-router-dom";
+const NavButton = ({ room, member }) => {
+  const navigator = useNavigate();
+  let text;
+  let clickHandler;
+  if (room.productDTO.tradeStatus === "SALED") {
+    if (
+      room.productDTO.sellerDTO.id === member.id ||
+      (room.productDTO.buyerDTO !== null &&
+        room.productDTO.buyerDTO.id === member.id)
+    )
+      text = "리뷰 있으면 리뷰 보기, 없으면 리뷰 작성 Navi";
+    clickHandler = () => {
+      alert("navi");
+    };
+  } else {
+    text = "상품 정보";
+    clickHandler = () => {
+      navigator(`/product/get/${room.productDTO.id}`);
+    };
+  }
+  return (
+    <Button variant="outlined" size="small" onClick={clickHandler}>
+      {text}
+    </Button>
+  );
+};
+const ChatHeader = ({ room, member }) => {
   return (
     <>
       <div
         style={{
           position: "fixed",
           top: "56px",
-          // display: "flex",
-          // alignItems: "center",
           backgroundColor: "#F5F5DC",
           height: "115px",
           width: "100%",
@@ -30,24 +54,22 @@ const ChatHeader = ({ product }) => {
         </Avatar>
         <div>
           <Typography variant="subtitle1">
-            {product.tradeStatus === "SALE"
+            {room.productDTO.tradeStatus === "SALE"
               ? "판매중"
-              : product.tradeStatus === "SALED"
+              : room.productDTO.tradeStatus === "SALED"
               ? "거래완료"
-              : product.tradeStatus === "RESERVATION"
+              : room.productDTO.tradeStatus === "RESERVATION"
               ? "예약중"
-              : product.tradeStatus === "HIDE"
+              : room.productDTO.tradeStatus === "HIDE"
               ? "숨김"
               : "?"}
             &nbsp;&nbsp;&nbsp;
-            <span style={{ fontSize: "0.9rem" }}>{product.title}</span>
+            <span style={{ fontSize: "0.9rem" }}>{room.productDTO.title}</span>
           </Typography>
           <Typography variant="subtitle1">
-            {formatKoreanNumber(product.price)}
+            {formatKoreanNumber(room.price)}
           </Typography>
-          <Button variant="outlined" size="small">
-            {"송금하기"}
-          </Button>
+          <NavButton room={room} member={member} />
         </div>
       </Box>
     </>

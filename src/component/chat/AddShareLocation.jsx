@@ -26,7 +26,13 @@ import { CHAT_EVENT, SocketContext } from "../../context/socket";
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-const AddShareLocation = ({ handleClose, open, roomId, product }) => {
+const AddShareLocation = ({
+  handleClose,
+  open,
+  roomId,
+  product,
+  sendTextMessageHandler,
+}) => {
   const [level, setLevel] = useState(3);
   const mapRef = useRef();
   const [latitude, setLatitude] = useState(33.5563);
@@ -49,12 +55,18 @@ const AddShareLocation = ({ handleClose, open, roomId, product }) => {
     }
   }, [open]);
   const getCoordinates = () => {
-    socket.emit(CHAT_EVENT.SEND_MESSAGE, {
-      roomId: roomId,
-      type: "LOCATION",
-      message: `${latitude},${longitude}`,
-      token: `${localStorage.getItem("token")}`,
-    });
+    sendTextMessageHandler(
+      `${latitude},${longitude}`,
+      roomId,
+      null,
+      "LOCATION"
+    );
+    // socket.emit(CHAT_EVENT.SEND_MESSAGE, {
+    //   roomId: roomId,
+    //   type: "LOCATION",
+    //   message: `${latitude},${longitude}`,
+    //   token: `${localStorage.getItem("token")}`,
+    // });
 
     handleClose();
   };

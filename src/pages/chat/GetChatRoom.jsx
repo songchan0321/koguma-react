@@ -29,7 +29,11 @@ const GetChatRoom = () => {
   const [product, setProduct] = useState(null);
   const [messages, setMessages] = useState([]);
   const [isWriting, setIsWriting] = useState(false);
-  const sendTextMessageHandler = async (text, roomId, toId) => {
+  const [newMessageOpen, setNewMessageOpen] = useState(false);
+  const newMessageCloseHandler = () => {
+    setNewMessageOpen(false);
+  };
+  const sendTextMessageHandler = async (text, roomId, toId, type) => {
     // 차단 여부 check true:
     // 나간 여부 check 그냥 emit 후 서버에서 알림 발송 x
     // 차단 여부 check false: emit하기 전에
@@ -41,6 +45,7 @@ const GetChatRoom = () => {
           socket.emit(CHAT_EVENT.SEND_MESSAGE, {
             roomId: roomId,
             toId: toId,
+            type: type,
             token: `${localStorage.getItem("token")}`,
             enter_date:
               updateChatroom.buyerDTO.id === member.id
@@ -53,6 +58,7 @@ const GetChatRoom = () => {
         socket.emit(CHAT_EVENT.SEND_MESSAGE, {
           roomId: roomId,
           toId: toId,
+          type: type,
           token: `${localStorage.getItem("token")}`,
           message: text,
         });
@@ -93,6 +99,10 @@ const GetChatRoom = () => {
       console.log("RECEIVED_MESSAGE EVENT!");
       console.log(message);
       setMessages((prev) => [...prev, message]);
+      setNewMessageOpen(true);
+      setTimeout(() => {
+        setNewMessageOpen(false);
+      }, 2000);
     });
   }, []);
   useEffect(() => {
@@ -146,10 +156,12 @@ const GetChatRoom = () => {
           : chatRoom.buyerDTO.nickname}
       </TopBar>
       <MarginEmpty />
-      <ChatHeader product={chatRoom.productDTO} />
+      <ChatHeader room={chatRoom} member={member} />
       <ChatMessageList
         textEvent={textEvent}
         sendTextMessageHandler={sendTextMessageHandler}
+        newMessageOpen={newMessageOpen}
+        newMessageCloseHandler={newMessageCloseHandler}
         member={member}
         product={product}
         room={chatRoom}
