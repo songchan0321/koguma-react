@@ -13,6 +13,7 @@ export default function IconCheckboxes() {
       <Checkbox
         color="secondary"
         {...label}
+        checked={true}
         icon={<FavoriteBorder />}
         checkedIcon={<Favorite />}
       />

@@ -33,8 +33,9 @@ import SuggestPriceComponent from "../../component/product/SuggestPriceComponent
 
 const ProductList = () => {
   const navigate = useNavigate();
-  const [datas, setDatas] = useState(null);
+  const [datas, setDatas] = useState([]);
   const { productId } = useParams();
+  const [isDone, setIsDone] = useState(false);
 
   const getMember = (memberId) => {
     navigate(`/member/other/get/${memberId}`);
@@ -45,7 +46,9 @@ const ProductList = () => {
       try {
         const result = await listSuggestPriceAPI(productId);
         setDatas(result);
+        setIsDone(true);
         console.log(result);
+        console.log("hi");
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -59,10 +62,11 @@ const ProductList = () => {
       <TopBar>가격제안 리스트</TopBar>
       <MarginEmpty />
 
-      {datas ? (
-        datas.map((data, idx) => {
-          return <SuggestPriceComponent data={data} />;
-        })
+      {isDone && datas.length > 0 ? (
+        (console.log(datas),
+        datas.map((suggestData, idx) => (
+          <SuggestPriceComponent key={idx} data={suggestData} />
+        )))
       ) : (
         <NotData />
       )}

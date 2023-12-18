@@ -10,7 +10,9 @@ import {
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MyList from "../../component/product/MyList";
+import Back from "../../component/common/Back";
 import TopBar from "../../component/payment/TopBar";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const MyBuyProduct = () => {
   //   const { clubId } = useParams();
@@ -27,28 +29,21 @@ const MyBuyProduct = () => {
       //     ]
     },
   ]);
-
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       try {
-  //         const data = await getClubAPI(clubId);
-  //         setProduct(data);
-  //         console.log(data.title);
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //     };
-  //     fetchData();
-  //   }, [clubId]); // clubId가 변경될 때마다 데이터를 다시 가져오도록
+  const getProduct = (productId) => {
+    navigate(`/product/get/${productId}`);
+  };
 
   return (
     <>
-      <TopBar children={"내 구매 목록"} />
+      <Back />
+      <TopBar>내 구매 목록</TopBar>
+      <MarginEmpty />
 
       {selectedAction && (
         <MyList
           buttonNM="받은 후기 보기"
           onClick={getProductReview}
+          onClickGetProduct={getProduct}
           selectedActions={selectedAction[0]}
         />
       )}
