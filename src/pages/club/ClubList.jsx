@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CategoryList from "../../component/club/CategoryList";
 import ClubListByCategory from "../../component/club/ClubListByCategory";
-import { Button } from "@mui/material";
+import { Button, Tab, Tabs } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Link } from "react-router-dom";
 import TopBarClub from "../../component/club/common/TopBarClub";
@@ -33,6 +33,7 @@ function ClubList() {
       <div position="fixed" sx={{ textAlign: "center", mb: 1.5 }}>
         <TopBarClub>모임 리스트 </TopBarClub>
       </div>
+
       <div>
         <div
           style={{
@@ -68,7 +69,9 @@ function ClubList() {
             <div>
               <CategoryList onCategorySelect={setSelectedCategoryId} />
               <br />
-              <ClubListByCategory categoryId={selectedCategoryId} />
+              <div style={{ padding: "10px" }}>
+                <ClubListByCategory categoryId={selectedCategoryId} />
+              </div>
             </div>
             <div>
               <Link

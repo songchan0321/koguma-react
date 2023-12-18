@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { categoryListAPI } from "../../apis/api/club";
+import { categoryListAPI } from "../../../apis/api/club";
 import { Button, Grid } from "@mui/material";
 
 const AddClubCategory = ({ onCategorySelect, onNext }) => {

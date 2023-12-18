@@ -144,6 +144,17 @@ export const listClubMemberAPI = async (clubId) => {
   }
 };
 
+export const countClubMemberAPI = async (clubId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/members/count/${clubId}`
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const getClubMemberAPI = async (clubMemberId) => {
   try {
     const { data } = await authInstance.get(
@@ -301,6 +312,25 @@ export const addClubPostCategory = async (clubId, name) => {
       JSON.stringify({
         clubId: clubId,
         name: name,
+      }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const addClubPost = async (clubId, formData) => {
+  try {
+    const { data } = await authInstance.post(
+      `${CLUB_API_URI}/post/add`,
+      JSON.stringify({
+        clubId: clubId,
       }),
       {
         headers: {

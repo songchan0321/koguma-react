@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { checkClubMemberAPI, getClubAPI } from "../../apis/api/club";
-import { Box, Button, CardMedia } from "@mui/material";
+import { BottomNavigationAction, Box, Button, CardMedia } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ClubHome from "../../component/club/ClubHome";
 import ClubHomeMeetUp from "../../component/club/meetUp/ClubHomeMeetUp";
@@ -9,11 +9,15 @@ import ClubHomeClubMember from "../../component/club/clubMember/ClubHomeClubMemb
 import TopBarClub from "../../component/club/common/TopBarClub";
 import JoinRequestButton from "../../component/club/clubMember/JoinRequestButton";
 import ClubSettings from "./ClubSettings";
+import Diversity3Icon from "@mui/icons-material/Diversity3";
+
 import ClubHomePostList from "../../component/club/board/ClubHomePostList";
+import GetClubChat from "./chat/GetClubChat";
+import MapTest from "../../component/club/common/MapTest";
 
 const GetClub = () => {
+  const navigator = useNavigate();
   const { clubId } = useParams();
-  //const dispatch = useDispatch();
   const [club, setClub] = useState({});
   const [clubMember, setClubMember] = useState({});
   const [selectedMenu, setSelectedMenu] = useState("home");
@@ -43,11 +47,22 @@ const GetClub = () => {
     setSelectedMenu(menu);
   };
 
+  const listClubMember = () => {
+    navigator(`/club/members/${clubId}`, {
+      state: { clubMember: clubMember },
+    });
+  };
+
+  const clubSetting = () => {
+    navigator(`/club/settings`, {
+      state: { clubId: clubId },
+    });
+  };
   return (
     <>
       <TopBarClub children={"asd"}>{club.title}</TopBarClub>
       <Box sx={{ overflowY: "auto", maxHeight: "calc(100vh - 80px)" }}>
-        <Box>
+        <Box style={{ display: "flex", alignItems: "center" }}>
           <CardMedia
             component="img"
             height="120"
@@ -56,15 +71,36 @@ const GetClub = () => {
           />
         </Box>
         <hr></hr>
-        <div>
+        <div
+          style={{
+            padding: "10px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <span>
             <h1>{club.title}</h1>
           </span>
-          <span>
-            <Link to={`/club/settings`} state={{ clubId: clubId }}>
-              <SettingsIcon />
-            </Link>
-          </span>
+          <div>
+            <span>
+              <BottomNavigationAction
+                label="모임"
+                value="club"
+                onClick={listClubMember}
+                icon={<Diversity3Icon sx={{ fontSize: "1.5rem" }} />}
+              />
+            </span>
+            <span>
+              <BottomNavigationAction
+                onClick={clubSetting}
+                icon={<SettingsIcon sx={{ fontSize: "1.5rem" }} />}
+              ></BottomNavigationAction>
+              {/* <Link to={`/club/settings`} state={{ clubId: clubId }}>
+                <SettingsIcon />
+              </Link> */}
+            </span>
+          </div>
         </div>
 
         <div style={{ display: "flex", width: "100%" }}>
@@ -108,7 +144,9 @@ const GetClub = () => {
               selectedMenu={selectedMenu}
             />
           )}
-          {selectedMenu === "chatRoom" && <div>채팅 컴포넌트</div>}
+          {selectedMenu === "chatRoom" && (
+            <GetClubChat clubId={clubId} clubMember={clubMember} />
+          )}
         </div>
         {!clubMember.activeFlag === true && (
           <JoinRequestButton clubId={clubId} />

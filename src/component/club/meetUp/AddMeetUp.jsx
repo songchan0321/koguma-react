@@ -1,11 +1,13 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { addMeetUpAPI } from "../../../apis/api/club";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import TopBarClub from "../common/TopBarClub";
+import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import CommonlyUsedComponents from "../common/DatePicker";
 
 const AddMeetUp = () => {
+  const navigate = useNavigate();
   const { clubId } = useParams();
   const navigator = useNavigate();
 
@@ -120,6 +122,13 @@ const AddMeetUp = () => {
             value={meetUp.roadAddr}
             onChange={handleInput}
           />
+          <div>
+            <Link to={`/club/meet-up/add/location`}>
+              <Button>
+                <FmdGoodIcon />
+              </Button>
+            </Link>
+          </div>
         </div>
         {/* <div>
           <CommonlyUsedComponents

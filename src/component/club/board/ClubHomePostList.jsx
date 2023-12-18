@@ -1,13 +1,19 @@
 import { Fab } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import { Link } from "react-router-dom";
 
 const ClubHomePostList = ({ clubId, clubMember }) => {
   return (
     <>
       <div style={fabContainerStyle}>
-        <Fab color="secondary" aria-label="edit">
-          <EditIcon />
-        </Fab>
+        <Link
+          to={"/club/post/add"}
+          state={{ clubId: clubId, clubMember: clubMember }}
+        >
+          <Fab color="secondary" aria-label="edit">
+            <EditIcon />
+          </Fab>
+        </Link>
       </div>
     </>
   );
