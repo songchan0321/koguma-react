@@ -4,7 +4,7 @@ import ClubListByCategory from "../../component/club/ClubListByCategory";
 import { Button } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Link } from "react-router-dom";
-import TopBarClub from "../../component/club/common/TopbarClub";
+import TopBarClub from "../../component/club/common/TopBarClub";
 import TopBar from "../../component/payment/TopBar";
 
 function ClubList() {

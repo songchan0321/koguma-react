@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
-import { listClubJoinRequest } from "../../../apis/api/club";
-import { List } from "@mui/material";
+import {
+  acceptJoinRequestAPI,
+  listClubJoinRequest,
+  rejectJoinRequestAPI,
+} from "../../../apis/api/club";
+import { Button, List } from "@mui/material";
 
 const ListClubJoinRequest = ({ clubId }) => {
   const [joinRequests, setJoinRequests] = useState([]);
@@ -17,6 +21,32 @@ const ListClubJoinRequest = ({ clubId }) => {
     fetchData();
   }, [clubId]);
 
+  const handleReject = async (id) => {
+    try {
+      const response = await rejectJoinRequestAPI(id);
+      const updatedJoinRequests = joinRequests.filter(
+        (request) => request.id !== id
+      );
+      setJoinRequests(updatedJoinRequests);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleAccept = async (id) => {
+    try {
+      const response = await acceptJoinRequestAPI(id);
+      const updatedJoinRequests = joinRequests.filter(
+        (request) => request.id !== id
+      );
+      setJoinRequests(updatedJoinRequests);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <div>
@@ -24,14 +54,34 @@ const ListClubJoinRequest = ({ clubId }) => {
         <List sx={{ width: "100%", bgcolor: "background.paper" }}>
           {joinRequests &&
             joinRequests.map((JoinRequest) => (
-              <div
-                key={JoinRequest.id}
-                onClick={() =>
-                  navigator(`/club/join/request/${JoinRequest.id}`)
-                }
-                style={backgroundStyle}
-              >
-                {JoinRequest.nickname}
+              <div key={JoinRequest.id} style={backgroundStyle}>
+                <div>
+                  <span>활동명: </span>
+                  <span>{JoinRequest.nickname}</span>
+                </div>
+                <div>
+                  <span>자기소개: </span>
+                  <span>{JoinRequest.content}</span>
+                </div>
+                <div>
+                  {" "}
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    style={{ width: "35%", left: 10 }}
+                    onClick={() => handleAccept(JoinRequest.id)}
+                  >
+                    승인
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    style={{ width: "35%", left: 60 }}
+                    onClick={() => handleReject(JoinRequest.id)}
+                  >
+                    거절
+                  </Button>
+                </div>
               </div>
             ))}
         </List>

@@ -3,7 +3,7 @@ import { authInstance, defaultInstance } from "../utils/instance";
 
 const CLUB_API_URI = `/club`;
 
-//== 1. 모임 2. 모임원 3. 만남  ==//
+//== 1. 모임 2. 모임원 3. 만남  4. 포스트==//
 
 //-- 1. 모임 -- //
 export const getClubAPI = async (clubId) => {
@@ -65,6 +65,17 @@ export const checkClubMemberAPI = async (clubId) => {
   }
 };
 
+export const checkJoinRequestAPI = async (clubId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/check/join/request/${clubId}`
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const joinRequestAPI = async (clubId, joinProfile) => {
   try {
     alert(joinProfile.nickname);
@@ -82,6 +93,39 @@ export const joinRequestAPI = async (clubId, joinProfile) => {
           "Content-Type": "application/json",
         },
       }
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const cancelJoinReauestAPI = async (clubId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/join/request/cancel/${clubId}`
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const rejectJoinRequestAPI = async (joinId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/reject/join/${joinId}`
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const acceptJoinRequestAPI = async (joinId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/accept/join/${joinId}`
     );
     return data;
   } catch (err) {
@@ -134,10 +178,10 @@ export const listClubJoinRequest = async (clubId) => {
 //   }
 // };
 
-export const listMeetUpAPI = async (clubId) => {
+export const listMeetUpAPI = async (clubId, type) => {
   try {
     const { data } = await authInstance.get(
-      `${CLUB_API_URI}/meet-up/list/${clubId}`
+      `${CLUB_API_URI}/meet-up/list/${clubId}?meetUpType=${type}`
     );
     return data;
   } catch (err) {
@@ -150,22 +194,28 @@ export const addMeetUpAPI = async (
   title,
   content,
   maxCapacity,
+  meetDate,
   roadAddr
 ) => {
   alert(title);
+  alert(content);
+  alert(maxCapacity);
+
   try {
     await authInstance.post(
       `${CLUB_API_URI}/add/meet-up`,
 
       JSON.stringify({
         clubDTO: {
-          id: 4,
+          id: clubId,
         },
+        clubId: clubId,
         title: title,
-        content: content,
-        maxCapacity: maxCapacity,
-        meetDate: null, // 서버에서 설정하거나 적절한 값으로 가정
-        roadAddr: roadAddr,
+        meetUpType: "null",
+        // content: content,
+        // maxCapacity: maxCapacity,
+        // //meetDate: meetDate, // 서버에서 설정하거나 적절한 값으로 가정
+        // roadAddr: roadAddr,
       }),
 
       {
@@ -220,8 +270,45 @@ export const joinMeetUpCancelAPI = async (clubId, meetUpId, isJoined) => {
         clubId: clubId,
         meetUpId: meetUpId,
         isJoined: isJoined,
-      })
+      }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+///== 4. 모임 포스트 ==///
+export const listClubPostCategories = async (clubId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/post/categories/${clubId}`
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const addClubPostCategory = async (clubId, name) => {
+  try {
+    const { data } = await authInstance.post(
+      `${CLUB_API_URI}/post/category/add`,
+      JSON.stringify({
+        clubId: clubId,
+        name: name,
+      }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
   } catch (err) {
     console.log(err);
   }

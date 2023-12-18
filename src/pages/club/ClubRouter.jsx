@@ -10,6 +10,8 @@ import store from "../../store";
 import JoinRequest from "./clubMember/JoinReques";
 import ListClubMember from "../../component/club/clubMember/ListClubMember";
 import GetClubMember from "./clubMember/GetClubMember";
+import ClubSettings from "./ClubSettings";
+import ListClubPostCategory from "./board/ListClubPostCategory";
 
 const ClubRouter = () => {
   return (
@@ -22,6 +24,8 @@ const ClubRouter = () => {
       <Route path="/join/request" element={<JoinRequest />} />
       <Route path="/members/:clubId" element={<ListClubMember />} />
       <Route path="/member/:clubMemberId" element={<GetClubMember />} />
+      <Route path="/settings" element={<ClubSettings />} />
+      <Route path="/post/category/add" element={<ListClubPostCategory />} />
     </Routes>
   );
 };

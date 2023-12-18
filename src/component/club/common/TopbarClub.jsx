@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import Back from "../common/Back";
+import Back from "./Back";
 
 const TopBarClub = ({ children, color = "none" }) => {
   return (

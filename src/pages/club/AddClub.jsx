@@ -13,22 +13,80 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Paper,
+  createTheme,
 } from "@mui/material";
+import CategoryList from "../../component/club/CategoryList";
+import { categoryListAPI } from "../../apis/api/club";
+import styled, { ThemeProvider } from "styled-components";
 
-const SetCategory = ({ onNext }) => (
-  <div>
-    <Typography variant="h5">어떤 모임을 만들까요 ?</Typography>
-    {/* Step 1 내용 및 이벤트 처리 */}
-    <Button
-      onClick={onNext}
-      variant="contained"
-      color="secondary"
-      style={fixedButtonStyle}
-    >
-      다음
-    </Button>
-  </div>
-);
+const SetCategory = ({ onNext }) => {
+  const [selectCategory, setSelectCategory] = useState();
+  const [categories, setCategories] = useState([]);
+  const darkTheme = createTheme({ palette: { mode: "dark" } });
+  const lightTheme = createTheme({ palette: { mode: "light" } });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await categoryListAPI();
+        console.log(data);
+        setCategories(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleCategorySelect = (selectedCatgoryId) => {
+    console.log(`선택된 카테고리: ${selectedCatgoryId}`);
+  };
+  const buttonsPerRow = 3;
+  const rows = Math.ceil(categories.length / buttonsPerRow);
+
+  const Item = styled(Paper)(({ theme }) => ({
+    ...theme.typography.body2,
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    height: 60,
+    lineHeight: "60px",
+  }));
+
+  return (
+    <>
+      {/* <Button
+        //onClick={() => onNext(selectedCategoryId)}
+        variant="contained"
+        color="secondary"
+      >
+        다음
+      </Button> */}
+      <Grid container spacing={2}>
+        {[lightTheme, darkTheme].map((theme, index) => (
+          <Grid item xs={6} key={index}>
+            <ThemeProvider theme={theme}>
+              <Box
+                sx={{
+                  p: 2,
+                  borderRadius: 2,
+                  bgcolor: "background.default",
+                  display: "grid",
+                  gridTemplateColumns: { md: "1fr 1fr" },
+                  gap: 2,
+                }}
+              >
+                {categories.map((category) => (
+                  <Item key={category.id}>{category.name}</Item>
+                ))}
+              </Box>
+            </ThemeProvider>
+          </Grid>
+        ))}
+      </Grid>
+    </>
+  );
+};
 
 const SetDetail = ({ onBack, onNext }) => {
   const [clubName, setClubName] = useState("");
@@ -294,4 +352,15 @@ const fixedButtonStyle = {
   width: "90%",
   padding: "5px",
   textAlign: "center",
+};
+
+const containerStyle = {
+  display: "flex",
+  flexWrap: "wrap",
+  justifyContent: "space-around", // 중앙 정렬
+  marginTop: "16px", // 픽셀 단위로 지정
+};
+
+const buttonStyle = {
+  margin: "8px", // 픽셀 단위로 지정
 };

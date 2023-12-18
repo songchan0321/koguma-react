@@ -2,10 +2,14 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { checkClubMemberAPI, getClubAPI } from "../../apis/api/club";
 import { Box, Button, CardMedia } from "@mui/material";
+import SettingsIcon from "@mui/icons-material/Settings";
 import ClubHome from "../../component/club/ClubHome";
 import ClubHomeMeetUp from "../../component/club/meetUp/ClubHomeMeetUp";
 import ClubHomeClubMember from "../../component/club/clubMember/ClubHomeClubMember";
-import TopBarClub from "../../component/club/common/TopbarClub";
+import TopBarClub from "../../component/club/common/TopBarClub";
+import JoinRequestButton from "../../component/club/clubMember/JoinRequestButton";
+import ClubSettings from "./ClubSettings";
+import ClubHomePostList from "../../component/club/board/ClubHomePostList";
 
 const GetClub = () => {
   const { clubId } = useParams();
@@ -53,7 +57,14 @@ const GetClub = () => {
         </Box>
         <hr></hr>
         <div>
-          <h1>{club.title}</h1>
+          <span>
+            <h1>{club.title}</h1>
+          </span>
+          <span>
+            <Link to={`/club/settings`} state={{ clubId: clubId }}>
+              <SettingsIcon />
+            </Link>
+          </span>
         </div>
 
         <div style={{ display: "flex", width: "100%" }}>
@@ -87,7 +98,9 @@ const GetClub = () => {
               </div>
             </div>
           )}
-          {selectedMenu === "board" && <div>게시판 컴포넌트</div>}
+          {selectedMenu === "board" && (
+            <ClubHomePostList clubId={clubId} clubMember={clubMember} />
+          )}
           {selectedMenu === "meetUp" && (
             <ClubHomeMeetUp
               clubId={clubId}
@@ -98,15 +111,7 @@ const GetClub = () => {
           {selectedMenu === "chatRoom" && <div>채팅 컴포넌트</div>}
         </div>
         {!clubMember.activeFlag === true && (
-          <Link to={"/club/join/request"} state={{ clubId: clubId }}>
-            <Button
-              variant="contained"
-              color="secondary"
-              style={fixedButtonStyle}
-            >
-              모임 가입하기
-            </Button>
-          </Link>
+          <JoinRequestButton clubId={clubId} />
         )}
       </Box>
     </>

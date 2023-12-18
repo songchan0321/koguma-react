@@ -11,7 +11,7 @@ const ClubMeetUpList = ({ clubId, meetUpState, clubMember }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await listMeetUpAPI(clubId);
+        const data = await listMeetUpAPI(clubId, meetUpState);
         setMeetUpList(data);
       } catch (err) {
         console.log(err);

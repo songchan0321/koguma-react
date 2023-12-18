@@ -12,7 +12,7 @@ import {
 import { listClubByCategoryAPI } from "../../apis/api/club";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import TopBarClub from "./common/TopbarClub";
+import TopBarClub from "./common/TopBarClub";
 
 const ClubListByCategory = ({ categoryId }) => {
   const [listClub, setListClub] = useState([]);

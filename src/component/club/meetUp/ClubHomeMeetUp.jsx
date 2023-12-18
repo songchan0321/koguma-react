@@ -8,8 +8,8 @@ import ClubMeetUpList from "./ClubMeetUpList";
 
 const ClubHomeMeetUp = ({ clubId, clubMember, selectedMenu }) => {
   const [meetUp, setMeetUp] = useState({});
-  const [meetUpState, setMeetUpState] = useState("예정된 일정");
-  const meetUpMenu = ["예정된 일정", "종료된 일정"];
+  const [meetUpState, setMeetUpState] = useState("SCHEDULE");
+  const meetUpMenu = ["SCHEDULE", "COMPLETE"];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,11 +52,11 @@ const ClubHomeMeetUp = ({ clubId, clubMember, selectedMenu }) => {
                 color="secondary"
                 style={{ flex: 1 }}
               >
-                {menu}
+                {menu === "SCHEDULE" ? "예정된 일정" : "종료된 일정"}
               </Button>
             ))}
           </div>
-          {meetUpState === "예정된 일정" ? (
+          {meetUpState === "SCHEDULE" ? (
             <ClubMeetUpList
               clubId={clubId}
               meetUpState={meetUpState}

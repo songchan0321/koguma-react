@@ -3,6 +3,7 @@ import { checkClubMemberAPI, joinRequestAPI } from "../../../apis/api/club";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { Container } from "react-bootstrap";
 import { useState } from "react";
+import TopBarClub from "../../../component/club/common/TopBarClub";
 
 const JoinRequest = () => {
   const location = useLocation();
@@ -21,9 +22,11 @@ const JoinRequest = () => {
   const handleConfirm = async () => {
     try {
       console.log(joinProfile);
+      console.log(clubId);
       // API 호출을 통해 서버에 값을 전달
       const response = await joinRequestAPI(clubId, joinProfile);
       console.log(response);
+      alert("신청이 완료됐습니다!");
       navigator("/club/" + clubId);
     } catch (err) {
       console.log(err);
@@ -32,8 +35,11 @@ const JoinRequest = () => {
 
   return (
     <div>
+      <TopBarClub color={"secondary"}>가입 신청</TopBarClub>
       <div>
-        <Typography variant="h4">모임장 승인이 필요합니다. </Typography>
+        <Typography variant="h4" color={"secondary"}>
+          모임장 승인이 필요합니다.{" "}
+        </Typography>
       </div>
       <Typography variant="h6">활동명과 자기소개를 기재해주세요. </Typography>
 
