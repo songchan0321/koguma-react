@@ -22,6 +22,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import LikeCheckButton from "../../component/common/LikeCheckButton";
 import LoadingProgress from "../common/LoadingProgress";
 import { formatMoney } from "../../apis/services/product";
+import { formatTimeAgo } from "../../apis/utils/timestamp";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -36,87 +37,169 @@ const ExpandMore = styled((props) => {
 
 const ListContainingProduct = ({ data, index, type }) => {
   const navigate = useNavigate();
-
+  console.log(data);
+  console.log(type);
   const getProduct = (productId) => {
     navigate(`/product/get/${productId}`);
   };
 
   return (
     <>
-      {data ? (
+      {data && data.length > 0 ? (
         <>
-          {data.map((prod, idx) => (
-            <Card
-              id={prod.id}
-              sx={{ maxWidth: "100%" }}
-              onClick={() => getProduct(prod.id)}
-            >
-              <CardHeader
-                avatar={
-                  <CardMedia
-                    component="img"
-                    height="120"
-                    image={
-                      prod.imageDTO && prod.imageDTO.length > 0
-                        ? prod.imageDTO[0].url
-                        : "/photo.png"
+          {type === "like"
+            ? data.map((prod, idx) => (
+                <Card
+                  id={prod.productDTO.id}
+                  sx={{ maxWidth: "100%" }}
+                  onClick={() => getProduct(prod.productDTO.id)}
+                >
+                  <CardHeader
+                    avatar={
+                      <CardMedia
+                        component="img"
+                        height="120"
+                        image={
+                          prod.productDTO.imageDTO &&
+                          prod.productDTO.imageDTO.length > 0
+                            ? prod.productDTO.imageDTO[0].url
+                            : "/photo.png"
+                        }
+                        alt="/photo.png"
+                      />
                     }
-                    alt="/photo.png"
-                  />
-                }
-                action={
-                  type === "report" ? (
-                    <IconButton
-                      aria-label="settings"
-                      onClick={() => console.log("이 상품 신고하기")}
-                    >
-                      <FeedbackIcon />
-                    </IconButton>
-                  ) : (
-                    <IconButton
-                      aria-label="settings"
-                      onClick={() => console.log("좋아요 추가 취소")}
-                    >
-                      <LikeCheckButton />
-                    </IconButton>
-                  )
-                }
-                title={
-                  <Box>
-                    <Typography variant="h6" color="textSecondary">
-                      {prod.title}
-                    </Typography>
-                  </Box>
-                }
-                subheader={
-                  <>
-                    <Typography variant="subtitle2" color="textSecondary">
-                      {prod.dong}, 끌어올린 시간
-                    </Typography>
-                    <Box
-                      sx={{ display: "flex", justifyContent: "space-between" }}
-                    >
-                      <div>
+                    action={
+                      type === "report" ? (
+                        <IconButton
+                          aria-label="settings"
+                          onClick={() => console.log("이 상품 신고하기")}
+                        >
+                          <FeedbackIcon />
+                        </IconButton>
+                      ) : (
+                        <IconButton
+                          aria-label="settings"
+                          onClick={() => console.log("좋아요 추가 취소")}
+                        >
+                          <LikeCheckButton />
+                        </IconButton>
+                      )
+                    }
+                    title={
+                      <Box>
                         <Typography variant="h6" color="textSecondary">
-                          {formatMoney(prod.price)}원
+                          {prod.productDTO.title}
                         </Typography>
-                      </div>
-                      <div id="icongroup" sx={{ marginTop: 100 }}>
-                        <IconButton aria-label="add to favorites">
-                          <FavoriteBorderIcon />
+                      </Box>
+                    }
+                    subheader={
+                      <>
+                        <Typography variant="subtitle2" color="textSecondary">
+                          {prod.productDTO.dong}{" "}
+                          {formatTimeAgo(prod.productDTO.regDate)}
+                        </Typography>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <div>
+                            <Typography variant="h6" color="textSecondary">
+                              {formatMoney(prod.productDTO.price)}원
+                            </Typography>
+                          </div>
+                          <div id="icongroup" sx={{ marginTop: 100 }}>
+                            <IconButton aria-label="add to favorites">
+                              <FavoriteBorderIcon />
+                            </IconButton>
+                            1
+                            <IconButton aria-label="add to favorites">
+                              <ChatBubbleOutlineIcon />
+                            </IconButton>
+                            5
+                          </div>
+                        </Box>
+                      </>
+                    }
+                  />
+                </Card>
+              ))
+            : data.map((prod, idx) => (
+                <Card
+                  id={prod.id}
+                  sx={{ maxWidth: "100%" }}
+                  onClick={() => getProduct(prod.id)}
+                >
+                  <CardHeader
+                    avatar={
+                      <CardMedia
+                        component="img"
+                        height="120"
+                        image={
+                          prod.imageDTO && prod.imageDTO.length > 0
+                            ? prod.imageDTO[0].url
+                            : "/photo.png"
+                        }
+                        alt="/photo.png"
+                      />
+                    }
+                    action={
+                      type === "report" ? (
+                        <IconButton
+                          aria-label="settings"
+                          onClick={() => console.log("이 상품 신고하기")}
+                        >
+                          <FeedbackIcon />
                         </IconButton>
-                        1
-                        <IconButton aria-label="add to favorites">
-                          <ChatBubbleOutlineIcon />
+                      ) : (
+                        <IconButton
+                          aria-label="settings"
+                          onClick={() => console.log("좋아요 추가 취소")}
+                        >
+                          <LikeCheckButton />
                         </IconButton>
-                        5
-                      </div>
-                    </Box>
-                  </>
-                }
-              />
-            </Card>
-          ))}
+                      )
+                    }
+                    title={
+                      <Box>
+                        <Typography variant="h6" color="textSecondary">
+                          {prod.title}
+                        </Typography>
+                      </Box>
+                    }
+                    subheader={
+                      <>
+                        <Typography variant="subtitle2" color="textSecondary">
+                          {prod.dong} {formatTimeAgo(prod.regDate)}
+                        </Typography>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <div>
+                            <Typography variant="h6" color="textSecondary">
+                              {formatMoney(prod.price)}원
+                            </Typography>
+                          </div>
+                          <div id="icongroup" sx={{ marginTop: 100 }}>
+                            <IconButton aria-label="add to favorites">
+                              <FavoriteBorderIcon />
+                            </IconButton>
+                            1
+                            <IconButton aria-label="add to favorites">
+                              <ChatBubbleOutlineIcon />
+                            </IconButton>
+                            5
+                          </div>
+                        </Box>
+                      </>
+                    }
+                  />
+                </Card>
+              ))}
         </>
       ) : (
         <LoadingProgress />

@@ -7,90 +7,229 @@ import {
   Avatar,
   IconButton,
   Typography,
+  AppBar,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MyList from "../../component/product/MyList";
+
+import Back from "../../component/common/Back";
 import TopBar from "../../component/payment/TopBar";
+import MarginEmpty from "../../component/payment/MarginEmpty";
+import {
+  listProductBySaleAPI,
+  listProductByBuyAPI,
+  raiseProductAPI,
+  updateTradeStateAPI,
+  deleteProductAPI,
+} from "../../apis/api/Product";
 
 const MySaleProduct = () => {
   //   const { clubId } = useParams();
   const navigate = useNavigate();
-  const [product, setProduct] = useState({});
-  const [selectedAction, setSelectedAction] = useState([
+  const [selectedActionSale, setSelectedActionSale] = useState([
     {
-      name: ["예약중", "거래완료", "게시글 수정", "숨기기", "삭제"],
-      //  action:[handleReservation(),
-      //          '2','3','4','5,'
-      //   ]
+      name: "예약중",
+      action: (productId) => updateTradeState(productId, "RESERVATION"),
     },
-    { name: ["판매중", "게시글 수정", "거래 후기 작성", "숨기기", "삭제"] },
-    { name: ["게시글 수정", "삭제"] },
+    {
+      name: "거래완료",
+      action: (productId) => updateTradeState(productId, "SALED"),
+    },
+    {
+      name: "게시글 수정",
+      action: (productId) => console.log(productId),
+    },
+    {
+      name: "숨기기",
+      action: (productId) => updateTradeState(productId, "HIDE"),
+    },
+    {
+      name: "삭제",
+      action: (productId) => deleteProduct(productId),
+    },
   ]);
-  const [selectedMenu, setSelectedMenu] = useState("판매 중");
-  const menuList = ["판매 중", "판매 완료", "숨김 중"];
+  const [selectedActionSaled, setSelectedActionSaled] = useState([
+    {
+      name: "판매중",
+      action: (productId) => updateTradeState(productId, "SALE"),
+    },
+    {
+      name: "게시글 수정",
+      action: (productId) => console.log(productId),
+    },
+    {
+      name: "거래 후기 작성",
+      action: (productId) => console.log(productId),
+    },
+    {
+      name: "숨기기",
+      action: (productId) => updateTradeState(productId, "HIDE"),
+    },
+    {
+      name: "삭제",
+      action: (productId) => deleteProduct(productId),
+    },
+  ]);
+  const [selectedActionReservation, setSelectedActionReservation] = useState([
+    {
+      name: "판매중",
+      action: (productId) => updateTradeState(productId, "SALE"),
+    },
+    {
+      name: "거래완료",
+      action: (productId) => updateTradeState(productId, "SALED"),
+    },
+    {
+      name: "게시글 수정",
+      action: (productId) => console.log(productId),
+    },
+    {
+      name: "숨기기",
+      action: (productId) => updateTradeState(productId, "HIDE"),
+    },
+    {
+      name: "삭제",
+      action: (productId) => deleteProduct(productId),
+    },
+  ]);
+  const [selectedActionHide, setSelectedActionHide] = useState([
+    {
+      name: "게시글 수정",
+      action: (productId) => console.log(productId),
+    },
+    {
+      name: "삭제",
+      action: (productId) => deleteProduct(productId),
+    },
+  ]);
 
-  const getProductReview = () => {
-    navigate("/product/review/get");
-  };
-  const raiseProduct = () => {
-    alert("상품 끌어올리기");
+  const [selectedMenu, setSelectedMenu] = useState("판매 중");
+  const [selectedMenuType, setSelectedMenuType] = useState("SALE");
+  const menuList = ["판매 중", "판매 완료", "예약 중", "숨김 중"];
+  const menuListEng = ["SALE", "SALED", "RESERVATION", "HIDE"];
+  const [alert, setAlert] = useState(null);
+
+  const getProductReview = (productId) => {
+    navigate(`/product/review/get/${productId}`);
   };
   const addHide = () => {
     alert("hide");
   };
 
-  const selectActionHandler = () => {};
-  const handleMenuClick = (menu) => {
-    setSelectedMenu(menu);
+  const handleMenuClick = (idx) => {
+    setSelectedMenu(menuList[idx]);
+    setSelectedMenuType(menuListEng[idx]);
+  };
+
+  const getProduct = (productId) => {
+    navigate(`/product/get/${productId}`);
+  };
+
+  const raiseProduct = async (productId) => {
+    try {
+      const response = await raiseProductAPI(productId);
+      console.log(response);
+      setAlert(
+        <Alert severity="success">
+          <AlertTitle>Success</AlertTitle>
+          끌어올리기 성공!
+        </Alert>
+      );
+    } catch (err) {
+      console.log(err);
+      setAlert(
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          {err.response.data}
+        </Alert>
+      );
+    }
+  };
+  const updateTradeState = async (prodcutId, type) => {
+    // 상품 상태 변경 axios 요청
+    await updateTradeStateAPI(prodcutId, type);
+  };
+  const updateTradeStateByReservation = async (prodcutId) => {
+    //예약중인 상품을 판매중으로 변경
+    await updateTradeStateAPI(prodcutId, "SALE");
+  };
+  const deleteProduct = async (productId) => {
+    await deleteProductAPI(productId);
   };
 
   return (
     <>
-      <TopBar children={"나의 판매 내역"} />
-      <CardHeader
-        sx={{ m: 4 }}
-        title="나의 판매내역"
-        avatar={<Avatar aria-label="recipe">R</Avatar>}
-      />
-      <div>
-        <h1>{product.title}</h1>
-      </div>
+      <Back />
+      <TopBar>내 판매 내역</TopBar>
+      <MarginEmpty />
+      <MarginEmpty value={"160px"} />
+      <AppBar
+        position="fixed"
+        style={{
+          backgroundColor: "#ffffff",
+          zIndex: 90,
+        }}
+      >
+        <MarginEmpty value={"50px"} />
+        <CardHeader
+          sx={{ m: 4, color: "black" }}
+          title="나의 판매내역"
+          // avatar={<Avatar aria-label="recipe">R</Avatar>}
+        />
 
-      <div style={{ display: "flex", width: "100%" }}>
-        {menuList.map((menu) => (
-          <Button
-            key={menu}
-            onClick={() => handleMenuClick(menu)}
-            variant={selectedMenu === menu ? "contained" : "outlined"}
-            color="secondary"
-            style={{ flex: 1 }}
-          >
-            {menu}
-          </Button>
-        ))}
-      </div>
+        <div style={{ display: "flex", width: "100%" }}>
+          {menuList.map((menu, idx) => (
+            <Button
+              key={menu}
+              onClick={() => handleMenuClick(idx)}
+              variant={selectedMenu === menu ? "contained" : "outlined"}
+              color="secondary"
+              style={{ flex: 1 }}
+            >
+              {menu}
+            </Button>
+          ))}
+        </div>
+      </AppBar>
+
       <hr></hr>
 
-      {selectedMenu === "판매 중" && selectedAction && (
+      {selectedMenu === "판매 중" && (
         <MyList
+          selectedMenuType={selectedMenuType}
           buttonNM="끌어올리기"
           onClick={raiseProduct}
-          selectedActions={selectedAction[0]}
+          onClickGetProduct={getProduct}
+          selectedActions={selectedActionSale}
         />
       )}
-      {/* {selectedMenu === "meetUp" && <ClubHomeMeetUp clubId={clubId} />} */}
-      {selectedMenu === "판매 완료" && selectedAction && (
+
+      {selectedMenu === "판매 완료" && (
         <MyList
+          selectedMenuType={selectedMenuType}
           buttonNM="받은 후기 보기"
           onClick={getProductReview}
-          selectedActions={selectedAction[1]}
+          onClickGetProduct={getProduct}
+          selectedActions={selectedActionSaled}
         />
       )}
-      {selectedMenu === "숨김 중" && selectedAction && (
+      {selectedMenu === "예약 중" && (
         <MyList
+          selectedMenuType={selectedMenuType}
+          buttonNM="예약 해제"
+          onClick={updateTradeStateByReservation}
+          onClickGetProduct={getProduct}
+          selectedActions={selectedActionReservation}
+        />
+      )}
+      {selectedMenu === "숨김 중" && (
+        <MyList
+          selectedMenuType={selectedMenuType}
           buttonNM="숨기기 해제"
           onClick={addHide}
-          selectedActions={selectedAction[2]}
+          onClickGetProduct={getProduct}
+          selectedActions={selectedActionHide}
         />
       )}
     </>

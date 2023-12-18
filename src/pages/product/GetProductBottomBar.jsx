@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
 import { Badge, Paper } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import LikeCheckButton from "../../component/common/LikeCheckButton";
+import LikeProduct from "../../component/product/LikeProduct";
 import {
   Card,
   CardHeader,
@@ -66,9 +66,7 @@ const GetProductBottomBar = ({ data, isMine }) => {
       >
         <StyledCardActions>
           <div>
-            <IconButton aria-label="add to favorites">
-              <LikeCheckButton />
-            </IconButton>
+            <LikeProduct prodId={data.id} />
             <span>{formatMoney(data.price)}원</span>
           </div>
           {isMine ? ( // 판매자일때 가격제안 리스트를 확인 nav
