@@ -5,11 +5,11 @@ import { Box, Grid, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import UpdateMemberForm from "../../component/member/UpdateMemberForm";
 import { authInstance } from "../../apis/utils/instance";
-import ProfileForm from "../../component/member/ProfileForm";
 
 const UpdateMember = () => {
     const navigate = useNavigate();
     const [member, setMember] = useState();
+    const [profileImageUrl, setProfileImageUrl] = useState(null);
 
     useEffect(() => {
         const fetchMemberData = async () => {
@@ -20,7 +20,9 @@ const UpdateMember = () => {
                     },
                 });
                 setMember(response.data);
-                console.log(response.data);
+                console.log(profileImageUrl)
+                // 멤버의 ID를 기반으로 프로필 이미지를 가져오는 부분 수정
+
             } catch (error) {
                 console.error("오류 발생: ", error);
             }
@@ -46,15 +48,17 @@ const UpdateMember = () => {
         <Box p={3} sx={{ overflowY: 'auto', maxHeight: 'calc(100vh - 64px)' }}>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={4}>
+                    {member &&
                     <img
-                        src="path/to/profile/image.jpg"
+                        src={member.profileURL}
                         alt="Profile"
-                        style={{ width: "100%", borderRadius: "50%" }}
+                        style={{ width: "20%", borderRadius: "20%" }}
                     />
+                    }
                 </Grid>
                 <Grid item xs={12} md={8}>
                     <Typography variant="h4" gutterBottom>
-                        {member?.nickname || "닉네임이 없습니다."}
+                        {member?.nickname || "로딩 중."}
                     </Typography>
                     {/* ProfileForm 대신 UpdateMemberForm 사용 */}
                     <UpdateMemberForm member={member} onUpdateSuccess={handleUpdateSuccess} />
