@@ -9,7 +9,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useRef, useState } from "react";
 import { Avatar, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import PhotoIcon from "@mui/icons-material/Photo";
@@ -23,13 +23,20 @@ import AddPlan from "./AddPlan";
 import { useNavigate } from "react-router-dom";
 import RequestTransferForm from "./RequstTransferForm";
 import LeaveCheck from "./LeaveCheck";
-const ChatPlusButton = ({ roomId, product }) => {
+import { addImageAPI, uploadImageAPI } from "../../apis/api/common";
+import { CHAT_EVENT, SocketContext } from "../../context/socket";
+import LoadingBackdrop from "../common/LoadingBackdrop";
+const ChatPlusButton = ({ roomId, product, sendTextMessageHandler }) => {
+  const socket = useContext(SocketContext);
   const navigator = useNavigate();
   const [state, setState] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [locationModalOpen, setLocationModalOpen] = useState(false);
   const [planModalOpen, setPlanModalOpen] = useState(false);
   const [requestModalOpen, setRequestModalOpen] = useState(false);
   const [leaveModalOpen, setLeaveModalOpen] = useState(false);
+  const [imageLoadingModalOpen, setImageLoadingModalOpen] = useState(false);
+  const imageRef = useRef(null);
   const handleLocationModalClickOpen = () => {
     setLocationModalOpen(true);
   };
@@ -60,6 +67,47 @@ const ChatPlusButton = ({ roomId, product }) => {
   const handleLeaveModalClose = () => {
     setLeaveModalOpen(false);
   };
+
+  const imageUploadHandler = (event) => {
+    const formData = new FormData();
+
+    Object.keys(event.target.files).forEach((key) => {
+      formData.append("file", event.target.files[key]);
+    });
+    (async () => {
+      setImageLoadingModalOpen(true);
+      const intervalId = setInterval(() => {
+        setProgress((prev) => (prev < 80 ? prev + 5 : prev));
+      }, 500);
+      await uploadImageAPI(formData)
+        .then((data) => {
+          setProgress(90);
+          return addImageAPI(
+            data.map((url) => {
+              return {
+                URL: url,
+                imageType: "0",
+                repImageFlag: true,
+              };
+            })
+          );
+        })
+        .then((data) => {
+          data.forEach((image) => {
+            sendTextMessageHandler(`${image.url}`, roomId, null, "IMAGE");
+          });
+        })
+        .catch((err) => {
+          alert(err);
+          clearInterval(intervalId);
+          setProgress(0);
+          setImageLoadingModalOpen(false);
+        });
+      clearInterval(intervalId);
+      setProgress(0);
+      setImageLoadingModalOpen(false);
+    })();
+  };
   const toggleDrawer = (open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -88,7 +136,9 @@ const ChatPlusButton = ({ roomId, product }) => {
                       sx={{ width: 34, height: 34, bgcolor: "#F3C73C" }}
                       onClick={() =>
                         navigator("/payment/transfer", {
-                          state: { roomId: roomId },
+                          state: {
+                            roomId: roomId,
+                          },
                         })
                       }
                     >
@@ -109,7 +159,9 @@ const ChatPlusButton = ({ roomId, product }) => {
                   [
                     () =>
                       navigator("/payment/transfer", {
-                        state: { roomId: roomId },
+                        state: {
+                          roomId: roomId,
+                        },
                       }),
                     handleRequestModalClickOpen,
                   ][index]
@@ -145,11 +197,16 @@ const ChatPlusButton = ({ roomId, product }) => {
                   ][index]
                 }
               </ListItemIcon>
+
               <ListItemText
                 onClick={
-                  [handlePlanModalClickOpen, handleLocationModalClickOpen][
-                    index
-                  ]
+                  [
+                    handlePlanModalClickOpen,
+                    handleLocationModalClickOpen,
+                    () => {
+                      imageRef.current.click();
+                    },
+                  ][index]
                 }
                 primary={text}
               />
@@ -198,17 +255,21 @@ const ChatPlusButton = ({ roomId, product }) => {
           {list()}
         </Drawer>
         <AddShareLocation
+          sendTextMessageHandler={sendTextMessageHandler}
           roomId={roomId}
           product={product}
           open={locationModalOpen}
           handleClose={handleLocationModalClose}
         />
         <AddPlan
+          sendTextMessageHandler={sendTextMessageHandler}
           roomId={roomId}
           open={planModalOpen}
           handleClose={handlePlanModalClose}
         />
         <RequestTransferForm
+          sendTextMessageHandler={sendTextMessageHandler}
+          roomId={roomId}
           open={requestModalOpen}
           handleClose={handleRequestModalClose}
         />
@@ -217,6 +278,14 @@ const ChatPlusButton = ({ roomId, product }) => {
           open={leaveModalOpen}
           handleClose={handleLeaveModalClose}
         />
+        <input
+          type="file"
+          style={{ display: "none" }}
+          ref={imageRef}
+          onChange={imageUploadHandler}
+          multiple
+        />
+        <LoadingBackdrop open={imageLoadingModalOpen} progress={progress} />
       </Fragment>
     </div>
   );

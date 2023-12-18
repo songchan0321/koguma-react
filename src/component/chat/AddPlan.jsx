@@ -23,7 +23,7 @@ import {
   absoulte_timestamp_new_date,
 } from "../../apis/utils/timestamp";
 
-const AddPlan = ({ open, handleClose, roomId }) => {
+const AddPlan = ({ open, handleClose, roomId, sendTextMessageHandler }) => {
   const [address, setAddress] = useState(null);
   const [time, setTime] = useState(absoulte_timestamp_new_date(new Date()));
   const socket = useContext(SocketContext);
@@ -31,12 +31,13 @@ const AddPlan = ({ open, handleClose, roomId }) => {
     if (time == null || address == null) {
       alert("약속 정보를 입력해주세요");
     }
-    socket.emit(CHAT_EVENT.SEND_MESSAGE, {
-      roomId: roomId,
-      type: "PLAN",
-      message: `${address},${time}`,
-      token: `${localStorage.getItem("token")}`,
-    });
+    sendTextMessageHandler(`${address},${time}`, roomId, null, "PLAN");
+    // socket.emit(CHAT_EVENT.SEND_MESSAGE, {
+    //   roomId: roomId,
+    //   type: "PLAN",
+    //   message: `${address},${time}`,
+    //   token: `${localStorage.getItem("token")}`,
+    // });
 
     handleClose();
   };

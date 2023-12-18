@@ -51,7 +51,11 @@ const ChatForm = ({
           backgroundColor: "#E7E3E3",
         }}
       >
-        <ChatPlusButton roomId={roomId} product={product} />
+        <ChatPlusButton
+          sendTextMessageHandler={sendTextMessageHandler}
+          roomId={roomId}
+          product={product}
+        />
         <Divider sx={{ height: 40, m: 0.5 }} orientation="vertical" />
         <InputBase
           sx={{ ml: 1, flex: 1 }}
