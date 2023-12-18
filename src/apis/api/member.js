@@ -119,6 +119,24 @@ export const deleteReportAPI = async () => {
     console.log(error);
   }
 };
+export const memberImageAddAPI = async (imageUrl)=>{
+  try {
+    const { data } = await authInstance.post(
+        `/image/profile`,
+        JSON.stringify(
+            {"URL" : imageUrl}
+        ),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 /*
 export const getBlockAPI = async () => {

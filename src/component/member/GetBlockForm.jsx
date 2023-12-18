@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getBlockAPI, deleteBlockAPI } from '../../apis/api/member';
+import { Button, CircularProgress, ThemeProvider, createTheme } from '@mui/material';
+
+// 테마 정의
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: "#673AB7", // 보라색
+        },
+    },
+});
 
 const GetBlockForm = () => {
     const { targetMemberId } = useParams();
@@ -39,18 +49,22 @@ const GetBlockForm = () => {
     }, [targetMemberId]);
 
     return (
-        <div>
-            {loading ? (
-                <p>데이터를 불러오는 중입니다...</p>
-            ) : (
-                <div>
-                    <p>차단 상대: {getBlock.targetMember.nickname}</p>
-                    <p>차단 사유: {getBlock.content}</p>
-                    <p>차단 일시: {getBlock.targetMember.regDate}</p>
-                    <button onClick={handleUnblock}>차단 해제</button>
-                </div>
-            )}
-        </div>
+        <ThemeProvider theme={theme}>
+            <div>
+                {loading ? (
+                    <CircularProgress color="primary" />
+                ) : (
+                    <div>
+                        <p>차단 상대: {getBlock.targetMember.nickname}</p>
+                        <p>차단 사유: {getBlock.content}</p>
+                        <p>차단 일시: {getBlock.targetMember.regDate}</p>
+                        <Button variant="contained" color="primary" onClick={handleUnblock}>
+                            차단 해제
+                        </Button>
+                    </div>
+                )}
+            </div>
+        </ThemeProvider>
     );
 };
 
