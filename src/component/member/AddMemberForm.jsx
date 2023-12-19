@@ -77,10 +77,10 @@ const AddMemberForm = ({ onSubmit }) => {
                 return;
             }
 
-            if (!isSmsVerified) {
+            /*if (!isSmsVerified) {
                 window.alert("휴대폰 인증이 필요합니다.");
                 return;
-            }
+            }*/
 
             if (!isAgreed) {
                 window.alert("약관에 동의해주세요.");
