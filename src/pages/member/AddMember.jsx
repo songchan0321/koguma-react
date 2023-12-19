@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
 import AddMemberForm from "../../component/member/AddMemberForm";
+import {Box} from "@mui/material";
 
 const AddMember = () => {
     const handleAddMemberSubmit = async (memberDTO) => {
@@ -14,9 +14,6 @@ const AddMember = () => {
 
     return (
         <Box p={3} sx={{ overflowY: 'auto', maxHeight: 'calc(100vh - 64px)' }}>
-            <Typography variant="h4" gutterBottom>
-                고구마 회원 등록
-            </Typography>
             <AddMemberForm onSubmit={handleAddMemberSubmit} />
         </Box>
     );

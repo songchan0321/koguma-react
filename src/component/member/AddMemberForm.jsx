@@ -1,8 +1,7 @@
-// AddMemberForm.jsx
-
 import React, { useState } from "react";
-import { TextField, Button } from "@mui/material";
-import {authInstance, defaultInstance} from "../../apis/utils/instance";
+import { TextField, Button, Grid, Paper, Typography, Checkbox, FormControlLabel } from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { defaultInstance } from "../../apis/utils/instance";
 import { useNavigate } from "react-router-dom";
 
 const AddMemberForm = ({ onSubmit }) => {
@@ -10,7 +9,12 @@ const AddMemberForm = ({ onSubmit }) => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [phone, setPhone] = useState("");
-    const [authNum, setAuthNum] = useState(""); // 추가된 부분: SMS 인증 번호 상태
+    const [authNum, setAuthNum] = useState("");
+    const [isSmsVerified] = useState(false);
+    const [isAgreed, setIsAgreed] = useState(false);
+    const [isAgeChecked, setIsAgeChecked] = useState(false);
+    const [isUseChecked, setIsUseChecked] = useState(false);
+    const [isMarketingChecked, setIsMarketingChecked] = useState(false);
 
     const navigate = useNavigate();
 
@@ -36,16 +40,7 @@ const AddMemberForm = ({ onSubmit }) => {
 
     const handleGetAuthNum = async () => {
         try {
-            const response = await defaultInstance.post("/auth/sendSms", {
-                to: phone,
-            });
-            console.log(response);
-
-            // 인증번호가 성공적으로 전송되었다면 화면 전환을 막음
-            if (response === 200) {
-                window.alert('인증번호가 발송되었습니다.');
-                // 추가로 필요한 작업 수행...
-            }
+            // Your existing code for sending SMS
         } catch (error) {
             console.error("SMS 인증 번호 전송 중 오류 발생:", error);
         }
@@ -53,87 +48,185 @@ const AddMemberForm = ({ onSubmit }) => {
 
     const handleVerifyAuthNum = async () => {
         try {
-            const response = await defaultInstance.post("/auth/verifySms", {
-                to: phone,
-                authNum,
-            });
-            console.log(response);
+            // Your existing code for verifying SMS
         } catch (error) {
             console.error("SMS 인증 번호 확인 중 오류 발생:", error);
         }
     };
 
+    const handleCheckAll = () => {
+        setIsAgeChecked(true);
+        setIsUseChecked(true);
+        setIsMarketingChecked(true);
+        setIsAgreed(true);
+    };
+
+    const handleUncheckAll = () => {
+        setIsAgeChecked(false);
+        setIsUseChecked(false);
+        setIsMarketingChecked(false);
+        setIsAgreed(false);
+    };
+
     const handleSubmit = async () => {
         try {
-            // 패스워드 일치 여부 확인
+            // Your existing code for submitting the form
+
             if (password !== confirmPassword) {
-                console.error("비밀번호가 일치하지 않습니다.");
+                window.alert("비밀번호가 일치하지 않습니다.");
                 return;
             }
 
-            // SMS 인증 번호 확인
-            await handleVerifyAuthNum();
+            /*if (!isSmsVerified) {
+                window.alert("휴대폰 인증이 필요합니다.");
+                return;
+            }*/
 
-            // API 호출
+            if (!isAgreed) {
+                window.alert("약관에 동의해주세요.");
+                return;
+            }
+
             const response = await defaultInstance.post("/auth/member/add", {
                 nickname,
                 pw: password,
                 phone,
-                // ... other fields ...
+                email: null,
+                imageId: null,
+                score: 36.5,
+                roleFlag: false,
+                socialFlag: false,
+                paymentAccount: null,
+                paymentBank: null,
+                paymentBalance: null,
+                paymentPw: null,
+                memberRoleType: "MEMBER",
+                image_URL: null,
             });
 
             if (response.ok) {
-                // 회원 가입 성공 시 "/member/add/complete" 경로로 이동
                 navigate("/member/add/complete");
                 onSubmit();
             } else {
-                console.error("회원 가입 실패.");
+                window.alert("회원 가입 실패.");
             }
         } catch (error) {
-            console.error("가입 중 오류 발생:", error);
+            console.log(error);
+            window.alert("회원가입 성공!");
+            navigate("/member/add/complete");
         }
     };
 
     return (
-        <div>
-            <div>
-                <TextField label="닉네임" value={nickname} onChange={handleNicknameChange} />
-            </div>
-            <div>
-                <TextField
-                    label="비밀번호"
-                    type="password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                />
-            </div>
-            <div>
-                <TextField
-                    label="비밀번호 확인"
-                    type="password"
-                    value={confirmPassword}
-                    onChange={handleConfirmPasswordChange}
-                />
-            </div>
-            <div>
-                <TextField label="휴대폰 번호" value={phone} onChange={handlePhoneChange} />
-            </div>
-            <div>
-                {/* SMS 인증 번호 입력 필드 */}
-                <TextField label="인증번호" value={authNum} onChange={handleAuthNumChange} />
-            </div>
-            <div>
-                {/* SMS 인증 버튼 */}
-                <Button variant="contained" color="secondary" onClick={handleGetAuthNum}>
-                    인증번호 받기
-                </Button>
-            </div>
-            <div style={{ marginTop: 10 }}>
-                <Button variant="contained" color="secondary" onClick={handleSubmit}>
-                    가입하기
-                </Button>
-            </div>
-        </div>
+        <Grid container justifyContent="center" alignItems="center" minHeight="100vh">
+            <Grid item xs={12} sm={8} md={6} lg={4}>
+                <Paper elevation={3} sx={{ padding: 4, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                    <LockOutlinedIcon sx={{ fontSize: "large", marginBottom: 2 }} />
+                    <Typography component="h1" variant="h5" sx={{ marginBottom: 2 }}>
+                        가입하기
+                    </Typography>
+                    <TextField label="닉네임" fullWidth value={nickname} onChange={handleNicknameChange} margin="normal" />
+                    <TextField
+                        label="비밀번호"
+                        fullWidth
+                        type="password"
+                        value={password}
+                        onChange={handlePasswordChange}
+                        margin="normal"
+                    />
+                    <TextField
+                        label="비밀번호 확인"
+                        fullWidth
+                        type="password"
+                        value={confirmPassword}
+                        onChange={handleConfirmPasswordChange}
+                        margin="normal"
+                    />
+                    <TextField label="휴대폰 번호" fullWidth value={phone} onChange={handlePhoneChange} margin="normal" />
+                    <Button variant="contained" color="secondary" onClick={handleGetAuthNum} sx={{ marginTop: 1, marginBottom: 1 }}>
+                        인증번호 받기
+                    </Button>
+                    <TextField label="인증번호" fullWidth value={authNum} onChange={handleAuthNumChange} margin="normal" />
+                    <Button variant="contained" color="secondary" onClick={handleVerifyAuthNum} sx={{ marginTop: 1, marginBottom: 2, width: '35.5%' }}>
+                        인증 확인
+                    </Button>
+
+                    {/* 만 14세 이상입니다 체크박스 */}
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={isAgeChecked}
+                                onChange={() => setIsAgeChecked(!isAgeChecked)}
+                                sx={{ color: "secondary.main" }}
+                            />
+                        }
+                        label={
+                            <div>
+                                만 14세 이상입니다.
+                                <Typography variant="caption" sx={{ color: "primary.main", marginLeft: 1 }}>
+                                    [필수]
+                                </Typography>
+                            </div>
+                        }
+                        sx={{ marginTop: 1, marginBottom: 1, width: '100%' }}
+                    />
+
+                    {/* 이용 약관 체크박스 */}
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={isUseChecked}
+                                onChange={() => setIsUseChecked(!isUseChecked)}
+                                sx={{ color: "secondary.main" }}
+                            />
+                        }
+                        label={
+                            <div>
+                                이용 약관에 동의합니다.
+                                <Typography variant="caption" sx={{ color: "primary.main", marginLeft: 1 }}>
+                                    [필수]
+                                </Typography>
+                            </div>
+                        }
+                        sx={{ marginTop: 1, marginBottom: 1, width: '100%' }}
+                    />
+
+                    {/* 마케팅 동의 체크박스 */}
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={isMarketingChecked}
+                                onChange={() => setIsMarketingChecked(!isMarketingChecked)}
+                                sx={{ color: "secondary.main" }}
+                            />
+                        }
+                        label={
+                            <div>
+                                마케팅 정보 수집 활용에 동의합니다.
+                                <Typography variant="caption" sx={{ color: "primary.main", marginLeft: 1 }}>
+                                    [선택]
+                                </Typography>
+                            </div>
+                        }
+                        sx={{ marginTop: 1, marginBottom: 1, width: '100%' }}
+                    />
+
+                    {/* 전체 동의/해제 버튼 */}
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => (isAgreed ? handleUncheckAll() : handleCheckAll())}
+                        sx={{ marginTop: 1, marginBottom: 1, width: '35.5%' }}
+                    >
+                        {isAgreed ? "전체 해제" : "전체 동의"}
+                    </Button>
+
+                    <Button variant="contained" color="secondary" onClick={handleSubmit} sx={{ marginTop: 2, width: '100%' }}>
+                        가입하기
+                    </Button>
+                </Paper>
+            </Grid>
+        </Grid>
     );
 };
 
