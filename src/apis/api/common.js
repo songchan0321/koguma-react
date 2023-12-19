@@ -107,3 +107,10 @@ export const addImageAPI = async (urlList) => {
   });
   return data;
 };
+
+export const getGeo = async (address) => {
+  const { data } = await authInstance.get(
+    `/location/kakao/getDot?address=${address}`
+  );
+  return data;
+};

@@ -15,7 +15,7 @@ export const chatRoomListService = (data, memberId) => {
       const dong = room.productDTO.dong;
       room.latestMessage.content = truncatedText(
         room.latestMessage.content,
-        30
+        25
       );
       return {
         id: room.id,

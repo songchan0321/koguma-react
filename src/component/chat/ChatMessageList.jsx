@@ -92,16 +92,18 @@ const ChatMessageList = ({
                 style={{
                   display: "flex",
                   flexDirection: isOwnMessage ? "row-reverse" : "row",
+                  justifyContent: msg.type !== "ALERT" ? "none" : "center",
                   alignItems: "flex-start",
                 }}
               >
-                {!isOwnMessage && (
+                {msg.type !== "ALERT" && !isOwnMessage && (
                   <Avatar
+                    sx={{ border: "solid 1px rgba(120, 120, 120, 0.5)" }}
                     onClick={avatorClickHandler}
                     src={
-                      isOwnMessage
-                        ? "/path/to/own-avatar.png"
-                        : "/path/to/other-avatar.png"
+                      room.buyerDTO.id === member.id
+                        ? room.productDTO.sellerDTO.profileURL || ""
+                        : room.buyerDTO.profileURL || ""
                     }
                     alt=""
                   />

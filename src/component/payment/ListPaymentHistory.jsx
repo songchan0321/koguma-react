@@ -36,6 +36,10 @@ const ListPaymentHistory = ({ type }) => {
                 <span style={{ color: "green" }}>
                   {"+" + formatCommaNumber(payment.price) + "원"}
                 </span>
+              ) : payment.type === "TRANSFER" && parseInt(payment.price) > 0 ? (
+                <span style={{ color: "green" }}>
+                  {"+" + formatCommaNumber(payment.price) + "원"}
+                </span>
               ) : (
                 formatCommaNumber(payment.price) + "원"
               )}

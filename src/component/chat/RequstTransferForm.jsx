@@ -29,7 +29,8 @@ const RequestTransferForm = ({
   };
   const requestTransferClickHandler = () => {
     if (point > 0 && point <= 10000000) {
-      sendTextMessageHandler(`${point}, 0`, roomId, null, "REQUEST");
+      sendTextMessageHandler({ text: `${point}, 0`, type: "REQUEST" });
+      // sendTextMessageHandler(`${point}, 0`, roomId, null, "REQUEST");
       //   socket.emit(CHAT_EVENT.SEND_MESSAGE, {
       //     roomId: roomId,
       //     type: "REQUEST",

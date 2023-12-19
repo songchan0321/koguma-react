@@ -32,7 +32,15 @@ const TransferBubble = ({ msg, isOwnMessage, nickname }) => {
           variant="contained"
           fullWidth
           //   color="secondary"
-          sx={{ backgroundColor: "#D070FB" }}
+          sx={{
+            backgroundColor: "#D070FB",
+            "&:hover": {
+              backgroundColor: "#D070FB", // hover 시 배경색을 빨간색으로 변경
+            },
+            "&:active": {
+              backgroundColor: "#D070FB", // 클릭 시 배경색을 파란색으로 변경
+            },
+          }}
           onClick={() => navigator("/payment/get")}
         >
           내역 확인

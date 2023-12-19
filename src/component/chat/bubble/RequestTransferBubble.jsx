@@ -10,7 +10,7 @@ import {
 import { formatCommaNumber } from "../../../apis/utils/price";
 import { useNavigate } from "react-router-dom";
 
-const RequestTransferBubble = ({ msg, isOwnMessage, nickname, roomId }) => {
+const RequestTransferBubble = ({ msg, isOwnMessage, roomId }) => {
   const navigator = useNavigate();
   const [price, status] = msg.content.split(", ");
   return (
@@ -30,7 +30,15 @@ const RequestTransferBubble = ({ msg, isOwnMessage, nickname, roomId }) => {
           <Button
             variant="contained"
             fullWidth
-            sx={{ backgroundColor: "#D070FB" }}
+            sx={{
+              backgroundColor: "#D070FB",
+              "&:hover": {
+                backgroundColor: "#D070FB", // hover 시 배경색을 빨간색으로 변경
+              },
+              "&:active": {
+                backgroundColor: "#D070FB", // 클릭 시 배경색을 파란색으로 변경
+              },
+            }}
             onClick={() => {
               navigator("/payment/transfer", {
                 state: {

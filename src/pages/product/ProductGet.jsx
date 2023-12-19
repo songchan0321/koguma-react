@@ -109,7 +109,11 @@ const ProductGet = () => {
               {data.content}
             </Typography>
           </CardContent>
-          <GetProductBottomBar data={data} isMine={isMine} />
+          <GetProductBottomBar
+            data={data}
+            isMine={isMine}
+            productId={data.id}
+          />
         </>
       ) : (
         <LoadingProgress />

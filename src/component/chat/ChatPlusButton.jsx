@@ -94,7 +94,8 @@ const ChatPlusButton = ({ roomId, product, sendTextMessageHandler }) => {
         })
         .then((data) => {
           data.forEach((image) => {
-            sendTextMessageHandler(`${image.url}`, roomId, null, "IMAGE");
+            sendTextMessageHandler({ text: `${image.url}`, type: "IMAGE" });
+            // sendTextMessageHandler(`${image.url}`, roomId, null, "IMAGE");
           });
         })
         .catch((err) => {

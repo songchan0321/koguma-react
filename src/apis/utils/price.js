@@ -10,7 +10,7 @@ export const formatKoreanNumber = (number) => {
     return formattedNumber;
   } else {
     // 1,000 단위 콤마만 추가
-    return number.toLocaleString();
+    return number.toLocaleString() + "원";
   }
 };
 

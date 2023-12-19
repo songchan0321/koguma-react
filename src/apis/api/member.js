@@ -39,10 +39,12 @@ export const updateMemberAPI = async () => {
     alert("회원 정보를 수정할 수 없습니다.");
     console.log(err);
   }
-}
+};
 export const listBlockAPI = async () => {
   try {
-    const { data } = await authInstance.get(`${MEMBER_API_URI}/relationship/block/list`);
+    const { data } = await authInstance.get(
+      `${MEMBER_API_URI}/relationship/block/list`
+    );
     return data;
   } catch (err) {
     alert("차단 목록을 불러올 수 없습니다.");
@@ -52,7 +54,9 @@ export const listBlockAPI = async () => {
 
 export const listFollowingAPI = async () => {
   try {
-    const { data } = await authInstance.get(`${MEMBER_API_URI}/relationship/following/list`);
+    const { data } = await authInstance.get(
+      `${MEMBER_API_URI}/relationship/following/list`
+    );
     return data;
   } catch (err) {
     alert("팔로잉 목록을 불러올 수 없습니다.");
@@ -62,7 +66,9 @@ export const listFollowingAPI = async () => {
 
 export const getBlockAPI = async (targetMemberId) => {
   try {
-    const { data } = await authInstance.get(`${MEMBER_API_URI}/relationship/block/get/${targetMemberId}`);
+    const { data } = await authInstance.get(
+      `${MEMBER_API_URI}/relationship/block/get/${targetMemberId}`
+    );
     return data;
   } catch (err) {
     alert("차단 정보를 불러올 수 없습니다.");
@@ -72,7 +78,9 @@ export const getBlockAPI = async (targetMemberId) => {
 
 export const getFollowingAPI = async (targetMemberId) => {
   try {
-    const { data } = await authInstance.get(`${MEMBER_API_URI}/relationship/following/get/${targetMemberId}`);
+    const { data } = await authInstance.get(
+      `${MEMBER_API_URI}/relationship/following/get/${targetMemberId}`
+    );
     return data;
   } catch (err) {
     alert("차단 정보를 불러올 수 없습니다.");
@@ -82,40 +90,46 @@ export const getFollowingAPI = async (targetMemberId) => {
 
 export const deleteBlockAPI = async (targetMemberId) => {
   try {
-    const response = await authInstance.put('/member/relationship/block/delete', { targetMemberId });
+    const response = await authInstance.put(
+      "/member/relationship/block/delete",
+      { targetMemberId }
+    );
     return response.data;
   } catch (error) {
-    alert('차단을 해제할 수 없습니다.');
+    alert("차단을 해제할 수 없습니다.");
     console.log(error);
   }
 };
 
 export const deleteFollowingAPI = async (targetMemberId) => {
   try {
-    const response = await authInstance.put('/member/relationship/following/delete', { targetMemberId });
+    const response = await authInstance.put(
+      "/member/relationship/following/delete",
+      { targetMemberId }
+    );
     return response.data;
   } catch (error) {
-    alert('팔로잉을 해제할 수 없습니다.');
+    alert("팔로잉을 해제할 수 없습니다.");
     console.log(error);
   }
 };
 
 export const getReportAPI = async () => {
   try {
-    const response = await authInstance.get('/member/report/get', {});
+    const response = await authInstance.get("/member/report/get", {});
     return response.data;
   } catch (error) {
-    alert('신고 정보를 가져올 수 없습니다.');
+    alert("신고 정보를 가져올 수 없습니다.");
     console.log(error);
   }
 };
 
 export const deleteReportAPI = async () => {
   try {
-    const response = await authInstance.delete('/member/report/delete', {  });
+    const response = await authInstance.delete("/member/report/delete", {});
     return response.data;
   } catch (error) {
-    alert('신고를 삭제할 수 없습니다.');
+    alert("신고를 삭제할 수 없습니다.");
     console.log(error);
   }
 };
@@ -150,3 +164,10 @@ export const getBlockAPI = async () => {
 };
 
 */
+
+export const getProfileAPI = async (memberId) => {
+  const { data } = await authInstance.get(
+    `${MEMBER_API_URI}/other/get/${memberId}`
+  );
+  return data;
+};

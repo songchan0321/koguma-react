@@ -31,7 +31,8 @@ const AddPlan = ({ open, handleClose, roomId, sendTextMessageHandler }) => {
     if (time == null || address == null) {
       alert("약속 정보를 입력해주세요");
     }
-    sendTextMessageHandler(`${address},${time}`, roomId, null, "PLAN");
+    sendTextMessageHandler({ text: `${address},${time}`, type: "PLAN" });
+    // sendTextMessageHandler(`${address},${time}`, roomId, null, "PLAN");
     // socket.emit(CHAT_EVENT.SEND_MESSAGE, {
     //   roomId: roomId,
     //   type: "PLAN",

@@ -1,15 +1,14 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import { formatKoreanNumber } from "../../apis/utils/price";
 import { useNavigate } from "react-router-dom";
-const NavButton = ({ room, member }) => {
+const NavButton = ({ product, member }) => {
   const navigator = useNavigate();
   let text;
   let clickHandler;
-  if (room.productDTO.tradeStatus === "SALED") {
+  if (product.tradeStatus === "SALED") {
     if (
-      room.productDTO.sellerDTO.id === member.id ||
-      (room.productDTO.buyerDTO !== null &&
-        room.productDTO.buyerDTO.id === member.id)
+      product.sellerDTO.id === member.id ||
+      (product.buyerDTO !== null && product.buyerDTO.id === member.id)
     )
       text = "리뷰 있으면 리뷰 보기, 없으면 리뷰 작성 Navi";
     clickHandler = () => {
@@ -18,7 +17,7 @@ const NavButton = ({ room, member }) => {
   } else {
     text = "상품 정보";
     clickHandler = () => {
-      navigator(`/product/get/${room.productDTO.id}`);
+      navigator(`/product/get/${product.id}`);
     };
   }
   return (
@@ -27,7 +26,7 @@ const NavButton = ({ room, member }) => {
     </Button>
   );
 };
-const ChatHeader = ({ room, member }) => {
+const ChatHeader = ({ product, member, price }) => {
   return (
     <>
       <div
@@ -49,27 +48,29 @@ const ChatHeader = ({ room, member }) => {
         gap={1}
         sx={{ zIndex: "1001" }}
       >
-        <Avatar variant="rounded" sx={{ mr: 1 }}>
-          P
-        </Avatar>
+        <Avatar
+          variant="rounded"
+          sx={{ mr: 1 }}
+          src={product.imageDTO[0].url}
+        ></Avatar>
         <div>
           <Typography variant="subtitle1">
-            {room.productDTO.tradeStatus === "SALE"
+            {product.tradeStatus === "SALE"
               ? "판매중"
-              : room.productDTO.tradeStatus === "SALED"
+              : product.tradeStatus === "SALED"
               ? "거래완료"
-              : room.productDTO.tradeStatus === "RESERVATION"
+              : product.tradeStatus === "RESERVATION"
               ? "예약중"
-              : room.productDTO.tradeStatus === "HIDE"
+              : product.tradeStatus === "HIDE"
               ? "숨김"
               : "?"}
             &nbsp;&nbsp;&nbsp;
-            <span style={{ fontSize: "0.9rem" }}>{room.productDTO.title}</span>
+            <span style={{ fontSize: "0.9rem" }}>{product.title}</span>
           </Typography>
           <Typography variant="subtitle1">
-            {formatKoreanNumber(room.price)}
+            {formatKoreanNumber(price)}
           </Typography>
-          <NavButton room={room} member={member} />
+          <NavButton product={product} member={member} />
         </div>
       </Box>
     </>
