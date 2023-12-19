@@ -33,7 +33,7 @@ const MessageBubble = ({ msg, isOwnMessage, roomId, member }) => {
             style={{ marginRight: "5px" }}
           >
             <Typography variant="caption" color={"primary"}>
-              {!msg.readFlag && "안읽음"}
+              {msg.type !== "ALERT" && !msg.readFlag && "안읽음"}
             </Typography>
             <br />
             {msg.type !== "ALERT" && absoulte_timestamp(msg.timestamp)}
@@ -77,13 +77,7 @@ const MessageBubble = ({ msg, isOwnMessage, roomId, member }) => {
             }}
           >
             <Typography variant="body2">
-              {msg.type === "LOCATION"
-                ? `장소 공유\n${msg.content}`
-                : msg.type === "PLAN"
-                ? `약속 잡기\n${msg.content}`
-                : msg.type === "TRANSFER"
-                ? `채팅방 공지\n${msg.content}`
-                : addLineBreaks(msg.content, 14)}
+              {addLineBreaks(msg.content, 14)}
             </Typography>
           </Paper>
         )}

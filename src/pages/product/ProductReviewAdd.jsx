@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import TopReturnBar from "./TopReturnBar";
 import {
   Button,
@@ -15,15 +15,24 @@ import BasicRating from "../../component/product/Rating";
 import Commet from "../../component/product/Commet";
 import ReviewProductBar from "../../component/product/ReviewProductBar";
 
+import Back from "../../component/common/Back";
+import TopBar from "../../component/payment/TopBar";
+import MarginEmpty from "../../component/payment/MarginEmpty";
+import { addReviewAPI, getProductAPI } from "../../apis/api/Product";
 const ProductReviewAdd = () => {
   //   const { clubId } = useParams();
-  const [product, setProduct] = useState({});
+  const location = useLocation();
+  const [product, setProduct] = useState();
   const [review, setReview] = useState({
+    productDTO: product,
     rating: undefined,
     commet: [],
     content: "",
+    seller: location.state.seller,
   });
+  const navigate = useNavigate();
 
+  console.log(location.state.productId);
   const commetHandler = (e) => {
     const { name, value } = e.target;
     setReview({
@@ -51,15 +60,59 @@ const ProductReviewAdd = () => {
       commet: [],
     });
   };
+  const addReview = async () => {
+    try {
+      const data = await addReviewAPI(review);
+      await navigate(`/product/get/review`, {
+        state: {
+          isSeller: location.state.seller,
+          productId: data.productDTO.id,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getProduct = async () => {
+    try {
+      const data = await getProductAPI(location.state.productId);
+      setProduct(data);
+
+      // 상태 업데이트를 비동기적으로 처리하기 위해 함수 인자로 이전 상태를 받는 형태로 업데이트
+      setReview((prevReview) => ({
+        ...prevReview,
+        productDTO: data,
+        rating: undefined,
+        commet: [],
+        content: "",
+        seller: true,
+      }));
+
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getProduct();
+  }, []);
 
   return (
     <>
-      <TopReturnBar />
-      <ReviewProductBar />
-      <BasicRating
-        rating={review.rating}
-        setRating={(newValue) => setReview({ ...review, rating: newValue })}
-      />
+      <Back url={"/product/list/sale"} />
+      <TopBar>후기 작성하기</TopBar>
+      <MarginEmpty value="60px" />
+      {product && (
+        <>
+          <ReviewProductBar data={product} />
+          <BasicRating
+            buyer={product.buyerDTO.nickname}
+            rating={review.rating}
+            setRating={(newValue) => setReview({ ...review, rating: newValue })}
+          />
+        </>
+      )}
       {review.rating && (review.rating === 1 || review.rating === 2) ? (
         <Commet
           type="bad"
@@ -83,7 +136,8 @@ const ProductReviewAdd = () => {
           elevation={3}
         >
           <Button
-            onClick={() => console.log(review)}
+            onClick={() => addReview()}
+            // onClick={() => console.log(review)}
             fullWidth
             color="secondary"
             variant="contained"

@@ -12,6 +12,7 @@ import {
   AlertTitle,
 } from "@mui/material";
 import MyList from "../../component/product/MyList";
+import MySaledList from "../../component/product/MySaledList";
 
 import Back from "../../component/common/Back";
 import TopBar from "../../component/payment/TopBar";
@@ -34,7 +35,7 @@ const MySaleProduct = () => {
     },
     {
       name: "거래완료",
-      action: (productId) => updateTradeState(productId, "SALED"),
+      action: (productId) => navigate(`/product/get/seller/${productId}`),
     },
     {
       name: "게시글 수정",
@@ -60,7 +61,10 @@ const MySaleProduct = () => {
     },
     {
       name: "거래 후기 작성",
-      action: (productId) => console.log(productId),
+      action: (productId) =>
+        navigate(`/product/review/add`, {
+          state: { productId: productId, seller: true },
+        }),
     },
     {
       name: "숨기기",
@@ -78,7 +82,7 @@ const MySaleProduct = () => {
     },
     {
       name: "거래완료",
-      action: (productId) => updateTradeState(productId, "SALED"),
+      action: (productId) => navigate(`/product/get/seller/${productId}`),
     },
     {
       name: "게시글 수정",
@@ -206,7 +210,7 @@ const MySaleProduct = () => {
       )}
 
       {selectedMenu === "판매 완료" && (
-        <MyList
+        <MySaledList
           selectedMenuType={selectedMenuType}
           buttonNM="받은 후기 보기"
           onClick={getProductReview}

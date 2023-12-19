@@ -6,13 +6,14 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Divider,
   Grid,
   Typography,
 } from "@mui/material";
 import { listClubByCategoryAPI } from "../../apis/api/club";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import TopBarClub from "./common/TopbarClub";
+import TopBarClub from "./common/TopBarClub";
 
 const ClubListByCategory = ({ categoryId }) => {
   const [listClub, setListClub] = useState([]);
@@ -31,21 +32,16 @@ const ClubListByCategory = ({ categoryId }) => {
     fetchData();
   }, [categoryId]);
 
+  const truncateText = (text, maxLength) => {
+    if (text.length <= maxLength) {
+      return text;
+    } else {
+      return text.slice(0, maxLength) + "...";
+    }
+  };
+
   return (
     <>
-      <Typography
-        variant="h5"
-        style={{
-          fontFamily: "cursive", // 원하는 글꼴 지정
-          fontWeight: "normal", // 일반 두께
-          fontStyle: "normal", // 일반 스타일
-          fontSize: "2rem", // 원하는 크기 지정
-          color: "#333", // 원하는 색상 지정
-          // 그 외 다양한 스타일 속성을 추가할 수 있습니다.
-        }}
-      >
-        우리 동네 모임 (우동모)
-      </Typography>
       {listClub &&
         listClub.map((club) => (
           <div key={club.id}>
@@ -73,16 +69,17 @@ const ClubListByCategory = ({ categoryId }) => {
                     <Typography variant="body1">{club.title}</Typography>
                     {/* 모임 소개 */}
                     <Typography variant="body2" color="text.secondary">
-                      {club.content}
+                      {truncateText(club.content, 10)} {/* 최대 100자로 제한 */}
                     </Typography>
                     {/* 모임 인원수 */}
                     <Typography variant="body2" color="text.secondary">
-                      인원수: {club.maxCapacity}
+                      인원: {club.maxCapacity}/{club.maxCapacity}
                     </Typography>
                   </ClubContent>
                 </Grid>
               </Grid>
             </Link>
+            <Divider />
           </div>
         ))}
     </>

@@ -25,13 +25,17 @@ import DialogContentText from "@mui/material/DialogContentText";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import NotData from "./NotData";
-import { listProductBySaleAPI } from "../../apis/api/Product";
+import {
+  listProductByBuyAPI,
+  listProductBySaleAPI,
+} from "../../apis/api/Product";
 import { formatMoney } from "../../apis/services/product";
 import {
   absoulte_timestamp_new_date,
   formatTimeAgo,
 } from "../../apis/utils/timestamp";
 import TradeStateButton from "./TradeStateButton";
+import { ChatBubbleOutline, FavoriteBorder } from "@mui/icons-material";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -66,9 +70,13 @@ const MyList = ({
   };
   const fetchData = async () => {
     try {
-      const { data } = await listProductBySaleAPI(selectedMenuType);
-      setProduct(data);
-      console.log(data);
+      if (selectedMenuType === "BUY") {
+        await listProductByBuyAPI().then(({ data }) => setProduct(data));
+      } else {
+        await listProductBySaleAPI(selectedMenuType).then(({ data }) =>
+          setProduct(data)
+        );
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -86,16 +94,15 @@ const MyList = ({
             <Card sx={{ maxWidth: "100%" }} id={prod.id}>
               <CardHeader
                 avatar={
-                  <CardMedia
-                    component="img"
-                    height="120"
-                    width="120"
-                    image={
+                  <Avatar
+                    alt="/photo.png"
+                    src={
                       prod.imageDTO && prod.imageDTO.length > 0
                         ? prod.imageDTO[0].url
                         : "/photo.png"
                     }
-                    alt="/photo.png"
+                    variant="square"
+                    sx={{ width: 100, height: 100, mr: 1 }}
                   />
                 }
                 title={
@@ -115,21 +122,36 @@ const MyList = ({
                     >
                       <div>
                         <Typography variant="h6" color="textSecondary">
-                          <TradeStateButton
-                            type={{ tradeStatus: prod.tradeStatus }}
-                          />
+                          {selectedMenuType === "BUY" ? (
+                            <TradeStateButton type={{ tradeStatus: "BUY" }} />
+                          ) : (
+                            <TradeStateButton
+                              type={{ tradeStatus: prod.tradeStatus }}
+                            />
+                          )}
+                          &nbsp;
                           {formatMoney(prod.price)}원
                         </Typography>
                       </div>
                       <div id="icongroup" sx={{ marginTop: 100 }}>
-                        <IconButton aria-label="add to favorites">
-                          <FavoriteBorderIcon />
-                        </IconButton>
-                        1
-                        <IconButton aria-label="add to favorites">
-                          <ChatBubbleOutlineIcon />
-                        </IconButton>
-                        5
+                        {prod.chatroomCount > 0 && (
+                          <>
+                            <span style={{ marginRight: "5px" }}>
+                              <ChatBubbleOutline />
+                              &nbsp;
+                              {prod.chatroomCount}
+                            </span>
+                          </>
+                        )}
+                        {prod.likeCount > 0 && (
+                          <>
+                            <span style={{ marginRight: "5px" }}>
+                              <FavoriteBorder />
+                              &nbsp;
+                              {prod.likeCount}
+                            </span>
+                          </>
+                        )}
                       </div>
                     </Box>
                   </>

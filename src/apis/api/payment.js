@@ -86,9 +86,9 @@ export const chargePointAPI = async (imp_uid, merchant_uid) => {
 export const requestRefundPointAPI = async (point) => {
   const { data } = await authInstance.post(
     `${PAYMENT_API_URI}/request/refund`,
-    JSON.stringify({
-      point,
-    }),
+    {
+      point: `${point}`,
+    },
     {
       headers: {
         "Content-Type": "application/json",

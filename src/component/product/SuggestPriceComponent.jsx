@@ -63,7 +63,9 @@ const SuggestPriceComponent = (suggestData) => {
           return room;
         })
         .then((room) => navigate(`/chat/get/${room.id}`))
-        .catch((err) => alert(err.content));
+        .catch((err) => {
+          alert("이미 제안된 ");
+        });
       //있다면 채팅방 번호 가져옴
       //update
       // await updateChatRoomBySuggestAPI(data.id, suggestData.data.price); // 해당 채팅방의 가격을 설정

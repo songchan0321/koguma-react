@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { checkClubMemberAPI, listClubMemberAPI } from "../../../apis/api/club";
+import {
+  checkClubMemberAPI,
+  countClubMemberAPI,
+  listClubMemberAPI,
+} from "../../../apis/api/club";
 import ListClubMember from "./ListClubMember";
 import { Button, Card, CardContent } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -8,12 +12,15 @@ const ClubHomeClubMember = ({ clubId, clubMember }) => {
   const navigator = useNavigate();
 
   const [clubMembers, setClubMembers] = useState([]);
+  const [countClubMember, setCountClubMember] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await listClubMemberAPI(clubId);
         setClubMembers(data);
+        const count = await countClubMemberAPI(clubId);
+        setCountClubMember(count);
       } catch (err) {
         console.log(err);
       }
@@ -35,6 +42,9 @@ const ClubHomeClubMember = ({ clubId, clubMember }) => {
         </div>
       ) : (
         <div>
+          <span>
+            <h3>모임원 {countClubMember}</h3>
+          </span>
           {clubMembers.length > 0 &&
             clubMembers.slice(0, 3).map((clubMember) => (
               <Card key={clubMember.id} style={{ marginBottom: 10 }}>

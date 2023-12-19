@@ -3,7 +3,7 @@ import { listClubMemberAPI } from "../../../apis/api/club";
 import { Box, Button, CardMedia, List } from "@mui/material";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ListClubJoinRequest from "./ListClubJoinRequest";
-import TopBarClub from "../common/TopbarClub";
+import TopBarClub from "../common/TopBarClub";
 
 const ListClubMember = () => {
   const { clubId } = useParams();
