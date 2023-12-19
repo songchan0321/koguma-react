@@ -6,7 +6,7 @@ import { Divider, IconButton, InputBase, Paper } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import styled from "styled-components";
 
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect(process.env.REACT_APP_GROUP_CHAT_URL);
 
 const MessageContainer = styled.div`
   display: flex;
