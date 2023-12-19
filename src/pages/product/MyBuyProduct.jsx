@@ -13,20 +13,25 @@ import MyList from "../../component/product/MyList";
 import Back from "../../component/common/Back";
 import TopBar from "../../component/payment/TopBar";
 import MarginEmpty from "../../component/payment/MarginEmpty";
+import MySaledList from "../../component/product/MySaledList";
 
 const MyBuyProduct = () => {
   //   const { clubId } = useParams();
   const [product, setProduct] = useState({});
   const navigate = useNavigate();
-  const getProductReview = () => {
-    navigate("/product/review/get");
+
+  const getProductReview = async (productId) => {
+    await navigate(`/product/get/review`, {
+      state: {
+        isSeller: true,
+        productId: productId,
+      },
+    });
   };
   const [selectedAction, setSelectedAction] = useState([
     {
-      name: ["목록에서 제외하기"],
-      //    action:[handleReservation(),
-      //            '2','3','4','5,'
-      //     ]
+      name: "목록에서 제외하기",
+      action: (productId) => console.log(productId),
     },
   ]);
   const getProduct = (productId) => {
@@ -39,14 +44,13 @@ const MyBuyProduct = () => {
       <TopBar>내 구매 목록</TopBar>
       <MarginEmpty />
 
-      {selectedAction && (
-        <MyList
-          buttonNM="받은 후기 보기"
-          onClick={getProductReview}
-          onClickGetProduct={getProduct}
-          selectedActions={selectedAction[0]}
-        />
-      )}
+      <MySaledList
+        buttonNM="받은 후기 보기"
+        selectedMenuType={"BUY"}
+        onClick={getProductReview}
+        onClickGetProduct={getProduct}
+        selectedActions={selectedAction}
+      />
     </>
   );
 };
