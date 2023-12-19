@@ -61,11 +61,11 @@ const SuggestPrice = () => {
 
   const handleSubmit = () => {
     const submitData = {
-      productId: productDTO.id,
+      productId: `${productDTO.id}`,
 
-      price: numericPrice,
+      price: `${numericPrice}`,
     };
-
+    console.log(submitData);
     const { data } = addSuggestPrice(submitData);
     navigator(-1);
   };

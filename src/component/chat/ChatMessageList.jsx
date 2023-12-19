@@ -1,8 +1,14 @@
-import { Avatar, List, ListItem, Typography } from "@mui/material";
+import {
+  Avatar,
+  List,
+  ListItem,
+  Typography,
+  Snackbar,
+  Slide,
+} from "@mui/material";
 import MessageBubble from "./MessageBubble";
 import ChatForm from "./ChatForm";
-import { useEffect, useState } from "react";
-import { Margin } from "@mui/icons-material";
+import { useEffect, useState, useRef } from "react";
 import MarginEmpty from "../payment/MarginEmpty";
 import { useNavigate } from "react-router-dom";
 
@@ -14,9 +20,26 @@ const ChatMessageList = ({
   sendTextMessageHandler,
   product,
   textEvent,
+  newMessageOpen,
+  newMessageCloseHandler,
 }) => {
-  const [viewFlag, setViewFlag] = useState(false);
+  const listRef = useRef(null);
+  // const first = useRef(true);
   const navigate = useNavigate();
+  // const [open, setOpen] = useState(false);
+  const SlideTransition = (props) => {
+    return (
+      <Slide
+        {...props}
+        direction="up"
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
+        onClick={() => {
+          listRef.current.scrollIntoView({ behavior: "smooth" });
+          newMessageCloseHandler();
+        }}
+      />
+    );
+  };
   const avatorClickHandler = () => {
     navigate(
       `/member/other/get/${
@@ -26,15 +49,17 @@ const ChatMessageList = ({
       }`
     );
   };
-  const viewMessageList = () => {
-    setViewFlag(true);
-  };
   useEffect(() => {
     (async () => {
-      if (!viewFlag || messages[messages.length - 1].senderId === member.id) {
-        window.scrollTo(0, document.body.scrollHeight);
+      if (messages.length > 0) {
+        if (
+          newMessageOpen &&
+          messages[messages.length - 1].senderId !== member.id
+        ) {
+          return;
+        }
+        listRef.current.scrollIntoView({ behavior: "instant" });
       }
-      viewMessageList();
     })();
   }, [messages]);
   return (
@@ -42,7 +67,6 @@ const ChatMessageList = ({
       <MarginEmpty value={"115px"} />
       <List
         style={{
-          opacity: !viewFlag ? 0 : 1,
           display: "flex",
           flexDirection: "column",
           gap: "10px",
@@ -50,7 +74,6 @@ const ChatMessageList = ({
           paddingBottom: room.id ? "60px" : "125px",
         }}
       >
-        {console.log(messages)}
         {messages
           .filter((msg) => {
             return (
@@ -69,22 +92,30 @@ const ChatMessageList = ({
                 style={{
                   display: "flex",
                   flexDirection: isOwnMessage ? "row-reverse" : "row",
+                  justifyContent: msg.type !== "ALERT" ? "none" : "center",
                   alignItems: "flex-start",
                 }}
               >
-                {!isOwnMessage && (
+                {msg.type !== "ALERT" && !isOwnMessage && (
                   <Avatar
+                    sx={{ border: "solid 1px rgba(120, 120, 120, 0.5)" }}
                     onClick={avatorClickHandler}
                     src={
-                      isOwnMessage
-                        ? "/path/to/own-avatar.png"
-                        : "/path/to/other-avatar.png"
+                      room.buyerDTO.id === member.id
+                        ? room.productDTO.sellerDTO.profileURL || ""
+                        : room.buyerDTO.profileURL || ""
                     }
                     alt=""
                   />
                 )}
-
-                <MessageBubble msg={msg} isOwnMessage={isOwnMessage} />
+                {
+                  <MessageBubble
+                    msg={msg}
+                    isOwnMessage={isOwnMessage}
+                    roomId={room.id}
+                    member={member}
+                  />
+                }
               </ListItem>
             );
           })}
@@ -108,6 +139,20 @@ const ChatMessageList = ({
             </Typography>
           </div>
         )}
+        <Snackbar
+          open={
+            newMessageOpen &&
+            messages[messages.length - 1].senderId !== member.id
+          }
+          // onClose={handleClose}
+          TransitionComponent={SlideTransition}
+          // message="I love snacks"
+          message="새로운 채팅을 보냈어요!"
+          style={{
+            marginBottom: "4rem",
+          }}
+          // key={state.Transition.name}
+        />
         <ChatForm
           roomId={room.id}
           sendTextMessageHandler={sendTextMessageHandler}
@@ -115,6 +160,7 @@ const ChatMessageList = ({
           product={product}
         />
       </List>
+      <div ref={listRef}></div>
     </>
   );
 };

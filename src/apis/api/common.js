@@ -12,7 +12,7 @@ import { authInstance } from "../utils/instance";
 //     console.log(err);
 //   }
 // };
-export const addImageAPI = async (file) => {
+export const uploadImageAPI = async (file) => {
   try {
     console.log(file);
     const { data } = await authInstance.post(`/image/new`, file, {
@@ -98,4 +98,19 @@ export const getRepLocationAPI = async () => {
   } catch (err) {
     console.log(err);
   }
+};
+export const addImageAPI = async (urlList) => {
+  const { data } = await authInstance.post("/image/add", urlList, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return data;
+};
+
+export const getGeo = async (address) => {
+  const { data } = await authInstance.get(
+    `/location/kakao/getDot?address=${address}`
+  );
+  return data;
 };

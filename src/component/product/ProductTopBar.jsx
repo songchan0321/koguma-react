@@ -14,12 +14,19 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import { Badge, Paper } from "@mui/material";
+import { Badge, Drawer, Paper } from "@mui/material";
 import LocationBox from "../location/LocationBox";
 
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import SearchDrawer from "../common/SearchDrawer";
 const ProductTopBar = ({ location, setLocation }) => {
+  const navigator = useNavigate();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const toggleDrawer = (open) => {
+    setIsDrawerOpen(open);
+  };
   const categorys = [
     "디지털 기기",
     "인테리어",
@@ -62,16 +69,20 @@ const ProductTopBar = ({ location, setLocation }) => {
           },
         }}
       >
-        <LocationBox location={location} setLocation={setLocation} />
+        <LocationBox
+          variant="text"
+          location={location}
+          setLocation={setLocation}
+        />
         <ButtonGroup variant="text" aria-label="text button group">
           <Button onClick={handleModalOpen}>
             <MenuOpenIcon sx={{ fontSize: 30 }} color="secondary" />
           </Button>
           {/* 통합 검색 완성 후  Navi */}
-          <Button>
+          <Button onClick={() => toggleDrawer(true)}>
             <SearchIcon sx={{ fontSize: 30 }} color="secondary" />
           </Button>
-          <Button>
+          <Button onClick={() => navigator("/alert/list")}>
             <NotificationsNoneIcon sx={{ fontSize: 30 }} color="secondary" />
           </Button>
         </ButtonGroup>
@@ -90,6 +101,7 @@ const ProductTopBar = ({ location, setLocation }) => {
           </DialogContent>
         </Dialog>
       </Box>
+      <SearchDrawer open={isDrawerOpen} toggleDrawer={toggleDrawer} />
     </Paper>
   );
 };

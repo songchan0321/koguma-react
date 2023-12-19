@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { Button, CircularProgress, List, ListItem, ListItemText, ThemeProvider, createTheme } from '@mui/material';
 import { authInstance } from "../../apis/utils/instance";
 import { useNavigate } from 'react-router-dom';
+
+// 테마 정의
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: "#673AB7", // 보라색
+        },
+    },
+});
 
 const ListBlockForm = () => {
     const [blockList, setBlockList] = useState([]);
@@ -31,23 +41,28 @@ const ListBlockForm = () => {
     };
 
     return (
-        <div>
-            {loading ? (
-                <p>데이터를 불러오는 중입니다...</p>
-            ) : (
-                <ul>
-                    {blockList.map((block) => (
-                        <li key={block.id}>
-                            {block.targetMember.nickname}
-                            {' '}
-                            <button onClick={() => handleNavigateToBlockDetail(block.targetMember.id)}>
-                                차단 상세
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
+        <ThemeProvider theme={theme}>
+            <div>
+                {loading ? (
+                    <CircularProgress color="primary" />
+                ) : (
+                    <List>
+                        {blockList.map((block) => (
+                            <ListItem key={block.id}>
+                                <ListItemText primary={block.targetMember.nickname} />
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={() => handleNavigateToBlockDetail(block.targetMember.id)}
+                                >
+                                    차단 상세
+                                </Button>
+                            </ListItem>
+                        ))}
+                    </List>
+                )}
+            </div>
+        </ThemeProvider>
     );
 };
 

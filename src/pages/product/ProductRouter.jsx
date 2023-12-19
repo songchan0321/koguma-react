@@ -11,6 +11,7 @@ import LikeProductList from "./LikeProductList";
 import ProductReviewAdd from "./ProductReviewAdd";
 import ProductReviewGet from "./ProductReviewGet";
 import ListSuggestPrice from "./ListSuggestPrice";
+import ListChoiceBuyer from "./ListChoiceBuyer";
 
 const ProductRouter = () => {
   return (
@@ -28,8 +29,9 @@ const ProductRouter = () => {
       <Route path="/list/buy" element={<MyBuyProduct />} />
       <Route path="/list/like" element={<LikeProductList />} />
       <Route path="/review/add" element={<ProductReviewAdd />} />
-      <Route path="/review/get" element={<ProductReviewGet />} />
+      <Route path="/get/review" element={<ProductReviewGet />} />
       <Route path="/suggest/list/:productId" element={<ListSuggestPrice />} />
+      <Route path="/get/seller/:productId" element={<ListChoiceBuyer />} />
     </Routes>
   );
 };

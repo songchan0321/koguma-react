@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
 import { Badge, Paper } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import LikeCheckButton from "../../component/common/LikeCheckButton";
+import LikeProduct from "../../component/product/LikeProduct";
 import {
   Card,
   CardHeader,
@@ -22,6 +22,7 @@ import {
   existChatRoomByProductAndBuyerAPI,
   getChatRoomByProductAndMember,
 } from "../../apis/api/chat";
+import { getMemberAPI } from "../../apis/api/member";
 
 // 테마 생성
 const theme = createTheme({
@@ -37,9 +38,10 @@ const StyledCardActions = styled(CardActions)({
   justifyContent: "space-between",
 });
 
-const GetProductBottomBar = ({ data, isMine }) => {
+const GetProductBottomBar = ({ data, isMine, productId }) => {
   const navigate = useNavigate();
   const [isExist, setIsExist] = useState();
+  const [member, setMember] = useState();
 
   const existChatRoomByProduct = async () => {
     // 해당 구매자의 채팅기록이 있는지
@@ -47,14 +49,21 @@ const GetProductBottomBar = ({ data, isMine }) => {
     setIsExist(chatIsExist);
   };
 
+  useEffect(() => {
+    (async () => {
+      await getMemberAPI().then(setMember);
+    })();
+  }, []);
   const startChatting = async () => {
-    await existChatRoomByProduct(); //구매자의 채팅기록이 있는지 확인
-    if (isExist) {
-      const { data } = await getChatRoomByProductAndMember(); //있다면 채팅방 번호 가져옴
-      navigate(`/chat/get/${data.id}`); //기존 채팅방의 가격 설정후 채팅으로 이동
+    const response = await existChatRoomByProductAPI(data.id);
+    if (response) {
+      await getChatRoomByProductAndMember(data.id, member.id).then((room) =>
+        navigate(`/chat/get/${room.id}`)
+      ); //있다면 채팅방 번호 가져옴
+      // navigate(`/chat/get/${data.id}`); //기존 채팅방의 가격 설정후 채팅으로 이동
     } else {
       //구매자의 채팅기록이 없다면 구매자의 우선 입장
-      navigate(`/chat/new/${data.id}`, {});
+      navigate(`/chat/new`, { state: { productId } });
     }
   };
 
@@ -66,9 +75,7 @@ const GetProductBottomBar = ({ data, isMine }) => {
       >
         <StyledCardActions>
           <div>
-            <IconButton aria-label="add to favorites">
-              <LikeCheckButton />
-            </IconButton>
+            <LikeProduct prodId={data.id} />
             <span>{formatMoney(data.price)}원</span>
           </div>
           {isMine ? ( // 판매자일때 가격제안 리스트를 확인 nav
@@ -92,7 +99,7 @@ const GetProductBottomBar = ({ data, isMine }) => {
             <Button // 판매자일때 대화중인 채팅방 리스트를 확인 nav
               color="secondary"
               variant="contained"
-              onClick={() => navigate(`/chat/list`)}
+              onClick={() => navigate(`/chat/list/${data.id}`)}
             >
               대화중인 채팅방 1
             </Button>
@@ -100,7 +107,7 @@ const GetProductBottomBar = ({ data, isMine }) => {
             <Button // 구매자일때 채팅방 개설 && 예약중이면 채팅 못하기
               color="secondary"
               variant="contained"
-              onClick={() => startChatting()}
+              onClick={startChatting}
             >
               채팅하기
             </Button>

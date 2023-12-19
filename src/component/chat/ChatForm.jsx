@@ -3,32 +3,20 @@ import SendIcon from "@mui/icons-material/Send";
 import { Divider, IconButton, InputBase, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
 import ChatPlusButton from "./ChatPlusButton";
-const ChatForm = ({
-  roomId,
-  sendTextMessageHandler,
-  textEvent,
-  newSendTextMessageHandler,
-  product,
-}) => {
+const ChatForm = ({ roomId, sendTextMessageHandler, textEvent, product }) => {
   const [text, setText] = useState("");
   useEffect(() => {
     if (textEvent) {
       if (text === "") {
-        textEvent(false);
+        textEvent(false, roomId);
       } else {
-        textEvent(true);
+        textEvent(true, roomId);
       }
     }
   }, [text]);
   const onClickHandler = () => {
-    if (text !== "") {
-      if (roomId != null) {
-        sendTextMessageHandler(text, roomId);
-      } else {
-        newSendTextMessageHandler(text, product);
-      }
-      setText("");
-    }
+    sendTextMessageHandler({ text: text });
+    setText("");
   };
   return (
     <div
@@ -51,7 +39,11 @@ const ChatForm = ({
           backgroundColor: "#E7E3E3",
         }}
       >
-        <ChatPlusButton roomId={roomId} product={product} />
+        <ChatPlusButton
+          sendTextMessageHandler={sendTextMessageHandler}
+          roomId={roomId}
+          product={product}
+        />
         <Divider sx={{ height: 40, m: 0.5 }} orientation="vertical" />
         <InputBase
           sx={{ ml: 1, flex: 1 }}

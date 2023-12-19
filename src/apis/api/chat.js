@@ -18,12 +18,28 @@ export const chatRoomListAPI = async () => {
 
 export const chatRoomListBySellerAPI = async (productId) => {
   const { data } = await authInstance.get(`${CHAT_API_URI}/list/${productId}`);
-  return data;
+  const results = await Promise.all(
+    data.map(async (room) => {
+      return {
+        ...room,
+        count: await getUnreadCount(room.id),
+        latestMessage: await getLatestMessage(room.id),
+      };
+    })
+  );
+  return results;
+};
+
+export const existAbsoluteChatRoomByProductAPI = async (productId) => {
+  const { data } = await authInstance.get(
+    `${CHAT_API_URI}/exist/absolute/${productId}`
+  );
+  return data.result;
 };
 
 export const existChatRoomByProductAPI = async (productId) => {
   const { data } = await authInstance.get(`${CHAT_API_URI}/exist/${productId}`);
-  return data;
+  return data.result;
 };
 
 export const existChatRoomByProductAndBuyerAPI = async (productId, buyerId) => {
@@ -59,6 +75,42 @@ export const addChatRoom = async (productId) => {
     JSON.stringify({
       productId: `${productId}`,
     }),
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return data;
+};
+
+export const addSoloChatRoom = async (productId) => {
+  const { data } = await authInstance.post(
+    `${CHAT_API_URI}/add/solo`,
+    JSON.stringify({
+      productId: `${productId}`,
+    }),
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return data;
+};
+
+export const addChatRoomBySuggest = async (
+  productId,
+  suggestedMemberId,
+  price
+) => {
+  const { data } = await authInstance.post(
+    `${CHAT_API_URI}/addFromSuggest`,
+    {
+      productId: `${productId}`,
+      suggestedMemberId: `${suggestedMemberId}`,
+      price: `${price}`,
+    },
     {
       headers: {
         "Content-Type": "application/json",

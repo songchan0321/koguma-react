@@ -1,27 +1,49 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, ThemeProvider, createTheme } from "@mui/material";
 import { authInstance } from "../../apis/utils/instance";
-import { useNavigate, useParams,useLocation } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+
+// 테마 정의
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: "#673AB7", // 보라색
+        },
+    },
+});
 
 const AddBlockForm = ({ onSubmit }) => {
     const [content, setContent] = useState("");
+    const [inputError, setInputError] = useState(false); // State to manage input error
     const navigate = useNavigate();
     const { id } = useParams();
     const location = useLocation();
 
     const handleContentChange = (e) => {
-        setContent(e.target.value);
+        const inputValue = e.target.value;
+        setContent(inputValue);
+
+        // Check if the input length is less than 2 characters
+        if (inputValue.length < 6) {
+            setInputError(true);
+        } else {
+            setInputError(false);
+        }
     };
 
     const handleSubmit = async () => {
+
+        if (content.length < 10) {
+            window.alert("차단 사유는 5자 이상 입력해야 합니다.");
+            return;
+        }
+
         try {
             // API 호출
             const response = await authInstance.post(`/member/relationship/block/add/`, {
-
                 targetMember: {
-                    id:location.state.id
+                    id: location.state.id,
                 },
-
                 content,
                 memberRelationshipType: "BLOCK",
             });
@@ -47,14 +69,32 @@ const AddBlockForm = ({ onSubmit }) => {
     }, [id]);
 
     return (
-        <div>
-            <TextField label="차단 사유" value={content} onChange={handleContentChange}/>
-            <div style={{ marginTop: 10 }}>
-                <Button variant="contained" color="primary" onClick={handleSubmit}>
-                    차단 등록
-                </Button>
+        <ThemeProvider theme={theme}>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    minHeight: "100vh",
+                }}
+            >
+                <TextField
+                    label="차단 사유"
+                    value={content}
+                    onChange={handleContentChange}
+                    style={{ width: "100%" }}
+                    multiline
+                    rows={4}
+                    error={inputError} // Set error state
+                    helperText={inputError ? "차단 사유는 5자 이상 입력해야 합니다." : ""} // Display error message
+                />
+                <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
+                    <Button variant="contained" color="primary" onClick={handleSubmit}>
+                        차단 등록
+                    </Button>
+                </div>
             </div>
-        </div>
+        </ThemeProvider>
     );
 };
 

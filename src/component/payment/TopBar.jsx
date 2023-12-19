@@ -1,7 +1,7 @@
 import { AppBar, Toolbar, Typography } from "@mui/material";
 import Back from "../common/Back";
 
-const TopBar = ({ children, color }) => {
+const TopBar = ({ children, color, paddingRight }) => {
   return (
     <>
       {/* <Back /> */}
@@ -12,7 +12,12 @@ const TopBar = ({ children, color }) => {
           zIndex: 1000,
         }}
       >
-        <Toolbar style={{ display: "flex", justifyContent: "center" }}>
+        <Toolbar
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
           <Typography
             variant="h6"
             component="div"

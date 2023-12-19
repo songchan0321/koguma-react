@@ -37,7 +37,9 @@ export const formatTimeAgo = (dateTimeString, utc) => {
   const months = Math.floor(days / 30);
   const years = Math.floor(months / 12);
 
-  if (seconds < 60) {
+  if (seconds < 10) {
+    return `방금`;
+  } else if (seconds < 60) {
     return `${seconds}초 전`;
   } else if (minutes < 60) {
     return `${minutes}분 전`;
@@ -54,4 +56,18 @@ export const formatTimeAgo = (dateTimeString, utc) => {
   } else {
     return `${years}년 전`;
   }
+};
+
+export const formatTimeTo12Hour = (time) => {
+  const hour =
+    parseInt(time.split(":")[0]) === 24 ? 0 : parseInt(time.split(":")[0]);
+  const minute = time.split(":")[1];
+
+  // 오전/오후 표시와 12시간 형식으로 변경
+  const period = hour >= 12 ? "오후" : "오전";
+  const formattedHour = hour === 0 ? "0" : hour % 12 === 0 ? 12 : hour % 12;
+
+  return `${period} ${formattedHour.toString().padStart(2, "0")}:${minute
+    .toString()
+    .padStart(2, "0")}`;
 };

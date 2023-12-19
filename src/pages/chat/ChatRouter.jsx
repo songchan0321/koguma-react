@@ -15,16 +15,20 @@ const ChatRouter = () => {
         element={isLogin ? <ChatRoomList /> : <Navigate to="/common/login" />}
       />
       <Route
+        path="/list/:productId"
+        element={isLogin ? <ChatRoomList /> : <Navigate to="/common/login" />}
+      />
+      <Route
         path="/get/:urlRoomId"
         element={isLogin ? <GetChatRoom /> : <Navigate to="/common/login" />}
       />
       <Route
-        path="/new/:productId"
+        path="/new"
         element={isLogin ? <NewChatRoom /> : <Navigate to="/common/login" />}
       />
 
       <Route
-        path="/new/suggest/:suggestId"
+        path="/new/chat/suggest"
         element={
           isLogin ? <NewSuggestChatRoom /> : <Navigate to="/common/login" />
         }

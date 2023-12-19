@@ -1,7 +1,7 @@
 import { Chip, Paper } from "@mui/material";
 
 const HorizontalScrollChips = ({
-  newSendTextMessageHandler,
+  sendTextMessageHandler,
   product,
   suggested,
 }) => {
@@ -40,7 +40,7 @@ const HorizontalScrollChips = ({
           label={item}
           variant="outlined"
           style={chipStyle}
-          onClick={() => newSendTextMessageHandler(item, product)}
+          onClick={() => sendTextMessageHandler({ text: item, type: "TEXT" })}
           // Add other Chip props as needed
         />
       ))}

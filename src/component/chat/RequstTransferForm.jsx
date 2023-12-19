@@ -9,12 +9,17 @@ import {
   TextField,
 } from "@mui/material";
 import { forwardRef, useContext, useState } from "react";
-import { SocketContext } from "../../context/socket";
+import { CHAT_EVENT, SocketContext } from "../../context/socket";
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const RequestTransferForm = ({ open, handleClose }) => {
+const RequestTransferForm = ({
+  open,
+  handleClose,
+  roomId,
+  sendTextMessageHandler,
+}) => {
   const socket = useContext(SocketContext);
   const [point, setPoint] = useState(0);
   const [pointString, setPointString] = useState("0원");
@@ -22,7 +27,21 @@ const RequestTransferForm = ({ open, handleClose }) => {
     setPoint(0);
     setPointString("0원");
   };
-  const requestTransferClickHandler = () => {};
+  const requestTransferClickHandler = () => {
+    if (point > 0 && point <= 10000000) {
+      sendTextMessageHandler({ text: `${point}, 0`, type: "REQUEST" });
+      // sendTextMessageHandler(`${point}, 0`, roomId, null, "REQUEST");
+      //   socket.emit(CHAT_EVENT.SEND_MESSAGE, {
+      //     roomId: roomId,
+      //     type: "REQUEST",
+      //     message: `${point}, 0`,
+      //     token: `${localStorage.getItem("token")}`,
+      //   });
+      handleClose(pointResetHandler);
+    } else {
+      alert("요청할 금액을 확인해주세요.");
+    }
+  };
   const pointInputHandler = (event) => {
     const { value } = event.target;
     const replaceValue =

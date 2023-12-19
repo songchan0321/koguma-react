@@ -48,7 +48,7 @@ const RequestRefundPoint = () => {
     (async () => {
       try {
         await requestRefundPointAPI(point);
-        navigator("/success/refund");
+        navigator("/payment/success/refund");
       } catch (err) {
         console.log(err);
       }

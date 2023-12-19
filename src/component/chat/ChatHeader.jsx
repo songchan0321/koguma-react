@@ -1,15 +1,38 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import { formatKoreanNumber } from "../../apis/utils/price";
-
-const ChatHeader = ({ product }) => {
+import { useNavigate } from "react-router-dom";
+const NavButton = ({ product, member }) => {
+  const navigator = useNavigate();
+  let text;
+  let clickHandler;
+  if (product.tradeStatus === "SALED") {
+    if (
+      product.sellerDTO.id === member.id ||
+      (product.buyerDTO !== null && product.buyerDTO.id === member.id)
+    )
+      text = "리뷰 있으면 리뷰 보기, 없으면 리뷰 작성 Navi";
+    clickHandler = () => {
+      alert("navi");
+    };
+  } else {
+    text = "상품 정보";
+    clickHandler = () => {
+      navigator(`/product/get/${product.id}`);
+    };
+  }
+  return (
+    <Button variant="outlined" size="small" onClick={clickHandler}>
+      {text}
+    </Button>
+  );
+};
+const ChatHeader = ({ product, member, price }) => {
   return (
     <>
       <div
         style={{
           position: "fixed",
           top: "56px",
-          // display: "flex",
-          // alignItems: "center",
           backgroundColor: "#F5F5DC",
           height: "115px",
           width: "100%",
@@ -25,9 +48,11 @@ const ChatHeader = ({ product }) => {
         gap={1}
         sx={{ zIndex: "1001" }}
       >
-        <Avatar variant="rounded" sx={{ mr: 1 }}>
-          P
-        </Avatar>
+        <Avatar
+          variant="rounded"
+          sx={{ mr: 1 }}
+          src={product.imageDTO[0].url}
+        ></Avatar>
         <div>
           <Typography variant="subtitle1">
             {product.tradeStatus === "SALE"
@@ -43,11 +68,9 @@ const ChatHeader = ({ product }) => {
             <span style={{ fontSize: "0.9rem" }}>{product.title}</span>
           </Typography>
           <Typography variant="subtitle1">
-            {formatKoreanNumber(product.price)}
+            {formatKoreanNumber(price)}
           </Typography>
-          <Button variant="outlined" size="small">
-            {"송금하기"}
-          </Button>
+          <NavButton product={product} member={member} />
         </div>
       </Box>
     </>

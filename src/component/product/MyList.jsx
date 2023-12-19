@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Card,
@@ -23,6 +24,18 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
+import NotData from "./NotData";
+import {
+  listProductByBuyAPI,
+  listProductBySaleAPI,
+} from "../../apis/api/Product";
+import { formatMoney } from "../../apis/services/product";
+import {
+  absoulte_timestamp_new_date,
+  formatTimeAgo,
+} from "../../apis/utils/timestamp";
+import TradeStateButton from "./TradeStateButton";
+import { ChatBubbleOutline, FavoriteBorder } from "@mui/icons-material";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -36,93 +49,158 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const MyList = ({ buttonNM, selectedActions, onClick }) => {
+const MyList = ({
+  selectedMenuType,
+  buttonNM,
+  selectedActions,
+  onClick,
+  onClickGetProduct,
+}) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [prodNo, setProdNo] = React.useState(null);
+  const [change, setChange] = React.useState(0);
+  const [product, setProduct] = React.useState([]);
   const navigate = useNavigate();
-  const handleModalOpen = () => {
+  const handleModalOpen = (prodNo) => {
+    setProdNo(prodNo);
     setIsModalOpen(true);
   };
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
+  const fetchData = async () => {
+    try {
+      if (selectedMenuType === "BUY") {
+        await listProductByBuyAPI().then(({ data }) => setProduct(data));
+      } else {
+        await listProductBySaleAPI(selectedMenuType).then(({ data }) =>
+          setProduct(data)
+        );
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchData();
+  }, [selectedMenuType, isModalOpen, change]); // selectedMenuType가 변경될 때마다 fetchData 실행
+
   return (
     <>
-      <Card sx={{ maxWidth: "100%" }}>
-        <CardHeader
-          avatar={
-            <CardMedia
-              component="img"
-              height="120"
-              image="/photo.png"
-              alt="Paella dish"
-            />
-          }
-          title={
-            <Box>
-              <Typography variant="h6" color="textSecondary">
-                상품 이름
-              </Typography>
-            </Box>
-          }
-          subheader={
-            <>
-              <Typography variant="subtitle2" color="textSecondary">
-                동 이름, 끌어올린 시간
-              </Typography>
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <div>
-                  <Typography variant="h6" color="textSecondary">
-                    상품 가격
-                  </Typography>
-                </div>
-                <div id="icongroup" sx={{ marginTop: 100 }}>
-                  <IconButton aria-label="add to favorites">
-                    <FavoriteBorderIcon />
-                  </IconButton>
-                  1
-                  <IconButton aria-label="add to favorites">
-                    <ChatBubbleOutlineIcon />
-                  </IconButton>
-                  5
-                </div>
-              </Box>
-            </>
-          }
-        />
-        <div style={{ display: "flex", marginBottom: "10px" }}>
-          <Button
-            variant="outlined"
-            color="secondary"
-            style={{ flex: 6, marginLeft: "10px" }}
-            onClick={onClick}
-          >
-            {buttonNM}
-          </Button>
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={handleModalOpen}
-            style={{ flex: 1, marginLeft: "10px", marginRight: "10px" }}
-          >
-            <MoreHorizIcon />
-          </Button>
-        </div>
-      </Card>
-      <Dialog open={isModalOpen} onClose={handleModalClose}>
-        <DialogTitle>상품 설정</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            {selectedActions.name.map((selectedAction, idx) => (
-              <MenuItem
-                key={idx}
-                onClick={() => navigate("/product/review/add")}
-              >
-                {selectedAction}
-              </MenuItem>
-            ))}
-          </DialogContentText>
-        </DialogContent>
-      </Dialog>
+      {Array.isArray(product) && product.length > 0 ? (
+        product.map((prod, idx) => (
+          <React.Fragment key={idx}>
+            <Card sx={{ maxWidth: "100%" }} id={prod.id}>
+              <CardHeader
+                avatar={
+                  <Avatar
+                    alt="/photo.png"
+                    src={
+                      prod.imageDTO && prod.imageDTO.length > 0
+                        ? prod.imageDTO[0].url
+                        : "/photo.png"
+                    }
+                    variant="square"
+                    sx={{ width: 100, height: 100, mr: 1 }}
+                  />
+                }
+                title={
+                  <Box>
+                    <Typography variant="h6" color="textSecondary">
+                      {prod.title}
+                    </Typography>
+                  </Box>
+                }
+                subheader={
+                  <>
+                    <Typography variant="subtitle2" color="textSecondary">
+                      {prod.dong} {formatTimeAgo(prod.regDate)}
+                    </Typography>
+                    <Box
+                      sx={{ display: "flex", justifyContent: "space-between" }}
+                    >
+                      <div>
+                        <Typography variant="h6" color="textSecondary">
+                          {selectedMenuType === "BUY" ? (
+                            <TradeStateButton type={{ tradeStatus: "BUY" }} />
+                          ) : (
+                            <TradeStateButton
+                              type={{ tradeStatus: prod.tradeStatus }}
+                            />
+                          )}
+                          &nbsp;
+                          {formatMoney(prod.price)}원
+                        </Typography>
+                      </div>
+                      <div id="icongroup" sx={{ marginTop: 100 }}>
+                        {prod.chatroomCount > 0 && (
+                          <>
+                            <span style={{ marginRight: "5px" }}>
+                              <ChatBubbleOutline />
+                              &nbsp;
+                              {prod.chatroomCount}
+                            </span>
+                          </>
+                        )}
+                        {prod.likeCount > 0 && (
+                          <>
+                            <span style={{ marginRight: "5px" }}>
+                              <FavoriteBorder />
+                              &nbsp;
+                              {prod.likeCount}
+                            </span>
+                          </>
+                        )}
+                      </div>
+                    </Box>
+                  </>
+                }
+                onClick={() => onClickGetProduct(prod.id)}
+              />
+              <div style={{ display: "flex", marginBottom: "10px" }}>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  style={{ flex: 6, marginLeft: "10px" }}
+                  onClick={() => {
+                    onClick(prod.id);
+                    setChange(change + 1);
+                  }}
+                >
+                  {buttonNM}
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => handleModalOpen(prod.id)}
+                  style={{ flex: 1, marginLeft: "10px", marginRight: "10px" }}
+                >
+                  <MoreHorizIcon />
+                </Button>
+              </div>
+            </Card>
+            <Dialog open={isModalOpen} onClose={handleModalClose}>
+              <DialogTitle>상품 설정</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  {selectedActions.map((selectedAction, idx) => (
+                    <MenuItem
+                      key={idx}
+                      // onClick={() => navigate("/product/review/add")}
+                      onClick={() => selectedAction.action(prodNo)}
+                    >
+                      {selectedAction.name}
+                    </MenuItem>
+                  ))}
+                </DialogContentText>
+              </DialogContent>
+            </Dialog>
+          </React.Fragment>
+        ))
+      ) : (
+        <NotData>상품</NotData>
+      )}
     </>
   );
 };

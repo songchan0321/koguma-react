@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 
-const NotData = () => {
+const NotData = ({ children }) => {
   return (
     <Box
       sx={{
@@ -13,7 +13,7 @@ const NotData = () => {
         mb: 3,
       }}
     >
-      데이터가 없어요
+      {children} 이 없어요.
     </Box>
   );
 };

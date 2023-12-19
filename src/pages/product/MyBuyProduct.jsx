@@ -10,48 +10,47 @@ import {
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MyList from "../../component/product/MyList";
+import Back from "../../component/common/Back";
 import TopBar from "../../component/payment/TopBar";
+import MarginEmpty from "../../component/payment/MarginEmpty";
+import MySaledList from "../../component/product/MySaledList";
 
 const MyBuyProduct = () => {
   //   const { clubId } = useParams();
   const [product, setProduct] = useState({});
   const navigate = useNavigate();
-  const getProductReview = () => {
-    navigate("/product/review/get");
+
+  const getProductReview = async (productId) => {
+    await navigate(`/product/get/review`, {
+      state: {
+        isSeller: true,
+        productId: productId,
+      },
+    });
   };
   const [selectedAction, setSelectedAction] = useState([
     {
-      name: ["목록에서 제외하기"],
-      //    action:[handleReservation(),
-      //            '2','3','4','5,'
-      //     ]
+      name: "목록에서 제외하기",
+      action: (productId) => console.log(productId),
     },
   ]);
-
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       try {
-  //         const data = await getClubAPI(clubId);
-  //         setProduct(data);
-  //         console.log(data.title);
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //     };
-  //     fetchData();
-  //   }, [clubId]); // clubId가 변경될 때마다 데이터를 다시 가져오도록
+  const getProduct = (productId) => {
+    navigate(`/product/get/${productId}`);
+  };
 
   return (
     <>
-      <TopBar children={"내 구매 목록"} />
+      <Back />
+      <TopBar>내 구매 목록</TopBar>
+      <MarginEmpty />
 
-      {selectedAction && (
-        <MyList
-          buttonNM="받은 후기 보기"
-          onClick={getProductReview}
-          selectedActions={selectedAction[0]}
-        />
-      )}
+      <MySaledList
+        buttonNM="받은 후기 보기"
+        selectedMenuType={"BUY"}
+        onClick={getProductReview}
+        onClickGetProduct={getProduct}
+        selectedActions={selectedAction}
+      />
     </>
   );
 };

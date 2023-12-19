@@ -52,7 +52,13 @@ const LocationBox = ({ location, setLocation }) => {
           sx={{
             fontSize: 14,
             padding: "0px",
-            "& .MuiSelect-outlined": { borderBottom: "none" },
+            // "& .MuiSelect-outlined": { borderBottom: "none" },
+            "& .MuiOutlinedInput-notchedOutline": {
+              border: "none", // 테두리 없애기
+            },
+            "&:hover .MuiOutlinedInput-notchedOutline": {
+              border: "none", // 호버 상태일 때 테두리 없애기
+            },
           }}
           inputProps={{ "aria-label": "Without label", maxLength: 5 }}
         >

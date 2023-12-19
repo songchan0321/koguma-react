@@ -17,4 +17,5 @@ export const CHAT_EVENT = {
   EVENT_CHAT_LIST_ALERT: "event alert1",
   EVENT_BOTTOM_ALERT: "event alert2",
   NEW_MESSAGE: "new message",
+  UPDATE_MESSAGE: "update message",
 };
