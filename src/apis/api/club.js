@@ -24,6 +24,16 @@ export const listClubAPI = async () => {
   }
 };
 
+export const allClubAPI = async () => {
+  try {
+    const { data } = await authInstance.get(`${CLUB_API_URI}/all`);
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const categoryListAPI = async () => {
   try {
     const { data } = await authInstance.get(`${CLUB_API_URI}/category/CLUB`);
@@ -294,6 +304,15 @@ export const joinMeetUpCancelAPI = async (clubId, meetUpId, isJoined) => {
 };
 
 ///== 4. 모임 포스트 ==///
+export const listMyClubPostAPI = async () => {
+  try {
+    const { data } = await authInstance.post(`${CLUB_API_URI}/post/list/my`);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const listClubPostCategories = async (clubId) => {
   try {
     const { data } = await authInstance.get(
@@ -338,6 +357,15 @@ export const addClubPost = async (clubId, formData) => {
         },
       }
     );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getClubPost = async (postId) => {
+  try {
+    const { data } = await authInstance.get(`${CLUB_API_URI}/post/${postId}`);
     return data;
   } catch (err) {
     console.log(err);

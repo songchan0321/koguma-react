@@ -13,6 +13,8 @@ const CategoryList = ({ onCategorySelect }) => {
         const data = await categoryListAPI();
         setCategory(data);
         console.log(data);
+        onCategorySelect(29);
+        setSelectedCategory(29);
       } catch (err) {
         console.error(`Error Service categories`, err);
       }
@@ -28,21 +30,23 @@ const CategoryList = ({ onCategorySelect }) => {
 
   return (
     <div>
-      <Typography variant="h5">우리 동네 모임 (우동모)</Typography>
-      <Tabs
-        value={selectedCategory}
-        onChange={handleTabChange}
-        textColor="secondary"
-        indicatorColor="secondary"
-        aria-label="category tabs"
-        variant="scrollable"
-        scrollButtons="auto"
-      >
-        {category &&
-          category.map((item) => (
-            <Tab key={item.id} label={item.name} value={item.id} />
-          ))}
-      </Tabs>
+      <Typography variant="h5">우리 동네 모임</Typography>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={selectedCategory}
+          onChange={handleTabChange}
+          textColor="secondary"
+          indicatorColor="secondary"
+          aria-label="category tabs"
+          variant="scrollable"
+          scrollButtons="auto"
+        >
+          {category &&
+            category.map((item) => (
+              <Tab key={item.id} label={item.name} value={item.id} />
+            ))}
+        </Tabs>
+      </Box>
     </div>
   );
 };
