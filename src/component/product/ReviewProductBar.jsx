@@ -7,6 +7,7 @@ import {
   Box,
   IconButton,
   Typography,
+  Avatar,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
@@ -24,42 +25,49 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const ReviewProductBar = (data) => {
+const ReviewProductBar = ({ data }) => {
+  console.log(data);
   return (
     <>
-      <Card id={data} sx={{ maxWidth: "100%" }}>
-        <CardHeader
-          avatar={
-            <CardMedia
-              component="img"
-              height="120"
-              image="/photo.png"
-              alt="Paella dish"
-            />
-          }
-          title={
-            <Box>
-              <Typography variant="h6" color="textSecondary">
-                상품 이름
-              </Typography>
-            </Box>
-          }
-          subheader={
-            <>
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <div>
-                  <Typography variant="subtitle1" color="textSecondary">
-                    <span>
-                      <span>거래한 회원 </span>
-                      <b>멀렁카우</b>
-                    </span>
-                  </Typography>
-                </div>
+      {data && (
+        <Card id={data.id} sx={{ maxWidth: "100%" }}>
+          <CardHeader
+            avatar={
+              <Avatar
+                alt="/photo.png"
+                src={
+                  data.imageDTO && data.imageDTO.length > 0
+                    ? data.imageDTO[0].url
+                    : "/photo.png"
+                }
+                variant="square"
+                sx={{ width: 100, height: 100, mr: 1 }}
+              />
+            }
+            title={
+              <Box>
+                <Typography variant="h6" color="textSecondary">
+                  {data.title}
+                </Typography>
               </Box>
-            </>
-          }
-        />
-      </Card>
+            }
+            subheader={
+              <>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <div>
+                    <Typography variant="subtitle1" color="textSecondary">
+                      <span>
+                        <span>거래한 회원 </span>
+                        <b>{data.sellerDTO.nickname}</b>
+                      </span>
+                    </Typography>
+                  </div>
+                </Box>
+              </>
+            }
+          />
+        </Card>
+      )}
     </>
   );
 };

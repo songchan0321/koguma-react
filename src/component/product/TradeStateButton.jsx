@@ -15,6 +15,12 @@ const TradeStateButton = ({ type }) => {
         판매완료
       </Button>
     );
+  } else if (tradeStatus === "BUY") {
+    return (
+      <Button color="secondary" variant="contained" size="small">
+        구매완료
+      </Button>
+    );
   }
 
   // Default case or unknown type

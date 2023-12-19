@@ -48,7 +48,7 @@ const ProductList = () => {
   return (
     <>
       <ProductTopBar location={location} setLocation={setLocation} />
-      <MarginEmpty />
+      <MarginEmpty value={60}></MarginEmpty>
       <BottomBar />
       <AddFloatingButton arrival={"/product/add"} />
 

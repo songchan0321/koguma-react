@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import TopReturnBar from "./TopReturnBar";
 import {
   Button,
@@ -18,13 +18,40 @@ import MyList from "../../component/product/MyList";
 import BasicRating from "../../component/product/Rating";
 import Commet from "../../component/product/Commet";
 import ReviewProductBar from "../../component/product/ReviewProductBar";
+import { getReviewAPI } from "../../apis/api/Product";
+
+import Back from "../../component/common/Back";
+import TopBar from "../../component/payment/TopBar";
+import MarginEmpty from "../../component/payment/MarginEmpty";
+import NotData from "../../component/product/NotData";
 
 const ProductReviewGet = () => {
-  //   const { clubId } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [review, setReview] = useState();
+  console.log(location.state.isSeller, location.state.productId);
+  const getReview = async () => {
+    await getReviewAPI(location.state.productId, location.state.isSeller)
+      .then((data) => setReview(data))
+      .then(console.log(review));
+  };
+
+  const getReviewOther = () => {
+    navigate(`/product/get/review`, {
+      state: {
+        isSeller: !review.seller,
+        productId: review.productDTO.id,
+      },
+    });
+  };
+  useEffect(() => {
+    getReview();
+  }, [location]);
 
   return (
     <>
-      <TopReturnBar />
+      <Back url={"/product/list/sale"} />
+      <TopBar>거래 후기 </TopBar>
       <Box
         sx={{
           display: "flex",
@@ -36,31 +63,41 @@ const ProductReviewGet = () => {
           mb: 3,
         }}
       >
-        <Typography variant="h6" gutterBottom>
-          000님이 보낸 후기가 도착했어요
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-          000님과 xxx 거래했어요
-        </Typography>
-        <Card sx={{ maxWidth: 345 }}>
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              height="140"
-              image="/login/mayuko-vermeulen--4HCai3y6yY-unsplash.jpg"
-              alt="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                멀렁카우님.
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
+        {review ? (
+          <>
+            <Typography variant="h6" gutterBottom>
+              {review.productDTO.sellerDTO.nickname}님이 보낸 후기가 도착했어요
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+              {review.memberDTO.nickname}님과 {review.productDTO.title}{" "}
+              거래했어요
+            </Typography>
+            <Card sx={{ width: "90%" }}>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image="/login/mayuko-vermeulen--4HCai3y6yY-unsplash.jpg"
+                  alt="green iguana"
+                />
+                <CardContent sx={{ width: "90%" }}>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {review.memberDTO.nickname}님
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {review.commet.map((commet, idx) => {
+                      return <div>{commet}</div>;
+                    })}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </>
+        ) : (
+          <>
+            <NotData>작성된 리뷰가 없어요.</NotData>
+          </>
+        )}
       </Box>
 
       <Paper
@@ -68,12 +105,12 @@ const ProductReviewGet = () => {
         elevation={3}
       >
         <Button
-          onClick={() => console.log("myReview go")}
+          onClick={() => getReviewOther()}
           fullWidth
           color="secondary"
           variant="contained"
         >
-          내가 보낸 후기 보기
+          상대가 보낸 후기 보기
         </Button>
       </Paper>
     </>

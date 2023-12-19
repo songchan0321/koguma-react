@@ -35,7 +35,7 @@ export const getProductAPI = async (productId) => {
   );
   return data;
 };
-export const ListProductAPI = async (page, keyword) => {
+export const ListProductAPI = async (keyword) => {
   try {
     const response = await authInstance.get(
       `${PRODUCT_API_URI}/list?keyword=${keyword || ""}`
@@ -95,9 +95,7 @@ export const listProductByBuyAPI = async () => {
   try {
     const response = await authInstance.get(`${PRODUCT_API_URI}/buy/list`);
     console.log(response);
-    return {
-      response,
-    };
+    return response;
   } catch (err) {
     console.log(err);
   }
@@ -107,6 +105,17 @@ export const updateTradeStateAPI = async (productId, type) => {
   try {
     const response = await authInstance.put(
       `${PRODUCT_API_URI}/tradestate?productId=${productId}&type=${type}`
+    );
+    console.log(response);
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const updateTradeStateSaledAPI = async (productId, buyerId, type) => {
+  try {
+    const response = await authInstance.put(
+      `${PRODUCT_API_URI}/tradestate?productId=${productId}&buyerId=${buyerId}&type=${type}`
     );
     console.log(response);
     return response;
@@ -181,4 +190,23 @@ export const deleteProductAPI = async (productId) => {
   } catch (err) {
     console.log(err);
   }
+};
+export const addReviewAPI = async (reviewDTO) => {
+  const { data } = await authInstance.post(
+    `/review/new`,
+    JSON.stringify(reviewDTO),
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  console.log(data);
+  return data;
+}; // type = true 판매자가 구매자에게 리뷰쓴거 확인
+//type = false 구매자가 판매자에게 리뷰쓴거 확인
+export const getReviewAPI = async (productId, type) => {
+  const { data } = await authInstance.get(`/review/${productId}?type=${type}`);
+  console.log(data);
+  return data;
 };

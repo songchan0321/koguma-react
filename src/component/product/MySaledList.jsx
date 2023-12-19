@@ -68,6 +68,24 @@ const MyList = ({
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
+
+  const getReviewNavigate = (isSeller, productId) => {
+    navigate(`/product/get/review`, {
+      state: {
+        isSeller: isSeller,
+        productId: productId,
+      },
+    });
+  };
+  //   const addReviewNavigate = (isSeller) => {
+  //     navigate(`/product/get/review/${data.id}`, {
+  //       state: {
+  //         isSeller: location.state.seller,
+  //         productId: data.productDTO.id,
+  //       },
+  //     });
+  //   };
+
   const fetchData = async () => {
     try {
       if (selectedMenuType === "BUY") {
@@ -159,17 +177,59 @@ const MyList = ({
                 onClick={() => onClickGetProduct(prod.id)}
               />
               <div style={{ display: "flex", marginBottom: "10px" }}>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  style={{ flex: 6, marginLeft: "10px" }}
-                  onClick={() => {
-                    onClick(prod.id);
-                    setChange(change + 1);
-                  }}
-                >
-                  {buttonNM}
-                </Button>
+                {selectedMenuType === "BUY" ? (
+                  prod.reviewDTO.some(
+                    (review, idx) => review.seller === true
+                  ) ? (
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      style={{ flex: 6, marginLeft: "10px" }}
+                      onClick={() => {
+                        getReviewNavigate(true, prod.id);
+                        setChange(change + 1);
+                      }}
+                    >
+                      받은 후기보기
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      style={{ flex: 6, marginLeft: "10px" }}
+                      onClick={() => {
+                        setChange(change + 1);
+                      }}
+                    >
+                      후기 작성하기
+                    </Button>
+                  )
+                ) : prod.reviewDTO.some(
+                    (review, idx) => review.seller === false
+                  ) ? (
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    style={{ flex: 6, marginLeft: "10px" }}
+                    onClick={() => {
+                      getReviewNavigate(false, prod.id);
+                      setChange(change + 1);
+                    }}
+                  >
+                    받은 후기 보기
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    style={{ flex: 6, marginLeft: "10px" }}
+                    onClick={() => {
+                      setChange(change + 1);
+                    }}
+                  >
+                    후기 작성하기
+                  </Button>
+                )}
                 <Button
                   variant="outlined"
                   color="secondary"
@@ -179,6 +239,54 @@ const MyList = ({
                   <MoreHorizIcon />
                 </Button>
               </div>
+              {/* <div style={{ display: "flex", marginBottom: "10px" }}>
+                {selectedMenuType === "BUY" ? (
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    style={{ flex: 6, marginLeft: "10px" }}
+                    
+                    onClick={() => {
+                      console.log(prod.);
+                      setChange(change + 1);
+                    }}
+                  >
+                    {prod.reviewDTO.some(
+                      (review, idx) => review.seller === false
+                    ) ? (
+                      <div>후기 작성하기</div>
+                    ) : (
+                      <div>받은 후기 보기</div>
+                    )}
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    style={{ flex: 6, marginLeft: "10px" }}
+                    onClick={() => {
+                      console.log(prod.id);
+                      setChange(change + 1);
+                    }}
+                  >
+                    {prod.reviewDTO.some(
+                      (review, idx) => review.seller === true
+                    ) ? (
+                      <div>받은 후기 보기</div>
+                    ) : (
+                      <div>후기 작성하기</div>
+                    )}
+                  </Button>
+                )}
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => handleModalOpen(prod.id)}
+                  style={{ flex: 1, marginLeft: "10px", marginRight: "10px" }}
+                >
+                  <MoreHorizIcon />
+                </Button>
+              </div> */}
             </Card>
             <Dialog open={isModalOpen} onClose={handleModalClose}>
               <DialogTitle>상품 설정</DialogTitle>

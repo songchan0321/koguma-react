@@ -22,7 +22,7 @@ import {
 
 import { formatMoney } from "../../apis/services/product";
 import ImageList from "../common/ImageList";
-import { addImageAPI } from "../../apis/api/common";
+import { addImageAPI, uploadImageAPI } from "../../apis/api/common";
 import { addProductAPI } from "../../apis/api/Product";
 import { Navigate, useNavigate } from "react-router-dom";
 
@@ -131,37 +131,28 @@ const ProductForm = ({ text }) => {
       imageList.append("file", el);
     });
     (async () => {
-      try {
-        // const { data } = await addProductAPI(dto);
-        // console.log(data);
-
-        const imageUrlList = await addImageAPI(imageList);
-        console.log(imageUrlList);
-        const dto = {
-          productDTO: {
-            title: form.get("title"),
-            categoryName: formData.categoryName,
-            categoryId: formData.categoryId,
-            price: parseInt(form.get("price").replace(/,/g, ""), 10),
-            content: form.get("content"),
-            images: imageUrlList,
-          },
-        };
-        console.log(dto);
-        await addProductAPI(dto.productDTO)
-          .then((response) => {
-            console.log(response);
-            navigate(`/product/get/${response.data.id}`, { replace: true });
-          })
-          .catch((error) => {
-            console.error("Error in addProductAPI:", error);
-            // Handle the error appropriately
-          });
-      } catch (error) {
-        alert("등록 실패입니다.");
-        console.log(error);
-        // Handle the error appropriately
-      }
+      const imageUrlList = await uploadImageAPI(imageList);
+      console.log(imageUrlList);
+      const dto = {
+        productDTO: {
+          title: form.get("title"),
+          categoryName: formData.categoryName,
+          categoryId: formData.categoryId,
+          price: parseInt(form.get("price").replace(/,/g, ""), 10),
+          content: form.get("content"),
+          images: imageUrlList,
+        },
+      };
+      console.log(dto);
+      await addProductAPI(dto.productDTO)
+        .then((response) => {
+          console.log(response);
+          navigate(`/product/get/${response.data.id}`, { replace: true });
+        })
+        .catch((error) => {
+          console.error("Error in addProductAPI:", error);
+          // Handle the error appropriately
+        });
     })();
   };
 
