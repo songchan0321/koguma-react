@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import Back from "./Back";
 
-const TopBarClub = ({ children, color = "none" }) => {
+const TopBarAddClub = ({ children, color = "none" }) => {
   return (
     <Typography
       variant="h6"
@@ -17,4 +17,4 @@ const TopBarClub = ({ children, color = "none" }) => {
   );
 };
 
-export default TopBarClub;
+export default TopBarAddClub;

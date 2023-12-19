@@ -3,7 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { getClubMeetUp } from "../../../apis/api/club";
 import { Box } from "@mui/material";
 import JoinedMeetUpMember from "../../../component/club/meetUp/JoinedMeetUpMember";
-import TopBarClub from "../../../component/club/common/TopbarClub";
+import TopBarClub from "../../../component/club/common/TopBarClub";
 
 const GetClubMeetUp = () => {
   const { meetUpId } = useParams();
