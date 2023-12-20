@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Button, CircularProgress, List, ListItem, ListItemText, ThemeProvider, createTheme } from '@mui/material';
+import { List, ListItem, ListItemText, ThemeProvider, createTheme, IconButton, CircularProgress } from '@mui/material';
 import { authInstance } from "../../apis/utils/instance";
 import { useNavigate } from 'react-router-dom';
-
+import Back from "../../component/common/Back";
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
+import SentimentDissatisfiedOutlinedIcon from '@mui/icons-material/SentimentDissatisfiedOutlined';
 // 테마 정의
 const theme = createTheme({
     palette: {
         primary: {
-            main: "#673AB7", // 보라색
+            main: "#cfe8fc",
         },
     },
 });
@@ -21,8 +23,8 @@ const ListBlockForm = () => {
         const fetchBlockList = async () => {
             try {
                 const response = await authInstance.get('/member/relationship/block/list');
-                console.log('Response:', response); // 응답 전체를 출력
-                console.log('Data:', response.data); // 응답에서 데이터만 출력
+                console.log('Response:', response);
+                console.log('Data:', response.data);
                 setBlockList(response.data);
                 setLoading(false);
             } catch (error) {
@@ -46,19 +48,26 @@ const ListBlockForm = () => {
                 {loading ? (
                     <CircularProgress color="primary" />
                 ) : (
-                    <List>
+                    <List sx={{ width: '100%' }}>
                         {blockList.map((block) => (
-                            <ListItem key={block.id}>
-                                <ListItemText primary={block.targetMember.nickname} />
-                                <Button
-                                    variant="contained"
-                                    color="primary"
+                            <ListItem
+                                key={block.id}
+                                sx={{ justifyContent: 'flex-start' }}
+                            >
+                                <SentimentDissatisfiedOutlinedIcon/>
+                                <ListItemText
+                                    primary={block.targetMember.nickname}
+                                    sx={{ marginLeft: '15px' }}
+                                />
+                                <IconButton
                                     onClick={() => handleNavigateToBlockDetail(block.targetMember.id)}
+                                    aria-label="comment"
                                 >
-                                    차단 상세
-                                </Button>
+                                    <ArticleOutlinedIcon />
+                                </IconButton>
                             </ListItem>
                         ))}
+                        <Back />
                     </List>
                 )}
             </div>

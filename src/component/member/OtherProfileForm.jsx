@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { authInstance } from '../../apis/utils/instance';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import {CircularProgress} from "@mui/material";
 
 const OtherProfileForm = () => {
     const { id } = useParams();
@@ -38,22 +39,24 @@ const OtherProfileForm = () => {
     return (
         <div>
             {loading ? (
-                <p>Loading...</p>
+                <CircularProgress />
             ) : (
                 <div>
-                    <Typography variant="body1" sx={{ color: '#673AB7' }}>
-                        닉네임: {otherMember.nickname}
+                    <Typography variant="body1" sx={{ color: '#673AB7', display: 'flex', justifyContent: 'center' }}>
+                        <img src={otherMember.profileURL} alt="" style={{ width: "40%", borderRadius: "40%", marginTop: "40px" }} />
                     </Typography>
-                    <Typography variant="body2" sx={{ color: '#673AB7' }}>
-                        프로필 사진: {otherMember.imageId}
+                    <Typography variant="body2" sx={{ color: '#673AB7', display: 'flex', justifyContent: 'center', marginTop: '40px', fontSize: '1.5rem' }}>
+                        {otherMember.nickname}
                     </Typography>
-                    {/* 추가적인 회원 정보 표시 */}
-                    <Button variant="contained" color="secondary" onClick={handleBlockButtonClick} sx={{ marginTop: 2 }}>
-                        차단
-                    </Button>
-                    <Button variant="contained" color="secondary" onClick={handleFollowingButtonClick} sx={{ marginTop: 2 }}>
-                        팔로우
-                    </Button>
+                    {/* 차단 버튼 */}
+                    <div style={{ textAlign: 'center', marginTop: '60px' }}>
+                        <Button variant="contained" color="secondary" onClick={handleBlockButtonClick}>
+                            차단
+                        </Button>
+                        <Button variant="contained" color="secondary" onClick={handleFollowingButtonClick} style={{ marginLeft: '10px' }}>
+                            팔로우
+                        </Button>
+                    </div>
                 </div>
             )}
         </div>

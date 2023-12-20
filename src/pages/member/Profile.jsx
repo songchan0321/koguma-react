@@ -47,8 +47,8 @@ const Profile = () => {
           <Grid item>
             <Button
                 onClick={() => navigate("/member/update")}
-                variant="contained"
-                color="secondary"
+                variant="outlined"
+                color="primary"
                 sx={{ width: '100px', height: '40px' }}
             >
               내 정보 수정
@@ -63,8 +63,8 @@ const Profile = () => {
                   localStorage.removeItem("token");
                   navigate("/common/login");
                 }}
-                variant="contained"
-                color="secondary"
+                variant="outlined"
+                color="primary"
                 sx={{ width: '100px', height: '40px', marginLeft: '2px' }}
             >
               로그아웃
@@ -78,7 +78,12 @@ const Profile = () => {
                 <CircularProgress />
             ) : (
                 // 로딩이 완료되면 멤버 이미지 표시
-                member && <img src={member.profileURL} alt="Profile" style={{ width: "20%", borderRadius: "20%" }} />
+                member && member.profileURL ? (
+                    <img src={member.profileURL} alt="" style={{ width: "40%", borderRadius: "40%" }} />
+                ) : (
+                    // 이미지가 없을 때 아이콘 등의 대체 컨텐츠를 표시
+                    <div></div>
+                )
             )}
           </Grid>
           <Grid item xs={12} md={8}>
