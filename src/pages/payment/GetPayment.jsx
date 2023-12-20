@@ -1,19 +1,9 @@
-import {
-  Box,
-  Button,
-  Chip,
-  CircularProgress,
-  Container,
-  ListItem,
-  Paper,
-  Stack,
-} from "@mui/material";
+import { Chip, Container, Stack } from "@mui/material";
 import PaymentInfo from "../../component/payment/PaymentInfo";
 import TopBar from "../../component/payment/TopBar";
 import { useContext, useEffect, useState } from "react";
 import { existPaymentAPI } from "../../apis/api/payment";
-import { getMemberAPI } from "../../apis/api/member";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import { IsLoginContext } from "../../context/LoginContextProvider";
 import MarginEmpty from "../../component/payment/MarginEmpty";
@@ -21,7 +11,7 @@ import ListPaymentHistory from "../../component/payment/ListPaymentHistory";
 import Back from "../../component/common/Back";
 
 const GetPayment = () => {
-  const { setIsLogin } = useContext(IsLoginContext);
+  const { state } = useLocation();
   const [type, setType] = useState("ALL");
   const [existPayment, setExistPayment] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -52,7 +42,13 @@ const GetPayment = () => {
           <TopBar color="secondary">
             <i>Pay</i>
           </TopBar>
-          <Back url={"/"} />
+          <Back
+            url={
+              state?.roomId != null
+                ? `/chat/get/${state.roomId}`
+                : "/product/list"
+            }
+          />
           <MarginEmpty value={"70px"} />
           <PaymentInfo registered={existPayment} />
           <br />

@@ -1,14 +1,11 @@
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import { Fragment, useContext, useRef, useState } from "react";
 import { Avatar, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -24,10 +21,8 @@ import { useNavigate } from "react-router-dom";
 import RequestTransferForm from "./RequstTransferForm";
 import LeaveCheck from "./LeaveCheck";
 import { addImageAPI, uploadImageAPI } from "../../apis/api/common";
-import { CHAT_EVENT, SocketContext } from "../../context/socket";
 import LoadingBackdrop from "../common/LoadingBackdrop";
 const ChatPlusButton = ({ roomId, product, sendTextMessageHandler }) => {
-  const socket = useContext(SocketContext);
   const navigator = useNavigate();
   const [state, setState] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -192,7 +187,12 @@ const ChatPlusButton = ({ roomId, product, sendTextMessageHandler }) => {
                     >
                       <LocationOnIcon sx={{ color: "#F5F5DC" }} />
                     </Avatar>,
-                    <Avatar sx={{ width: 34, height: 34, bgcolor: "gray" }}>
+                    <Avatar
+                      sx={{ width: 34, height: 34, bgcolor: "gray" }}
+                      onClick={() => {
+                        imageRef.current.click();
+                      }}
+                    >
                       <PhotoIcon sx={{ color: "F5F5DC" }} />
                     </Avatar>,
                   ][index]

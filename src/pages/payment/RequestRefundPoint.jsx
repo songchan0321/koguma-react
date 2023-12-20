@@ -1,10 +1,9 @@
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getMemberAPI } from "../../apis/api/member";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import TopBar from "../../component/payment/TopBar";
 import { useNavigate } from "react-router-dom";
-import uuid from "react-uuid";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 import Back from "../../component/common/Back";
 import { requestRefundPointAPI } from "../../apis/api/payment";

@@ -44,8 +44,8 @@ const SuggestPriceComponent = (suggestData) => {
         suggestData.data.memberDTO.id
       )
         .then((room) => {
-          updateChatRoomBySuggestAPI(room.id, suggestData.data.price);
-          return room;
+          return updateChatRoomBySuggestAPI(room.id, suggestData.data.price);
+          // return room;
         })
         .then((room) => enterChatRoomAPI(room.id))
         .then((room) => {

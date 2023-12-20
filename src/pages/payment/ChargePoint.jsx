@@ -1,4 +1,4 @@
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getMemberAPI } from "../../apis/api/member";
 import LoadingProgress from "../../component/common/LoadingProgress";

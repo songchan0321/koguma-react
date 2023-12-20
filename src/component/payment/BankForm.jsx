@@ -2,7 +2,6 @@ import {
   Avatar,
   Box,
   Dialog,
-  DialogActions,
   DialogContent,
   DialogTitle,
   Grid,

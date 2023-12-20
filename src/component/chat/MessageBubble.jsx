@@ -43,9 +43,9 @@ const MessageBubble = ({ msg, isOwnMessage, roomId, member }) => {
           <ImageBubble msg={msg} isOwnMessage={isOwnMessage} />
         ) : msg.type === "TRANSFER" ? (
           <TransferBubble
+            roomId={roomId}
             msg={msg}
             isOwnMessage={isOwnMessage}
-            nickname={member.nickname}
           />
         ) : msg.type === "REQUEST" ? (
           <RequestTransferBubble

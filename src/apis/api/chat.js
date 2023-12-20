@@ -48,6 +48,12 @@ export const existChatRoomByProductAndBuyerAPI = async (productId, buyerId) => {
   );
   return data;
 };
+export const checkEnterRoomByMemberAPI = async (roomId, memberId) => {
+  const { data } = await authInstance.get(
+    `${CHAT_API_URI}/enter/check/${roomId}/${memberId}`
+  );
+  return data.result;
+};
 
 export const updateChatRoomBySuggestAPI = async (roomId, price) => {
   const { data } = await authInstance.post(

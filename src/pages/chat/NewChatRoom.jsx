@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getProductAPI } from "../../apis/api/Product";
 import ChatForm from "../../component/chat/ChatForm";
 import { Chip, List } from "@mui/material";
@@ -14,7 +14,7 @@ import {
 } from "../../apis/api/chat";
 import { CHAT_EVENT, SocketContext } from "../../context/socket";
 import LoadingProgress from "../../component/common/LoadingProgress";
-import { getBlockAPI, getMemberAPI } from "../../apis/api/member";
+import { getMemberAPI, getReverseBlockAPI } from "../../apis/api/member";
 import Back from "../../component/common/Back";
 import TopBar from "../../component/payment/TopBar";
 import MarginEmpty from "../../component/payment/MarginEmpty";
@@ -28,48 +28,11 @@ const NewChatRoom = () => {
   } = useLocation();
   const [product, setProduct] = useState();
   const [member, setMember] = useState();
-  // const sendTextMessageHandler = async (text, roomId, toId, type, member) => {
-  //   // 차단 여부 check true:
-  //   // 나간 여부 check 그냥 emit 후 서버에서 알림 발송 x
-  //   // 차단 여부 check false: emit하기 전에
-  //   // enter_date 설정, emit 후 서버에서 알림 발송
-  //   await enterChatRoomAPI(roomId).then((data) => {
-  //     if (data.result) {
-  //       (async () => {
-  //         const updateChatroom = await getChatRoomAPI(roomId);
-  //         console.log(
-  //           updateChatroom.buyerDTO.id === member.id
-  //             ? updateChatroom.sellerEnterDate
-  //             : updateChatroom.buyerEnterDate
-  //         );
-  //         socket.emit(CHAT_EVENT.SEND_MESSAGE, {
-  //           roomId: roomId,
-  //           toId: toId,
-  //           type: type,
-  //           token: `${localStorage.getItem("token")}`,
-  //           enter_date:
-  //             updateChatroom.buyerDTO.id === member.id
-  //               ? updateChatroom.sellerEnterDate
-  //               : updateChatroom.buyerEnterDate,
-  //           message: text,
-  //         });
-  //       })();
-  //     } else {
-  //       socket.emit(CHAT_EVENT.SEND_MESSAGE, {
-  //         roomId: roomId,
-  //         toId: toId,
-  //         type: type,
-  //         token: `${localStorage.getItem("token")}`,
-  //         message: text,
-  //       });
-  //     }
-  //   });
-  // };
 
   const sendTextMessageHandler_temp = async ({ text, type, toId }) => {
     console.log("sendTextMessageHandler_temp()");
     // 판매자가 나를 차단하냐?
-    const block_flag = await getBlockAPI(product.sellerDTO.id);
+    const block_flag = await getReverseBlockAPI(product.sellerDTO.id);
     // 로그인한 회원(구매 예정자)이 채팅방이 리얼 처음인가
     console.log(block_flag);
     const room_exist_flag = await existAbsoluteChatRoomByProductAPI(
@@ -87,7 +50,7 @@ const NewChatRoom = () => {
           token: `${localStorage.getItem("token")}`,
           enter_date: room.buyerEnterDate,
           message: text,
-          flag: false, // 알림 발송 여부
+          flag: true, // 알림 발송 여부
         });
         navigator(`/chat/get/${room.id}`);
       });

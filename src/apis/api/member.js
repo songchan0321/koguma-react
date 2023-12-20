@@ -7,8 +7,7 @@ export const getMemberAPI = async () => {
     const { data } = await authInstance.get(`${MEMBER_API_URI}/profile/get`);
     return data;
   } catch (err) {
-    alert("회원 정보를 가져올 수 없습니다.");
-    console.log(err);
+    window.location.href = "/common/login";
   }
 };
 export const addMemberAPI = async () => {
@@ -76,6 +75,17 @@ export const getBlockAPI = async (targetMemberId) => {
   }
 };
 
+export const getReverseBlockAPI = async (sourceMemberId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${MEMBER_API_URI}/relationship/block/get/reverse/${sourceMemberId}`
+    );
+    return data;
+  } catch (err) {
+    return null;
+  }
+};
+
 export const getFollowingAPI = async (targetMemberId) => {
   try {
     const { data } = await authInstance.get(
@@ -133,18 +143,16 @@ export const deleteReportAPI = async () => {
     console.log(error);
   }
 };
-export const memberImageAddAPI = async (imageUrl)=>{
+export const memberImageAddAPI = async (imageUrl) => {
   try {
     const { data } = await authInstance.post(
-        `/image/profile`,
-        JSON.stringify(
-            {"URL" : imageUrl}
-        ),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+      `/image/profile`,
+      JSON.stringify({ URL: imageUrl }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
     return data;
   } catch (err) {

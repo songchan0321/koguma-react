@@ -1,10 +1,8 @@
 import { AppBar, Toolbar, Typography } from "@mui/material";
-import Back from "../common/Back";
 
-const TopBar = ({ children, color, paddingRight }) => {
+const TopBar = ({ children, color }) => {
   return (
     <>
-      {/* <Back /> */}
       <AppBar
         position="fixed"
         style={{

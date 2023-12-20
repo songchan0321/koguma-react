@@ -5,10 +5,9 @@ import {
   Box,
   Button,
   CircularProgress,
-  Grid,
   TextField,
 } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import BankForm from "./BankForm";
 import { addPaymentAPI, checkAccountNameAPI } from "../../apis/api/payment";
 import { useNavigate } from "react-router-dom";
