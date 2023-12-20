@@ -35,7 +35,7 @@ const ProductRouter = () => {
       <Route path="/list/buy" element={<MyBuyProduct />} />
       <Route path="/list/like" element={<LikeProductList />} />
       <Route path="/review/add" element={<ProductReviewAdd />} />
-      <Route path="/get/review" element={<ProductReviewGet />} />
+      <Route path="/get/review/:reviewId" element={<ProductReviewGet />} />
       <Route path="/suggest/list/:productId" element={<ListSuggestPrice />} />
       <Route path="/get/seller/:productId" element={<ListChoiceBuyer />} />
     </Routes>

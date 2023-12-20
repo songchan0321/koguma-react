@@ -60,13 +60,6 @@ const MySaleProduct = () => {
       action: (productId) => console.log(productId),
     },
     {
-      name: "거래 후기 작성",
-      action: (productId) =>
-        navigate(`/product/review/add`, {
-          state: { productId: productId, seller: true },
-        }),
-    },
-    {
       name: "숨기기",
       action: (productId) => updateTradeState(productId, "HIDE"),
     },
@@ -164,7 +157,7 @@ const MySaleProduct = () => {
 
   return (
     <>
-      <Back />
+      <Back url="/member/profile" />
       <TopBar>내 판매 내역</TopBar>
       <MarginEmpty />
       <MarginEmpty value={"160px"} />

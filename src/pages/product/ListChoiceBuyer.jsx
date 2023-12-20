@@ -55,9 +55,13 @@ const ListChoiceBuyer = () => {
     console.log(choice);
     try {
       await updateTradeStateSaledAPI(productId, choice, "SALED").then(() =>
-        navigate(`/product/review/add`, {
-          state: { buyerId: choice, productId: productId, seller: true },
-        })
+        navigate(
+          `/product/review/add`,
+          {
+            state: { buyerId: choice, productId: productId, seller: true },
+          },
+          { replace: true }
+        )
       );
     } catch (err) {
       console.log(err);
