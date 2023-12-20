@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getFollowingAPI, deleteFollowingAPI } from '../../apis/api/member';
-
+import Back from "../../component/common/Back";
 const GetFollowingForm = () => {
     const { targetMemberId } = useParams();
     const [getFollowing, setGetFollowing] = useState({});
@@ -50,10 +50,13 @@ const GetFollowingForm = () => {
                     <p>팔로잉 사유: {getFollowing.content}</p>
                     <p>팔로잉 일시: {getFollowing.targetMember.regDate}</p>
                     <button onClick={handleUnfollowing}>팔로잉 해제</button>
+                    <Back/>
                 </div>
             )}
+
         </div>
     );
+
 };
 
 export default GetFollowingForm;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { authInstance } from '../../apis/utils/instance';
 import { useNavigate, useParams } from 'react-router-dom';
+import Back from "../../component/common/Back";
 import {
     ThemeProvider,
     createTheme,
@@ -83,6 +84,7 @@ const ListReportForm = () => {
                 >
                     문의 및 신고 추가
                 </Button>
+                <Back/>
             </div>
         </ThemeProvider>
     );

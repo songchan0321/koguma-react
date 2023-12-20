@@ -1,11 +1,14 @@
 import React from "react";
 import OtherProfileForm from "../../component/member/OtherProfileForm";
+import Back from "../../component/common/Back";
+import BottomBar from "../../component/common/BottomBar";
 
 const OtherProfile = () => {
     return (
         <div>
-            <h2>타 회원 프로필 조회</h2>
             <OtherProfileForm />
+            <Back/>
+            <BottomBar/>
         </div>
     );
 };

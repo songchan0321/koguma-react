@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getBlockAPI, deleteBlockAPI } from '../../apis/api/member';
 import { Button, CircularProgress, ThemeProvider, createTheme } from '@mui/material';
-
+import Back from "../../component/common/Back";
 // 테마 정의
 const theme = createTheme({
     palette: {
@@ -61,6 +61,7 @@ const GetBlockForm = () => {
                         <Button variant="contained" color="primary" onClick={handleUnblock}>
                             차단 해제
                         </Button>
+                        <Back/>
                     </div>
                 )}
             </div>
