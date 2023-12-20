@@ -14,13 +14,14 @@ const LikeProduct = ({ prodId }) => {
   const [checked, setChecked] = React.useState(false);
   const [load, isLoad] = React.useState(false);
   console.log(prodId);
-  const handleChange = async (event) => {
+  const handleChange = (event) => {
     const isChecked = event.target.checked;
     setChecked(isChecked);
     if (isChecked) {
-      await addProductLikeAPI(prodId);
+      addProductLikeAPI(prodId);
     } else {
-      await deleteProductLikeAPI(prodId);
+      console.log(prodId);
+      deleteProductLikeAPI(prodId);
     }
   };
 

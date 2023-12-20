@@ -92,14 +92,58 @@ export const listProductBySaleAPI = async (type) => {
   }
 };
 export const listProductByBuyAPI = async () => {
-  try {
-    const response = await authInstance.get(`${PRODUCT_API_URI}/buy/list`);
-    console.log(response);
-    return response;
-  } catch (err) {
-    console.log(err);
-  }
+  const { data } = await authInstance.get(`${PRODUCT_API_URI}/buy/list`);
+  console.log(data);
+  const results = await Promise.all(
+    data.map(async (product) => {
+      return {
+        ...product,
+        reviewId: await getOppReviewIdAPI(product),
+        myReviewId: await getMyReviewIdAPI(product),
+      };
+    })
+  );
+  console.log(results);
+  return results;
 };
+export const listProductBySaledAPI = async () => {
+  const { data } = await authInstance.get(
+    `${PRODUCT_API_URI}/sale/list?type=SALED`
+  );
+  console.log(data);
+  const results = await Promise.all(
+    data.map(async (product) => {
+      return {
+        ...product,
+        reviewId: await getOppReviewIdAPI(product),
+        myReviewId: await getMyReviewIdAPI(product),
+      };
+    })
+  );
+  console.log(results);
+  return results;
+};
+
+// export const listProductBySaleAPI = async (type) => {
+//   try {
+//     const response = await authInstance.get(
+//       `${PRODUCT_API_URI}/sale/list?type=${type}`
+//     );
+//     console.log(response);
+//     return response;
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+// export const listProductByBuyAPI = async () => {
+//   try {
+//     const response = await authInstance.get(`${PRODUCT_API_URI}/buy/list`);
+//     console.log(response);
+//     return response;
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
 export const updateTradeStateAPI = async (productId, type) => {
   try {
@@ -203,10 +247,51 @@ export const addReviewAPI = async (reviewDTO) => {
   );
   console.log(data);
   return data;
-}; // type = true 판매자가 구매자에게 리뷰쓴거 확인
-//type = false 구매자가 판매자에게 리뷰쓴거 확인
-export const getReviewAPI = async (productId, type) => {
-  const { data } = await authInstance.get(`/review/${productId}?type=${type}`);
-  console.log(data);
-  return data;
+};
+export const getReviewAPI = async (reviewId) => {
+  // type = true  판매자가 구매자에게 리뷰쓴거 확인
+  // type = false 구매자가 판매자에게 리뷰쓴거 확인
+
+  const { data } = await authInstance.get(`/review/get/${reviewId}`);
+  console.log(data.reviewDTO.productDTO);
+  const results = await Promise.all([
+    data,
+    getOppReviewIdAPI(data.reviewDTO.productDTO),
+    getMyReviewIdAPI(data.reviewDTO.productDTO),
+  ]);
+
+  return { ...results[0], oppReviewId: results[1], myReviewId: results[2] };
+};
+
+export const getOppReviewIdAPI = async (product) => {
+  try {
+    const { data } = await authInstance.post(
+      `/review/get/opp/reviewid`,
+      JSON.stringify(product),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const getMyReviewIdAPI = async (product) => {
+  try {
+    const { data } = await authInstance.post(
+      `/review/get/my/reviewid`,
+      JSON.stringify(product),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
 };
