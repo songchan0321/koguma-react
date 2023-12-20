@@ -13,6 +13,7 @@ export const memberchecAPI = async () => {
 
 export const addProductAPI = async (product) => {
   try {
+    console.log(product);
     const response = await authInstance.post(
       `${PRODUCT_API_URI}/new`,
       JSON.stringify(product),

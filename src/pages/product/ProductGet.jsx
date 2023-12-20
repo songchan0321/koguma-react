@@ -21,6 +21,7 @@ import LoadingProgress from "../../component/common/LoadingProgress";
 import Back from "../../component/common/Back";
 import TopBar from "../../component/payment/TopBar";
 import MarginEmpty from "../../component/payment/MarginEmpty";
+import ImgCarousel from "../../component/product/ImgCarousel";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -66,7 +67,7 @@ const ProductGet = () => {
       {data ? (
         <>
           <Card sx={{ maxWidth: "100%" }}>
-            <CardMedia
+            {/* <CardMedia
               component="img"
               height="400"
               image={
@@ -75,7 +76,8 @@ const ProductGet = () => {
                   : "/photo.png"
               }
               alt="/photo.png"
-            />
+            /> */}
+            <ImgCarousel img={data.imageDTO} />
             {/* <Carousel>
           {sources.map((item) => (
             <Paper key={item.id}>

@@ -116,7 +116,7 @@ const SuggestPrice = () => {
           autoComplete="price"
           InputProps={{
             inputProps: {
-              maxLength: 10, // 10자리의 숫자 + 3자리의 콤마
+              maxLength: 7, // 10자리의 숫자 + 3자리의 콤마
             },
             endAdornment: <InputAdornment position="end">원</InputAdornment>,
           }}
