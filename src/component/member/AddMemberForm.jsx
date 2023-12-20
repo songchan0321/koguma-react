@@ -1,5 +1,17 @@
 import React, { useState } from "react";
-import { TextField, Button, Grid, Paper, Typography, Checkbox, FormControlLabel } from "@mui/material";
+import {
+    TextField,
+    Button,
+    Grid,
+    Paper,
+    Typography,
+    Checkbox,
+    FormControlLabel,
+    Dialog,          // 추가: Dialog 및 관련 컴포넌트 import
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+} from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { defaultInstance } from "../../apis/utils/instance";
 import { useNavigate } from "react-router-dom";
@@ -78,12 +90,16 @@ const AddMemberForm = ({ onSubmit }) => {
             }
 
             /*if (!isSmsVerified) {
-                window.alert("휴대폰 인증이 필요합니다.");
-                return;
+              window.alert("휴대폰 인증이 필요합니다.");
+              return;
             }*/
 
-            if (!isAgreed) {
-                window.alert("약관에 동의해주세요.");
+            if (!isAgeChecked) {
+                window.alert("개인정보 수집 및 이용 동의에 동의해 주세요.");
+                return;
+            }
+            if (!isUseChecked) {
+                window.alert("이용 약관에 동의해 주세요.");
                 return;
             }
 
@@ -104,17 +120,46 @@ const AddMemberForm = ({ onSubmit }) => {
                 image_URL: null,
             });
 
-            if (response.ok) {
-                navigate("/member/add/complete");
+            if (response.status === 200) {
+                // 성공
                 onSubmit();
+                window.alert("회원가입 성공!");
+                navigate("/member/add/complete");
             } else {
-                window.alert("회원 가입 실패.");
+                // 에러 처리
+                const data = await response.json();
+                window.alert(`회원 가입 실패: ${data.message}`);
             }
         } catch (error) {
             console.log(error);
-            window.alert("회원가입 성공!");
-            navigate("/member/add/complete");
         }
+    };
+
+    // 다이얼로그 관련 상태 및 핸들러
+    const [openDialog1, setOpenDialog1] = useState(false);
+    const [openDialog2, setOpenDialog2] = useState(false);
+    const [openDialog3, setOpenDialog3] = useState(false);
+
+    const handleOpenDialog1 = () => {
+        setOpenDialog1(true);
+    };
+
+    const handleCloseDialog1 = () => {
+        setOpenDialog1(false);
+    };
+    const handleOpenDialog2 = () => {
+        setOpenDialog2(true);
+    };
+
+    const handleCloseDialog2 = () => {
+        setOpenDialog2(false);
+    };
+    const handleOpenDialog3 = () => {
+        setOpenDialog3(true);
+    };
+
+    const handleCloseDialog3 = () => {
+        setOpenDialog3(false);
     };
 
     return (
@@ -126,22 +171,8 @@ const AddMemberForm = ({ onSubmit }) => {
                         가입하기
                     </Typography>
                     <TextField label="닉네임" fullWidth value={nickname} onChange={handleNicknameChange} margin="normal" />
-                    <TextField
-                        label="비밀번호"
-                        fullWidth
-                        type="password"
-                        value={password}
-                        onChange={handlePasswordChange}
-                        margin="normal"
-                    />
-                    <TextField
-                        label="비밀번호 확인"
-                        fullWidth
-                        type="password"
-                        value={confirmPassword}
-                        onChange={handleConfirmPasswordChange}
-                        margin="normal"
-                    />
+                    <TextField label="비밀번호" fullWidth type="password" value={password} onChange={handlePasswordChange} margin="normal" />
+                    <TextField label="비밀번호 확인" fullWidth type="password" value={confirmPassword} onChange={handleConfirmPasswordChange} margin="normal" />
                     <TextField label="휴대폰 번호" fullWidth value={phone} onChange={handlePhoneChange} margin="normal" />
                     <Button variant="contained" color="secondary" onClick={handleGetAuthNum} sx={{ marginTop: 1, marginBottom: 1 }}>
                         인증번호 받기
@@ -162,10 +193,13 @@ const AddMemberForm = ({ onSubmit }) => {
                         }
                         label={
                             <div>
-                                만 14세 이상입니다.
+                                개인정보 수집 및 이용 동의
                                 <Typography variant="caption" sx={{ color: "primary.main", marginLeft: 1 }}>
                                     [필수]
                                 </Typography>
+                                <Button variant="contained" color="secondary" onClick={handleOpenDialog1} sx={{ width: 'auto', marginLeft: '50' }}>
+                                    전문 확인
+                                </Button>
                             </div>
                         }
                         sx={{ marginTop: 1, marginBottom: 1, width: '100%' }}
@@ -182,10 +216,13 @@ const AddMemberForm = ({ onSubmit }) => {
                         }
                         label={
                             <div>
-                                이용 약관에 동의합니다.
+                                이용 약관 동의
                                 <Typography variant="caption" sx={{ color: "primary.main", marginLeft: 1 }}>
                                     [필수]
                                 </Typography>
+                                <Button variant="contained" color="secondary" onClick={handleOpenDialog2} sx={{ width: 'auto', marginLeft: '50' }}>
+                                    전문 확인
+                                </Button>
                             </div>
                         }
                         sx={{ marginTop: 1, marginBottom: 1, width: '100%' }}
@@ -201,11 +238,16 @@ const AddMemberForm = ({ onSubmit }) => {
                             />
                         }
                         label={
-                            <div>
-                                마케팅 정보 수집 활용에 동의합니다.
-                                <Typography variant="caption" sx={{ color: "primary.main", marginLeft: 1 }}>
-                                    [선택]
-                                </Typography>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                                <div>
+                                    광고성 정보 수신 동의
+                                    <Typography variant="caption" sx={{ color: "primary.main", marginLeft: 1 }}>
+                                        [선택]
+                                    </Typography>
+                                </div>
+                                <Button variant="contained" color="secondary" onClick={handleOpenDialog3} sx={{ width: 'auto', marginLeft: '50' }}>
+                                    전문 확인
+                                </Button>
                             </div>
                         }
                         sx={{ marginTop: 1, marginBottom: 1, width: '100%' }}
@@ -224,6 +266,77 @@ const AddMemberForm = ({ onSubmit }) => {
                     <Button variant="contained" color="secondary" onClick={handleSubmit} sx={{ marginTop: 2, width: '100%' }}>
                         가입하기
                     </Button>
+
+                    {/* 다이얼로그 추가 */}
+                    <Dialog onClose={handleCloseDialog1} open={openDialog1} aria-labelledby="customized-dialog-title">
+                        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                            개인정보 수집 및 이용 동의
+                        </DialogTitle>
+                        <DialogContent dividers>
+                            <Typography gutterBottom>
+                                Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+                                consectetur ac, vestibulum at eros.
+                            </Typography>
+                            <Typography gutterBottom>
+                                Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                            </Typography>
+                            <Typography gutterBottom>
+                                Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
+                                ullamcorper nulla non metus auctor fringilla.
+                            </Typography>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button autoFocus onClick={handleCloseDialog1}>
+                                확인
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                    <Dialog onClose={handleCloseDialog2} open={openDialog2} aria-labelledby="customized-dialog-title">
+                        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                            이용 약관 동의
+                        </DialogTitle>
+                        <DialogContent dividers>
+                            <Typography gutterBottom>
+                                Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+                                consectetur ac, vestibulum at eros.
+                            </Typography>
+                            <Typography gutterBottom>
+                                Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                            </Typography>
+                            <Typography gutterBottom>
+                                Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
+                                ullamcorper nulla non metus auctor fringilla.
+                            </Typography>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button autoFocus onClick={handleCloseDialog2}>
+                                확인
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                    <Dialog onClose={handleCloseDialog3} open={openDialog3} aria-labelledby="customized-dialog-title">
+                        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                            광고성 정보 수신 동의
+                        </DialogTitle>
+                        <DialogContent dividers>
+                            <Typography gutterBottom>
+                                Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+                                consectetur ac, vestibulum at eros.
+                            </Typography>
+                            <Typography gutterBottom>
+                                Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                            </Typography>
+                            <Typography gutterBottom>
+                                Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
+                                ullamcorper nulla non metus auctor fringilla.
+                            </Typography>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button autoFocus onClick={handleCloseDialog3}>
+                                확인
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                 </Paper>
             </Grid>
         </Grid>
