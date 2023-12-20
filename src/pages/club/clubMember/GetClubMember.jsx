@@ -10,6 +10,7 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
+import TopBarClub from "../../../component/club/common/TopBarClub";
 
 const GetClubMember = () => {
   const { clubMemberId } = useParams();
@@ -29,7 +30,7 @@ const GetClubMember = () => {
 
   return (
     <>
-      <TopBar>모임원 상세 보기</TopBar>
+      <TopBarClub>모임원 상세 보기</TopBarClub>
       <Container maxWidth="lg">
         <Grid container spacing={3} justify="center" alignItems="center">
           {/* 회원 이미지 */}

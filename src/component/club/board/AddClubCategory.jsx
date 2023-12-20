@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { categoryListAPI } from "../../apis/api/club";
+import { categoryListAPI } from "../../../apis/api/club";
 import { Button, Grid } from "@mui/material";
 
-const AddClubCategory = ({ onCategorySelect }) => {
+const AddClubCategory = ({ onCategorySelect, onNext }) => {
   const [categories, setCategories] = useState([]);
   const [selectedCatrogyId, setSelectedCategoryId] = useState(null);
 
@@ -29,10 +29,7 @@ const AddClubCategory = ({ onCategorySelect }) => {
       <Grid container spacing={2} justifyContent="center" alignItems="center">
         {categories.map((category, index) => (
           <Grid item key={index} xs={3} sm={3} md={2}>
-            <Button
-              variant="contained"
-              onClick={() => handleCategoryClick(index + 1)}
-            >
+            <Button variant="contained" onClick={onNext}>
               {category.name}
             </Button>
           </Grid>

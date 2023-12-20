@@ -52,7 +52,7 @@ const GetPayment = () => {
           <TopBar color="secondary">
             <i>Pay</i>
           </TopBar>
-          <Back />
+          <Back url={"/"} />
           <MarginEmpty value={"70px"} />
           <PaymentInfo registered={existPayment} />
           <br />

@@ -61,7 +61,8 @@ const ListPaymentHistory = ({ type }) => {
                   >
                     Ali Connors
                   </Typography> */}
-                  {absoulte_timestamp(payment.regDate, true)}
+                  {absoulte_timestamp(payment.regDate, true)}{" "}
+                  {payment.type === "REFUND_REQUEST" && "(환급 요청)"}
                 </Fragment>
               }
             />

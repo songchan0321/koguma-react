@@ -1,164 +1,143 @@
-import React from "react";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Button, Grid, Typography, Paper, List, ListItemButton, ListItemText, Collapse } from "@mui/material";
+import AttachMoney from '@mui/icons-material/AttachMoney';
+import FaceRetouchingNatural from '@mui/icons-material/FaceRetouchingNatural';
+import HeadsetMic from '@mui/icons-material/HeadsetMic';
+import HolidayVillage from '@mui/icons-material/HolidayVillage';
+import Groups from '@mui/icons-material/Groups';
+import LocalMall from '@mui/icons-material/LocalMall';
+import ListItemIcon from "@mui/material/ListItemIcon";
 
 const ProfileForm = ({ navigate }) => {
   const handleNavigate = (url) => {
     navigate(url);
   };
+  const [openPoint, setOpenPoint] = useState(false);
+  const [openTrade, setOpenTrade] = useState(false);
+  const [openCommunity, setOpenCommunity] = useState(false);
+  const [openClub, setOpenClub] = useState(false);
+  const [openRelationship, setOpenRelationship] = useState(false);
+  const [openSupport, setOpenSupport] = useState(false);
+
+  const handleToggle = (section) => {
+    switch (section) {
+      case "point":
+        setOpenPoint(!openPoint);
+        break;
+      case "trade":
+        setOpenTrade(!openTrade);
+        break;
+      case "community":
+        setOpenCommunity(!openCommunity);
+        break;
+      case "club":
+        setOpenClub(!openClub);
+        break;
+      case "relationship":
+        setOpenRelationship(!openRelationship);
+        break;
+      case "support":
+        setOpenSupport(!openSupport);
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
-    <Box p={3}>
-      <Grid container spacing={2}>
-        {/* 내 정보 수정 버튼 */}
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => handleNavigate("/member/update")}
-        >
-          내 정보 수정
-        </Button>
-        {/* 로그아웃 버튼 */}
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => {
-            localStorage.removeItem("token");
-            handleNavigate("/common/login");
-          }}
-          style={{ marginLeft: 10 }}
-        >
-          로그아웃
-        </Button>
-        {/* 고구마 포인트 섹션 */}
-        <Grid item xs={12} md={4}>
-          <Typography variant="h5" gutterBottom>
-            포인트
-          </Typography>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => handleNavigate("/payment/get")}
-            width="3000"
-          >
-            고구마 포인트
-          </Button>
-        </Grid>
-        {/* 나의 거래 섹션 */}
-        <Grid item xs={12} md={8}>
-          <Typography variant="h5" gutterBottom>
-            나의 거래
-          </Typography>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => handleNavigate("/product/list/sale")}
-            fullWidth
-            style={{ marginTop: 10 }}
-          >
-            내 판매내역
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => handleNavigate("/product/list/buy")}
-            fullWidth
-            style={{ marginTop: 10 }}
-          >
-            구매 내역
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => handleNavigate("/product/list/like")}
-            fullWidth
-            style={{ marginTop: 10 }}
-          >
-            관심 상품
-          </Button>
-        </Grid>
-        {/* 동네생활 */}
-        <Grid item xs={12} md={8}>
-          <Typography variant="h5" gutterBottom>
-            나의 동네생활
-          </Typography>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => handleNavigate("/post/list/community")}
-            width="3000"
-          >
-            동네생활 활동
-          </Button>
-        </Grid>
-        {/* 모임 */}
-        <Grid item xs={12} md={8}>
-          <Typography variant="h5" gutterBottom>
-            나의 모임
-          </Typography>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => handleNavigate("/club/list")}
-            width="3000"
-          >
-            모임 활동
-          </Button>
-        </Grid>
-        {/* 회원 차단 */}
-        <Grid item xs={12} md={8}>
-          <Typography variant="h5" gutterBottom>
-            회원 차단
-          </Typography>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => handleNavigate("/member/relationship/block/list")}
-            width="3000"
-          >
-            차단
-          </Button>
-        </Grid>
-        {/* 팔로잉 */}
-        <Grid item xs={12} md={8}>
-          <Typography variant="h5" gutterBottom>
-            회원 팔로잉
-          </Typography>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() =>
-              handleNavigate("/member/relationship/following/list")
-            }
-            width="3000"
-          >
-            팔로잉
-          </Button>
-        </Grid>
-        {/* 고객센터 */}
-        <Grid item xs={12} md={8}>
-          <Typography variant="h5" gutterBottom>
-            고객센터
-          </Typography>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => handleNavigate("/member/report/list")}
-            fullWidth
-          >
-            문의 및 신고
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => handleNavigate("/member/delete")}
-            fullWidth
-            style={{ marginTop: 10 }}
-          >
-            회원 탈퇴
-          </Button>
-        </Grid>
-      </Grid>
-    </Box>
+      <Box p={3}>
+          <List>
+            {/* 포인트 섹션 */}
+            <ListItemButton onClick={() => handleToggle("point")}>
+              <AttachMoney/>
+              <ListItemText primary="포인트 관리"  sx={{ marginLeft: 2 }}/>
+            </ListItemButton>
+            <Collapse in={openPoint} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton onClick={() => handleNavigate("/payment/get")}>
+                  <ListItemText primary="고구마 포인트" sx={{ marginLeft: 7 }} />
+                </ListItemButton>
+              </List>
+            </Collapse>
+
+            {/* 나의 거래 섹션 */}
+            <ListItemButton onClick={() => handleToggle("trade")}>
+              <LocalMall/>
+              <ListItemText primary="나의 거래"  sx={{ marginLeft: 2 }}/>
+            </ListItemButton>
+            <Collapse in={openTrade} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton onClick={() => handleNavigate("/product/list/sale")} fullWidth style={{ marginTop: 10 }}>
+                  <ListItemText primary="내 상품" sx={{marginLeft: 7}}/>
+                </ListItemButton>
+                <ListItemButton onClick={() => handleNavigate("/product/list/buy")} fullWidth style={{ marginTop: 10 }}>
+                  <ListItemText primary="구매 내역" sx={{marginLeft: 7}}/>
+                </ListItemButton>
+                <ListItemButton onClick={() => handleNavigate("/product/list/like")} fullWidth style={{ marginTop: 10 }}>
+                  <ListItemText primary="관심 상품" sx={{marginLeft: 7}}/>
+                </ListItemButton>
+              </List>
+            </Collapse>
+
+            {/* 나의 동네생활 섹션 */}
+            <ListItemButton onClick={() => handleToggle("community")}>
+              <HolidayVillage/>
+              <ListItemText primary="나의 동네생활"  sx={{ marginLeft: 2 }}/>
+            </ListItemButton>
+            <Collapse in={openCommunity} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton onClick={() => handleNavigate("/post/list/community")} fullWidth style={{ marginTop: 10 }}>
+                  <ListItemText primary="동네생활 활동" sx={{marginLeft: 7}}/>
+                </ListItemButton>
+              </List>
+            </Collapse>
+
+            {/* 나의 모임 섹션 */}
+            <ListItemButton onClick={() => handleToggle("club")}>
+              <Groups/>
+              <ListItemText primary="나의 모임"  sx={{ marginLeft: 2 }}/>
+            </ListItemButton>
+            <Collapse in={openClub} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton onClick={() => handleNavigate("/club/list")} fullWidth style={{ marginTop: 10 }}>
+                  <ListItemText primary="모임 활동" sx={{marginLeft: 7}}/>
+                </ListItemButton>
+              </List>
+            </Collapse>
+
+            {/* 회원 관계 섹션 */}
+            <ListItemButton onClick={() => handleToggle("relationship")}>
+              <FaceRetouchingNatural/>
+              <ListItemText primary="차단 및 팔로잉" sx={{ marginLeft: 2 }} />
+            </ListItemButton>
+            <Collapse in={openRelationship} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton onClick={() => handleNavigate("/member/relationship/block/list")} fullWidth style={{ marginTop: 10 }}>
+                  <ListItemText primary="차단" sx={{marginLeft: 7}}/>
+                </ListItemButton>
+                <ListItemButton onClick={() => handleNavigate("/member/relationship/following/list")} fullWidth style={{ marginTop: 10 }}>
+                  <ListItemText primary="팔로잉" sx={{marginLeft: 7}}/>
+                </ListItemButton>
+              </List>
+            </Collapse>
+
+            {/* 고객센터 섹션 */}
+            <ListItemButton onClick={() => handleToggle("support")}>
+              <HeadsetMic/>
+              <ListItemText primary="고객센터"  sx={{ marginLeft: 2 }}/>
+            </ListItemButton>
+            <Collapse in={openSupport} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton onClick={() => handleNavigate("/member/report/list")} fullWidth style={{ marginTop: 10 }}>
+                  <ListItemText primary="문의 및 신고" sx={{marginLeft: 7}}/>
+                </ListItemButton>
+                <ListItemButton onClick={() => handleNavigate("/member/delete")} fullWidth style={{ marginTop: 10 }}>
+                  <ListItemText primary="회원 탈퇴" sx={{marginLeft: 7}}/>
+                </ListItemButton>
+              </List>
+            </Collapse>
+          </List>
+      </Box>
   );
 };
 

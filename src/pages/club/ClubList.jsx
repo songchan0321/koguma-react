@@ -1,22 +1,20 @@
 import React, { useState } from "react";
 import CategoryList from "../../component/club/CategoryList";
 import ClubListByCategory from "../../component/club/ClubListByCategory";
-import { Button } from "@mui/material";
+import { Box, Divider, Tab, Tabs, Typography } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Link } from "react-router-dom";
-import TopBarClub from "../../component/club/common/TopbarClub";
-import TopBar from "../../component/payment/TopBar";
+import TopBarClub from "../../component/club/common/TopBarClub";
+import MyClubList from "../../component/club/MyClubList";
+import ClubListStepper from "../../component/club/ClubListStepper";
+import MyClubPostList from "../../component/club/board/MyClubPostList";
 
 function ClubList() {
-  const [selectedCategoryId, setSelectedCategoryId] = useState(29);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(0); // 초기 값은 0으로 설정
   const [myClubList, setMyClubList] = useState(false);
 
-  const handleAllClubsClick = () => {
-    setMyClubList(false);
-  };
-
-  const handleMyClubsClick = () => {
-    setMyClubList(true);
+  const handleTabChange = (event, newValue) => {
+    setMyClubList(newValue === 1); // 1이면 내 모임, 0이면 전체 모임
   };
 
   const buttonStyle = {
@@ -31,44 +29,52 @@ function ClubList() {
   return (
     <>
       <div position="fixed" sx={{ textAlign: "center", mb: 1.5 }}>
-        <TopBarClub>모임 리스트 </TopBarClub>
+        <TopBarClub>모임 리스트</TopBarClub>
       </div>
+
       <div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "20px",
-          }}
-        >
-          <span style={{ flex: 1, textAlign: "center" }}>
-            <Button
-              variant="contained"
-              color={myClubList ? "primary" : "secondary"}
-              onClick={handleAllClubsClick}
+        <div style={{ textAlign: "center" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              mb: 1,
+              borderBottom: 1,
+              borderColor: "divider",
+            }}
+          >
+            <Tabs
+              value={myClubList ? 1 : 0} // 전체 모임과 내 모임을 탭으로 구분
+              onChange={handleTabChange} // 탭 변경 시 내 모임 선택
+              textColor="secondary"
+              indicatorColor="secondary"
+              aria-label="category tabs"
             >
-              전체 모임
-            </Button>
-          </span>
-          <span style={{ flex: 1, textAlign: "center" }}>
-            <Button
-              variant="contained"
-              color={myClubList ? "secondary" : "primary"}
-              onClick={handleMyClubsClick}
-            >
-              내 모임
-            </Button>
-          </span>
+              <Tab label="전체 모임" />
+              <Tab label="내 모임" />
+            </Tabs>
+          </Box>
         </div>
         <br />
         {myClubList ? (
-          <div>내모임</div>
+          <div style={{ margin: "10px" }}>
+            <MyClubList />
+            <Divider />
+            <div style={{ margin: "10px" }}>
+              <MyClubPostList />
+            </div>
+          </div>
         ) : (
           <div>
             <div>
+              <ClubListStepper />
+            </div>
+            <div>
               <CategoryList onCategorySelect={setSelectedCategoryId} />
               <br />
-              <ClubListByCategory categoryId={selectedCategoryId} />
+              <div style={{ padding: "10px" }}>
+                <ClubListByCategory categoryId={selectedCategoryId} />
+              </div>
             </div>
             <div>
               <Link

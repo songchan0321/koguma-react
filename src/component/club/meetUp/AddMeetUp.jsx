@@ -1,10 +1,13 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { addMeetUpAPI } from "../../../apis/api/club";
-import { useNavigate, useParams } from "react-router-dom";
-import TopBar from "../../payment/TopBar";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import TopBarClub from "../common/TopBarClub";
+import FmdGoodIcon from "@mui/icons-material/FmdGood";
+import CommonlyUsedComponents from "../common/DatePicker";
 
 const AddMeetUp = () => {
+  const navigate = useNavigate();
   const { clubId } = useParams();
   const navigator = useNavigate();
 
@@ -12,6 +15,7 @@ const AddMeetUp = () => {
     title: "",
     content: "",
     roadAddr: "",
+    // meetDate: "",
     maxCapacity: 0,
   });
 
@@ -54,6 +58,7 @@ const AddMeetUp = () => {
         meetUp.title,
         meetUp.content,
         meetUp.maxCapacity,
+        // meetUp.meetDate,
         meetUp.roadAddr
       );
       navigator("/club/" + clubId);
@@ -64,7 +69,7 @@ const AddMeetUp = () => {
 
   return (
     <>
-      <TopBar>일정 생성</TopBar>
+      <TopBarClub children={"일정생성"}>일정생성</TopBarClub>
       <Box
         component="form"
         sx={{
@@ -117,7 +122,20 @@ const AddMeetUp = () => {
             value={meetUp.roadAddr}
             onChange={handleInput}
           />
+          <div>
+            <Link to={`/club/meet-up/add/location`}>
+              <Button>
+                <FmdGoodIcon />
+              </Button>
+            </Link>
+          </div>
         </div>
+        {/* <div>
+          <CommonlyUsedComponents
+            value={meetUp.meetDate}
+            onChange={handleInput}
+          ></CommonlyUsedComponents>
+        </div> */}
 
         <Button
           variant="contained"

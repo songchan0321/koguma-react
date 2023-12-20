@@ -21,6 +21,7 @@ import ProductList from "./pages/product/ProductList";
 import { getAlertCountAPI } from "./apis/api/alert";
 import ListAlert from "./pages/common/ListAlert";
 import SearchTab from "./pages/common/SearchTab";
+import Landing from "./Landing";
 
 const AppRouter = ({ messageAlertHandler }) => {
   const socket = useContext(SocketContext);
@@ -79,10 +80,7 @@ const AppRouter = ({ messageAlertHandler }) => {
       <Routes>
         {/* <Route path="/post/list" element={<ListPost />} />   community/post ? */}
         {/* <Route path="/post/add" element={<AddPost />} /> */}
-        <Route
-          path="/"
-          element={isLogin ? <ProductList /> : <Navigate to="/common/login" />}
-        />
+        <Route path="/" element={<Landing />} />
         <Route path="/chat/*" element={<ChatRouter />} />
         <Route path="/club/*" element={<ClubRouter />} />
         <Route path="/common/*" element={<CommonRouter />} />
