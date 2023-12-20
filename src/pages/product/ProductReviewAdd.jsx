@@ -28,7 +28,6 @@ const ProductReviewAdd = () => {
     rating: undefined,
     commet: [],
     content: "",
-    seller: location.state.seller,
   });
   const navigate = useNavigate();
 
@@ -62,13 +61,8 @@ const ProductReviewAdd = () => {
   };
   const addReview = async () => {
     try {
-      const data = await addReviewAPI(review);
-      await navigate(`/product/get/review`, {
-        state: {
-          isSeller: location.state.seller,
-          productId: data.productDTO.id,
-        },
-      });
+      const data = await addReviewAPI(review); // navigate
+      await navigate(`/product/list/sale`, { replace: true });
     } catch (err) {
       console.log(err);
     }

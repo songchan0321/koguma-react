@@ -122,9 +122,11 @@ const ListChatRoom = () => {
         {rooms.map((room, idx) => {
           console.log(room.id);
           return (
-            <div onClick={() => navigator(`/chat/get/${room.id}`)}>
-              <ChatThumbnail key={idx} room={room} />
-            </div>
+            room.latestMessage && (
+              <div onClick={() => navigator(`/chat/get/${room.id}`)}>
+                <ChatThumbnail key={idx} room={room} />
+              </div>
+            )
           );
         })}
       </List>

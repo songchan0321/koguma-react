@@ -12,8 +12,14 @@ import ProductReviewAdd from "./ProductReviewAdd";
 import ProductReviewGet from "./ProductReviewGet";
 import ListSuggestPrice from "./ListSuggestPrice";
 import ListChoiceBuyer from "./ListChoiceBuyer";
+import {
+  IsLoginContext,
+  useIsLoginState,
+} from "../../context/LoginContextProvider";
+import Login from "../../component/common/Login";
 
 const ProductRouter = () => {
+  const isLogin = useIsLoginState(IsLoginContext);
   return (
     <Routes>
       {/* <Route path="/:prodNo" element={<Product />}/>
@@ -22,14 +28,14 @@ const ProductRouter = () => {
             <Route path="/main" element={<Main />}/> */}
       <Route path="/get/:productId" element={<ProductGet />} />
       <Route path="/update/:productId" element={<ProductUpdate />} />
-      <Route path="/list" element={<ProductList />} />
+      <Route path="/list" element={isLogin ? <ProductList /> : <Login />} />
       <Route path="/add" element={<ProductAdd />} />
       <Route path="/suggest/:productId" element={<SuggestPrice />} />
       <Route path="/list/sale" element={<MySaleProduct />} />
       <Route path="/list/buy" element={<MyBuyProduct />} />
       <Route path="/list/like" element={<LikeProductList />} />
       <Route path="/review/add" element={<ProductReviewAdd />} />
-      <Route path="/get/review" element={<ProductReviewGet />} />
+      <Route path="/get/review/:reviewId" element={<ProductReviewGet />} />
       <Route path="/suggest/list/:productId" element={<ListSuggestPrice />} />
       <Route path="/get/seller/:productId" element={<ListChoiceBuyer />} />
     </Routes>

@@ -18,6 +18,7 @@ import {
   TextField,
   createTheme,
   ThemeProvider,
+  InputAdornment,
 } from "@mui/material";
 
 import { formatMoney } from "../../apis/services/product";
@@ -49,13 +50,34 @@ const ProductForm = ({ text }) => {
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
   const navigate = useNavigate();
+
+  const [formattedPrice, setFormattedPrice] = useState(""); // 가격 표시용
+  const [numericPrice, setNumericPrice] = useState(null); // 실제 가격
+
+  const handlePriceChange = (event) => {
+    let inputValue = event.target.value.replace(/[^0-9]/g, "");
+    const numericValue = parseInt(inputValue, 10);
+
+    // 콤마로 포맷된 문자열 생성
+    const formattedValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    setFormattedPrice(formattedValue);
+
+    // 숫자 값으로 상태 업데이트
+    setNumericPrice(numericValue);
+
+    // 업데이트된 numericValue를 사용하여 formData.price를 설정
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      price: numericValue,
+    }));
+  };
   const imageRegHandler = (images) => {
-    setFormData((prev) => ({ ...prev, images: images }));
+    setFormData((prev) => ({ ...prev, thumbnail: images }));
   };
   const imageDelHandler = (id) => {
     setFormData((prev) => ({
       ...prev,
-      images: prev.images.filter((_, index) => index !== id),
+      thumbnail: prev.thumbnail.filter((_, index) => index !== id),
     }));
   };
   const [formData, setFormData] = useState({
@@ -63,10 +85,8 @@ const ProductForm = ({ text }) => {
     categoryName: "",
     categoryId: 0,
     price: 0,
-
     content: "",
-    // image: images,
-    images: [],
+    thumbnail: [],
   });
 
   const handleChange = (e) => {
@@ -85,19 +105,6 @@ const ProductForm = ({ text }) => {
     }
   };
 
-  const handlePriceChange = (event) => {
-    let inputValue = event.target.value.replace(/\D/g, "");
-    if (parseInt(inputValue, 10) > 99999999) {
-      inputValue = "99999999";
-    } else if (parseInt(inputValue, 0) === 0) {
-      inputValue = "0";
-    }
-    setFormData({
-      ...formData,
-      // price: formatMoney(inputValue),
-      price: inputValue,
-    });
-  };
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -108,52 +115,37 @@ const ProductForm = ({ text }) => {
       },
     },
   };
+  const imageUrlParse = (imageList) => {
+    return uploadImageAPI(imageList);
+  };
+  const addProduct = async (productDTO) => {
+    try {
+      await addProductAPI(productDTO).then((response) => {
+        navigate(`/product/get/${response.data.id}`, { replace: true });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const form = new FormData(event.currentTarget);
+  const uploadProduct = async () => {
+    try {
+      const imageList = new FormData();
+      formData.thumbnail.forEach((el) => {
+        imageList.append("file", el);
+      });
 
-    const updatedFormData = {
-      title: form.get("title"),
-      categoryName: formData.categoryName,
-      categoryId: formData.categoryId,
-      price: parseInt(form.get("price").replace(/,/g, ""), 10),
+      const imageUrlList = await imageUrlParse(imageList);
 
-      content: form.get("content"),
-      images: formData.images,
-    };
-
-    setFormData({ ...updatedFormData });
-    console.log(updatedFormData);
-
-    const imageList = new FormData();
-    updatedFormData.images.forEach((el) => {
-      imageList.append("file", el);
-    });
-    (async () => {
-      const imageUrlList = await uploadImageAPI(imageList);
-      console.log(imageUrlList);
-      const dto = {
-        productDTO: {
-          title: form.get("title"),
-          categoryName: formData.categoryName,
-          categoryId: formData.categoryId,
-          price: parseInt(form.get("price").replace(/,/g, ""), 10),
-          content: form.get("content"),
-          images: imageUrlList,
-        },
+      const productDTO = {
+        ...formData,
+        images: imageUrlList,
       };
-      console.log(dto);
-      await addProductAPI(dto.productDTO)
-        .then((response) => {
-          console.log(response);
-          navigate(`/product/get/${response.data.id}`, { replace: true });
-        })
-        .catch((error) => {
-          console.error("Error in addProductAPI:", error);
-          // Handle the error appropriately
-        });
-    })();
+
+      await addProduct(productDTO);
+    } catch (error) {
+      console.error("Error during product upload:", error);
+    }
   };
 
   return (
@@ -182,12 +174,7 @@ const ProductForm = ({ text }) => {
             imageDelHandler={imageDelHandler}
           />
 
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box noValidate sx={{ mt: 1 }}>
             <Grid container spacing={2} justifyContent="flex-end">
               <Grid item xs={7}>
                 <TextField
@@ -197,13 +184,14 @@ const ProductForm = ({ text }) => {
                   label="상품 이름"
                   name="title"
                   autoComplete="title"
+                  onChange={handleChange}
                   autoFocus
                   fullWidth
                 />
               </Grid>
 
               <Grid item mt={2} xs={5}>
-                <FormControl sx={{ minWidth: 100 }}>
+                <FormControl sx={{ width: 140 }}>
                   <InputLabel id="category">카테고리</InputLabel>
                   <Select
                     labelId="category"
@@ -244,17 +232,19 @@ const ProductForm = ({ text }) => {
               fullWidth
               id="price"
               name="price"
-              type="number" // type을 "text"로 변경
-              label="상품 가격"
-              value={formData.price} // 표시할 때 포맷팅된 값을 사용
+              type="text"
+              label="제안 가격"
+              value={formattedPrice}
               onChange={handlePriceChange}
+              autoComplete="price"
               InputProps={{
                 inputProps: {
-                  min: 0,
-                  max: 99999999,
+                  maxLength: 7, // 10자리의 숫자 + 3자리의 콤마
                 },
+                endAdornment: (
+                  <InputAdornment position="end">원</InputAdornment>
+                ),
               }}
-              autoComplete="price"
             />
 
             <Grid mt={2}>
@@ -269,7 +259,7 @@ const ProductForm = ({ text }) => {
               />
             </Grid>
             <Button
-              type="submit"
+              onClick={() => uploadProduct()}
               fullWidth
               color="secondary"
               variant="contained"

@@ -14,7 +14,6 @@ import { authInstance } from "../utils/instance";
 // };
 export const uploadImageAPI = async (file) => {
   try {
-    console.log(file);
     const { data } = await authInstance.post(`/image/new`, file, {
       headers: {
         "Content-Type": "multipart/form-data",

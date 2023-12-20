@@ -128,7 +128,7 @@ const NewChatRoom = () => {
       await getMemberAPI().then((data) => setMember(data));
     })();
   }, [productId]);
-  return !product ? (
+  return !product || !member ? (
     <LoadingProgress />
   ) : (
     <>

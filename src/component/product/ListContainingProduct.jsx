@@ -103,12 +103,13 @@ const ListContainingProduct = ({ data, index, type }) => {
                     }
                     action={
                       type === "report" ? (
-                        <IconButton
-                          aria-label="settings"
-                          onClick={() => console.log("이 상품 신고하기")}
-                        >
-                          <FeedbackIcon />
-                        </IconButton>
+                        // <IconButton
+                        //   aria-label="settings"
+                        //   onClick={() => console.log("이 상품 신고하기")}
+                        // >
+                        //   <FeedbackIcon />
+                        // </IconButton>
+                        <></>
                       ) : (
                         <IconButton>
                           <LikeCheckButton />
@@ -175,7 +176,7 @@ const ListContainingProduct = ({ data, index, type }) => {
                       alignItems: "flex-end",
                     }}
                   >
-                    {type === "report" && (
+                    {/* {type === "report" && (
                       <IconButton
                         aria-label="settings"
                         onClick={() => console.log("이 상품 신고하기")}
@@ -183,12 +184,12 @@ const ListContainingProduct = ({ data, index, type }) => {
                       >
                         <FeedbackIcon />
                       </IconButton>
-                    )}
+                    )} */}
                     <div
                       style={{
                         display: "flex",
                         flexDirection: "row",
-                        marginTop: "60px",
+                        marginTop: "90px",
                       }}
                     >
                       {prod.chatroomCount > 0 && (
