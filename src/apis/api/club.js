@@ -6,6 +6,31 @@ const CLUB_API_URI = `/club`;
 //== 1. 모임 2. 모임원 3. 만남  4. 포스트==//
 
 //-- 1. 모임 -- //
+export const addClubAPI = async (formData) => {
+  try {
+    const { data } = await authInstance.post(
+      `${CLUB_API_URI}/add`,
+      JSON.stringify({
+        title: formData.title,
+        content: formData.content,
+        categoryId: formData.categoryId,
+        urls: formData.urls,
+        nickname: formData.nickname,
+        memberContent: formData.memberContent,
+        maxCapacity: formData.maxCapacity,
+      }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const getClubAPI = async (clubId) => {
   try {
     const { data } = await authInstance.get(`${CLUB_API_URI}/${clubId}`);
@@ -215,13 +240,9 @@ export const addMeetUpAPI = async (
   title,
   content,
   maxCapacity,
-  meetDate,
   roadAddr
 ) => {
-  alert(title);
-  alert(content);
-  alert(maxCapacity);
-
+  alert(roadAddr);
   try {
     await authInstance.post(
       `${CLUB_API_URI}/add/meet-up`,
@@ -232,11 +253,10 @@ export const addMeetUpAPI = async (
         },
         clubId: clubId,
         title: title,
+        content: content,
+        maxCapacity: maxCapacity,
+        roadAddr: roadAddr,
         meetUpType: "null",
-        // content: content,
-        // maxCapacity: maxCapacity,
-        // //meetDate: meetDate, // 서버에서 설정하거나 적절한 값으로 가정
-        // roadAddr: roadAddr,
       }),
 
       {
@@ -313,6 +333,28 @@ export const listMyClubPostAPI = async () => {
   }
 };
 
+export const listClubPost = async (clubId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/post/list/${clubId}`
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const listClubPostByCategory = async (categoryId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/post/list/category/${categoryId}`
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const listClubPostCategories = async (clubId) => {
   try {
     const { data } = await authInstance.get(
@@ -363,9 +405,11 @@ export const addClubPost = async (clubId, formData) => {
   }
 };
 
-export const getClubPost = async (postId) => {
+export const getClubPostAPI = async (clubPostId) => {
   try {
-    const { data } = await authInstance.get(`${CLUB_API_URI}/post/${postId}`);
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/post/${clubPostId}`
+    );
     return data;
   } catch (err) {
     console.log(err);

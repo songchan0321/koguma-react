@@ -19,11 +19,16 @@ const AddClubCategoryForm = ({ onNext }) => {
   }, []);
 
   const handleNextClick = () => {
-    onNext(selectedCategoryId);
+    onNext({ categoryId: selectedCategoryId }); // 이 부분 수정
   };
+
   const handleCategoryClick = (categoryId) => {
     setSelectedCategoryId(categoryId);
   };
+
+  useEffect(() => {
+    console.log("Selected Category ID:", selectedCategoryId);
+  }, [selectedCategoryId]);
 
   return (
     <>
@@ -50,9 +55,16 @@ const AddClubCategoryForm = ({ onNext }) => {
           >
             <Button
               value={selectedCategoryId}
-              variant="contained"
+              variant={
+                selectedCategoryId === category.id ? "contained" : "outlined"
+              }
               size="large"
-              sx={{ width: "60%", height: "80%" }}
+              sx={{
+                width: "60%",
+                height: "80%",
+                backgroundColor:
+                  selectedCategoryId === category.id ? "secondary" : "initial", // 여기에 선택된 색상을 지정하세요
+              }}
               color="secondary"
               onClick={() => handleCategoryClick(category.id)}
             >
@@ -77,7 +89,6 @@ export default AddClubCategoryForm;
 
 const fixedButtonStyle = {
   position: "fixed",
-
   bottom: 20,
   left: 20,
   width: "90%",
