@@ -3,31 +3,17 @@ import {
   Avatar,
   Button,
   Dialog,
-  Divider,
   IconButton,
   List,
-  ListItem,
-  ListItemText,
   Slide,
   Toolbar,
   Typography,
 } from "@mui/material";
-import {
-  Fragment,
-  forwardRef,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { Fragment, forwardRef, useLayoutEffect, useRef } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import PlaceIcon from "@mui/icons-material/Place";
-import LoadingProgress from "../common/LoadingProgress";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { CHAT_EVENT, SocketContext } from "../../context/socket";
+import { Map } from "react-kakao-maps-sdk";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
-import MarginEmpty from "../payment/MarginEmpty";
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -161,16 +147,7 @@ const AddShareLocation = ({
                 locationRef.current.latitude = map.getCenter().getLat();
                 locationRef.current.longitude = map.getCenter().getLng();
               }}
-            >
-              {/* <MapMarker position={{ lat: 33.450701, lng: 126.570667 }} /> */}
-              {/* <MapMarker
-                position={{
-                  lat: locationRef.current.latitude,
-                  lng: locationRef.current.longitude,
-                }}
-              /> */}
-            </Map>
-            {/* <Button onClick={() => console.log(location.current)}>1</Button> */}
+            ></Map>
           </>
         </List>
       </Dialog>

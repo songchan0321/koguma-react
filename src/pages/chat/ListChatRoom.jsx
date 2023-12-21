@@ -1,12 +1,12 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { chatRoomListAPI, chatRoomListBySellerAPI } from "../../apis/api/chat";
 import LoadingProgress from "../../component/common/LoadingProgress";
-import { Divider, List, ListItemButton } from "@mui/material";
+import { List } from "@mui/material";
 import TopBar from "../../component/payment/TopBar";
 import { getMemberAPI } from "../../apis/api/member";
 import { chatRoomListService } from "../../apis/services/chat";
 import ChatThumbnail from "../../component/chat/ChatThumbnail";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import BottomBar from "../../component/common/BottomBar";
 import { CHAT_EVENT, SocketContext } from "../../context/socket";
 import MarginEmpty from "../../component/payment/MarginEmpty";
@@ -18,7 +18,6 @@ const ListChatRoom = () => {
   const socket = useContext(SocketContext);
   const [rooms, setRooms] = useState([]);
   const navigator = useNavigate();
-  //   const [memberId, setMemberId] = useState(null);
   const memberId = useRef();
   const [flag, setFlag] = useState(false);
   const changeAlert = (message) => {
@@ -93,7 +92,6 @@ const ListChatRoom = () => {
               )
             );
         }
-        // .then((data) => setRooms(data));
         setIsLoading(false);
       } catch (err) {
         console.log(err);
@@ -103,11 +101,6 @@ const ListChatRoom = () => {
       console.log("listChatRoom socket bye");
     };
   }, [flag]);
-  // useEffect(() => {
-  //   if (Object.keys(rooms).length > 0) {
-
-  //   }
-  // }, [rooms]);
   return isLoading ? (
     <>
       <LoadingProgress />
@@ -122,9 +115,11 @@ const ListChatRoom = () => {
         {rooms.map((room, idx) => {
           console.log(room.id);
           return (
-            <div onClick={() => navigator(`/chat/get/${room.id}`)}>
-              <ChatThumbnail key={idx} room={room} />
-            </div>
+            room.latestMessage && (
+              <div onClick={() => navigator(`/chat/get/${room.id}`)}>
+                <ChatThumbnail key={idx} room={room} />
+              </div>
+            )
           );
         })}
       </List>

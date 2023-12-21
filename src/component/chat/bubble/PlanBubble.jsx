@@ -1,14 +1,6 @@
-import {
-  Avatar,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Typography,
-} from "@mui/material";
+import { Button, Card, CardContent, Typography } from "@mui/material";
 import { formatTimeTo12Hour } from "../../../apis/utils/timestamp";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { getGeo } from "../../../apis/api/common";
 
 const PlanBubble = ({ content, isOwnMessage }) => {
@@ -38,18 +30,12 @@ const PlanBubble = ({ content, isOwnMessage }) => {
         backgroundColor: "#F8F8FA",
       }}
     >
-      {/* <CardMedia
-      sx={{ height: "10rem", width: "12.5rem" }}
-      image={`/chat/transfer.png`}
-      title="green iguana"
-    /> */}
-      <CardContent sx={{ height: "5rem", width: "10.5rem" }}>
+      <CardContent sx={{ height: "7rem", width: "12.5rem" }}>
         <Typography gutterBottom variant="h6" component="div">
           {`약속을 만들었어요.`}
         </Typography>
-        <Typography variant="body1" color="text.secondary">
-          날짜: {`${year}년 ${month}월 ${day}일`}
-        </Typography>
+        날짜: {`${year}년 ${month}월 ${day}일`}
+        <Typography variant="body1" color="text.secondary"></Typography>
         <Typography variant="body1" color="text.secondary">
           시간: {`${formatTimeTo12Hour(time)}`}
         </Typography>

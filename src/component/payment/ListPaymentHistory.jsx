@@ -1,15 +1,4 @@
-import {
-  Avatar,
-  Container,
-  Divider,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Typography,
-} from "@mui/material";
-import PaymentInfo from "../../component/payment/PaymentInfo";
-import TopBar from "../../component/payment/TopBar";
+import { Divider, List, ListItem, ListItemText } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import LoadingProgress from "../common/LoadingProgress";
 import { listPaymentHistoryAPI } from "../../apis/api/payment";
@@ -27,7 +16,7 @@ const ListPaymentHistory = ({ type }) => {
   return !history ? (
     <LoadingProgress />
   ) : (
-    <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+    <List sx={{ width: "100%", bgcolor: "background.paper" }}>
       {history.map((payment, idx) => (
         <>
           <ListItem alignItems="flex-start">

@@ -9,48 +9,27 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
-  TextField,
-  createTheme,
 } from "@mui/material";
 import DaumPost from "../common/DaumPost";
-import { ThemeProvider } from "styled-components";
 import { useContext, useState } from "react";
-import { CHAT_EVENT, SocketContext } from "../../context/socket";
-import {
-  absoulte_timestamp,
-  absoulte_timestamp_new_date,
-} from "../../apis/utils/timestamp";
+import { SocketContext } from "../../context/socket";
+import { absoulte_timestamp_new_date } from "../../apis/utils/timestamp";
 
 const AddPlan = ({ open, handleClose, roomId, sendTextMessageHandler }) => {
   const [address, setAddress] = useState(null);
   const [time, setTime] = useState(absoulte_timestamp_new_date(new Date()));
-  const socket = useContext(SocketContext);
   const sendPlanMessage = () => {
     if (time == null || address == null) {
       alert("약속 정보를 입력해주세요");
     }
     sendTextMessageHandler({ text: `${address},${time}`, type: "PLAN" });
-    // sendTextMessageHandler(`${address},${time}`, roomId, null, "PLAN");
-    // socket.emit(CHAT_EVENT.SEND_MESSAGE, {
-    //   roomId: roomId,
-    //   type: "PLAN",
-    //   message: `${address},${time}`,
-    //   token: `${localStorage.getItem("token")}`,
-    // });
 
     handleClose();
   };
   const daumAddressGetHandler = (addr) => {
     setAddress(addr);
   };
-  useState(() => {
-    if (!open) {
-      //   setTime(null);
-      //   setAddress(null);
-    }
-  }, [open]);
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>약속 만들기</DialogTitle>
@@ -60,7 +39,6 @@ const AddPlan = ({ open, handleClose, roomId, sendTextMessageHandler }) => {
             <DemoItem>
               <MobileDateTimePicker
                 defaultValue={dayjs(new Date())}
-                // selectedSections={new Date()}
                 onChange={(value) =>
                   setTime(absoulte_timestamp_new_date(new Date(value.$d)))
                 }
@@ -77,19 +55,6 @@ const AddPlan = ({ open, handleClose, roomId, sendTextMessageHandler }) => {
           daumAddressGetHandler={daumAddressGetHandler}
           address={address}
         />
-        {/* <DialogContentText>
-          To subscribe to this website, please enter your email address here. We
-          will send updates occasionally.
-        </DialogContentText>
-        <TextField
-          autoFocus
-          margin="dense"
-          id="name"
-          label="Email Address"
-          type="email"
-          fullWidth
-          variant="standard"
-        /> */}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>

@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import MessageBubble from "./MessageBubble";
 import ChatForm from "./ChatForm";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import MarginEmpty from "../payment/MarginEmpty";
 import { useNavigate } from "react-router-dom";
 
@@ -24,9 +24,7 @@ const ChatMessageList = ({
   newMessageCloseHandler,
 }) => {
   const listRef = useRef(null);
-  // const first = useRef(true);
   const navigate = useNavigate();
-  // const [open, setOpen] = useState(false);
   const SlideTransition = (props) => {
     return (
       <Slide

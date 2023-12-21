@@ -3,12 +3,10 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Slide,
-  TextField,
 } from "@mui/material";
-import { forwardRef, useContext, useState } from "react";
+import { forwardRef, useContext } from "react";
 import { SocketContext } from "../../context/socket";
 import { leaveChatRoomAPI } from "../../apis/api/chat";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +16,6 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const LeaveCheck = ({ open, handleClose, roomId }) => {
   const navigator = useNavigate();
-  const socket = useContext(SocketContext);
   const leaveClickHandler = () => {
     (async () => {
       try {

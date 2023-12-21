@@ -1,4 +1,3 @@
-import AddIcon from "@mui/icons-material/Add";
 import SendIcon from "@mui/icons-material/Send";
 import { Divider, IconButton, InputBase, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -54,6 +53,7 @@ const ChatForm = ({ roomId, sendTextMessageHandler, textEvent, product }) => {
         />
         <Divider sx={{ height: 40, m: 0.5 }} orientation="vertical" />
         <IconButton
+          disabled={text === ""}
           color="secondary"
           sx={{ p: "10px" }}
           aria-label="directions"

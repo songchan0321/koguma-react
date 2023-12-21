@@ -9,7 +9,7 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import { Fragment, useContext, useEffect, useRef, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { getMemberAPI } from "../../apis/api/member";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import TopBar from "../../component/payment/TopBar";
@@ -97,7 +97,7 @@ const TransferPoint = () => {
           setMember(data);
           if (data.paymentAccount === null) {
             alert("고구마 페이가 없습니다! 먼저 등록해주세요.");
-            navigator("/payment/get", { replace: true });
+            navigator("/payment/get", { replace: true, state: { roomId } });
           }
           return data;
         })
@@ -256,10 +256,10 @@ const TransferPoint = () => {
                     /> */}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>취소</Button>
-          <Button color="error" onClick={transferPaymentHandler}>
-            삭제
+          <Button color="error" onClick={handleClose}>
+            취소
           </Button>
+          <Button onClick={transferPaymentHandler}>송금</Button>
         </DialogActions>
       </Dialog>
     </Container>

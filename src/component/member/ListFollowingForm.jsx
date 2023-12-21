@@ -1,6 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { List, ListItem, ListItemText, ThemeProvider, createTheme, IconButton, CircularProgress } from '@mui/material';
 import { authInstance } from "../../apis/utils/instance";
 import { useNavigate } from 'react-router-dom';
+import Back from "../../component/common/Back";
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
+import SentimentSatisfiedAltOutlinedIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
+// 테마 정의
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: "#cfe8fc",
+        },
+    },
+});
 
 const ListFollowingForm = () => {
     const [followingList, setFollowingList] = useState([]);
@@ -11,8 +23,8 @@ const ListFollowingForm = () => {
         const fetchFollowingList = async () => {
             try {
                 const response = await authInstance.get('/member/relationship/following/list');
-                console.log('Response:', response); // 응답 전체를 출력
-                console.log('Data:', response.data); // 응답에서 데이터만 출력
+                console.log('Response:', response);
+                console.log('Data:', response.data);
                 setFollowingList(response.data);
                 setLoading(false);
             } catch (error) {
@@ -31,23 +43,35 @@ const ListFollowingForm = () => {
     };
 
     return (
-        <div>
-            {loading ? (
-                <p>데이터를 불러오는 중입니다...</p>
-            ) : (
-                <ul>
-                    {followingList.map((following) => (
-                        <li key={following.id}>
-                            {following.targetMember.nickname}
-                            {' '}
-                            <button onClick={() => handleNavigateToFollowingDetail(following.targetMember.id)}>
-                                팔로잉 상세
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
+        <ThemeProvider theme={theme}>
+            <div>
+                {loading ? (
+                    <CircularProgress color="primary" />
+                ) : (
+                    <List sx={{ width: '100%' }}>
+                        {followingList.map((following) => (
+                            <ListItem
+                                key={following.id}
+                                sx={{ justifyContent: 'flex-start' }}
+                            >
+                                <SentimentSatisfiedAltOutlinedIcon/>
+                                <ListItemText
+                                    primary={following.targetMember.nickname}
+                                    sx={{ marginLeft: '15px' }}
+                                />
+                                <IconButton
+                                    onClick={() => handleNavigateToFollowingDetail(following.targetMember.id)}
+                                    aria-label="comment"
+                                >
+                                    <ArticleOutlinedIcon />
+                                </IconButton>
+                            </ListItem>
+                        ))}
+                        <Back />
+                    </List>
+                )}
+            </div>
+        </ThemeProvider>
     );
 };
 

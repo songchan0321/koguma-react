@@ -1,12 +1,5 @@
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Typography,
-} from "@mui/material";
+import { Button, Card } from "@mui/material";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { a } from "react-spring";
 
 const SharedLocationBubble = ({ content, isOwnMessage }) => {
   const [latitude, longitude] = content.split(",");

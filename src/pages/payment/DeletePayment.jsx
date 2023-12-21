@@ -14,11 +14,10 @@ import {
   Typography,
 } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import TopBar from "../../component/payment/TopBar";
 import Back from "../../component/common/Back";
 import MarginEmpty from "../../component/payment/MarginEmpty";
-import GetPayment from "./GetPayment";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import { getMemberAPI } from "../../apis/api/member";
 import { getPaymentAPIService } from "../../apis/services/payment";

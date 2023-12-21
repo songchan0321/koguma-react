@@ -1,23 +1,27 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { CHAT_EVENT, SocketContext } from "../../context/socket";
-import { getMemberAPI } from "../../apis/api/member";
-import { enterChatRoomAPI, getChatRoomAPI } from "../../apis/api/chat";
-import { getProductAPI } from "../../apis/api/Product";
+import { getMemberAPI, getReverseBlockAPI } from "../../apis/api/member";
+import {
+  checkEnterRoomByMemberAPI,
+  enterChatRoomAPI,
+  getChatRoomAPI,
+} from "../../apis/api/chat";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import ChatMessageList from "../../component/chat/ChatMessageList";
 import ChatHeader from "../../component/chat/ChatHeader";
 import TopBar from "../../component/payment/TopBar";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 import { Chip } from "@mui/material";
-import ThermostatIcon from "@mui/icons-material/Thermostat";
 import CallIcon from "@mui/icons-material/Call";
 import Back from "../../component/common/Back";
+import BottomBar from "../../component/common/BottomBar";
 const GetChatRoom = () => {
-  const { urlRoomId, productId } = useParams();
+  const { urlRoomId } = useParams();
+  const { state } = useLocation();
   const [roomId, setRoomId] = useState(urlRoomId);
   const navigator = useNavigate();
-  if (roomId == null && productId == null) {
+  if (roomId == null) {
     navigator("/product/list");
   }
   //   if (roomId == null && roomId == null) {
@@ -34,15 +38,59 @@ const GetChatRoom = () => {
   const newMessageCloseHandler = () => {
     setNewMessageOpen(false);
   };
+  const sendTextMessageHandler_temp = async ({ text, type, toId }) => {
+    console.log("sendTextMessageHandler_temp()");
+    // 판매자가 나를 차단하냐?
+    const block_flag = await getReverseBlockAPI(
+      chatRoom.buyerDTO.id === member.id
+        ? chatRoom.productDTO.sellerDTO.id
+        : chatRoom.buyerDTO.id
+    );
+    const exist_flag = await checkEnterRoomByMemberAPI(
+      chatRoom.id,
+      chatRoom.buyerDTO.id === member.id
+        ? chatRoom.productDTO.sellerDTO.id
+        : chatRoom.buyerDTO.id
+    );
+    // 로그인한 회원(구매 예정자)이 채팅방이 리얼 처음인가
+    console.log(block_flag);
+    console.log(exist_flag);
+    console.log("------------------------");
+    await getChatRoomAPI(roomId)
+      .then((room) => {
+        if (block_flag == null) return enterChatRoomAPI(room.id);
+        return room;
+      })
+      .then((room) => {
+        socket.emit(CHAT_EVENT.SEND_MESSAGE, {
+          roomId: room.id,
+          flag: block_flag == null ? false : true,
+          type: type,
+          token: `${localStorage.getItem("token")}`,
+          enter_date: exist_flag
+            ? null
+            : room.buyerDTO.id === member.id
+            ? room.sellerEnterDate
+            : room.buyerEnterDate,
+          message: text,
+        });
+        navigator(`/chat/get/${room.id}`);
+      });
+  };
+
   const sendTextMessageHandler = async ({ text, toId, type }) => {
     // 차단 여부 check true:
     // 나간 여부 check 그냥 emit 후 서버에서 알림 발송 x
     // 차단 여부 check false: emit하기 전에
     // enter_date 설정, emit 후 서버에서 알림 발송
     await enterChatRoomAPI(chatRoom.id).then((data) => {
-      if (data.result) {
+      console.log("???????????????????????????????????");
+      console.log(data);
+      if (data) {
         (async () => {
           const updateChatroom = await getChatRoomAPI(roomId);
+          console.log("---------------------------");
+          console.log(updateChatroom);
           socket.emit(CHAT_EVENT.SEND_MESSAGE, {
             roomId: chatRoom.id,
             toId: toId,
@@ -73,18 +121,9 @@ const GetChatRoom = () => {
       token: `${localStorage.getItem("token")}`,
     });
   };
-  // useEffect(() => {
-  //   (async () => {
-  //     console.log("scroll event");
-  //     window.scrollTo(0, document.body.scrollHeight);
-  //   })();
-  // }, [messages]);
   useEffect(() => {
     (async () => {
       await getMemberAPI().then((data) => setMember(data));
-      if (productId != null) {
-        await getProductAPI(productId).then((data) => setProduct(data));
-      }
     })();
     socket.on(CHAT_EVENT.IS_WRITING, (flag) => {
       setIsWriting(flag);
@@ -132,10 +171,15 @@ const GetChatRoom = () => {
     };
   }, [roomId]);
   return !member || !chatRoom ? (
-    <LoadingProgress />
+    <>
+      <LoadingProgress />
+      <BottomBar />
+    </>
   ) : (
     <>
-      <Back url={`/chat/list`} />
+      <Back
+        url={state?.productId ? `/chat/list/${state.productId}` : `/chat/list`}
+      />
       <div
         style={{
           position: "fixed",
@@ -155,40 +199,14 @@ const GetChatRoom = () => {
           }
         />
       </div>
-      {/* <div
-        style={{
-          position: "fixed",
-          left: "52%",
-          top: "1rem",
-          zIndex: 1005,
-        }}
-      >
-        <Chip
-          icon={<ThermostatIcon sx={{ fontSize: "0.8rem" }} />}
-          color="primary"
-          sx={{
-            // pl: "-0.5rem",
-            width: "5rem",
-            height: "1.5rem",
-            fontSize: "0.7rem",
-          }}
-          label={
-            (chatRoom.buyerDTO.id === member.id
-              ? chatRoom.productDTO.sellerDTO.score
-              : chatRoom.buyerDTO.score) + "°C"
-          }
-        />
-      </div> */}
       <TopBar>
         {chatRoom.buyerDTO.id === member.id
           ? chatRoom.productDTO.sellerDTO.nickname
           : chatRoom.buyerDTO.nickname}
         &nbsp;
         <Chip
-          // icon={<ThermostatIcon sx={{ fontSize: "0.7rem" }} />}
           color="primary"
           sx={{
-            // pl: "-0.5rem",
             width: "3.5rem",
             height: "1.0rem",
             fontSize: "0.6rem",
@@ -208,7 +226,7 @@ const GetChatRoom = () => {
       />
       <ChatMessageList
         textEvent={textEvent}
-        sendTextMessageHandler={sendTextMessageHandler}
+        sendTextMessageHandler={sendTextMessageHandler_temp}
         newMessageOpen={newMessageOpen}
         newMessageCloseHandler={newMessageCloseHandler}
         member={member}
@@ -219,9 +237,6 @@ const GetChatRoom = () => {
       />
     </>
   );
-  //   return messages.map((message, idx) => {
-  //     return <ChatMessage />;
-  //   });
 };
 
 export default GetChatRoom;

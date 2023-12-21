@@ -5,7 +5,6 @@ import AddPayment from "./AddPayment";
 import ChargePoint from "./ChargePoint";
 import SuccessPayment from "./SuccessPayment";
 import { useIsLoginState } from "../../context/LoginContextProvider";
-import Login from "../../component/common/Login";
 import DeletePayment from "./DeletePayment";
 import RequestRefundPoint from "./RequestRefundPoint";
 import TransferPoint from "./TransferPoint";

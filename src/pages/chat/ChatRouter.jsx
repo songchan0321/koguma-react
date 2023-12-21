@@ -4,7 +4,6 @@ import { useIsLoginState } from "../../context/LoginContextProvider";
 import ChatRoomList from "./ListChatRoom";
 import GetChatRoom from "./GetChatRoom";
 import NewChatRoom from "./NewChatRoom";
-import NewSuggestChatRoom from "./NewSuggestChatRoom";
 
 const ChatRouter = () => {
   const isLogin = useIsLoginState();
@@ -26,16 +25,6 @@ const ChatRouter = () => {
         path="/new"
         element={isLogin ? <NewChatRoom /> : <Navigate to="/common/login" />}
       />
-
-      <Route
-        path="/new/chat/suggest"
-        element={
-          isLogin ? <NewSuggestChatRoom /> : <Navigate to="/common/login" />
-        }
-      />
-
-      {/* <Route path="/post/list" element={<ListPost />} />
-            <Route path="/post/add" element={<AddPost />} /> */}
     </Routes>
   );
 };

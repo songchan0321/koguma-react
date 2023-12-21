@@ -3,13 +3,11 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Slide,
   TextField,
 } from "@mui/material";
-import { forwardRef, useContext, useState } from "react";
-import { CHAT_EVENT, SocketContext } from "../../context/socket";
+import { forwardRef, useState } from "react";
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -20,7 +18,6 @@ const RequestTransferForm = ({
   roomId,
   sendTextMessageHandler,
 }) => {
-  const socket = useContext(SocketContext);
   const [point, setPoint] = useState(0);
   const [pointString, setPointString] = useState("0원");
   const pointResetHandler = () => {
@@ -68,7 +65,7 @@ const RequestTransferForm = ({
       open={open}
       TransitionComponent={Transition}
       keepMounted
-      onClose={handleClose}
+      onClose={() => handleClose(pointResetHandler)}
       aria-describedby="alert-dialog-slide-description"
     >
       <DialogTitle>{"송금 요청하기"}</DialogTitle>
