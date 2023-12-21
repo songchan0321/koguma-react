@@ -52,26 +52,9 @@ export const callPostListByViewAPI = async () => {
   }
 };
 
-<<<<<<< Updated upstream
 //img, location 추가 해야함
 export const addPostAPI = async (post) => {
   try {
-=======
-export const callPostListByCategoryAPI = async (categoryId) => {
-  try {
-    const { data } = await authInstance.get(
-      `${POST_API_URI}/list/category/${categoryId}`
-    );
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-//img, location 추가 해야함
-export const addPostAPI = async (post) => {
-  try {
->>>>>>> Stashed changes
     const response = await authInstance.post(`${POST_API_URI}/add`, post, {
       headers: {
         "Content-Type": "application/json",

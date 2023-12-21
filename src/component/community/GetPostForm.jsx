@@ -4,13 +4,10 @@ import { getPostAPI } from "../../apis/api/community";
 import { Container, Button, Typography, Box } from "@mui/material";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import { useNavigate, useParams } from "react-router-dom";
-<<<<<<< Updated upstream
 import CommunityAavatarForm from "./CommunityAvatarFrom";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import { authInstance } from "../../apis/utils/instance";
-=======
->>>>>>> Stashed changes
 
 const GetPostForm = () => {
   const { setIsLogin } = useContext(IsLoginContext);
@@ -30,13 +27,10 @@ const GetPostForm = () => {
         setData(result);
         setLoading(false);
         console.log(result);
-<<<<<<< Updated upstream
 
         // 조회수 증가 작업
         increaseViews(postId);
         console.log(postId);
-=======
->>>>>>> Stashed changes
       } catch (err) {
         console.error(err);
         setLoading(false);
@@ -45,7 +39,6 @@ const GetPostForm = () => {
 
     fetchData();
   }, [postId]);
-<<<<<<< Updated upstream
 
   // increaseViews 함수 정의
   const increaseViews = async (postId) => {
@@ -56,8 +49,6 @@ const GetPostForm = () => {
       console.error(err);
     }
   };
-=======
->>>>>>> Stashed changes
 
   return (
     <Container fixed>
@@ -65,7 +56,6 @@ const GetPostForm = () => {
         <LoadingProgress />
       ) : (
         <>
-<<<<<<< Updated upstream
           <Button
             variant="outlined"
             sx={{
@@ -103,11 +93,6 @@ const GetPostForm = () => {
               {data.views + 1}명이 봤어요
             </span>
           </Typography>
-=======
-          <Button variant="outlined">{data.categoryName}</Button>
-          <h1>{data.title}</h1>
-          <p>{data.content}</p>
->>>>>>> Stashed changes
         </>
       )}
     </Container>

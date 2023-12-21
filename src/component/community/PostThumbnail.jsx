@@ -5,6 +5,7 @@ import { Card, CardContent, Divider, Grid, Typography } from "@mui/material";
 import { callPostListAPI } from "../../apis/api/community";
 
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const PostThumbnail = ({ callAPI, callParam }) => {
   const [listPost, setListPost] = useState([]);
