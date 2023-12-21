@@ -100,12 +100,6 @@ const ListClubMember = () => {
                       <Typography variant="body1">
                         {clubMember.nickname}
                       </Typography>
-                      <Typography variant="body1">
-                        {clubMember.nickname}
-                      </Typography>
-                      <Typography variant="body1">
-                        {clubMember.nickname}
-                      </Typography>
                     </Grid>
                   </Grid>
                 </Paper>

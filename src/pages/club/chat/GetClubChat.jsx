@@ -5,6 +5,7 @@ import "./Chatcss.css";
 import { Divider, IconButton, InputBase, Paper } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import styled from "styled-components";
+import MarginEmpty from "../../../component/payment/MarginEmpty";
 
 const socket = io.connect(process.env.REACT_APP_GROUP_CHAT_URL);
 
@@ -102,52 +103,48 @@ const GetClubChat = ({ clubId, clubMember }) => {
 
   return (
     <>
-      <div
-        style={{ display: "flex", flexDirection: "column", height: "100vh" }}
-      >
-        <div style={{ flex: 1, overflowY: "auto", marginBottom: "30px" }}>
-          {/* 메시지 히스토리 영역 */}
-          {messages.map((msg, index) => (
-            <MessageContainer key={index}>
-              {msg.nickname !== nickname && (
-                <NicknameContainer>{msg.nickname}</NicknameContainer>
-              )}
-              <MessageBubble isOwnMessage={msg.nickname === nickname}>
-                {msg.text}
-              </MessageBubble>
-              <div ref={messagesContainerRef}></div>
-            </MessageContainer>
-          ))}
-        </div>
-        <div style={{ position: "fixed", bottom: 0, left: 0, right: 0 }}>
-          {/* 메시지 입력 창 영역 */}
-          <Paper
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              height: "60px",
-              backgroundColor: "#E7E3E3",
-            }}
+      <div style={{ flex: 1, overflowY: "auto", marginBottom: "30px" }}>
+        {/* 메시지 히스토리 영역 */}
+        {messages.map((msg, index) => (
+          <MessageContainer key={index}>
+            {msg.nickname !== nickname && (
+              <NicknameContainer>{msg.nickname}</NicknameContainer>
+            )}
+            <MessageBubble isOwnMessage={msg.nickname === nickname}>
+              {msg.text}
+            </MessageBubble>
+            <div ref={messagesContainerRef}></div>
+          </MessageContainer>
+        ))}
+      </div>
+      <div style={{ position: "fixed", bottom: 0, left: 0, right: 0 }}>
+        {/* 메시지 입력 창 영역 */}
+        <Paper
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            height: "60px",
+            backgroundColor: "#E7E3E3",
+          }}
+        >
+          <Divider sx={{ height: 40, m: 0.5 }} orientation="vertical" />
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="메시지 입력하세요."
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            inputProps={{ "aria-label": "search google maps" }}
+          />
+          <Divider sx={{ height: 40, m: 0.5 }} orientation="vertical" />
+          <IconButton
+            color="secondary"
+            sx={{ p: "10px" }}
+            aria-label="directions"
+            onClick={handleSendMessage}
           >
-            <Divider sx={{ height: 40, m: 0.5 }} orientation="vertical" />
-            <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="메시지 입력하세요."
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              inputProps={{ "aria-label": "search google maps" }}
-            />
-            <Divider sx={{ height: 40, m: 0.5 }} orientation="vertical" />
-            <IconButton
-              color="secondary"
-              sx={{ p: "10px" }}
-              aria-label="directions"
-              onClick={handleSendMessage}
-            >
-              <SendIcon></SendIcon>
-            </IconButton>
-          </Paper>
-        </div>
+            <SendIcon></SendIcon>
+          </IconButton>
+        </Paper>
       </div>
     </>
   );
