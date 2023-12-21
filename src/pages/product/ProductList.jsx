@@ -1,9 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { useInfiniteQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { useInView } from "react-intersection-observer";
 import BottomBar from "../../component/common/BottomBar";
 import ProductTopBar from "../../component/product/ProductTopBar";
 import AddFloatingButton from "../../component/common/AddFloatingButton";
@@ -17,7 +15,16 @@ const ProductList = () => {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [location, setLocation] = useState();
-
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const handleCategoryClick = (category, index) => {
+    navigate("/product/list/category", {
+      state: {
+        category: category,
+        categoryIndex: index,
+      },
+    });
+  };
   const loginMemberhasLocation = async () => {
     try {
       await loginMemberhasLocationAPI().then((data) => {
@@ -40,18 +47,20 @@ const ProductList = () => {
     }
   };
 
+  // useEffect(() => {
+  //   loginMemberhasLocation();
+  // }, []);
   useEffect(() => {
-    loginMemberhasLocation();
-  }, []);
-  useEffect(() => {
-    console.log(location);
-
     listProduct();
   }, [location]);
   return (
     <>
-      <ProductTopBar location={location} setLocation={setLocation} />
-      <MarginEmpty value={60}></MarginEmpty>
+      <ProductTopBar
+        location={location}
+        setLocation={setLocation}
+        handleCategory={handleCategoryClick}
+      />
+      <MarginEmpty value={80}></MarginEmpty>
       <BottomBar />
       <AddFloatingButton arrival={"/product/add"} />
 

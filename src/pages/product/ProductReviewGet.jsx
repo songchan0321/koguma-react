@@ -12,6 +12,7 @@ import ReviewCard from "../../component/product/ReviewCard";
 
 const ProductReviewGet = () => {
   const { reviewId } = useParams();
+  const { state } = useLocation();
   const navigate = useNavigate();
   const [review, setReview] = useState();
   const getReview = async () => {
@@ -38,7 +39,9 @@ const ProductReviewGet = () => {
 
   return (
     <>
-      <Back url={"/product/list/sale"} />
+      <Back
+        url={state?.roomId ? `/chat/get/${state.roomId}` : "/product/list/sale"}
+      />
       <TopBar>거래 후기 </TopBar>
       <Box
         sx={{

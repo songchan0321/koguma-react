@@ -31,7 +31,7 @@ const LocationBox = ({ location, setLocation }) => {
       navigate("/common/location", { state: { init: true } });
     }
   };
-  loginMemberhasLocation();
+  // loginMemberhasLocation();
   const getRepLocation = async () => {
     try {
       const response = await getRepLocationAPI();

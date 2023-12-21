@@ -20,10 +20,11 @@ import LocationBox from "../location/LocationBox";
 import { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import SearchDrawer from "../common/SearchDrawer";
-const ProductTopBar = ({ location, setLocation }) => {
+const ProductTopBar = ({ location, setLocation, handleCategory }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+
   const toggleDrawer = (open) => {
     setIsDrawerOpen(open);
   };
@@ -71,13 +72,6 @@ const ProductTopBar = ({ location, setLocation }) => {
           },
         }}
       >
-        {/* {location && (
-          <LocationBox
-            variant="text"
-            location={location}
-            setLocation={setLocation}
-          />
-        )} */}
         <LocationBox
           variant="text"
           location={location}
@@ -102,8 +96,12 @@ const ProductTopBar = ({ location, setLocation }) => {
           <DialogTitle>카테고리 선택</DialogTitle>
           <DialogContent sx={{ overflowY: "auto", maxHeight: "300px" }}>
             <DialogContentText>
-              {categorys.map((category) => (
-                <MenuItem key={category} value={category}>
+              {categorys.map((category, index) => (
+                <MenuItem
+                  key={category}
+                  value={category}
+                  onClick={() => handleCategory(category, index + 1)}
+                >
                   {category}
                 </MenuItem>
               ))}
