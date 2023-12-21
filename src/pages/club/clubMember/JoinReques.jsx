@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { checkClubMemberAPI, joinRequestAPI } from "../../../apis/api/club";
+import { joinRequestAPI } from "../../../apis/api/club";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { Container } from "react-bootstrap";
 import { useState } from "react";

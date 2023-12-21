@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { addClubPost, listClubPostCategories } from "../../../apis/api/club";
-import { Button, Modal } from "@mui/material";
 import { useLocation } from "react-router-dom";
+import AddPostCategoryModal from "../../../component/club/board/AddPostCategoryModal";
+import TopBarAddClubPost from "../../../component/club/common/TopBarAddClubPost";
+import MarginEmpty from "../../../component/payment/MarginEmpty";
 
 const AddClubPost = () => {
   const location = useLocation();
@@ -13,7 +15,7 @@ const AddClubPost = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("자유");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,15 +32,6 @@ const AddClubPost = () => {
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
-    handleCloseModal();
-  };
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
   };
 
   const handleSubmit = async (e) => {
@@ -68,29 +61,17 @@ const AddClubPost = () => {
 
   return (
     <>
-      <div>
-        <Button onClick={handleOpenModal}>{selectedCategory}</Button>
+      <TopBarAddClubPost></TopBarAddClubPost>
+      <MarginEmpty />
 
-        <Modal
-          open={isModalOpen}
-          onClose={handleCloseModal}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <div>
-            {categories.map((category) => (
-              <Button
-                key={category.id}
-                onClick={() => handleCategoryChange(category)}
-              >
-                {category.name}
-              </Button>
-            ))}
-          </div>
-        </Modal>
+      <div>
+        <div>
+          <AddPostCategoryModal
+            clubId={clubId}
+            onSelectCategory={handleCategoryChange}
+            clubMember={clubMember}
+          />
+        </div>
       </div>
       <form onSubmit={handleSubmit}>
         <label>

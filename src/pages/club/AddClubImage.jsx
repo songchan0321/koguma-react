@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { Box, Button, Container, Paper, Typography } from "@mui/material";
+import { Button, Container, Paper, Typography } from "@mui/material";
 import { uploadImageAPI } from "../../apis/api/common";
 
 const AddClubImage = ({ onPrev, onNext, data }) => {
