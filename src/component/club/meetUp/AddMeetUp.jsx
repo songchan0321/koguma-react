@@ -1,12 +1,19 @@
-import { Box, Button, TextField, Modal } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import {
+  Box,
+  Button,
+  TextField,
+  Modal,
+  Paper,
+  InputAdornment,
+} from "@mui/material";
+import { useRef, useState } from "react";
 import { addMeetUpAPI } from "../../../apis/api/club";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TopBarClub from "../common/TopBarClub";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
-import AddMeetUpLo from "./AddMeetUpLo";
-import DaumPostcodeEmbed from "react-daum-postcode";
+
 import MapTest from "../common/MapTest";
+import MarginEmpty from "../../payment/MarginEmpty";
 
 const AddMeetUp = () => {
   const navigate = useNavigate();
@@ -32,8 +39,6 @@ const AddMeetUp = () => {
   };
 
   const handleAddressUpdate = (address) => {
-    console.log(`111111111111`);
-    console.log(address);
     setMeetUp({ ...meetUp, roadAddr: address });
   };
 
@@ -59,15 +64,12 @@ const AddMeetUp = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(meetUp);
-    console.log(`-------------`);
     try {
       await addMeetUpAPI(
         clubId,
         meetUp.title,
         meetUp.content,
         meetUp.maxCapacity,
-        // meetUp.meetDate,
         meetUp.roadAddr
       );
       navigator("/club/" + clubId);
@@ -87,6 +89,7 @@ const AddMeetUp = () => {
   return (
     <>
       <TopBarClub children={"일정생성"}>일정생성</TopBarClub>
+      <MarginEmpty />
       <Box
         component="form"
         sx={{
@@ -95,93 +98,87 @@ const AddMeetUp = () => {
             width: "90%",
           },
         }}
+        style={{ marginLeft: "5px" }}
         noValidate
         autoComplete="off"
       >
-        <div>
-          <h1> 일정명 </h1>
-          <TextField
-            fullWidth
-            label="일정명"
-            id="fullWidth"
-            name="title"
-            value={meetUp.title}
-            onChange={handleInput}
-          />
-        </div>
-        <div>
-          <TextField
-            fullWidth
-            label="내용"
-            id="content"
-            name="content"
-            value={meetUp.content}
-            onChange={handleInput}
-          />
-        </div>
-        <div>
-          <TextField
-            fullWidth
-            label="인원"
-            id="maxCapacity"
-            type="number"
-            name="maxCapacity"
-            value={meetUp.maxCapacity}
-            onChange={handleInput}
-          />
-        </div>
-        <div>
-          <TextField
-            fullWidth
-            label="주소"
-            id="roadAddr"
-            name="roadAddr"
-            value={meetUp.roadAddr}
-            onChange={handleInput}
-          />
-          {/* <DaumPostcodeEmbed /> */}
-          <Box
-            component="form"
-            sx={{
-              "& .MuiTextField-root": {
-                m: 1,
-                width: "90%",
-              },
-            }}
-            noValidate
-            autoComplete="off"
+        <Paper elevation={0}>
+          <div>
+            <TextField
+              fullWidth
+              label="일정명"
+              id="fullWidth"
+              name="title"
+              value={meetUp.title}
+              onChange={handleInput}
+            />
+          </div>
+          <div>
+            <TextField
+              fullWidth
+              label="내용"
+              id="content"
+              name="content"
+              value={meetUp.content}
+              onChange={handleInput}
+            />
+          </div>
+          <div>
+            <TextField
+              fullWidth
+              label="인원"
+              id="maxCapacity"
+              type="number"
+              name="maxCapacity"
+              value={meetUp.maxCapacity}
+              onChange={handleInput}
+            />
+          </div>
+          <div>
+            <TextField
+              fullWidth
+              label="주소"
+              id="roadAddr"
+              name="roadAddr"
+              value={meetUp.roadAddr}
+              onChange={handleInput}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Button onClick={openModal}>
+                      <FmdGoodIcon />
+                    </Button>
+                  </InputAdornment>
+                ),
+              }}
+              onClick={openModal}
+            />
+            <Modal open={isModalOpen} onClose={closeModal}>
+              <div>
+                <TopBarClub></TopBarClub>
+                <MarginEmpty value={180} />
+                <MapTest onAddressUpdate={handleAddressUpdate} />
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  style={fixedButtonStyle}
+                  onClick={closeModal}
+                >
+                  확인
+                </Button>
+              </div>
+            </Modal>
+          </div>
+
+          <Button
+            variant="contained"
+            color="secondary"
+            style={fixedButtonStyle}
+            onClick={handleSubmit}
           >
-            <div>
-              <Button onClick={openModal}>
-                <FmdGoodIcon />
-              </Button>
-              <Modal open={isModalOpen} onClose={closeModal}>
-                <div>
-                  <MapTest onAddressUpdate={handleAddressUpdate} />
-                  <Button onClick={closeModal}>닫기</Button>
-                </div>
-              </Modal>
-            </div>
-
-            <Button
-              variant="contained"
-              color="secondary"
-              style={fixedButtonStyle}
-              onClick={handleSubmit}
-            >
-              만들기
-            </Button>
-          </Box>
-        </div>
-
-        <Button
-          variant="contained"
-          color="secondary"
-          style={fixedButtonStyle}
-          onClick={handleSubmit}
-        >
-          만들기
-        </Button>
+            만들기
+          </Button>
+        </Paper>
       </Box>
     </>
   );

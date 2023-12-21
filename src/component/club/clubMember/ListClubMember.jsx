@@ -1,9 +1,20 @@
 import { useEffect, useState } from "react";
 import { listClubMemberAPI } from "../../../apis/api/club";
-import { Box, Button, CardMedia, List } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  CardContent,
+  Grid,
+  List,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ListClubJoinRequest from "./ListClubJoinRequest";
 import TopBarClub from "../common/TopBarClub";
+import MarginEmpty from "../../payment/MarginEmpty";
+import styled from "styled-components";
 
 const ListClubMember = () => {
   const { clubId } = useParams();
@@ -38,6 +49,7 @@ const ListClubMember = () => {
   return (
     <>
       <TopBarClub>모임원</TopBarClub>
+      <MarginEmpty value={70} />
 
       {clubMember.memberRole ? (
         <Box sx={{ overflowY: "auto", maxHeight: "calc(100vh - 80px)" }}>
@@ -66,13 +78,37 @@ const ListClubMember = () => {
           <List sx={{ width: "100%", bgcolor: "background.paper" }}>
             {clubMembers.map((clubMember) => {
               return (
-                <div
+                <Paper
                   key={clubMember.id}
                   onClick={() => navigator(`/club/member/${clubMember.id}`)}
                   style={backgroundStyle}
                 >
-                  {clubMember.nickname}
-                </div>
+                  <Grid container spacing={2}>
+                    <Grid item xs={3}>
+                      <Avatar
+                        alt="Remy Sharp"
+                        style={{
+                          width: "70px",
+                          height: "70px",
+                          margin: "auto",
+                          borderRadius: "100%",
+                        }}
+                        src={clubMember.memberDTO.profileURL}
+                      />
+                    </Grid>
+                    <Grid item xs={7}>
+                      <Typography variant="body1">
+                        {clubMember.nickname}
+                      </Typography>
+                      <Typography variant="body1">
+                        {clubMember.nickname}
+                      </Typography>
+                      <Typography variant="body1">
+                        {clubMember.nickname}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Paper>
               );
             })}
           </List>
@@ -89,3 +125,11 @@ const backgroundStyle = {
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
   padding: "20px",
 };
+
+const ClubContent = styled(Avatar)({
+  flex: 1,
+  width: "200",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+});

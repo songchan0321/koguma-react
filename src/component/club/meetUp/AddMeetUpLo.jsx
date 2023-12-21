@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import DaumPostcodeEmbed from "react-daum-postcode";
 
 const AddMeetUpLo = ({ handleAddressUpdate }) => {
   const [map, setMap] = useState(null);
