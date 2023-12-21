@@ -4,14 +4,14 @@ import TopBarAddClub from "../../component/club/common/TopBarAddClub";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const AddClubMaxCapacity = ({ onPrev, onNext, data }) => {
-  const [formData, setFormData] = useState({
-    categoryId: data.categoryId || "",
-    title: data.title || "",
-    content: data.content || "",
-    urls: data.urls || "",
+  // const [formData, setFormData] = useState({
+  //   categoryId: data.categoryId || "",
+  //   title: data.title || "",
+  //   content: data.content || "",
+  //   urls: data.urls || "",
 
-    maxCapacity: data.maxCapacity || 0,
-  });
+  //   maxCapacity: data.maxCapacity || 0,
+  // });
 
   const [selectedMaxCapacity, setSelectedMaxCapacity] = useState();
   const maxCapacityList = [10, 20, 30, 40, 50];

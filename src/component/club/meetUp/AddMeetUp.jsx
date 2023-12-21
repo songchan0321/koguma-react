@@ -14,6 +14,11 @@ import FmdGoodIcon from "@mui/icons-material/FmdGood";
 
 import MapTest from "../common/MapTest";
 import MarginEmpty from "../../payment/MarginEmpty";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { TimePicker } from "@mui/x-date-pickers";
 
 const AddMeetUp = () => {
   const navigate = useNavigate();
@@ -27,6 +32,7 @@ const AddMeetUp = () => {
     content: "",
     roadAddr: "",
     maxCapacity: 0,
+    meetUpData: "",
   });
 
   const fixedButtonStyle = {
@@ -170,6 +176,34 @@ const AddMeetUp = () => {
             </Modal>
           </div>
 
+          <div>
+            <div>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer components={["DatePicker"]}>
+                  <DatePicker
+                    label="날짜"
+                    value={meetUp.selectedDate} // 선택한 날짜를 저장할 필드
+                    onChange={(newValue) =>
+                      setMeetUp({ ...meetUp, selectedDate: newValue })
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} fullWidth />
+                    )}
+                  />{" "}
+                </DemoContainer>
+                <TimePicker
+                  label="시간"
+                  value={meetUp.selectedTime} // 선택한 시간을 저장할 필드
+                  onChange={(newValue) =>
+                    setMeetUp({ ...meetUp, selectedTime: newValue })
+                  }
+                  renderInput={(params) => <TextField {...params} fullWidth />}
+                />
+              </LocalizationProvider>{" "}
+            </div>
+
+            <div></div>
+          </div>
           <Button
             variant="contained"
             color="secondary"

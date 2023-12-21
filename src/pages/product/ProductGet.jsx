@@ -5,16 +5,11 @@ import { useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
-  CardMedia,
   CardContent,
-  CardActions,
-  Collapse,
   Avatar,
   IconButton,
   Typography,
 } from "@mui/material";
-import { red } from "@mui/material/colors";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import GetProductBottomBar from "./GetProductBottomBar";
 import { getProductAPI, validProductAPI } from "../../apis/api/Product";
 import LoadingProgress from "../../component/common/LoadingProgress";
@@ -52,7 +47,6 @@ const ProductGet = () => {
       try {
         const result = await getProductAPI(productId);
         setData(result);
-        console.log(result);
         const valid = await validProductAPI(productId);
         setIsMine(valid);
       } catch (error) {
@@ -119,10 +113,17 @@ const ProductGet = () => {
               <b>{data.title}</b>
             </Typography>
             <Typography variant="caption" color="text.secondary" sx={{ mb: 3 }}>
-              {data.categoryName}&nbsp; {formatTimeAgo(data.regDate)}
+              {data.categoryName} · {formatTimeAgo(data.regDate)}
             </Typography>
-            <Typography variant="body2" color="textPrimary" sx={{ mt: 3 }}>
+            <Typography
+              variant="body2"
+              color="textPrimary"
+              sx={{ mt: 3, mb: 1 }}
+            >
               {data.content}
+            </Typography>
+            <Typography variant="caption" color="text.secondary" sx={{ mb: 3 }}>
+              관심 {data.likeCount} · 조회 {data.views}
             </Typography>
           </CardContent>
           <GetProductBottomBar
@@ -134,7 +135,7 @@ const ProductGet = () => {
       ) : (
         <LoadingProgress />
       )}
-      <MarginEmpty />
+      <MarginEmpty value={300} />
     </>
   );
 };

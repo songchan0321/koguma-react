@@ -4,19 +4,12 @@ import { styled } from "@mui/material/styles";
 import {
   Card,
   CardHeader,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Collapse,
   Avatar,
   Button,
   Box,
   IconButton,
   Typography,
 } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite"; //채워진 하트
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"; // 안채워진 하트
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -153,7 +146,6 @@ const MyList = ({
                               type={{ tradeStatus: prod.tradeStatus }}
                             />
                           )}
-                          &nbsp;
                           {formatMoney(prod.price)}원
                         </Typography>
                       </div>
@@ -293,7 +285,9 @@ const MyList = ({
           </React.Fragment>
         ))
       ) : (
-        <NotData>상품</NotData>
+        <NotData>
+          <div>상품이 존재하지 않아요.</div>
+        </NotData>
       )}
     </>
   );
