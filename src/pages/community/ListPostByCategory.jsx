@@ -1,4 +1,3 @@
-
 import { Fragment, useEffect, useState } from "react";
 import PostThumbnail from "../../component/community/PostThumbnail";
 import { callPostListByCategoryAPI } from "../../apis/api/community";
@@ -53,16 +52,7 @@ const ListPostByCategory = () => {
       <PostThumbnail
         callAPI={callPostListByCategoryAPI}
         callParam={categoryId}
-
-  return (
-    <Fragment>
-      <Back />
-      <PostThumbnail
-        callAPI={callPostListByCategoryAPI}
-        callParam={selectedCategory}
-
-      />
-
+      ></PostThumbnail>
       <Fab
         style={{ position: "fixed", bottom: "80px", right: "30px" }}
         variant="contained"
@@ -76,7 +66,6 @@ const ListPostByCategory = () => {
 
       <MarginEmpty />
       <BottomBar />
-
     </Fragment>
   );
 };
