@@ -2,6 +2,7 @@ import {
   AppBar,
   Avatar,
   Button,
+  CircularProgress,
   Dialog,
   IconButton,
   List,
@@ -9,7 +10,14 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { Fragment, forwardRef, useLayoutEffect, useRef } from "react";
+import {
+  Fragment,
+  forwardRef,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import PlaceIcon from "@mui/icons-material/Place";
 import { Map } from "react-kakao-maps-sdk";
@@ -18,44 +26,34 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 const AddShareLocation = ({
+  lat,
+  lng,
+  locationClickHandler,
   handleClose,
   open,
   roomId,
   product,
   sendTextMessageHandler,
 }) => {
+  const [locationState, setLocationState] = useState({
+    center: {
+      lat: lat,
+      lng: lng,
+    },
+  });
+  const [feedback, setFeedback] = useState(false);
   const locationRef = useRef({
     level: 4,
-    latitude: 37.49934209591508,
-    longitude: 127.02901006028125,
-    // latitude: 32.49934209591508,
-    // longitude: 122.02901006028125,
+    // latitude: 37.49934209591508,
+    // longitude: 127.02901006028125,
+    latitude: lat,
+    longitude: lng,
   });
   // const [location, setLocation] = useState({
   //   level: 2,
   //   latitude: 33.450701,
   //   longitude: 126.570667,
   // });
-  useLayoutEffect(() => {
-    if (open) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          console.log(locationRef.current.latitude);
-          console.log(locationRef.current.longitude);
-          locationRef.current.latitude = pos.coords.latitude;
-          locationRef.current.longitude = pos.coords.longitude;
-          // console.log(locationRef.current.latitude);
-          // console.log(locationRef.current.longitude);
-        },
-        (err) => alert("위치 권한이 없어요!"),
-        {
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 0,
-        }
-      );
-    }
-  }, [open]);
   const getCoordinates = () => {
     sendTextMessageHandler({
       text: `${locationRef.current.latitude},${locationRef.current.longitude}`,
@@ -124,16 +122,16 @@ const AddShareLocation = ({
                   height: "3.5rem",
                 }}
               >
-                <MyLocationIcon />
+                <IconButton onClick={locationClickHandler}>
+                  <MyLocationIcon />
+                </IconButton>
               </Avatar>
             </div>
-            {console.log(locationRef.current)}
-
+            {console.log("AddShareLocation render")}
             <Map // 지도를 표시할 Container
               center={{
-                // 지도의 중심좌표
-                lat: locationRef.current.latitude,
-                lng: locationRef.current.longitude,
+                lat: lat,
+                lng: lng,
               }}
               style={{
                 position: "fixed",
@@ -141,6 +139,7 @@ const AddShareLocation = ({
                 // overflow: "hidd",
                 height: "100vh",
               }}
+              isPanto={true}
               level={1} // 지도의 확대 레벨
               onCenterChanged={(map) => {
                 locationRef.current.level = map.getLevel();

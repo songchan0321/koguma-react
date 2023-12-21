@@ -52,9 +52,9 @@ const LandingPayment = () => {
           sx={{ textAlign: "center", mt: "1.2rem" }}
           color="text.secondary"
         >
-          이웃간의 의사소통과
+          편리한 거래를 위한
           <br />
-          안전한 송금까지 경험해보세요.
+          페이를 등록해보세요.
         </Typography>
         <div
           style={{

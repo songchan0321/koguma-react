@@ -6,7 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Fragment, useContext, useRef, useState } from "react";
+import { Fragment, useContext, useEffect, useRef, useState } from "react";
 import { Avatar, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import PhotoIcon from "@mui/icons-material/Photo";
@@ -23,7 +23,7 @@ import LeaveCheck from "./LeaveCheck";
 import { addImageAPI, uploadImageAPI } from "../../apis/api/common";
 import LoadingBackdrop from "../common/LoadingBackdrop";
 const ChatPlusButton = ({ roomId, product, sendTextMessageHandler }) => {
-  const navigator = useNavigate();
+  const navigator_dom = useNavigate();
   const [state, setState] = useState(false);
   const [progress, setProgress] = useState(0);
   const [locationModalOpen, setLocationModalOpen] = useState(false);
@@ -31,7 +31,35 @@ const ChatPlusButton = ({ roomId, product, sendTextMessageHandler }) => {
   const [requestModalOpen, setRequestModalOpen] = useState(false);
   const [leaveModalOpen, setLeaveModalOpen] = useState(false);
   const [imageLoadingModalOpen, setImageLoadingModalOpen] = useState(false);
+  const [locationState, setLocationState] = useState({
+    latitude: 32.49934209591508,
+    longitude: 122.02901006028125,
+  });
+  const locationClickHandler = () => {
+    setLocationState((prev) => ({
+      latitude: prev.latitude + 0.00000000000001,
+      longitude: prev.longitude + 0.00000000000001,
+    }));
+  };
   const imageRef = useRef(null);
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setLocationState({
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude,
+        });
+      },
+      (err) => {
+        console.log(err);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
+      }
+    );
+  }, []);
   const handleLocationModalClickOpen = () => {
     setLocationModalOpen(true);
   };
@@ -131,7 +159,7 @@ const ChatPlusButton = ({ roomId, product, sendTextMessageHandler }) => {
                     <Avatar
                       sx={{ width: 34, height: 34, bgcolor: "#F3C73C" }}
                       onClick={() =>
-                        navigator("/payment/transfer", {
+                        navigator_dom("/payment/transfer", {
                           state: {
                             roomId: roomId,
                           },
@@ -154,7 +182,7 @@ const ChatPlusButton = ({ roomId, product, sendTextMessageHandler }) => {
                 onClick={
                   [
                     () =>
-                      navigator("/payment/transfer", {
+                      navigator_dom("/payment/transfer", {
                         state: {
                           roomId: roomId,
                         },
@@ -256,6 +284,9 @@ const ChatPlusButton = ({ roomId, product, sendTextMessageHandler }) => {
           {list()}
         </Drawer>
         <AddShareLocation
+          lat={locationState.latitude}
+          lng={locationState.longitude}
+          locationClickHandler={locationClickHandler}
           sendTextMessageHandler={sendTextMessageHandler}
           roomId={roomId}
           product={product}
