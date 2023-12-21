@@ -18,6 +18,13 @@ const AddFollowingForm = ({ onSubmit }) => {
     const { id } = useParams();
     const location = useLocation();
 
+    const confirmFollowing = () => {
+        const confirmed = window.confirm("정말 팔로우 하시겠습니까?");
+        if (confirmed) {
+            handleSubmit();
+        }
+    };
+
     const handleContentChange = (e) => {
         setContent(e.target.value);
     };
@@ -67,10 +74,10 @@ const AddFollowingForm = ({ onSubmit }) => {
                     label="팔로우 메모"
                     value={content}
                     onChange={handleContentChange}
-                    style={{ width: "100%" }}
+                    style={{ width: "100%", marginTop:'160px'}}
                 />
                 <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
-                    <Button variant="contained" color="primary" onClick={handleSubmit}>
+                    <Button variant="contained" color="primary" onClick={confirmFollowing}>
                         팔로우
                     </Button>
                 </div>

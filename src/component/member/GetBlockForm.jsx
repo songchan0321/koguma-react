@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getBlockAPI, deleteBlockAPI } from '../../apis/api/member';
-import { Button, CircularProgress, ThemeProvider, createTheme } from '@mui/material';
+import { Button, CircularProgress, ThemeProvider, createTheme, Typography } from '@mui/material';
 import Back from "../../component/common/Back";
-// 테마 정의
+
 const theme = createTheme({
     palette: {
         primary: {
@@ -48,20 +48,32 @@ const GetBlockForm = () => {
         fetchGetBlock();
     }, [targetMemberId]);
 
+    // 날짜 부분만 추출하는 함수
+    const extractDate = (fullDate) => {
+        const dateObj = new Date(fullDate);
+        return dateObj.toISOString().split('T')[0];
+    };
+
     return (
         <ThemeProvider theme={theme}>
-            <div>
+            <div style={{ textAlign: 'center' }}>
                 {loading ? (
                     <CircularProgress color="primary" />
                 ) : (
                     <div>
-                        <p>차단 상대: {getBlock.targetMember.nickname}</p>
-                        <p>차단 사유: {getBlock.content}</p>
-                        <p>차단 일시: {getBlock.targetMember.regDate}</p>
-                        <Button variant="contained" color="primary" onClick={handleUnblock}>
+                        <Typography variant="h6" gutterBottom style={{ marginTop: '240px', fontWeight: 'bold', fontSize: '1.5rem' }}>
+                            닉네임: {getBlock.targetMember.nickname}
+                        </Typography>
+                        <Typography variant="body1" gutterBottom style={{ fontSize: '1rem' }}>
+                            차단 사유: {getBlock.content}
+                        </Typography>
+                        <Typography variant="body1" gutterBottom style={{ fontSize: '1rem' }}>
+                            차단 일시: {extractDate(getBlock.targetMember.regDate)}
+                        </Typography>
+                        <Button variant="contained" color="primary" onClick={handleUnblock} style={{ marginTop: '20px' }}>
                             차단 해제
                         </Button>
-                        <Back/>
+                        <Back />
                     </div>
                 )}
             </div>
