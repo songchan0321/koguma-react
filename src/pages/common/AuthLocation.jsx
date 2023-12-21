@@ -1,28 +1,6 @@
-import {
-  AppBar,
-  Button,
-  Dialog,
-  Divider,
-  IconButton,
-  List,
-  Box,
-  ListItem,
-  Grid,
-  ListItemText,
-  Slide,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { Button, IconButton, List, Box, Grid, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {
-  Fragment,
-  forwardRef,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { Circle, Map, MapMarker } from "react-kakao-maps-sdk";
+import { Fragment, useEffect, useRef, useState } from "react";
 import SearchSlider from "../../component/location/SearchSlider";
 import MapComponent from "../../component/location/MapComponent";
 import Back from "../../component/common/Back";
@@ -48,10 +26,19 @@ const AuthLocation = () => {
   const [locationList, setLocationList] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState();
   const [listLocationComplete, setListLocationComplete] = useState(false);
+  const [type, setType] = useState();
   const [mapKey, setMapKey] = useState(0);
   const location = useLocation();
-  const handleLocationClick = (idx) => {
-    console.log(selectedLocation);
+  const handleLocationClick = async (idx) => {
+    updateRepLocation(locationList[idx].id);
+    setSelectedLocation(idx);
+    setLatitude(locationList[idx].latitude);
+    setLongitude(locationList[idx].longitude);
+    setSearchRange(locationList[idx].searchRange);
+  };
+  const handleAddLocationClick = async () => {
+    //위치 추가를 위한 api
+    const idx = locationList.length - 1;
     updateRepLocation(locationList[idx].id);
     setSelectedLocation(idx);
     setLatitude(locationList[idx].latitude);
@@ -70,8 +57,19 @@ const AuthLocation = () => {
   const addLocation = async () => {
     const location = await getCurrentLocation();
     const { data } = await addLocationAPI(location);
-    setLocationList((prevList) => [...prevList, data]);
+    await (async () => {
+      setLocationList((prevList) => [...prevList, data]);
+      setType("add");
+    })();
   };
+  useEffect(() => {
+    console.log(locationList);
+    if (type === "add") {
+      handleAddLocationClick();
+    }
+    setType(null);
+  }, [locationList]);
+
   const listLocation = async () => {
     const { data } = await listLocationAPI();
     setLocationList(data);
@@ -86,6 +84,10 @@ const AuthLocation = () => {
     await updateSearchRangeAPI(updatedLocation);
   };
   const deleteLocation = async (idx) => {
+    if (locationList.length === 1) {
+      alert("위치는 하나이상 존재해야합니다");
+      return;
+    }
     await deleteLocationAPI(locationList[idx].id);
     const updatedLocationList = locationList.filter(
       (_, index) => index !== idx
@@ -99,6 +101,7 @@ const AuthLocation = () => {
     setLocationList(updatedLocationList);
     console.log(newSelectedLocation);
     setSelectedLocation(newSelectedLocation);
+    await handleLocationClick(0);
     // setLocationList(updatedLocationList);
   };
   const getRepLocation = async () => {
@@ -117,6 +120,7 @@ const AuthLocation = () => {
     setLongitude(data.longitude);
     setSearchRange(data.searchRange);
     setSelectedLocation(data);
+    await handleLocationClick(repLocationIndex);
   };
   useEffect(() => {
     if (searchRange === 4 || searchRange === 5) {
@@ -174,11 +178,15 @@ const AuthLocation = () => {
         />
       </List>
 
-      <Typography sx={{ flex: 1, mt: 2, mb: 2 }} variant="h6" component="div">
+      <Typography
+        sx={{ flex: 1, mt: 2, mb: 2, ml: 5 }}
+        variant="h6"
+        component="div"
+      >
         내 동네
       </Typography>
 
-      <Grid container spacing={2}>
+      <Grid container justifyContent="center" alignItems="center" spacing={2}>
         {locationList ? (
           locationList.map((list, idx) => (
             <Grid item xs={5} key={list.id}>
@@ -207,7 +215,7 @@ const AuthLocation = () => {
         ) : (
           <></>
         )}
-        <Grid item xs={4}>
+        <Grid item xs={5}>
           <Box
             sx={{
               display: "flex",
@@ -227,7 +235,7 @@ const AuthLocation = () => {
         </Grid>
         <Grid item xs={12}>
           <Typography
-            sx={{ flex: 1, mt: 2, mb: 2 }}
+            sx={{ flex: 1, mt: 2, mb: 2, ml: 5 }}
             variant="h6"
             component="div"
           >
