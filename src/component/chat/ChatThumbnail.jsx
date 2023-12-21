@@ -39,7 +39,7 @@ const ChatThumbnail = ({ room }) => {
                   fontSize="0.7rem"
                   color="text.disabled"
                 >
-                  {room.dong}&nbsp;&nbsp;&nbsp;
+                  {room.dong}&nbsp;·&nbsp;
                   {formatTimeAgo(room.latestMessage.timestamp, true)}
                 </Typography>
               </Fragment>

@@ -16,6 +16,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import ArticleIcon from "@mui/icons-material/Article";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import ChatBubbleTwoToneIcon from "@mui/icons-material/ChatBubbleTwoTone";
+import RequestQuoteTwoToneIcon from "@mui/icons-material/RequestQuoteTwoTone";
 import PaidTwoToneIcon from "@mui/icons-material/PaidTwoTone";
 import { useEffect, useRef, useState } from "react";
 import Back from "../../component/common/Back";
@@ -34,50 +35,7 @@ import ListAlertSkeleton from "../../component/common/ListAlertSkeleton";
 const Demo = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
 }));
-const dummy = [
-  {
-    id: "1",
-    title: "회원",
-    content: "~님이 팔로잉을 했어요!",
-    url: "",
-    regDate: "",
-  },
-  {
-    id: "2",
-    title: "채팅",
-    content: "~님이 채팅을 시작했어요!",
-    url: "",
-    regDate: "",
-  },
-  {
-    id: "3",
-    title: "상품",
-    content: "~님이 찜하기를 했어요!",
-    url: "",
-    regDate: "",
-  },
-  {
-    id: "4",
-    title: "동네생활",
-    content: "~님이 좋아요를 했어요!",
-    url: "",
-    regDate: "",
-  },
-  {
-    id: "5",
-    title: "모임",
-    content: "~님이 만남을 생성했어요!",
-    url: "",
-    regDate: "",
-  },
-  {
-    id: "6",
-    title: "거래",
-    content: "~님이 송금을 했어요!",
-    url: "",
-    regDate: "",
-  },
-];
+
 const icon = {
   회원: <PersonAddIcon />,
   동네생활: <ArticleIcon />,
@@ -85,6 +43,7 @@ const icon = {
   채팅: <ChatBubbleTwoToneIcon />,
   상품: <ChatBubbleTwoToneIcon />,
   거래: <PaidTwoToneIcon />,
+  가격제인: <RequestQuoteTwoToneIcon />,
 };
 const ListAlert = () => {
   const navigator = useNavigate();

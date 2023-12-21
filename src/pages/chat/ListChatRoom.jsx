@@ -11,6 +11,7 @@ import BottomBar from "../../component/common/BottomBar";
 import { CHAT_EVENT, SocketContext } from "../../context/socket";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 import Back from "../../component/common/Back";
+import NotExist from "../../component/common/NotExist";
 
 const ListChatRoom = () => {
   const { productId } = useParams();
@@ -65,8 +66,6 @@ const ListChatRoom = () => {
     (async () => {
       try {
         await getMemberAPI().then((data) => (memberId.current = data.id));
-        console.log("-------------------------21412853829758932758 9");
-        console.log(productId);
         if (productId) {
           await chatRoomListBySellerAPI(productId)
             .then((data) => chatRoomListService(data, memberId.current))
@@ -108,20 +107,32 @@ const ListChatRoom = () => {
     </>
   ) : (
     <>
-      {productId && <Back />}
+      {productId && <Back url={`/product/get/${productId}`} />}
       <TopBar>채팅</TopBar>
       <MarginEmpty />
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-        {rooms.map((room, idx) => {
-          console.log(room.id);
-          return (
-            room.latestMessage && (
-              <div onClick={() => navigator(`/chat/get/${room.id}`)}>
-                <ChatThumbnail key={idx} room={room} />
-              </div>
-            )
-          );
-        })}
+        {rooms.length <= 0 ? (
+          <NotExist
+            title={"채팅이 존재하지 않아요!"}
+            content={"먼저 상품을 구경해보세요!"}
+            url={"/product/list"}
+          />
+        ) : (
+          rooms.map((room, idx) => {
+            console.log(room.id);
+            return (
+              room.latestMessage && (
+                <div
+                  onClick={() =>
+                    navigator(`/chat/get/${room.id}`, { state: { productId } })
+                  }
+                >
+                  <ChatThumbnail key={idx} room={room} />
+                </div>
+              )
+            );
+          })
+        )}
       </List>
       <BottomBar />
       <MarginEmpty />

@@ -26,7 +26,8 @@ const UnregistedPaymentCard = () => {
       <CardActions sx={{ justifyContent: "center", mb: 2.0 }}>
         <Button
           variant="contained"
-          color="secondary"
+          // color="secondary"
+          sx={{ backgroundColor: "#D070FB" }}
           component={Link}
           to="/payment/add"
         >
@@ -63,7 +64,8 @@ const PaymentCard = () => {
       <CardActions sx={{ justifyContent: "space-around", mb: 2.0 }}>
         <Button
           variant="contained"
-          color="secondary"
+          // color="secondary"
+          sx={{ backgroundColor: "#D070FB" }}
           size="large"
           component={Link}
           to="/payment/charge"
@@ -73,7 +75,7 @@ const PaymentCard = () => {
         </Button>
         <Button
           variant="contained"
-          color="secondary"
+          sx={{ backgroundColor: "#D070FB" }}
           size="large"
           component={Link}
           to="/payment/requestRefund"

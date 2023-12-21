@@ -96,7 +96,7 @@ const RequestRefundPoint = () => {
           <Box sx={{ textAlign: "center" }}>
             <Button
               disabled={balance - point < 0 || point <= 0}
-              sx={{ mt: 1 }}
+              sx={{ mt: 1, backgroundColor: "#D070FB" }}
               size="large"
               variant="contained"
               color="secondary"
