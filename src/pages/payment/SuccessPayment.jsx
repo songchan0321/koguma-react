@@ -101,10 +101,10 @@ const SuccessPayment = () => {
           <Box sx={{ textAlign: "center" }}>
             <Button
               //   disabled={point <= 0 || point >= 3000000}
-              sx={{ mt: 1 }}
+              sx={{ mt: 1, backgroundColor: "#D070FB" }}
               size="large"
               variant="contained"
-              color="secondary"
+              // color="secondary"
               onClick={
                 type === "transfer"
                   ? () => navigator(`/chat/get/${roomId}`)

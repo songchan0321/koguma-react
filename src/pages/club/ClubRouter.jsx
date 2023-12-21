@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import ClubList from "./ClubList";
 import GetClub from "./GetClub";
 import AddMeetUp from "../../component/club/meetUp/AddMeetUp";
 import GetClubMeetUp from "./meetUp/GetClubMeetUp";
-import { Provider } from "react-redux";
-import store from "../../store";
+
 import JoinRequest from "./clubMember/JoinReques";
 import ListClubMember from "../../component/club/clubMember/ListClubMember";
 import GetClubMember from "./clubMember/GetClubMember";

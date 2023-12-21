@@ -7,7 +7,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 const theme = createTheme({
     palette: {
         primary: {
-            main: "#673AB7", // 보라색
+            main: "#D070FB", // 보라색
         },
     },
 });

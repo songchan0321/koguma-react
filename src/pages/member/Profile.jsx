@@ -88,7 +88,7 @@ const Profile = () => {
             ) : (
                 // 로딩이 완료되면 멤버 이미지 표시
                 member && member.profileURL ? (
-                    <img src={member.profileURL} alt="" style={{ width: "40%", marginLeft: '103px', marginTop: '30px' }} />
+                    <img src={member.profileURL} alt="" style={{ width: "40%", marginLeft: '103px', marginTop: '30px', borderRadius: '50%' }} />
                 ) : (
                     // 이미지가 없을 때 아이콘 등의 대체 컨텐츠를 표시
                     <div></div>
@@ -97,7 +97,7 @@ const Profile = () => {
           </Grid>
           <Grid item xs={12} md={8}>
             {/* 닉네임 */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #ccc', paddingBottom: '10px' }}>
               <Typography variant="h4" gutterBottom>
                 {/* 로딩 중일 때 CircularProgress 표시 */}
                 {loading ? (

@@ -7,7 +7,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import SearchDrawer from "../../component/common/SearchDrawer";
 import ProductTopBar from "../../component/product/ProductTopBar";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 import { useLocation } from "react-router-dom";
@@ -67,7 +66,7 @@ const SearchTab = () => {
   return (
     <>
       <ProductTopBar />
-      <MarginEmpty value={"5rem"} />
+      <MarginEmpty value={"5.1rem"} />
       {/* <Margin */}
       <Box sx={{ bgcolor: "background.paper" }}>
         <AppBar position="static" sx={{ backgroundColor: "#D070FB" }}>

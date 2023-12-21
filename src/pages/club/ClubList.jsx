@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import CategoryList from "../../component/club/CategoryList";
 import ClubListByCategory from "../../component/club/ClubListByCategory";
-import { Box, Divider, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Divider, Tab, Tabs } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Link } from "react-router-dom";
 import TopBarClub from "../../component/club/common/TopBarClub";
 import MyClubList from "../../component/club/MyClubList";
 import ClubListStepper from "../../component/club/ClubListStepper";
 import MyClubPostList from "../../component/club/board/MyClubPostList";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 function ClubList() {
   const [selectedCategoryId, setSelectedCategoryId] = useState(0); // 초기 값은 0으로 설정
@@ -28,9 +29,8 @@ function ClubList() {
 
   return (
     <>
-      <div position="fixed" sx={{ textAlign: "center", mb: 1.5 }}>
-        <TopBarClub>모임 리스트</TopBarClub>
-      </div>
+      <TopBarClub children={"모임리스트"}>모임리스트</TopBarClub>
+      <MarginEmpty />
 
       <div>
         <div style={{ textAlign: "center" }}>
@@ -59,7 +59,7 @@ function ClubList() {
         {myClubList ? (
           <div style={{ margin: "10px" }}>
             <MyClubList style={backgroundStyle} />
-            <Divider style={backgroundStyle} />
+            <Divider />
             <div style={{ margin: "10px" }}>
               <MyClubPostList style={backgroundStyle} />
             </div>

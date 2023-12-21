@@ -1,7 +1,16 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { Box, Button, Container, Paper, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  Container,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { uploadImageAPI } from "../../apis/api/common";
+import TopBarAddClub from "../../component/club/common/TopBarAddClub";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const AddClubImage = ({ onPrev, onNext, data }) => {
   const [formData, setFormData] = useState({
@@ -10,7 +19,7 @@ const AddClubImage = ({ onPrev, onNext, data }) => {
     content: data.content || "", // 기존 데이터가 있으면 사용, 없으면 빈 문자열
     urls: data.urls || "",
   });
-  const [selectedFile, setSelectedFile] = useState([]);
+  const [selectedFile, setSelectedFile] = useState([""]);
 
   const handleUpload = async (event) => {
     const imageList = new FormData();
@@ -43,36 +52,39 @@ const AddClubImage = ({ onPrev, onNext, data }) => {
 
   return (
     <>
-      <Typography
-        variant="h4"
-        style={{ marginTop: "20px", marginLeft: "30px" }}
-      >
-        모임 대표 이미지 업로드
-      </Typography>
-      <Container style={{ marginTop: "30px", marginLeft: "20px" }}>
+      <TopBarAddClub />
+      <MarginEmpty value={70} />
+      <div style={{ marginLeft: "20px" }}>
+        <Typography variant="h4">모임 대표 이미지 업로드</Typography>
+        {selectedFile && (
+          <Card style={{ maxWidth: 345, margin: "20px 0" }}>
+            <CardMedia
+              component="img"
+              alt="사진을 업로드해주세요 ! "
+              image={selectedFile}
+              style={{ width: "100%" }} // 이미지를 Card 폭에 맞게 조절
+            />
+          </Card>
+        )}
+
         <input type="file" onChange={handleUpload} />
-      </Container>
-      <Paper
-        sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
-        elevation={3}
+      </div>
+      <Button
+        variant="contained"
+        color="secondary"
+        style={backButtonStyle}
+        onClick={handlePrevClick}
       >
-        <Button
-          variant="contained"
-          color="secondary"
-          style={backButtonStyle}
-          onClick={handlePrevClick}
-        >
-          이전
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          style={nextButtonStyle}
-          onClick={handleNextClick}
-        >
-          다음
-        </Button>
-      </Paper>
+        이전
+      </Button>
+      <Button
+        variant="contained"
+        color="secondary"
+        style={nextButtonStyle}
+        onClick={handleNextClick}
+      >
+        다음
+      </Button>
     </>
   );
 };

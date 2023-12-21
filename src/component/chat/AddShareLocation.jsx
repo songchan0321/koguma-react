@@ -127,7 +127,6 @@ const AddShareLocation = ({
                 </IconButton>
               </Avatar>
             </div>
-            {console.log("AddShareLocation render")}
             <Map // 지도를 표시할 Container
               center={{
                 lat: lat,

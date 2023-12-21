@@ -19,6 +19,7 @@ import Back from "../../component/common/Back";
 import TopBar from "../../component/payment/TopBar";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 import ChatHeader from "../../component/chat/ChatHeader";
+import WarningBubble from "../../component/chat/bubble/WarningBubble";
 
 const NewChatRoom = () => {
   const socket = useContext(SocketContext);
@@ -106,6 +107,21 @@ const NewChatRoom = () => {
       <TopBar>{product.sellerDTO.nickname}</TopBar>
       <MarginEmpty />
       <ChatHeader product={product} member={member} price={product.price} />
+      <div
+        style={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        <WarningBubble
+          contetnt={
+            "고구마 페이가 아닌 타 계좌번호로 송금을 요구하는 경우 사기일 위험이 있으니 주의하세요!"
+          }
+        />
+      </div>
+      {/* <AlertBubble contetnt={"123"} /> */}
       <List
         style={{
           display: "flex",

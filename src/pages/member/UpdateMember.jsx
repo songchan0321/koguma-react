@@ -56,7 +56,7 @@ const UpdateMember = () => {
                         // 로딩이 완료되면 멤버 이미지 표시
                         member && (
                             <div style={{ textAlign: 'center', marginTop: '50px' }}>
-                                <img src={member.profileURL} alt="" style={{ width: "40%", marginTop: '30px' }} />
+                                <img src={member.profileURL} alt="" style={{ width: "40%", marginTop: '30px', borderRadius: '50%' }} />
                                 <div></div>
 
                             </div>

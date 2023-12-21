@@ -16,7 +16,7 @@ const App = () => {
   const [messageAlert, setMessageAlert] = useState({});
   const messageAlertHandler = (message) => {
     setMessageAlert(message);
-    // setTimeOutId(setTimeout(() => {}, 2 * 1000));
+    // setTimeOutId(setTimeout(() => {}, 4 * 1000));
     setTimeout(() => {
       (() => setMessageAlert({}))();
     }, 2 * 1000);
