@@ -4,6 +4,8 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import DeleteMemberForm from "../../component/member/DeleteMemberForm";
 import { useNavigate } from "react-router-dom";
+import Back from "../../component/common/Back";
+import TopBar from "../../component/payment/TopBar";
 
 const DeleteMember = () => {
     const navigate = useNavigate();
@@ -16,10 +18,9 @@ const DeleteMember = () => {
 
     return (
         <Box p={3} sx={{ overflowY: 'auto', maxHeight: 'calc(100vh - 64px)' }}>
-            <Typography variant="h4" gutterBottom>
-                고구마 회원 탈퇴
-            </Typography>
             <DeleteMemberForm onSubmit={handleDeleteMember} />
+            <Back/>
+            <TopBar>회원 탈퇴</TopBar>
         </Box>
     );
 };

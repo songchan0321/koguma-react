@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Grid, IconButton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ProfileForm from "../../component/member/ProfileForm";
 import { authInstance } from "../../apis/utils/instance";
 import BottomBar from "../../component/common/BottomBar";
+import SettingsIcon from "@mui/icons-material/Settings";
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -45,30 +47,37 @@ const Profile = () => {
         <Grid container spacing={2} justifyContent="flex-end" alignItems="flex-start">
           {/* 내 정보 수정 버튼 */}
           <Grid item>
-            <Button
-                onClick={() => navigate("/member/update")}
+            <IconButton
+                onClick={() => navigate('/member/update')}
                 variant="outlined"
-                color="primary"
+                color="secondary"
                 sx={{ width: '100px', height: '40px' }}
+                startIcon={<SettingsIcon />}
             >
-              내 정보 수정
-            </Button>
+              <SettingsIcon sx={{ fontSize: 20 }} />
+              <Typography variant="body2" sx={{  fontSize: 12 }}>
+                내 정보 수정
+              </Typography>
+            </IconButton>
           </Grid>
-
           {/* 로그아웃 버튼 */}
           <Grid item>
             {/* 수정: marginLeft 속성 추가 */}
-            <Button
+            <IconButton
                 onClick={() => {
                   localStorage.removeItem("token");
                   navigate("/common/login");
                 }}
                 variant="outlined"
-                color="primary"
-                sx={{ width: '100px', height: '40px', marginLeft: '2px' }}
+                color="secondary"
+                sx={{ width: '100px', height: '40px' }}
+                startIcon={<MeetingRoomIcon />}
             >
-              로그아웃
-            </Button>
+              <MeetingRoomIcon sx={{fontSize: 20}}/>
+              <Typography variant="body2" sx={{ fontSize: 12 }}>
+                로그아웃
+              </Typography>
+            </IconButton>
           </Grid>
         </Grid>
         <Grid container spacing={2}>
@@ -79,7 +88,7 @@ const Profile = () => {
             ) : (
                 // 로딩이 완료되면 멤버 이미지 표시
                 member && member.profileURL ? (
-                    <img src={member.profileURL} alt="" style={{ width: "40%", borderRadius: "40%" }} />
+                    <img src={member.profileURL} alt="" style={{ width: "40%", marginLeft: '103px', marginTop: '30px' }} />
                 ) : (
                     // 이미지가 없을 때 아이콘 등의 대체 컨텐츠를 표시
                     <div></div>
@@ -88,15 +97,26 @@ const Profile = () => {
           </Grid>
           <Grid item xs={12} md={8}>
             {/* 닉네임 */}
-            <Typography variant="h4" gutterBottom>
-              {/* 로딩 중일 때 CircularProgress 표시 */}
-              {loading ? (
-                  <CircularProgress size={20} />
-              ) : (
-                  // 로딩이 완료되면 멤버 닉네임 표시
-                  member?.nickname
-              )}
-            </Typography>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Typography variant="h4" gutterBottom>
+                {/* 로딩 중일 때 CircularProgress 표시 */}
+                {loading ? (
+                    <CircularProgress size={20} />
+                ) : (
+                    // 로딩이 완료되면 멤버 닉네임 표시
+                    member?.nickname
+                )}
+              </Typography>
+              <Typography variant="h6" gutterBottom>
+                {/* 로딩 중일 때 CircularProgress 표시 */}
+                {loading ? (
+                    <CircularProgress size={20} />
+                ) : (
+                    // 로딩이 완료되면 멤버 Score 표시
+                    `매너온도: ${member?.score}℃`
+                )}
+              </Typography>
+            </div>
             {/* ProfileForm 컴포넌트 추가 */}
             <ProfileForm navigate={navigate} />
           </Grid>

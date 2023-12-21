@@ -1,10 +1,12 @@
+import HelpIcon from '@mui/icons-material/Help';
 import React, { useEffect, useState } from 'react';
-import { List, ListItem, ListItemText, ThemeProvider, createTheme, IconButton, CircularProgress } from '@mui/material';
+import { Box, List, ListItem, ListItemText, ThemeProvider, createTheme, IconButton, CircularProgress, Typography } from '@mui/material';
 import { authInstance } from "../../apis/utils/instance";
 import { useNavigate } from 'react-router-dom';
 import Back from "../../component/common/Back";
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import SentimentDissatisfiedOutlinedIcon from '@mui/icons-material/SentimentDissatisfiedOutlined';
+
 // 테마 정의
 const theme = createTheme({
     palette: {
@@ -34,7 +36,6 @@ const ListBlockForm = () => {
         };
 
         fetchBlockList();
-
     }, []);
 
     const handleNavigateToBlockDetail = (targetMemberId) => {
@@ -44,33 +45,48 @@ const ListBlockForm = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <div>
+            <Box
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                height="auto"
+            >
                 {loading ? (
-                    <CircularProgress color="primary" />
+                    <CircularProgress color="secondary" />
                 ) : (
                     <List sx={{ width: '100%' }}>
-                        {blockList.map((block) => (
-                            <ListItem
-                                key={block.id}
-                                sx={{ justifyContent: 'flex-start' }}
-                            >
-                                <SentimentDissatisfiedOutlinedIcon/>
-                                <ListItemText
-                                    primary={block.targetMember.nickname}
-                                    sx={{ marginLeft: '15px' }}
-                                />
-                                <IconButton
-                                    onClick={() => handleNavigateToBlockDetail(block.targetMember.id)}
-                                    aria-label="comment"
+                        {blockList.length > 0 ? (
+                            blockList.map((block) => (
+                                <ListItem
+                                    key={block.id}
+                                    sx={{ justifyContent: 'flex-start' }}
                                 >
-                                    <ArticleOutlinedIcon />
-                                </IconButton>
-                            </ListItem>
-                        ))}
-                        <Back />
+                                    <SentimentDissatisfiedOutlinedIcon/>
+                                    <ListItemText
+                                        primary={block.targetMember.nickname}
+                                        sx={{ marginLeft: '15px' }}
+                                    />
+                                    <IconButton
+                                        onClick={() => handleNavigateToBlockDetail(block.targetMember.id)}
+                                        aria-label="comment"
+                                    >
+                                        <ArticleOutlinedIcon />
+                                    </IconButton>
+                                </ListItem>
+                            ))
+                        ) : (
+                            <>
+                                <HelpIcon sx={{ fontSize: 64, marginBottom: 2, marginLeft: 19, marginTop:30 }} />
+                                <Typography variant="h5" sx={{ marginLeft: 8, marginBottom: 30 }}>
+                                    차단 목록이 없습니다!
+                                </Typography>
+                            </>
+                        )}
+                        <Back url = "/member/profile" />
                     </List>
                 )}
-            </div>
+            </Box>
         </ThemeProvider>
     );
 };

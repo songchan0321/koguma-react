@@ -19,6 +19,13 @@ const AddBlockForm = ({ onSubmit }) => {
     const { id } = useParams();
     const location = useLocation();
 
+    const confirmBlock = () => {
+        const confirmed = window.confirm("정말 차단하시겠습니까?");
+        if (confirmed) {
+            handleSubmit();
+        }
+    };
+
     const handleContentChange = (e) => {
         const inputValue = e.target.value;
         setContent(inputValue);
@@ -32,7 +39,6 @@ const AddBlockForm = ({ onSubmit }) => {
     };
 
     const handleSubmit = async () => {
-
         if (content.length < 10) {
             window.alert("차단 사유는 5자 이상 입력해야 합니다.");
             return;
@@ -82,14 +88,14 @@ const AddBlockForm = ({ onSubmit }) => {
                     label="차단 사유"
                     value={content}
                     onChange={handleContentChange}
-                    style={{ width: "100%" }}
+                    style={{ width: "100%", marginTop: "160px" }}
                     multiline
                     rows={4}
                     error={inputError} // Set error state
                     helperText={inputError ? "차단 사유는 5자 이상 입력해야 합니다." : ""} // Display error message
                 />
                 <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
-                    <Button variant="contained" color="primary" onClick={handleSubmit}>
+                    <Button variant="contained" color="primary" onClick={confirmBlock}>
                         차단 등록
                     </Button>
                 </div>
