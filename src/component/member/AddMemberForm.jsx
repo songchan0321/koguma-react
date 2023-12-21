@@ -90,7 +90,16 @@ const AddMemberForm = ({ onSubmit }) => {
 
     const handleGetAuthNum = async () => {
         try {
-            // Your existing code for sending SMS
+            const response = await defaultInstance.post("/auth/sendSms", {
+                to: phone,
+            });
+            console.log(response);
+
+            // 인증번호가 성공적으로 전송되었다면 화면 전환을 막음
+            if (response === 200) {
+                window.alert('인증번호가 발송되었습니다.');
+                // 추가로 필요한 작업 수행...
+            }
         } catch (error) {
             console.error("SMS 인증 번호 전송 중 오류 발생:", error);
         }
@@ -98,7 +107,11 @@ const AddMemberForm = ({ onSubmit }) => {
 
     const handleVerifyAuthNum = async () => {
         try {
-            // Your existing code for verifying SMS
+            const response = await defaultInstance.post("/auth/verifySms", {
+                to: phone,
+                authNum,
+            });
+            console.log(response);
         } catch (error) {
             console.error("SMS 인증 번호 확인 중 오류 발생:", error);
         }
@@ -160,6 +173,7 @@ const AddMemberForm = ({ onSubmit }) => {
                 window.alert("이용 약관에 동의해 주세요.");
                 return;
             }
+            await handleVerifyAuthNum();
 
             const response = await defaultInstance.post("/auth/member/add", {
                 nickname,
