@@ -37,17 +37,19 @@ import {
   updateRepLocationAPI,
   updateSearchRangeAPI,
 } from "../../apis/api/common";
+import { useLocation } from "react-router-dom";
 
 const AuthLocation = () => {
   const [level, setLevel] = useState(7);
   const mapRef = useRef();
-  const [latitude, setLatitude] = useState(33.5563);
-  const [longitude, setLongitude] = useState(126.79581);
+  const [latitude, setLatitude] = useState(37.4993705);
+  const [longitude, setLongitude] = useState(127.0290175);
   const [searchRange, setSearchRange] = useState(2);
   const [locationList, setLocationList] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState();
   const [listLocationComplete, setListLocationComplete] = useState(false);
   const [mapKey, setMapKey] = useState(0);
+  const location = useLocation();
   const handleLocationClick = (idx) => {
     console.log(selectedLocation);
     updateRepLocation(locationList[idx].id);
@@ -126,7 +128,10 @@ const AuthLocation = () => {
   }, [searchRange]);
 
   useEffect(() => {
-    listLocation();
+    if (!location || !location.state || !location.state.init) {
+      listLocation();
+    }
+    // listLocation();
   }, [latitude, longitude, level, searchRange, mapKey]);
 
   const getCurrentLocation = () => {
@@ -156,7 +161,7 @@ const AuthLocation = () => {
 
   return (
     <Fragment>
-      <Back />
+      <Back url={"/product/list"} />
       <TopBar>내 동네 설정</TopBar>
       <MarginEmpty />
       <List>

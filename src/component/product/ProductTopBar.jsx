@@ -18,10 +18,10 @@ import { Badge, Drawer, Paper } from "@mui/material";
 import LocationBox from "../location/LocationBox";
 
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import SearchDrawer from "../common/SearchDrawer";
 const ProductTopBar = ({ location, setLocation }) => {
-  const navigator = useNavigate();
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const toggleDrawer = (open) => {
@@ -46,6 +46,8 @@ const ProductTopBar = ({ location, setLocation }) => {
     "기타",
   ];
 
+  // !location && navigate("/common/location", { state: { init: true } });
+
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
@@ -69,11 +71,19 @@ const ProductTopBar = ({ location, setLocation }) => {
           },
         }}
       >
+        {/* {location && (
+          <LocationBox
+            variant="text"
+            location={location}
+            setLocation={setLocation}
+          />
+        )} */}
         <LocationBox
           variant="text"
           location={location}
           setLocation={setLocation}
         />
+
         <ButtonGroup variant="text" aria-label="text button group">
           <Button onClick={handleModalOpen}>
             <MenuOpenIcon sx={{ fontSize: 30 }} color="secondary" />
@@ -82,7 +92,7 @@ const ProductTopBar = ({ location, setLocation }) => {
           <Button onClick={() => toggleDrawer(true)}>
             <SearchIcon sx={{ fontSize: 30 }} color="secondary" />
           </Button>
-          <Button onClick={() => navigator("/alert/list")}>
+          <Button onClick={() => navigate("/alert/list")}>
             <NotificationsNoneIcon sx={{ fontSize: 30 }} color="secondary" />
           </Button>
         </ButtonGroup>

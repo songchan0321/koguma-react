@@ -141,7 +141,7 @@ const MyList = ({
                 }
                 title={
                   <Box>
-                    <Typography variant="h6" color="textSecondary">
+                    <Typography variant="body1" color="textPrimary">
                       {prod.title}
                     </Typography>
                   </Box>
@@ -155,7 +155,7 @@ const MyList = ({
                       sx={{ display: "flex", justifyContent: "space-between" }}
                     >
                       <div>
-                        <Typography variant="h6" color="textSecondary">
+                        <Typography variant="body1" color="textPrimary">
                           {selectedMenuType === "BUY" ? (
                             <TradeStateButton type={{ tradeStatus: "BUY" }} />
                           ) : (

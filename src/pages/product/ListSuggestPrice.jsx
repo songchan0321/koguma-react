@@ -68,7 +68,14 @@ const ProductList = () => {
           <SuggestPriceComponent key={idx} data={suggestData} />
         )))
       ) : (
-        <NotData />
+        <NotData
+          children={
+            <>
+              <div>아직 가격을 제안한 이웃이 없어요.</div>
+              <div>이웃이 가격 제안을 하면 알려드릴게요!</div>
+            </>
+          }
+        />
       )}
     </>
   );

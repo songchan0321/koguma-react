@@ -13,6 +13,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"; // 안채워진 하트
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { formatMoney } from "../../apis/services/product";
+import TradeStateButton from "./TradeStateButton";
+import { formatTimeAgo } from "../../apis/utils/timestamp";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -45,7 +47,7 @@ const ContainingProduct = ({ data }) => {
           }
           title={
             <Box>
-              <Typography variant="h6" color="textSecondary">
+              <Typography variant="body1" color="textPrimary">
                 {data.title}
               </Typography>
             </Box>
@@ -54,10 +56,19 @@ const ContainingProduct = ({ data }) => {
             <>
               <Typography variant="subtitle2" color="textSecondary">
                 {data.dong}
+                {formatTimeAgo(data.regDate)}
               </Typography>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <div>
-                  <Typography variant="h6" color="textSecondary">
+                  <Typography variant="body1" color="textPrimary">
+                    {data.tradeStatus === "BUY" ? (
+                      <TradeStateButton type={{ tradeStatus: "BUY" }} />
+                    ) : (
+                      <TradeStateButton
+                        type={{ tradeStatus: data.tradeStatus }}
+                      />
+                    )}
+                    &nbsp;
                     {formatMoney(data.price)}원
                   </Typography>
                 </div>

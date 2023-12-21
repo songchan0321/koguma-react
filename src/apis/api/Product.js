@@ -34,7 +34,21 @@ export const getProductAPI = async (productId) => {
   const { data } = await authInstance.get(
     `${PRODUCT_API_URI}/get/${productId}`
   );
-  return data;
+  const results = await Promise.all([data, countSuggestPriceAPI(data.id)]);
+
+  return { ...results[0], suggestCount: results[1] };
+};
+export const updateProductAPI = async (productDTO) => {
+  await authInstance.put(
+    `${PRODUCT_API_URI}/update`,
+
+    JSON.stringify(productDTO),
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 };
 export const ListProductAPI = async (keyword) => {
   try {
@@ -77,6 +91,12 @@ export const addSuggestPriceAPI = async (suggest) => {
 export const listSuggestPriceAPI = async (productId) => {
   const { data } = await authInstance.get(
     `${PRODUCT_API_URI}/suggest/list/${productId}`
+  );
+  return data;
+};
+export const countSuggestPriceAPI = async (productId) => {
+  const { data } = await authInstance.get(
+    `${PRODUCT_API_URI}/suggest/count/${productId}`
   );
   return data;
 };
