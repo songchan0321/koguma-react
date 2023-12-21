@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+
 import { Fragment, useEffect, useState } from "react";
 import PostThumbnail from "../../component/community/PostThumbnail";
 import { callPostListByCategoryAPI } from "../../apis/api/community";
@@ -53,26 +53,14 @@ const ListPostByCategory = () => {
       <PostThumbnail
         callAPI={callPostListByCategoryAPI}
         callParam={categoryId}
-=======
-import { Fragment } from "react";
-import PostThumbnail from "../../component/community/PostThumbnail";
-import { callPostListByCategoryAPI } from "../../apis/api/community";
-import { Fab } from "@mui/material";
-import { Link, useParams } from "react-router-dom";
-import AddIcon from "@mui/icons-material/Add";
-import Back from "../../component/common/Back";
 
-const ListPostByCategory = (selectedCategory) => {
-  //   const { selectedCategory } = useParams();
-  console.log(selectedCategory);
-  //   JSON.stringify(selectedCategory);
   return (
     <Fragment>
       <Back />
       <PostThumbnail
         callAPI={callPostListByCategoryAPI}
         callParam={selectedCategory}
->>>>>>> Stashed changes
+
       />
 
       <Fab
@@ -85,11 +73,10 @@ const ListPostByCategory = (selectedCategory) => {
       >
         <AddIcon />
       </Fab>
-<<<<<<< Updated upstream
+
       <MarginEmpty />
       <BottomBar />
-=======
->>>>>>> Stashed changes
+
     </Fragment>
   );
 };

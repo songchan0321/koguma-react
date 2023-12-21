@@ -28,11 +28,7 @@ const PostTopBar = ({ location, setLocation }) => {
     setIsDrawerOpen(open);
   };
   const categories = [
-<<<<<<< Updated upstream
     { id: "view", name: "인기글" },
-=======
-    { id: "views", name: "인기글" },
->>>>>>> Stashed changes
     { id: 23, name: "동네소식" },
     { id: 24, name: "동네맛집" },
     { id: 25, name: "동네질문" },
@@ -51,11 +47,7 @@ const PostTopBar = ({ location, setLocation }) => {
   const handleCategorySelect = (selectedCategoryId) => {
     console.log(selectedCategoryId);
     // useNavigate를 사용하여 페이지 이동
-<<<<<<< Updated upstream
     navigate(`/post/list/category/${selectedCategoryId.id}`);
-=======
-    navigate(`/post/list/category/${selectedCategoryId}`);
->>>>>>> Stashed changes
   };
 
   return (
@@ -99,11 +91,7 @@ const PostTopBar = ({ location, setLocation }) => {
               {categories.map((category) => (
                 <MenuItem
                   key={category.id}
-<<<<<<< Updated upstream
                   onClick={() => handleCategorySelect(category)}
-=======
-                  onClick={() => handleCategorySelect(category.id)}
->>>>>>> Stashed changes
                 >
                   {category.name}
                 </MenuItem>

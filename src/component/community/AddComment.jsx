@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
 import { Box, Button, Fab, Grid, TextField } from "@mui/material";
-=======
-import { Box, Button, Grid, TextField } from "@mui/material";
->>>>>>> Stashed changes
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { useState } from "react";
 import { addCommentAPI, addPostAPI } from "../../apis/api/community";
@@ -11,11 +7,7 @@ import { useParams } from "react-router-dom";
 const AddComment = () => {
   const { postId } = useParams();
   const [formData, setFormData] = useState({
-<<<<<<< Updated upstream
     writerId: 0,
-=======
-    writerId: "",
->>>>>>> Stashed changes
     postId: postId,
     content: "",
     activeFlag: true,
@@ -70,7 +62,6 @@ const AddComment = () => {
             }}
           />
         </Grid>
-<<<<<<< Updated upstream
         <Grid item xs={2} sm={1} style={{ textAlign: "right" }}>
           <Fab
             variant="contained"
@@ -85,17 +76,6 @@ const AddComment = () => {
           >
             <ArrowUpwardIcon sx={{ fontSize: "2rem" }} />
           </Fab>
-=======
-        <Grid item xs={1} sm={3} style={{ textAlign: "right" }}>
-          <Button
-            variant="contained"
-            color="secondary"
-            style={{ height: "100%", width: "80%" }}
-            onClick={handleSubmit}
-          >
-            {<ArrowUpwardIcon />}
-          </Button>
->>>>>>> Stashed changes
         </Grid>
       </Grid>
     </Box>

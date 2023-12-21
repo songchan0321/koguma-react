@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-<<<<<<< Updated upstream
+
 import { Card, CardContent, Divider, Grid, Typography } from "@mui/material";
 
-=======
+
 import {
   Box,
   Card,
@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { callPostListAPI } from "../../apis/api/community";
->>>>>>> Stashed changes
+
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -24,22 +24,17 @@ const PostThumbnail = ({ callAPI, callParam }) => {
       try {
         const data = await callAPI(callParam);
         console.log(data);
-<<<<<<< Updated upstream
+
         setListPost(data);
-=======
-        setListPost(data.content);
->>>>>>> Stashed changes
+
       } catch (err) {
         console.error(err);
       }
     };
 
     fetchData();
-<<<<<<< Updated upstream
+
   }, [callAPI]);
-=======
-  }, [callParam]);
->>>>>>> Stashed changes
 
   return (
     <>
@@ -53,12 +48,25 @@ const PostThumbnail = ({ callAPI, callParam }) => {
               <Grid container spacing={2}>
                 <Grid item xs={8}>
                   <PostContent>
+<<<<<<< Updated upstreamq
 <<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
                     {/* 선택한 카테고리 */}
                     <Typography variant="body1" color="text.secondary">
                       {post.categoryName}
                     </Typography>
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
+=======
+=======
+>>>>>>> Stashed changes
 >>>>>>> Stashed changes
                     {/* 게시글 제목 */}
                     <Typography variant="body1">
@@ -69,12 +77,21 @@ const PostThumbnail = ({ callAPI, callParam }) => {
                       {post.content.slice(0, 20)}
                     </Typography>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
 
 =======
                     {/* 선택한 카테고리 */}
                     <Typography variant="body2" color="text.secondary">
                       {post.categoryName}
                     </Typography>
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                     {/* 대표 동 */}
                     <Typography variant="body2" color="text.secondary">
@@ -83,6 +100,13 @@ const PostThumbnail = ({ callAPI, callParam }) => {
 <<<<<<< Updated upstream
                     {/* 타임스탬프 추가 */}
 =======
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+                    {/* 타임스탬프 추가 */}
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 >>>>>>> Stashed changes
                   </PostContent>
                 </Grid>
@@ -104,6 +128,13 @@ const PostThumbnail = ({ callAPI, callParam }) => {
 <<<<<<< Updated upstream
               <Divider />
 =======
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+              <Divider />
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 >>>>>>> Stashed changes
             </Link>
           </div>
