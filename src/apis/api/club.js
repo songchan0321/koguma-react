@@ -227,7 +227,7 @@ export const listClubJoinRequest = async (clubId) => {
 export const listMeetUpAPI = async (clubId, type) => {
   try {
     const { data } = await authInstance.get(
-      `${CLUB_API_URI}/meet-up/list/${clubId}?meetUpType=${type}`
+      `${CLUB_API_URI}/meet-up/list/${clubId}/${type}`
     );
     return data;
   } catch (err) {
@@ -240,7 +240,8 @@ export const addMeetUpAPI = async (
   title,
   content,
   maxCapacity,
-  roadAddr
+  roadAddr,
+  meetUpData
 ) => {
   alert(roadAddr);
   try {
@@ -256,6 +257,7 @@ export const addMeetUpAPI = async (
         content: content,
         maxCapacity: maxCapacity,
         roadAddr: roadAddr,
+        meetUpData: meetUpData,
         meetUpType: "null",
       }),
 

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 import ClubMeetUpList from "./ClubMeetUpList";
 import MarginEmpty from "../../payment/MarginEmpty";
+import SelectMeetUpList from "./SelectMeetUpList";
 
 const ClubHomeMeetUp = ({ clubId, clubMember, selectedMenu }) => {
   const [meetUp, setMeetUp] = useState({});
@@ -15,6 +16,7 @@ const ClubHomeMeetUp = ({ clubId, clubMember, selectedMenu }) => {
     const fetchData = async () => {
       try {
         const data = await listMeetUpAPI(clubId);
+
         setMeetUp(data);
       } catch (err) {
         console.log(err);
@@ -59,13 +61,13 @@ const ClubHomeMeetUp = ({ clubId, clubMember, selectedMenu }) => {
             ))}
           </div>
           {meetUpState === "SCHEDULE" ? (
-            <ClubMeetUpList
+            <SelectMeetUpList
               clubId={clubId}
               meetUpState={meetUpState}
               clubMember={clubMember}
             />
           ) : (
-            <ClubMeetUpList
+            <SelectMeetUpList
               clubId={clubId}
               meetUpState={meetUpState}
               clubMember={clubMember}
