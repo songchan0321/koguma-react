@@ -95,8 +95,8 @@ const PostForm = ({ text }) => {
           }}
           variant="text"
           onClick={handleSubmit}
-          // component={Link}
-          // to="/post/get"
+          component={Link}
+          to="/post/list"
         >
           완료
         </Button>

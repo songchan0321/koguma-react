@@ -13,7 +13,7 @@ const ListPost = () => {
   return (
     <Fragment>
       <PostTopBar />
-      <MarginEmpty />
+      <MarginEmpty /><MarginEmpty />
       <PostThumbnail callAPI={callPostListAPI} />
 
       <div style={{ position: "fixed", bottom: "80px", right: "30px" }}>

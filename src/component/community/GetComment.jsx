@@ -54,10 +54,9 @@ const GetComment = () => {
                     </Box>
                   </Box>
                   <CardContent sx={{ marginLeft: "30px", marginBottom: 0 }}>
-                    <Typography variant="header4">{comment.content}</Typography>
-
+                    <Typography variant="body1">{comment.content}</Typography>
                     <ListReply />
-                    <AddReply />
+                    <AddReply commentId={comment.id} />
                     <Divider />
                   </CardContent>
                 </Card>

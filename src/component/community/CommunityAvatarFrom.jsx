@@ -22,7 +22,7 @@ const CommunityAavatarForm = () => {
         const result = await getPostAPI(postId);
         setData(result);
         setLoading(false);
-        console.log(result.memberDTO?.id);
+        console.log(result);
       } catch (err) {
         console.error(err);
         setLoading(false);

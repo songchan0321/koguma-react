@@ -53,13 +53,25 @@ export const callPostListByViewAPI = async () => {
 };
 
 //img, location 추가 해야함
-export const addPostAPI = async (post) => {
+// img, location 추가 해야함
+export const addPostAPI = async (postDTO) => {
   try {
-    const response = await authInstance.post(`${POST_API_URI}/add`, post, {
-      headers: {
-        "Content-Type": "application/json",
+    const { categoryId, ...rest } = postDTO;
+
+    const response = await authInstance.post(
+      `${POST_API_URI}/add`,
+      {
+        ...rest,
+        categoryDTO: {
+          id: categoryId,
+        },
       },
-    });
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     console.log(response);
     return response;
   } catch (err) {
@@ -101,15 +113,29 @@ export const callReplyListAPI = async (postId) => {
   return data;
 };
 
-export const addCommentAPI = async (postId, writerId, content) => {
+export const addCommentAPI = async (
+  postId,
+  writerId,
+  content,
+  activeFlag,
+  parentId
+) => {
   try {
     const response = await authInstance.post(
       `${COMMENT_API_URI}/add`,
-      JSON.stringify({
-        memberId: writerId,
-        postId: postId,
+      {
+        memberDTO: {
+          id: writerId,
+        },
+        postDTO: {
+          id: postId,
+        },
         content: content,
-      }),
+        activeFlag: activeFlag,
+        parentDTO: {
+          id: parentId,
+        },
+      },
       {
         headers: {
           "Content-Type": "application/json",

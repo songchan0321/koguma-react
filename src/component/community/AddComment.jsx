@@ -1,6 +1,6 @@
 import { Box, Button, Fab, Grid, TextField } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { addCommentAPI, addPostAPI } from "../../apis/api/community";
 import { useParams } from "react-router-dom";
 
@@ -24,6 +24,15 @@ const AddComment = () => {
         formData.parentId
       );
       console.log(data);
+
+      // 입력창 초기화
+      setFormData({
+        writerId: 0,
+        postId: postId,
+        content: "",
+        activeFlag: true,
+        parentId: null,
+      });
     } catch (err) {
       console.log(err);
     }
@@ -31,13 +40,19 @@ const AddComment = () => {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    console.log(e.target);
 
     setFormData((prevFormData) => ({
       ...prevFormData,
       [id]: value,
     }));
   };
+
+  // useEffect를 사용하여 완료 버튼 클릭 후 입력창 초기화
+  useEffect(() => {
+    // 여기에 원하는 조건을 추가하여 입력창 초기화가 필요한 경우에만 실행되도록 설정 가능
+    // 예: 특정 상태가 변할 때에만 실행
+  }, [formData.content]);
+
   return (
     <Box
       component="form"
@@ -81,4 +96,5 @@ const AddComment = () => {
     </Box>
   );
 };
+
 export default AddComment;

@@ -5,15 +5,15 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import AddIcon from "@mui/icons-material/Add";
 import { addCommentAPI } from "../../apis/api/community"; // 수정: addReplyAPI 대신 addCommentAPI를 import
 
-const AddReply = ({ parentId }) => {
+const AddReply = ({ commentId }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const { postId } = useParams();
   const [formData, setFormData] = useState({
-    writerId: "",
+    writerId: 0,
     postId: postId,
     content: "",
     activeFlag: true,
-    parentId: parentId,
+    parentId: commentId,
   });
 
   const handleSubmit = async (event) => {
