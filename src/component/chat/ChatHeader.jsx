@@ -1,7 +1,13 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import { formatKoreanNumber } from "../../apis/utils/price";
 import { useNavigate } from "react-router-dom";
-const NavButton = ({ product, member }) => {
+import {
+  getMyReviewIdAPI,
+  getMyReviewIdByProductIdAPI,
+  getReviewAPI,
+} from "../../apis/api/Product";
+import { useEffect, useState } from "react";
+const NavButton = ({ product, member, roomId, reviewId }) => {
   const navigator = useNavigate();
   let text;
   let clickHandler;
@@ -9,15 +15,27 @@ const NavButton = ({ product, member }) => {
     if (
       product.sellerDTO.id === member.id ||
       (product.buyerDTO !== null && product.buyerDTO.id === member.id)
-    )
-      text = "리뷰 있으면 리뷰 보기, 없으면 리뷰 작성 Navi";
-    clickHandler = () => {
-      alert("navi");
-    };
+    ) {
+      if (reviewId) {
+        text = "작성한 리뷰 보기";
+        clickHandler = () => {
+          navigator(`/product/get/review/${reviewId}`, {
+            state: { roomId: roomId },
+          });
+        };
+      } else {
+        text = "리뷰 작성하기";
+        clickHandler = () => {
+          navigator(`/product/review/add`, {
+            state: { roomId: roomId, productId: product.id },
+          });
+        };
+      }
+    }
   } else {
     text = "상품 정보";
     clickHandler = () => {
-      navigator(`/product/get/${product.id}`);
+      navigator(`/product/get/${product.id}`, { state: { roomId: roomId } });
     };
   }
   return (
@@ -26,7 +44,15 @@ const NavButton = ({ product, member }) => {
     </Button>
   );
 };
-const ChatHeader = ({ product, member, price }) => {
+const ChatHeader = ({ product, member, price, roomId }) => {
+  const [reviewId, setReviewId] = useState();
+  useEffect(() => {
+    (async () => {
+      await getMyReviewIdByProductIdAPI(product.id)
+        .then((data) => setReviewId(data))
+        .catch((err) => alert(err));
+    })();
+  }, []);
   return (
     <>
       <div
@@ -70,7 +96,12 @@ const ChatHeader = ({ product, member, price }) => {
           <Typography variant="subtitle1">
             {formatKoreanNumber(price)}
           </Typography>
-          <NavButton product={product} member={member} />
+          <NavButton
+            product={product}
+            member={member}
+            roomId={roomId}
+            reviewId={reviewId}
+          />
         </div>
       </Box>
     </>

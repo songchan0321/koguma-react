@@ -6,7 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Fragment, useContext, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Avatar, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import PhotoIcon from "@mui/icons-material/Photo";
@@ -32,8 +32,8 @@ const ChatPlusButton = ({ roomId, product, sendTextMessageHandler }) => {
   const [leaveModalOpen, setLeaveModalOpen] = useState(false);
   const [imageLoadingModalOpen, setImageLoadingModalOpen] = useState(false);
   const [locationState, setLocationState] = useState({
-    latitude: 32.49934209591508,
-    longitude: 122.02901006028125,
+    latitude: 37.715133,
+    longitude: 126.734086,
   });
   const locationClickHandler = () => {
     setLocationState((prev) => ({

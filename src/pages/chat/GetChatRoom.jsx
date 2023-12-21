@@ -205,11 +205,21 @@ const GetChatRoom = () => {
           : chatRoom.buyerDTO.nickname}
         &nbsp;
         <Chip
-          color="primary"
+          // color="primary"
           sx={{
             width: "3.5rem",
             height: "1.0rem",
             fontSize: "0.6rem",
+            backgroundColor:
+              (chatRoom.buyerDTO.id === member.id
+                ? chatRoom.productDTO.sellerDTO.score
+                : chatRoom.buyerDTO.score) > "50.0"
+                ? "#DB4455"
+                : (chatRoom.buyerDTO.id === member.id
+                    ? chatRoom.productDTO.sellerDTO.score
+                    : chatRoom.buyerDTO.score) > "40.0"
+                ? "#FFD400"
+                : "#B0E0E6",
           }}
           label={
             (chatRoom.buyerDTO.id === member.id
@@ -223,6 +233,7 @@ const GetChatRoom = () => {
         product={chatRoom.productDTO}
         member={member}
         price={chatRoom.price}
+        roomId={roomId}
       />
       <ChatMessageList
         textEvent={textEvent}

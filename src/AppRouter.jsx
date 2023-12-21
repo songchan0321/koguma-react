@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./component/product/Home";
 
 // import ListPost from "./pages/community/ListPost";
@@ -22,9 +22,29 @@ import { getAlertCountAPI } from "./apis/api/alert";
 import ListAlert from "./pages/common/ListAlert";
 import SearchTab from "./pages/common/SearchTab";
 import Landing from "./Landing";
+import { Alert, Box, Slide, Snackbar } from "@mui/material";
+
+function TransitionRight(props) {
+  return <Slide {...props} direction="right" />;
+}
 
 const AppRouter = ({ messageAlertHandler }) => {
   const socket = useContext(SocketContext);
+  const navigator = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [transition, setTransition] = useState(undefined);
+  const handleClick = (Transition) => () => {
+    setTransition(() => Transition);
+    setOpen(true);
+    setTimeout(() => {
+      handleClose();
+    }, 10 * 1000);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const isLogin = useIsLoginState(IsLoginContext);
   const socketIntervalRef = useRef(null);
   const alertIntervalRef = useRef(null);
@@ -46,14 +66,17 @@ const AppRouter = ({ messageAlertHandler }) => {
       alertIntervalRef.current = setInterval(() => {
         (async () => {
           if (isLogin) {
-            const { count } = await getAlertCountAPI();
-            console.log(count);
+            const { count } = await getAlertCountAPI().catch(() => {
+              localStorage.clear("token");
+              // navigator("/common/login");
+            });
             if (alertCount.current == null) {
+              if (count > 0) handleClick(TransitionRight)();
               alertCount.current = count;
             } else {
               if (alertCount.current < count) {
                 alertCount.current = count;
-                alert(1);
+                handleClick(TransitionRight)();
                 // feedback 추가!
               } else if (alertCount.current > count) {
                 // 알림을 read 처리 한거겟죠
@@ -63,8 +86,8 @@ const AppRouter = ({ messageAlertHandler }) => {
             }
           }
         })();
-      }, 10000);
-      clearInterval(alertIntervalRef.current);
+      }, 5000);
+      // clearInterval(alertIntervalRef.current);
     }
     socket.on(CHAT_EVENT.EVENT_ALERT, (message) => {
       messageAlertHandler(message);
@@ -77,9 +100,40 @@ const AppRouter = ({ messageAlertHandler }) => {
   }, []);
   return (
     <>
+      <div
+        style={{
+          position: "fixed",
+          // top: "1rem",
+          zIndex: 2000,
+          width: "100%",
+          opacity: "0.9",
+        }}
+      >
+        <Snackbar
+          open={open}
+          sx={{ position: "absolute", top: 0, mt: "2rem" }}
+          onClose={handleClose}
+          TransitionComponent={transition}
+          message="I love snacks"
+          key={transition ? transition.name : ""}
+        >
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            새로운 알림이 있어요!
+          </Alert>
+        </Snackbar>
+      </div>
+      {/* <Alert
+          variant="filled"
+          severity="info"
+          onClick={() => navigator("/alert/list")}
+        >
+          `알림이 왔어요!`
+        </Alert> */}
       <Routes>
-        {/* <Route path="/post/list" element={<ListPost />} />   community/post ? */}
-        {/* <Route path="/post/add" element={<AddPost />} /> */}
         <Route path="/" element={<Landing />} />
         <Route path="/chat/*" element={<ChatRouter />} />
         <Route path="/club/*" element={<ClubRouter />} />
