@@ -76,8 +76,10 @@ const GetProductBottomBar = ({ data, isMine, productId }) => {
       >
         <StyledCardActions>
           <div>
-            <LikeProduct prodId={data.id} />
-            <span>{formatMoney(data.price)}원</span>
+            <Typography variant="body1" color="textPrimary">
+              <LikeProduct prodId={data.id} />
+              <b>{formatMoney(data.price)}원</b>
+            </Typography>
           </div>
           {isMine ? (
             <BottomButton

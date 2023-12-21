@@ -1,5 +1,4 @@
 import {
-  Paper,
   Typography,
   Grid,
   CardMedia,
@@ -7,7 +6,6 @@ import {
   CardContent,
   Divider,
   Checkbox,
-  Box,
 } from "@mui/material";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
@@ -15,7 +13,6 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { useEffect, useState } from "react";
 import { listMyClubPostAPI } from "../../../apis/api/club";
 import styled from "styled-components";
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 const MyClubPostList = () => {

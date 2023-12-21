@@ -1,6 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const AddClubConfirm = ({ clubId }) => {
   const navigate = useNavigate();
@@ -24,19 +25,14 @@ const AddClubConfirm = ({ clubId }) => {
 
   return (
     <>
+      <MarginEmpty value={120} />
+
       <div>
         <Typography
           variant="h5"
           style={{ marginTop: "20px", marginLeft: "30px" }}
         >
           모임 생성을 축하합니다. !
-        </Typography>
-        <Typography
-          variant="h6"
-          color="text.secondary"
-          style={{ marginTop: "20px", marginLeft: "30px" }}
-        >
-          활동명은 이 모임에서만 사용하는 닉네임 입니다.
         </Typography>
       </div>
       <Button

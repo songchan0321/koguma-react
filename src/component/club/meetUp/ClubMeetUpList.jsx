@@ -41,11 +41,11 @@ const ClubMeetUpList = ({ clubId, meetUpState, clubMember }) => {
                   pathname: `/club/meet-up/${meetUpList[activeStep].id}`,
                   state: { clubId: clubId },
                 }}
+                style={{ boxShadow: "none" }}
               >
-                <Card style={{ marginBottom: 10 }}>
-                  <CardContent>
-                    <div>{meetUpList[activeStep].title}</div>
-                    {/* 여기에 다른 멤버 정보 표시 (예: meetUpMember.email, meetUpMember.role 등) */}
+                <Card style={{ marginBottom: 10, boxShadow: "none" }}>
+                  <CardContent style={{ boxShadow: "none" }}>
+                    {meetUpList[activeStep].title}
                   </CardContent>
                 </Card>
               </Link>

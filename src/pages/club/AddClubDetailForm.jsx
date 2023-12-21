@@ -8,6 +8,8 @@ import {
 } from "@mui/material";
 import "./ClubCommoncss.css";
 import { useState } from "react";
+import TopBarAddClub from "../../component/club/common/TopBarAddClub";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const AddClubDetailForm = ({ onPrev, onNext, data }) => {
   const [formData, setFormData] = useState({
@@ -36,18 +38,14 @@ const AddClubDetailForm = ({ onPrev, onNext, data }) => {
 
   return (
     <>
-      <div>
-        <Typography
-          variant="h4"
-          style={{ marginTop: "20px", marginLeft: "30px" }}
-        >
-          모임을 소개해주세요 !
-        </Typography>
+      <TopBarAddClub />
+      <MarginEmpty value={70} />
+      <div style={{ marginLeft: "30px" }}>
+        <Typography variant="h4">모임을 소개해주세요 !</Typography>
+        <MarginEmpty />
 
-        <Container style={{ marginTop: "30px", marginLeft: "20px" }}>
-          <Typography variant="h5" style={{ marginLeft: "" }}>
-            모임명
-          </Typography>
+        <div>
+          <Typography variant="h5">모임명</Typography>
           <Box
             sx={{
               width: 300,
@@ -63,12 +61,8 @@ const AddClubDetailForm = ({ onPrev, onNext, data }) => {
               onChange={handleInputChange}
             />
           </Box>
-        </Container>
 
-        <Container style={{ marginTop: "30px", marginLeft: "20px" }}>
-          <Typography variant="h5" style={{ marginLeft: "" }}>
-            모임소개
-          </Typography>
+          <Typography>모임소개</Typography>
           <Box
             sx={{
               width: 300,
@@ -84,7 +78,7 @@ const AddClubDetailForm = ({ onPrev, onNext, data }) => {
               onChange={handleInputChange}
             />
           </Box>
-        </Container>
+        </div>
       </div>
 
       <Paper

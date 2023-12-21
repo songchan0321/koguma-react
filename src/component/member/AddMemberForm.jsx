@@ -10,11 +10,12 @@ import {
     Dialog,          // 추가: Dialog 및 관련 컴포넌트 import
     DialogTitle,
     DialogContent,
-    DialogActions,
+    DialogActions, IconButton,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { defaultInstance } from "../../apis/utils/instance";
 import { useNavigate } from "react-router-dom";
+import StorageIcon from '@mui/icons-material/Storage';
 
 const AddMemberForm = ({ onSubmit }) => {
     const [nickname, setNickname] = useState("");
@@ -27,27 +28,64 @@ const AddMemberForm = ({ onSubmit }) => {
     const [isAgeChecked, setIsAgeChecked] = useState(false);
     const [isUseChecked, setIsUseChecked] = useState(false);
     const [isMarketingChecked, setIsMarketingChecked] = useState(false);
+    const [nicknameError, setNicknameError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+    const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+    const [phoneError, setPhoneError] = useState(false);
+    const [authNumError, setAuthNumError] = useState(false);
 
     const navigate = useNavigate();
 
     const handleNicknameChange = (e) => {
-        setNickname(e.target.value);
+        const inputValue = e.target.value;
+        setNickname(inputValue);
+        if (inputValue.length < 2) {
+            setNicknameError(true);
+        } else {
+            setNicknameError(false);
+        }
     };
 
     const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
+        const inputValue = e.target.value;
+        setPassword(inputValue);
+        if (inputValue.length < 8) {
+            setPasswordError(true);
+        } else {
+            setPasswordError(false);
+        }
     };
 
     const handleConfirmPasswordChange = (e) => {
-        setConfirmPassword(e.target.value);
+        const inputValue = e.target.value;
+        setConfirmPassword(inputValue);
+        if (inputValue.length < 8) {
+            setConfirmPasswordError(true);
+        } else {
+            setConfirmPasswordError(false);
+        }
     };
 
     const handlePhoneChange = (e) => {
-        setPhone(e.target.value);
+        // Allow only numbers and limit input to 11 characters
+        const inputValue = e.target.value.replace(/\D/g, "").slice(0, 11);
+        setPhone(inputValue);
+        if (inputValue.length === 11) {
+            setPhoneError(false);
+        } else {
+            setPhoneError(true);
+        }
     };
 
     const handleAuthNumChange = (e) => {
-        setAuthNum(e.target.value);
+        // Allow only numbers and limit input to 6 characters
+        const inputValue = e.target.value.replace(/\D/g, "").slice(0, 6);
+        setAuthNum(inputValue);
+        if (inputValue.length === 6) {
+            setAuthNumError(false);
+        } else {
+            setAuthNumError(true);
+        }
     };
 
     const handleGetAuthNum = async () => {
@@ -83,27 +121,26 @@ const AddMemberForm = ({ onSubmit }) => {
     const handleSubmit = async () => {
         try {
             // Your existing code for submitting the form
-            if (!nickname){
-                window.alert("닉네임을 입력해 주세요.");
+            if (nickname.length < 2) {
+                window.alert("닉네임은 2자 이상이어야 합니다.");
                 return;
             }
-            if (!password){
-                window.alert("비밀번호를 입력해 주세요.");
+            if (password.length < 8) {
+                window.alert("비밀번호는 8자 이상이어야 합니다.");
                 return;
             }
-            if (!confirmPassword){
-                window.alert("비밀번호 확인을 입력해 주세요.");
+            if (confirmPassword.length < 8) {
+                window.alert("비밀번호 확인은 8자 이상이어야 합니다.");
                 return;
             }
-            if (!phone){
-                window.alert("휴대폰 번호를 입력해 주세요.");
+            if (phone.length !== 11) {
+                window.alert("휴대폰 번호는 11자여야 합니다.");
                 return;
             }
-            if (!authNum){
-                window.alert("인증 번호를 입력해 주세요.");
+            if (authNum.length !== 6) {
+                window.alert("인증 번호는 6자여야 합니다.");
                 return;
             }
-
 
             if (password !== confirmPassword) {
                 window.alert("비밀번호가 일치하지 않습니다.");
@@ -191,19 +228,30 @@ const AddMemberForm = ({ onSubmit }) => {
                     <Typography component="h1" variant="h5" sx={{ marginBottom: 2 }}>
                         가입하기
                     </Typography>
-                    <TextField label="닉네임" fullWidth value={nickname} onChange={handleNicknameChange} margin="normal" />
-                    <TextField label="비밀번호" fullWidth type="password" value={password} onChange={handlePasswordChange} margin="normal" />
-                    <TextField label="비밀번호 확인" fullWidth type="password" value={confirmPassword} onChange={handleConfirmPasswordChange} margin="normal" />
-                    <TextField label="휴대폰 번호" fullWidth value={phone} onChange={handlePhoneChange} margin="normal" />
-                    <Button variant="contained" color="secondary" onClick={handleGetAuthNum} sx={{ marginTop: 1, marginBottom: 1 }}>
+                    <TextField label="닉네임" fullWidth value={nickname} onChange={handleNicknameChange} margin="normal"
+                               error={nicknameError} // Set error state
+                               helperText={nicknameError ? "닉네임은 2자 이상 입력해야 합니다." : ""}/>
+                    <TextField label="비밀번호" fullWidth type="password" value={password} onChange={handlePasswordChange} margin="normal"
+                               error={passwordError} // Set error state
+                               helperText={passwordError ? "비밀번호는 8자 이상 입력해야 합니다." : ""}/>
+                    <TextField label="비밀번호 확인" fullWidth type="password" value={confirmPassword} onChange={handleConfirmPasswordChange} margin="normal"
+                               error={confirmPasswordError} // Set error state
+                               helperText={confirmPasswordError ? "비밀번호 확인은 8자 이상 입력해야 합니다." : ""}/>
+                    <TextField label="휴대폰 번호" fullWidth value={phone} onChange={handlePhoneChange} margin="normal"
+                               error={phoneError} // Set error state
+                               helperText={phoneError ? "휴대폰 번호는 11자리의 숫자만 입력해야 합니다." : ""}/>
+                    <Button variant="contained" color="secondary" onClick={handleGetAuthNum} sx={{ marginTop: 1, marginBottom: 1 }}
+                    >
                         인증번호 받기
                     </Button>
-                    <TextField label="인증번호" fullWidth value={authNum} onChange={handleAuthNumChange} margin="normal" />
+                    <TextField label="인증번호" fullWidth value={authNum} onChange={handleAuthNumChange} margin="normal"
+                               error={authNumError} // Set error state
+                               helperText={authNumError ? "인증번호는 6자리의 숫자만 입력해야 합니다." : ""}/>
                     <Button variant="contained" color="secondary" onClick={handleVerifyAuthNum} sx={{ marginTop: 1, marginBottom: 2, width: '35.5%' }}>
                         인증 확인
                     </Button>
 
-                    {/* 만 14세 이상입니다 체크박스 */}
+
                     <FormControlLabel
                         control={
                             <Checkbox
@@ -214,19 +262,24 @@ const AddMemberForm = ({ onSubmit }) => {
                         }
                         label={
                             <div>
-                                개인정보 수집 및 이용 동의
+                                정보 수집 및 이용 동의
                                 <Typography variant="caption" sx={{ color: "primary.main", marginLeft: 1 }}>
                                     [필수]
                                 </Typography>
-                                <Button variant="contained" color="secondary" onClick={handleOpenDialog1} sx={{ width: 'auto', marginLeft: '50' }}>
-                                    전문 확인
-                                </Button>
+                                <IconButton
+                                    color="secondary"
+                                    onClick={handleOpenDialog1}
+                                    sx={{ width: 'auto', marginRight: 'auto' }}
+                                >
+                                    <StorageIcon />
+
+                                </IconButton>
                             </div>
                         }
                         sx={{ marginTop: 1, marginBottom: 1, width: '100%' }}
                     />
 
-                    {/* 이용 약관 체크박스 */}
+
                     <FormControlLabel
                         control={
                             <Checkbox
@@ -241,15 +294,20 @@ const AddMemberForm = ({ onSubmit }) => {
                                 <Typography variant="caption" sx={{ color: "primary.main", marginLeft: 1 }}>
                                     [필수]
                                 </Typography>
-                                <Button variant="contained" color="secondary" onClick={handleOpenDialog2} sx={{ width: 'auto', marginLeft: '50' }}>
-                                    전문 확인
-                                </Button>
+                                <IconButton
+                                    color="secondary"
+                                    onClick={handleOpenDialog2}
+                                    sx={{ width: 'auto', marginRight: 'auto', marginLeft:'49px' }}
+                                >
+                                    <StorageIcon />
+
+                                </IconButton>
                             </div>
                         }
                         sx={{ marginTop: 1, marginBottom: 1, width: '100%' }}
                     />
 
-                    {/* 마케팅 동의 체크박스 */}
+
                     <FormControlLabel
                         control={
                             <Checkbox
@@ -266,9 +324,14 @@ const AddMemberForm = ({ onSubmit }) => {
                                         [선택]
                                     </Typography>
                                 </div>
-                                <Button variant="contained" color="secondary" onClick={handleOpenDialog3} sx={{ width: 'auto', marginLeft: '50' }}>
-                                    전문 확인
-                                </Button>
+                                <IconButton
+                                    color="secondary"
+                                    onClick={handleOpenDialog3}
+                                    sx={{ width: 'auto', marginRight: 'auto', marginLeft: '4px' }}
+                                >
+                                    <StorageIcon />
+
+                                </IconButton>
                             </div>
                         }
                         sx={{ marginTop: 1, marginBottom: 1, width: '100%' }}

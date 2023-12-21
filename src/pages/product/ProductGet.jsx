@@ -22,6 +22,8 @@ import Back from "../../component/common/Back";
 import TopBar from "../../component/payment/TopBar";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 import ImgCarousel from "../../component/product/ImgCarousel";
+import ThermostatIcon from "@mui/icons-material/Thermostat";
+import { formatTimeAgo } from "../../apis/utils/timestamp";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -36,6 +38,7 @@ const ExpandMore = styled((props) => {
 
 const ProductGet = () => {
   const { productId } = useParams();
+  const { state } = useLocation();
   const [data, setData] = useState(null);
   const [isMine, setIsMine] = useState();
   const navigate = useNavigate();
@@ -61,7 +64,9 @@ const ProductGet = () => {
   }, []);
   return (
     <>
-      <Back />
+      <Back
+        url={state?.roomId ? `/chat/get/${state.roomId}` : "/product/list"}
+      />
       <TopBar>상품 조회</TopBar>
       <MarginEmpty />
       {data ? (
@@ -89,21 +94,34 @@ const ProductGet = () => {
               onClick={() => getMember(data.sellerDTO.id)}
               action={
                 <IconButton aria-label="settings">
-                  {data.sellerDTO.score}℃
+                  <Typography variant="body1" color="textPrimary">
+                    {data.sellerDTO.score}℃
+                    <ThermostatIcon />
+                  </Typography>
                 </IconButton>
               }
-              title={data.sellerDTO.nickname}
-              subheader={data.dong}
+              title={
+                <Typography variant="h6" color="textPrimary">
+                  {data.sellerDTO.nickname}
+                  <br />
+                </Typography>
+              }
+              // subheader={data.dong}
+              subheader={
+                <Typography variant="subtitle2" color="textSecondary">
+                  {data.dong}
+                </Typography>
+              }
             />
           </Card>
           <CardContent>
-            <Typography variant="h4" color="text.secondary">
-              {data.title}
+            <Typography variant="h6" color="textPrimary" sx={{ mb: 1 }}>
+              <b>{data.title}</b>
             </Typography>
-            <Typography variant="h6" color="text.secondary">
-              {data.categoryName}
+            <Typography variant="caption" color="text.secondary" sx={{ mb: 3 }}>
+              {data.categoryName}&nbsp; {formatTimeAgo(data.regDate)}
             </Typography>
-            <Typography variant="body1" color="text.secondary">
+            <Typography variant="body2" color="textPrimary" sx={{ mt: 3 }}>
               {data.content}
             </Typography>
           </CardContent>
@@ -116,6 +134,7 @@ const ProductGet = () => {
       ) : (
         <LoadingProgress />
       )}
+      <MarginEmpty />
     </>
   );
 };

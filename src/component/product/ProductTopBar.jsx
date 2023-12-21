@@ -20,13 +20,20 @@ import LocationBox from "../location/LocationBox";
 import { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import SearchDrawer from "../common/SearchDrawer";
+import { getAlertCountAPI } from "../../apis/api/alert";
 const ProductTopBar = ({ location, setLocation }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const [alertCount, setAlertCount] = React.useState();
   const toggleDrawer = (open) => {
     setIsDrawerOpen(open);
   };
+  useEffect(() => {
+    (async () => {
+      await getAlertCountAPI((data) => setAlertCount(data));
+    })();
+  }, []);
   const categorys = [
     "디지털 기기",
     "인테리어",
@@ -93,7 +100,13 @@ const ProductTopBar = ({ location, setLocation }) => {
             <SearchIcon sx={{ fontSize: 30 }} color="secondary" />
           </Button>
           <Button onClick={() => navigate("/alert/list")}>
-            <NotificationsNoneIcon sx={{ fontSize: 30 }} color="secondary" />
+            <Badge
+              variant="dot"
+              color="error"
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            >
+              <NotificationsNoneIcon sx={{ fontSize: 30 }} color="secondary" />
+            </Badge>
           </Button>
         </ButtonGroup>
 

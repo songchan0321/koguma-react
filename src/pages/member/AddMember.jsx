@@ -1,8 +1,10 @@
 import React from "react";
 import AddMemberForm from "../../component/member/AddMemberForm";
 import {Box} from "@mui/material";
+import Back from "../../component/common/Back";
 
 const AddMember = () => {
+
     const handleAddMemberSubmit = async (memberDTO) => {
         try {
             // AddMemberForm 컴포넌트에서 직접 API 호출을 수행하므로 여기서는 추가 작업 필요 없음
@@ -12,10 +14,13 @@ const AddMember = () => {
         }
     };
 
+
     return (
         <Box p={3} sx={{ overflowY: 'auto', maxHeight: 'calc(100vh - 64px)' }}>
             <AddMemberForm onSubmit={handleAddMemberSubmit} />
+            <Back/>
         </Box>
+
     );
 };
 

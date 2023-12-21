@@ -1,4 +1,3 @@
-import { AspectRatio } from "@mui/icons-material";
 import { Box, Card, CardMedia, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { listMyClubAPI } from "../../apis/api/club";

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { listMeetUpAPI } from "../../../apis/api/club";
-import { Button, MobileStepper } from "@mui/material";
+import { Button, Chip } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
+
 import ClubMeetUpList from "./ClubMeetUpList";
+import MarginEmpty from "../../payment/MarginEmpty";
 
 const ClubHomeMeetUp = ({ clubId, clubMember, selectedMenu }) => {
   const [meetUp, setMeetUp] = useState({});
@@ -29,31 +29,33 @@ const ClubHomeMeetUp = ({ clubId, clubMember, selectedMenu }) => {
 
   return (
     <>
-      {selectedMenu === "meetUp" ? (
+      <MarginEmpty value={10} />
+      {selectedMenu === "일정" ? (
         <div>
           <div>
             <Link to={`/club/meet-up/add/${clubId}`}>
               <Button
-                variant="contained"
+                variant="outlined"
                 color="secondary"
-                style={{ width: "100%", borderRadius: 0 }}
+                style={fixedButtonStyle}
               >
                 + 일정 만들기
               </Button>
             </Link>
           </div>
-          <br />
+          <MarginEmpty value={10} />
           <div>
-            {meetUpMenu.map((menu) => (
-              <Button
-                key={menu}
-                onClick={() => handleMenuClick(menu)}
-                variant={meetUpState === menu ? "contained" : "outlined"}
-                color="secondary"
-                style={{ flex: 1 }}
-              >
-                {menu === "SCHEDULE" ? "예정된 일정" : "종료된 일정"}
-              </Button>
+            {meetUpMenu.map((menu, index) => (
+              <>
+                <Chip
+                  label={menu === "SCHEDULE" ? "예정된 일정" : "종료된 일정"}
+                  key={index}
+                  onClick={() => handleMenuClick(menu)}
+                  variant={meetUpState === menu ? "contained" : "outlined"}
+                  color="secondary"
+                  style={{ marginLeft: "10px" }}
+                />
+              </>
             ))}
           </div>
           {meetUpState === "SCHEDULE" ? (
@@ -83,3 +85,11 @@ const ClubHomeMeetUp = ({ clubId, clubMember, selectedMenu }) => {
 };
 
 export default ClubHomeMeetUp;
+
+const fixedButtonStyle = {
+  bottom: 0,
+  left: 15,
+  width: "90%",
+  padding: "5px",
+  textAlign: "center",
+};
