@@ -133,6 +133,10 @@ const Login = () => {
                     (window.location.href =
                       "https://kauth.kakao.com/oauth/authorize?client_id=ef2f330de7db2127b41280db652748e5&redirect_uri=http://localhost:3000/common/kakao/callback&response_type=code&prompt=login")
                   }
+                  // onClick={() =>
+                  //   (window.location.href =
+                  //     "https://kauth.kakao.com/oauth/authorize?client_id=ef2f330de7db2127b41280db652748e5&redirect_uri=https://koguma.5quys/com/common/kakao/callback&response_type=code&prompt=login")
+                  // }
                 />
               </Grid>
             </Grid>

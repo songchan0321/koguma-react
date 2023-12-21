@@ -107,18 +107,30 @@ const MyList = ({
                 }
                 title={
                   <Box>
-                    <Typography variant="body1" color="textPrimary">
+                    <Typography
+                      variant="body1"
+                      color="textPrimary"
+                      sx={{ mb: 1 }}
+                    >
                       {prod.title}
                     </Typography>
                   </Box>
                 }
                 subheader={
                   <>
-                    <Typography variant="subtitle2" color="textSecondary">
+                    <Typography
+                      variant="subtitle2"
+                      color="textSecondary"
+                      sx={{ mb: 1 }}
+                    >
                       {prod.dong} {formatTimeAgo(prod.regDate)}
                     </Typography>
                     <Box
-                      sx={{ display: "flex", justifyContent: "space-between" }}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        mb: 1,
+                      }}
                     >
                       <div>
                         <Typography variant="body1" color="textPrimary">
@@ -137,7 +149,7 @@ const MyList = ({
                         {prod.chatroomCount > 0 && (
                           <>
                             <span style={{ marginRight: "5px" }}>
-                              <ChatBubbleOutline />
+                              <ChatBubbleOutline sx={{ fontSize: 16 }} />
                               &nbsp;
                               {prod.chatroomCount}
                             </span>
@@ -146,7 +158,7 @@ const MyList = ({
                         {prod.likeCount > 0 && (
                           <>
                             <span style={{ marginRight: "5px" }}>
-                              <FavoriteBorder />
+                              <FavoriteBorder sx={{ fontSize: 16 }} />
                               &nbsp;
                               {prod.likeCount}
                             </span>

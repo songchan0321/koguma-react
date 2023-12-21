@@ -1,5 +1,6 @@
 import { Alert, AlertTitle } from "@mui/material";
 import { authInstance } from "../utils/instance";
+import { countProductChatRoom } from "./chat";
 
 const PRODUCT_API_URI = "/product";
 export const memberchecAPI = async () => {
@@ -34,9 +35,17 @@ export const getProductAPI = async (productId) => {
   const { data } = await authInstance.get(
     `${PRODUCT_API_URI}/get/${productId}`
   );
-  const results = await Promise.all([data, countSuggestPriceAPI(data.id)]);
+  const results = await Promise.all([
+    data,
+    countSuggestPriceAPI(data.id),
+    countProductChatRoom(data.id),
+  ]);
 
-  return { ...results[0], suggestCount: results[1] };
+  return {
+    ...results[0],
+    suggestCount: results[1],
+    chatroom: results[2].result,
+  };
 };
 export const updateProductAPI = async (productDTO) => {
   await authInstance.put(

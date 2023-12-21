@@ -57,8 +57,8 @@ const ListContainingProduct = ({ data, index, type }) => {
           {type === "like"
             ? data.map((prod, idx) => (
                 <Card
-                  id={prod.productDTO.id}
                   sx={{ maxWidth: "100%" }}
+                  id={prod.id}
                   onClick={() => getProduct(prod.productDTO.id)}
                 >
                   <CardHeader
@@ -109,17 +109,31 @@ const ListContainingProduct = ({ data, index, type }) => {
                               {formatMoney(prod.productDTO.price)}원
                             </Typography>
                           </div>
+                          <div id="icongroup" sx={{ marginTop: 100 }}>
+                            {prod.productDTO.chatroomCount > 0 && (
+                              <>
+                                <span style={{ marginRight: "5px" }}>
+                                  <ChatBubbleOutline sx={{ fontSize: 16 }} />
+                                  &nbsp;
+                                  {prod.productDTO.chatroomCount}
+                                </span>
+                              </>
+                            )}
+                            {prod.likeCount > 0 && (
+                              <>
+                                <span style={{ marginRight: "5px" }}>
+                                  <FavoriteBorder sx={{ fontSize: 16 }} />
+                                  &nbsp;
+                                  {prod.productDTO.likeCount}
+                                </span>
+                              </>
+                            )}
+                          </div>
                         </Box>
                       </>
                     }
                     action={
                       type === "report" ? (
-                        // <IconButton
-                        //   aria-label="settings"
-                        //   onClick={() => console.log("이 상품 신고하기")}
-                        // >
-                        //   <FeedbackIcon />
-                        // </IconButton>
                         <></>
                       ) : (
                         <IconButton>
@@ -132,12 +146,8 @@ const ListContainingProduct = ({ data, index, type }) => {
               ))
             : data.map((prod, idx) => (
                 <Card
+                  sx={{ maxWidth: "100%" }}
                   id={prod.id}
-                  sx={{
-                    maxWidth: "100%",
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
                   onClick={() => getProduct(prod.id)}
                 >
                   <CardHeader
@@ -150,35 +160,39 @@ const ListContainingProduct = ({ data, index, type }) => {
                             : "/photo.png"
                         }
                         variant="square"
-                        sx={{
-                          width: 100,
-                          height: 100,
-                          mr: 1,
-                          border: "1px solid #ccc",
-                        }}
+                        sx={{ width: 100, height: 100, mr: 1 }}
                       />
                     }
                     title={
                       <Box>
-                        <Typography variant="body1" color="textPrimary">
+                        <Typography
+                          variant="body1"
+                          color="textPrimary"
+                          sx={{ mb: 1 }}
+                        >
                           {prod.title}
                         </Typography>
                       </Box>
                     }
                     subheader={
                       <>
-                        <Typography variant="subtitle2" color="textSecondary">
+                        <Typography
+                          variant="subtitle2"
+                          color="textSecondary"
+                          sx={{ mb: 1 }}
+                        >
                           {prod.dong} {formatTimeAgo(prod.regDate)}
                         </Typography>
                         <Box
                           sx={{
                             display: "flex",
                             justifyContent: "space-between",
+                            mb: 1,
                           }}
                         >
                           <div>
                             <Typography variant="body1" color="textPrimary">
-                              {prod.tradeStatus === "BUY" ? (
+                              {prod.selectedMenuType === "BUY" ? (
                                 <TradeStateButton
                                   type={{ tradeStatus: "BUY" }}
                                 />
@@ -191,53 +205,30 @@ const ListContainingProduct = ({ data, index, type }) => {
                               {formatMoney(prod.price)}원
                             </Typography>
                           </div>
+                          <div id="icongroup" sx={{ marginTop: 100 }}>
+                            {prod.chatroomCount > 0 && (
+                              <>
+                                <span style={{ marginRight: "5px" }}>
+                                  <ChatBubbleOutline sx={{ fontSize: 16 }} />
+                                  &nbsp;
+                                  {prod.chatroomCount}
+                                </span>
+                              </>
+                            )}
+                            {prod.likeCount > 0 && (
+                              <>
+                                <span style={{ marginRight: "5px" }}>
+                                  <FavoriteBorder sx={{ fontSize: 16 }} />
+                                  &nbsp;
+                                  {prod.likeCount}
+                                </span>
+                              </>
+                            )}
+                          </div>
                         </Box>
                       </>
                     }
                   />
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-end",
-                    }}
-                  >
-                    {/* {type === "report" && (
-                      <IconButton
-                        aria-label="settings"
-                        onClick={() => console.log("이 상품 신고하기")}
-                        style={{ marginRight: "5px" }}
-                      >
-                        <FeedbackIcon />
-                      </IconButton>
-                    )} */}
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        marginTop: "90px",
-                      }}
-                    >
-                      {prod.chatroomCount > 0 && (
-                        <>
-                          <span style={{ marginRight: "5px" }}>
-                            <ChatBubbleOutline />
-                            &nbsp;
-                            {prod.chatroomCount}
-                          </span>
-                        </>
-                      )}
-                      {prod.likeCount > 0 && (
-                        <>
-                          <span style={{ marginRight: "5px" }}>
-                            <FavoriteBorder />
-                            &nbsp;
-                            {prod.likeCount}
-                          </span>
-                        </>
-                      )}
-                    </div>
-                  </div>
                 </Card>
               ))}
         </>

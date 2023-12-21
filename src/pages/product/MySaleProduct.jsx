@@ -110,8 +110,8 @@ const MySaleProduct = () => {
   const getProductReview = (productId) => {
     navigate(`/product/review/get/${productId}`);
   };
-  const addHide = () => {
-    alert("hide");
+  const changeHide = (productId) => {
+    updateTradeState(productId, "SALE");
   };
 
   const handleMenuClick = (idx) => {
@@ -127,20 +127,8 @@ const MySaleProduct = () => {
     try {
       const response = await raiseProductAPI(productId);
       console.log(response);
-      setAlert(
-        <Alert severity="success">
-          <AlertTitle>Success</AlertTitle>
-          끌어올리기 성공!
-        </Alert>
-      );
     } catch (err) {
       console.log(err);
-      setAlert(
-        <Alert severity="error">
-          <AlertTitle>Error</AlertTitle>
-          {err.response.data}
-        </Alert>
-      );
     }
   };
   const updateTradeState = async (prodcutId, type) => {
@@ -224,7 +212,7 @@ const MySaleProduct = () => {
         <MyList
           selectedMenuType={selectedMenuType}
           buttonNM="숨기기 해제"
-          onClick={addHide}
+          onClick={changeHide}
           onClickGetProduct={getProduct}
           selectedActions={selectedActionHide}
         />
