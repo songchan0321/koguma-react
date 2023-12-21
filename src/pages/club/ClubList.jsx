@@ -58,10 +58,10 @@ function ClubList() {
         <br />
         {myClubList ? (
           <div style={{ margin: "10px" }}>
-            <MyClubList />
-            <Divider />
+            <MyClubList style={backgroundStyle} />
+            <Divider style={backgroundStyle} />
             <div style={{ margin: "10px" }}>
-              <MyClubPostList />
+              <MyClubPostList style={backgroundStyle} />
             </div>
           </div>
         ) : (
@@ -92,3 +92,8 @@ function ClubList() {
 }
 
 export default ClubList;
+
+const backgroundStyle = {
+  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+  padding: "1px",
+};

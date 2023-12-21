@@ -6,47 +6,63 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import "./ClubCommoncss.css";
 import { useState } from "react";
 
-const AddClubDetailForm = ({ onPrev, onNext, data }) => {
+const AddClubNicknameForm = ({ onPrev, onNext, data }) => {
   const [formData, setFormData] = useState({
     categoryId: data.categoryId || "", // 기존 데이터가 있으면 사용, 없으면 빈 문자열
     title: data.title || "", // 기존 데이터가 있으면 사용, 없으면 빈 문자열
     content: data.content || "", // 기존 데이터가 있으면 사용, 없으면 빈 문자열
+    urls: data.urls || "",
+    nickname: data.nickname || "",
+    memberContent: data.memberContent || "",
+    maxCapacity: data.maxCapacity || "",
   });
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [id]: value }));
+    console.log(`handleInputChange`);
+    console.log(formData);
+    console.log(`asdfsdasdf`);
   };
-
   const handlePrevClick = () => {
     onPrev();
   };
 
   const handleNextClick = () => {
-    // 입력 받은 데이터를 formData에 추가
-    const title = document.getElementById("title").value;
-    const content = document.getElementById("content").value;
+    const nickname = document.getElementById("nickname").value;
+    const memberContent = document.getElementById("memberContent").value;
+    alert(nickname);
+    alert(memberContent);
 
-    // onNext 함수 호출
-    onNext({ title, content });
+    alert(formData);
+    console.log(`handleNextClick 555`);
+    console.log(formData);
+    console.log(`handleNextClick 555`);
+    onNext(formData);
   };
 
   return (
     <>
       <div>
         <Typography
-          variant="h4"
+          variant="h5"
           style={{ marginTop: "20px", marginLeft: "30px" }}
         >
-          모임을 소개해주세요 !
+          활동명을 설정해주세요 !
+        </Typography>
+        <Typography
+          variant="h6"
+          color="text.secondary"
+          style={{ marginTop: "20px", marginLeft: "30px" }}
+        >
+          활동명은 이 모임에서만 사용하는 닉네임 입니다.
         </Typography>
 
         <Container style={{ marginTop: "30px", marginLeft: "20px" }}>
-          <Typography variant="h5" style={{ marginLeft: "" }}>
-            모임명
+          <Typography variant="h6" style={{ marginLeft: "" }}>
+            활동명
           </Typography>
           <Box
             sx={{
@@ -56,18 +72,18 @@ const AddClubDetailForm = ({ onPrev, onNext, data }) => {
           >
             <TextField
               fullWidth
-              label="모임명을 입력해주세요"
-              id="title" // ID 추가
+              label="활동명을 입력해주세요 ! "
+              id="nickname"
               color="secondary"
-              value={formData.title}
+              value={formData.nickname}
               onChange={handleInputChange}
             />
           </Box>
         </Container>
 
         <Container style={{ marginTop: "30px", marginLeft: "20px" }}>
-          <Typography variant="h5" style={{ marginLeft: "" }}>
-            모임소개
+          <Typography variant="h6" style={{ marginLeft: "" }}>
+            활동명
           </Typography>
           <Box
             sx={{
@@ -77,42 +93,42 @@ const AddClubDetailForm = ({ onPrev, onNext, data }) => {
           >
             <TextField
               fullWidth
-              label="모임 소개를 입력해주세요"
-              id="content" // ID 추가
+              label="자기소개  "
+              id="memberContent"
               color="secondary"
-              value={formData.content}
+              value={formData.memberContent}
               onChange={handleInputChange}
             />
           </Box>
         </Container>
-      </div>
 
-      <Paper
-        sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
-        elevation={3}
-      >
-        <Button
-          variant="contained"
-          color="secondary"
-          style={backButtonStyle}
-          onClick={handlePrevClick}
+        <Paper
+          sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+          elevation={3}
         >
-          이전
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          style={nextButtonStyle}
-          onClick={handleNextClick}
-        >
-          다음
-        </Button>
-      </Paper>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={backButtonStyle}
+            onClick={handlePrevClick}
+          >
+            이전
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={nextButtonStyle}
+            onClick={handleNextClick}
+          >
+            다음
+          </Button>
+        </Paper>
+      </div>
     </>
   );
 };
 
-export default AddClubDetailForm;
+export default AddClubNicknameForm;
 
 const nextButtonStyle = {
   position: "fixed",

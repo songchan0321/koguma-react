@@ -1,21 +1,24 @@
-import { Box, Button, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Box, Button, TextField, Modal } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 import { addMeetUpAPI } from "../../../apis/api/club";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import TopBarClub from "../common/TopBarClub";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
-import CommonlyUsedComponents from "../common/DatePicker";
+import AddMeetUpLo from "./AddMeetUpLo";
+import DaumPostcodeEmbed from "react-daum-postcode";
+import MapTest from "../common/MapTest";
 
 const AddMeetUp = () => {
   const navigate = useNavigate();
   const { clubId } = useParams();
   const navigator = useNavigate();
+  const imageRef = useRef(null);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const [meetUp, setMeetUp] = useState({
     title: "",
     content: "",
     roadAddr: "",
-    // meetDate: "",
     maxCapacity: 0,
   });
 
@@ -26,6 +29,12 @@ const AddMeetUp = () => {
     width: "90%",
     padding: "10px",
     textAlign: "center",
+  };
+
+  const handleAddressUpdate = (address) => {
+    console.log(`111111111111`);
+    console.log(address);
+    setMeetUp({ ...meetUp, roadAddr: address });
   };
 
   const handleInput = (event) => {
@@ -50,8 +59,8 @@ const AddMeetUp = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(meetUp.title);
-    console.log(clubId);
+    console.log(meetUp);
+    console.log(`-------------`);
     try {
       await addMeetUpAPI(
         clubId,
@@ -65,6 +74,14 @@ const AddMeetUp = () => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -122,20 +139,40 @@ const AddMeetUp = () => {
             value={meetUp.roadAddr}
             onChange={handleInput}
           />
-          <div>
-            <Link to={`/club/meet-up/add/location`}>
-              <Button>
+          {/* <DaumPostcodeEmbed /> */}
+          <Box
+            component="form"
+            sx={{
+              "& .MuiTextField-root": {
+                m: 1,
+                width: "90%",
+              },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <div>
+              <Button onClick={openModal}>
                 <FmdGoodIcon />
               </Button>
-            </Link>
-          </div>
+              <Modal open={isModalOpen} onClose={closeModal}>
+                <div>
+                  <MapTest onAddressUpdate={handleAddressUpdate} />
+                  <Button onClick={closeModal}>닫기</Button>
+                </div>
+              </Modal>
+            </div>
+
+            <Button
+              variant="contained"
+              color="secondary"
+              style={fixedButtonStyle}
+              onClick={handleSubmit}
+            >
+              만들기
+            </Button>
+          </Box>
         </div>
-        {/* <div>
-          <CommonlyUsedComponents
-            value={meetUp.meetDate}
-            onChange={handleInput}
-          ></CommonlyUsedComponents>
-        </div> */}
 
         <Button
           variant="contained"

@@ -1,53 +1,39 @@
+import { useEffect, useState } from "react";
+import { listClubPostByCategory } from "../../../apis/api/club";
+import { useNavigate } from "react-router-dom";
 import {
-  Paper,
-  Typography,
-  Grid,
-  CardMedia,
-  Card,
   CardContent,
-  Divider,
+  CardMedia,
   Checkbox,
-  Box,
+  Divider,
+  Grid,
+  Typography,
 } from "@mui/material";
+import styled from "styled-components";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import { useEffect, useState } from "react";
-import { listMyClubPostAPI } from "../../../apis/api/club";
-import styled from "styled-components";
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
 
-const MyClubPostList = () => {
+const ListClubPostByCategory = ({ category }) => {
   const navigate = useNavigate();
-  const [clubPosts, setClubPost] = useState([]);
+  const [clubPosts, setClubPosts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await listMyClubPostAPI();
+        const data = await listClubPostByCategory(category.id);
+        setClubPosts(data);
         console.log(data);
-        setClubPost(data);
       } catch (err) {
         console.log(err);
       }
     };
     fetchData();
-  }, []);
-
-  const truncateText = (text, maxLength) => {
-    if (text.length <= maxLength) {
-      return text;
-    } else {
-      return text.slice(0, maxLength) + "...";
-    }
-  };
+  }, [category]);
 
   return (
     <>
-      <div>
-        <Typography variant="h5">피드</Typography>
-      </div>
+      <div></div>
 
       {clubPosts.map((clubPost, index) => (
         <>
@@ -116,17 +102,7 @@ const MyClubPostList = () => {
   );
 };
 
-export default MyClubPostList;
-const backgroundStyle = {
-  boxShadow: "0px 0px 1px rgba(0, 0, 0, 0.1)",
-  padding: "0.2px",
-};
-
-const ClubCard = styled(Card)({
-  display: "flex",
-  flexDirection: "row",
-});
-
+export default ListClubPostByCategory;
 const ClubContent = styled(CardContent)({
   flex: 1,
   width: "200",
@@ -134,3 +110,8 @@ const ClubContent = styled(CardContent)({
   flexDirection: "column",
   justifyContent: "space-between",
 });
+
+const backgroundStyle = {
+  boxShadow: "0px 0px 1px rgba(0, 0, 0, 0.1)",
+  padding: "0.2px",
+};
