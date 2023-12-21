@@ -67,33 +67,29 @@ const ProductGet = () => {
       {data ? (
         <>
           <Card sx={{ maxWidth: "100%" }}>
-            {/* <CardMedia
-              component="img"
-              height="400"
-              image={
-                data.imageDTO && data.imageDTO.length > 0
-                  ? data.imageDTO[0].url
-                  : "/photo.png"
-              }
-              alt="/photo.png"
-            /> */}
             <ImgCarousel img={data.imageDTO} />
-            {/* <Carousel>
-          {sources.map((item) => (
-            <Paper key={item.id}>
-              <img src={item.src} alt='' />
-            </Paper>))}
-        </Carousel> */}
+
             <CardHeader
               avatar={
-                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                  R
+                <Avatar
+                  aria-label="recipe"
+                  style={{ width: "48px", height: "48px" }} // Avatar 크기 조정
+                >
+                  <img
+                    src={data.sellerDTO.profileURL}
+                    alt="profile"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "50%",
+                    }} // 이미지 크기 및 모양 조정
+                  />
                 </Avatar>
               }
               onClick={() => getMember(data.sellerDTO.id)}
               action={
                 <IconButton aria-label="settings">
-                  <MoreVertIcon />
+                  {data.sellerDTO.score}℃
                 </IconButton>
               }
               title={data.sellerDTO.nickname}

@@ -29,6 +29,7 @@ import {
   ChatBubbleOutline,
   FavoriteBorder,
 } from "@mui/icons-material";
+import TradeStateButton from "./TradeStateButton";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -76,7 +77,7 @@ const ListContainingProduct = ({ data, index, type }) => {
                     }
                     title={
                       <Box>
-                        <Typography variant="h6" color="textSecondary">
+                        <Typography variant="body1" color="textPrimary">
                           {prod.productDTO.title}
                         </Typography>
                       </Box>
@@ -94,7 +95,17 @@ const ListContainingProduct = ({ data, index, type }) => {
                           }}
                         >
                           <div>
-                            <Typography variant="h6" color="textSecondary">
+                            <Typography variant="body1" color="textPrimary">
+                              {prod.tradeStatus === "BUY" ? (
+                                <TradeStateButton
+                                  type={{ tradeStatus: "BUY" }}
+                                />
+                              ) : (
+                                <TradeStateButton
+                                  type={{ tradeStatus: prod.tradeStatus }}
+                                />
+                              )}
+                              &nbsp;
                               {formatMoney(prod.productDTO.price)}원
                             </Typography>
                           </div>
@@ -149,7 +160,7 @@ const ListContainingProduct = ({ data, index, type }) => {
                     }
                     title={
                       <Box>
-                        <Typography variant="h6" color="textSecondary">
+                        <Typography variant="body1" color="textPrimary">
                           {prod.title}
                         </Typography>
                       </Box>
@@ -159,9 +170,24 @@ const ListContainingProduct = ({ data, index, type }) => {
                         <Typography variant="subtitle2" color="textSecondary">
                           {prod.dong} {formatTimeAgo(prod.regDate)}
                         </Typography>
-                        <Box>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
                           <div>
-                            <Typography variant="h6" color="textSecondary">
+                            <Typography variant="body1" color="textPrimary">
+                              {prod.tradeStatus === "BUY" ? (
+                                <TradeStateButton
+                                  type={{ tradeStatus: "BUY" }}
+                                />
+                              ) : (
+                                <TradeStateButton
+                                  type={{ tradeStatus: prod.tradeStatus }}
+                                />
+                              )}
+                              &nbsp;
                               {formatMoney(prod.price)}원
                             </Typography>
                           </div>

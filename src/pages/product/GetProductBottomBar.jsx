@@ -23,6 +23,7 @@ import {
   getChatRoomByProductAndMember,
 } from "../../apis/api/chat";
 import { getMemberAPI } from "../../apis/api/member";
+import BottomButton from "./BottomButton";
 
 // 테마 생성
 const theme = createTheme({
@@ -78,39 +79,31 @@ const GetProductBottomBar = ({ data, isMine, productId }) => {
             <LikeProduct prodId={data.id} />
             <span>{formatMoney(data.price)}원</span>
           </div>
-          {isMine ? ( // 판매자일때 가격제안 리스트를 확인 nav
-            <Button
-              color="secondary"
-              variant="contained"
-              onClick={() => navigate(`/product/suggest/list/${data.id}`)}
-            >
-              가격제안 1명
-            </Button>
+          {isMine ? (
+            <BottomButton
+              navTarget={() => navigate(`/product/suggest/list/${data.id}`)}
+              isBlock={true}
+              child={`가격제안 ${data.suggestCount}`}
+            />
           ) : (
-            <Button // 구매자일떄 가격제안 nav && 판매완료면 가격제안 못하기
-              color="secondary"
-              variant="contained"
-              onClick={() => navigate(`/product/suggest/${data.id}`)}
-            >
-              가격 제안하기
-            </Button>
+            <BottomButton
+              navTarget={() => navigate(`/product/suggest/${data.id}`)}
+              isBlock={data.tradeStatus === "SALED" ? false : true}
+              child={`가격제안 하기`}
+            />
           )}
           {isMine ? (
-            <Button // 판매자일때 대화중인 채팅방 리스트를 확인 nav
-              color="secondary"
-              variant="contained"
-              onClick={() => navigate(`/chat/list/${data.id}`)}
-            >
-              대화중인 채팅방 1
-            </Button>
+            <BottomButton
+              navTarget={() => navigate(`/chat/list/${data.id}`)}
+              isBlock={true}
+              child={`대화중인 채팅방 ${data.chatroomCount}`}
+            />
           ) : (
-            <Button // 구매자일때 채팅방 개설 && 예약중이면 채팅 못하기
-              color="secondary"
-              variant="contained"
-              onClick={startChatting}
-            >
-              채팅하기
-            </Button>
+            <BottomButton
+              navTarget={startChatting}
+              isBlock={data.tradeStatus === "SALED" ? false : true}
+              child={`채팅하기`}
+            />
           )}
         </StyledCardActions>
       </Paper>

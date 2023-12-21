@@ -89,6 +89,10 @@ export const updateRepLocationAPI = async (locationId) => {
   }
 };
 
+export const loginMemberhasLocationAPI = async () => {
+  const { data } = await authInstance.get(`/location/check`);
+  return data;
+};
 export const getRepLocationAPI = async () => {
   try {
     const response = await authInstance.get(`/location/rep`);

@@ -13,7 +13,7 @@ const NotData = ({ children }) => {
         mb: 3,
       }}
     >
-      {children} 이 없어요.
+      {children}
     </Box>
   );
 };

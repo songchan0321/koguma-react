@@ -7,6 +7,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import {
   getRepLocationAPI,
   listLocationAPI,
+  loginMemberhasLocationAPI,
   updateRepLocationAPI,
 } from "../../apis/api/common";
 import { useNavigate } from "react-router-dom";
@@ -16,12 +17,41 @@ const LocationBox = ({ location, setLocation }) => {
   const [dong, setDong] = useState();
   const navigate = useNavigate();
 
+  const loginMemberhasLocation = async () => {
+    try {
+      const data = await loginMemberhasLocationAPI();
+
+      if (!data) {
+        console.log("if");
+        navigate("/common/location", { state: { init: true } });
+      }
+    } catch (error) {
+      console.log(error);
+      navigate("/common/location", { state: { init: true } });
+    }
+  };
+  loginMemberhasLocation();
   const getRepLocation = async () => {
-    const { data } = await getRepLocationAPI();
-    return data;
+    try {
+      const response = await getRepLocationAPI();
+      const data = response.data;
+
+      if (data) {
+        return data;
+      } else {
+        throw new Error("Data is undefined");
+      }
+    } catch (err) {
+      console.log(err);
+      navigate("/common/location", { state: { init: true } });
+    }
   };
   const updateRepLocation = async (id) => {
-    await updateRepLocationAPI(id);
+    try {
+      await updateRepLocationAPI(id);
+    } catch (error) {
+      console.error("Error updating location:", error);
+    }
   };
 
   const listLocation = async () => {
@@ -30,9 +60,19 @@ const LocationBox = ({ location, setLocation }) => {
   };
 
   const fetchData = async () => {
-    const data = await getRepLocation();
-    setDong(data.dong);
-    console.log(data.dong); // 올바른 값이 출력됩니다.
+    try {
+      const data = await getRepLocation();
+
+      if (data && data.dong) {
+        setDong(data.dong);
+      } else {
+        console.log("data 또는 data.dong이 정의되지 않았습니다.");
+        navigate("/common/location", { state: { init: true } });
+      }
+    } catch (err) {
+      console.log(err);
+      navigate("/common/location", { state: { init: true } });
+    }
   };
 
   useEffect(() => {

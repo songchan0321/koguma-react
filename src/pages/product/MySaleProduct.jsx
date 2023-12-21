@@ -39,7 +39,7 @@ const MySaleProduct = () => {
     },
     {
       name: "게시글 수정",
-      action: (productId) => console.log(productId),
+      action: (productId) => navigate(`/product/update/${productId}`),
     },
     {
       name: "숨기기",
@@ -57,7 +57,7 @@ const MySaleProduct = () => {
     },
     {
       name: "게시글 수정",
-      action: (productId) => console.log(productId),
+      action: (productId) => navigate(`/product/update/${productId}`),
     },
     {
       name: "숨기기",
@@ -79,7 +79,7 @@ const MySaleProduct = () => {
     },
     {
       name: "게시글 수정",
-      action: (productId) => console.log(productId),
+      action: (productId) => navigate(`/product/update/${productId}`),
     },
     {
       name: "숨기기",

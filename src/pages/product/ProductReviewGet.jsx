@@ -15,9 +15,13 @@ const ProductReviewGet = () => {
   const navigate = useNavigate();
   const [review, setReview] = useState();
   const getReview = async () => {
-    await getReviewAPI(reviewId)
-      .then((data) => setReview(data))
-      .then(console.log(review));
+    try {
+      await getReviewAPI(reviewId)
+        .then((data) => setReview(data))
+        .then(console.log(review));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const getReviewOther = () => {
@@ -62,7 +66,7 @@ const ProductReviewGet = () => {
         sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
         elevation={3}
       >
-        {review && review.myReviewId ? (
+        {!review || review.myReviewId ? (
           <>
             <Button
               onClick={() => navigate("/product/list/sale")}

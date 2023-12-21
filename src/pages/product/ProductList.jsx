@@ -11,39 +11,42 @@ import ListContainingProduct from "../../component/product/ListContainingProduct
 import { ListProductAPI } from "../../apis/api/Product";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import MarginEmpty from "../../component/payment/MarginEmpty";
+import { loginMemberhasLocationAPI } from "../../apis/api/common";
 
 const ProductList = () => {
-  const navigator = useNavigate();
+  const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [location, setLocation] = useState();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await ListProductAPI();
-        setData(result.data);
-        console.log(location);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
 
-    fetchData();
-  }, [location]);
+  const loginMemberhasLocation = async () => {
+    try {
+      await loginMemberhasLocationAPI().then((data) => {
+        console.log(data);
+        if (!data) {
+          console.log(data);
+          navigate("/common/location");
+        }
+      });
+    } catch (error) {
+      navigate("/common/location", { state: { init: true } });
+    }
+  };
+  const listProduct = async () => {
+    try {
+      const result = await ListProductAPI();
+      setData(result.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    // dong이 변경된 후에 실행될 작업
+    loginMemberhasLocation();
+  }, []);
+  useEffect(() => {
     console.log(location);
 
-    // dong이 변경된 후에 데이터를 다시 불러와서 처리
-    const fetchDataAfterDongUpdate = async () => {
-      try {
-        const result = await ListProductAPI();
-        setData(result.data);
-      } catch (error) {
-        console.error("Error fetching data after dong update:", error);
-      }
-    };
-
-    fetchDataAfterDongUpdate();
+    listProduct();
   }, [location]);
   return (
     <>
