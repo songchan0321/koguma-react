@@ -11,6 +11,7 @@ import ProductTopBar from "../../component/product/ProductTopBar";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 import { useLocation } from "react-router-dom";
 import BottomBar from "../../component/common/BottomBar";
+import ProductSearchList from "../product/ProductSearchList";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -50,7 +51,7 @@ const SearchTab = () => {
   const { state } = useLocation();
   const query = state ? state.query : "defaultQuery";
   const [value, setValue] = React.useState(0);
-
+  console.log(state);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -90,7 +91,9 @@ const SearchTab = () => {
           onChangeIndex={handleChangeIndex}
         >
           <TabPanel value={value} index={0} dir={theme.direction}>
-            Item One
+            <>
+              <ProductSearchList query={query} />
+            </>
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
             Item Two

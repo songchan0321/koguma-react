@@ -7,11 +7,9 @@ import {
   Box,
   IconButton,
   Typography,
+  Avatar,
 } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"; // 안채워진 하트
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { formatMoney } from "../../apis/services/product";
 import TradeStateButton from "./TradeStateButton";
 import { formatTimeAgo } from "../../apis/utils/timestamp";
@@ -34,15 +32,15 @@ const ContainingProduct = ({ data }) => {
       <Card id={data.id} sx={{ maxWidth: "100%" }}>
         <CardHeader
           avatar={
-            <CardMedia
-              component="img"
-              height="120"
-              image={
+            <Avatar
+              alt="/photo.png"
+              src={
                 data.imageDTO && data.imageDTO.length > 0
                   ? data.imageDTO[0].url
                   : "/photo.png"
               }
-              alt="/photo.png"
+              variant="square"
+              sx={{ width: 100, height: 100, mr: 1 }}
             />
           }
           title={

@@ -6,10 +6,6 @@ import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -21,7 +17,7 @@ import { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import SearchDrawer from "../common/SearchDrawer";
 import { getAlertCountAPI } from "../../apis/api/alert";
-const ProductTopBar = ({ location, setLocation }) => {
+const ProductTopBar = ({ location, setLocation, handleCategory }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
@@ -78,13 +74,6 @@ const ProductTopBar = ({ location, setLocation }) => {
           },
         }}
       >
-        {/* {location && (
-          <LocationBox
-            variant="text"
-            location={location}
-            setLocation={setLocation}
-          />
-        )} */}
         <LocationBox
           variant="text"
           location={location}
@@ -116,8 +105,12 @@ const ProductTopBar = ({ location, setLocation }) => {
           <DialogTitle>카테고리 선택</DialogTitle>
           <DialogContent sx={{ overflowY: "auto", maxHeight: "300px" }}>
             <DialogContentText>
-              {categorys.map((category) => (
-                <MenuItem key={category} value={category}>
+              {categorys.map((category, index) => (
+                <MenuItem
+                  key={category}
+                  value={category}
+                  onClick={() => handleCategory(category, index + 1)}
+                >
                   {category}
                 </MenuItem>
               ))}

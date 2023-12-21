@@ -5,16 +5,11 @@ import { useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
-  CardMedia,
   CardContent,
-  CardActions,
-  Collapse,
   Avatar,
   IconButton,
   Typography,
 } from "@mui/material";
-import { red } from "@mui/material/colors";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import GetProductBottomBar from "./GetProductBottomBar";
 import { getProductAPI, validProductAPI } from "../../apis/api/Product";
 import LoadingProgress from "../../component/common/LoadingProgress";
@@ -52,7 +47,6 @@ const ProductGet = () => {
       try {
         const result = await getProductAPI(productId);
         setData(result);
-        console.log(result);
         const valid = await validProductAPI(productId);
         setIsMine(valid);
       } catch (error) {
@@ -134,7 +128,7 @@ const ProductGet = () => {
       ) : (
         <LoadingProgress />
       )}
-      <MarginEmpty />
+      <MarginEmpty value={100} />
     </>
   );
 };
