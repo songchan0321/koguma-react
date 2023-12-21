@@ -4,22 +4,12 @@ import { useNavigate, NavLink } from "react-router-dom";
 import {
   Card,
   CardHeader,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Collapse,
   Avatar,
   Box,
   IconButton,
   Typography,
   Checkbox,
 } from "@mui/material";
-import { red } from "@mui/material/colors";
-
-import FeedbackIcon from "@mui/icons-material/Feedback";
-import FavoriteIcon from "@mui/icons-material/Favorite"; //채워진 하트
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"; // 안채워진 하트
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import LikeCheckButton from "../../component/common/LikeCheckButton";
 import LoadingProgress from "../common/LoadingProgress";
 import { formatMoney } from "../../apis/services/product";
@@ -105,7 +95,6 @@ const ListContainingProduct = ({ data, index, type }) => {
                                   type={{ tradeStatus: prod.tradeStatus }}
                                 />
                               )}
-                              &nbsp;
                               {formatMoney(prod.productDTO.price)}원
                             </Typography>
                           </div>
@@ -201,7 +190,6 @@ const ListContainingProduct = ({ data, index, type }) => {
                                   type={{ tradeStatus: prod.tradeStatus }}
                                 />
                               )}
-                              &nbsp;
                               {formatMoney(prod.price)}원
                             </Typography>
                           </div>

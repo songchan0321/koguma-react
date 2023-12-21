@@ -113,10 +113,17 @@ const ProductGet = () => {
               <b>{data.title}</b>
             </Typography>
             <Typography variant="caption" color="text.secondary" sx={{ mb: 3 }}>
-              {data.categoryName}&nbsp; {formatTimeAgo(data.regDate)}
+              {data.categoryName} · {formatTimeAgo(data.regDate)}
             </Typography>
-            <Typography variant="body2" color="textPrimary" sx={{ mt: 3 }}>
+            <Typography
+              variant="body2"
+              color="textPrimary"
+              sx={{ mt: 3, mb: 1 }}
+            >
               {data.content}
+            </Typography>
+            <Typography variant="caption" color="text.secondary" sx={{ mb: 3 }}>
+              관심 {data.likeCount} · 조회 {data.views}
             </Typography>
           </CardContent>
           <GetProductBottomBar
@@ -128,7 +135,7 @@ const ProductGet = () => {
       ) : (
         <LoadingProgress />
       )}
-      <MarginEmpty value={100} />
+      <MarginEmpty value={300} />
     </>
   );
 };
