@@ -114,6 +114,10 @@ const AppRouter = ({ messageAlertHandler }) => {
           sx={{ position: "absolute", top: 0, mt: "2rem" }}
           onClose={handleClose}
           TransitionComponent={transition}
+          onClick={() => {
+            handleClose();
+            navigator("/alert/list");
+          }}
           message="I love snacks"
           key={transition ? transition.name : ""}
         >
