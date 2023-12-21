@@ -1,19 +1,37 @@
-import { Typography } from "@mui/material";
+import { AppBar, Divider, Toolbar, Typography } from "@mui/material";
 import Back from "./Back";
+import Exit from "./Exit";
 
 const TopBarAddClub = ({ children, color = "none" }) => {
   return (
-    <Typography
-      variant="h6"
-      color={color}
-      // ...option
-      component="h2"
-      sx={{ textAlign: "center", mb: 1.5 }}
-    >
-      <Back />
-      {/* <i>Pay</i> */}
-      {children}
-    </Typography>
+    <>
+      <AppBar
+        position="fixed"
+        style={{
+          backgroundColor: "white",
+          zIndex: 1000,
+          boxShadow: "none", // 그림자 없애기
+        }}
+      >
+        <Toolbar
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Typography
+            variant="h6"
+            component="div"
+            color={color ? color : "black"}
+          >
+            <Exit />
+            {/* <i>Pay</i> */}
+            {children}
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Divider style={{ backgroundColor: "gray", height: 2 }} />
+    </>
   );
 };
 
