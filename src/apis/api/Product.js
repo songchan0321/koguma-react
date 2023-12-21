@@ -325,3 +325,14 @@ export const getMyReviewIdAPI = async (product) => {
     console.log(err);
   }
 };
+
+export const getMyReviewIdByProductIdAPI = async (productId) => {
+  try {
+    const { data } = await authInstance.get(
+      `/review/get/my/reviewid/${productId}`
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
