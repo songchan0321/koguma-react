@@ -101,6 +101,7 @@ const ProductTopBar = ({ location, setLocation }) => {
           </Button>
           <Button onClick={() => navigate("/alert/list")}>
             <Badge
+              invisible={alertCount > 0}
               variant="dot"
               color="error"
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
