@@ -6,10 +6,7 @@ import GetPost from "./GetPost";
 import CommunityByMember from "./CommunityByMember";
 import UpdatePost from "./UpdatePost";
 import ListPostByCategory from "./ListPostByCategory";
-<<<<<<< Updated upstream
 import ListPostByView from "./ListPostByView";
-=======
->>>>>>> Stashed changes
 
 const CommunityRouter = () => {
   return (
@@ -22,16 +19,11 @@ const CommunityRouter = () => {
 
       <Route path="list/community" element={<CommunityByMember />} />
 
-<<<<<<< Updated upstream
       <Route path="list/category/View" element={<ListPostByView />} />
       <Route
         path="list/category/:categoryId"
         element={<ListPostByCategory />}
       />
-=======
-      {/* <Route path="Views" element={<ListPostViews />} /> */}
-      <Route path="list/category/:category" element={<ListPostByCategory />} />
->>>>>>> Stashed changes
     </Routes>
   );
 };

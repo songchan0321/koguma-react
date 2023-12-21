@@ -5,17 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9194628-c3e2-496e-8bab-64cb2d20ca51" name="Changes" comment="feat : UpdateMember 페이지 추가&#10;&#10;페이지 추가 및 로직 추가&#10;&#10;2023.12.11 / 21:22 / SIC">
-      <change afterPath="$PROJECT_DIR$/src/apis/api/community.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/component/community/PostForm.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/community/GetPost.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppRouter.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppRouter.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/community/AddPostTopBar.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/community/ListCategoryForSelect.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/community/ListCategoryForSelect.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/community/AddPost.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/community/AddPost.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/community/CommunityRouter.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/community/CommunityRouter.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/community/ListPost.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/community/ListPost.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,26 +42,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "hsc",
-    "last_opened_file_path": "C:/intelliJWorkspace/koguma-react",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.general",
-    "ts.external.directory.path": "/Applications/IntelliJ IDEA.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;hsc&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/intelliJWorkspace/koguma-react&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/IntelliJ IDEA.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="npm.npm start">
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
       <method v="2" />
@@ -97,6 +88,7 @@
       <workItem from="1701928470953" duration="4509000" />
       <workItem from="1702254249900" duration="30764000" />
       <workItem from="1702341052226" duration="11754000" />
+      <workItem from="1703145714922" duration="369000" />
     </task>
     <task id="LOCAL-00001" summary="feat : AddMember, Profile, AddMemberComplete 페이지 추가&#10;&#10;페이지 추가 및 Form 추가&#10;&#10;2023.12.11 / 16:19 / SIC">
       <option name="closed" value="true" />
