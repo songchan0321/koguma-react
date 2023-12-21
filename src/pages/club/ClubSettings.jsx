@@ -34,17 +34,6 @@ const ClubSettings = () => {
               <div style={backgroundStyle}>
                 <Typography variant="body1">모임 운영</Typography>
               </div>
-
-              <div style={backgroundStyle}></div>
-              <div style={backgroundStyle}>
-                <p>내 프로필 보기</p>
-              </div>
-              <div style={backgroundStyle}>
-                <p>내 프로필 보기</p>
-              </div>
-              <div style={backgroundStyle}>
-                <p>내 프로필 보기</p>
-              </div>
             </Paper>
           </List>
         </div>
