@@ -54,7 +54,7 @@ const DeleteMemberForm = ({ onSubmit }) => {
         <Grid container spacing={2}>
             {!isConfirmationSent ? (
                 <>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sx={{ marginTop: 30 }}>
                         <TextField
                             label="휴대폰 번호"
                             variant="outlined"
@@ -83,6 +83,7 @@ const DeleteMemberForm = ({ onSubmit }) => {
                             fullWidth
                             value={confirmationCode}
                             onChange={(e) => setConfirmationCode(e.target.value)}
+
                         />
                     </Grid>
                     <Grid item xs={12}>

@@ -55,25 +55,27 @@ const UpdateMember = () => {
                     ) : (
                         // 로딩이 완료되면 멤버 이미지 표시
                         member && (
-                            <img
-                                src={member.profileURL}
-                                alt="Profile"
-                                style={{ width: "20%", borderRadius: "20%" }}
-                            />
+                            <div style={{ textAlign: 'center', marginTop: '50px' }}>
+                                <img src={member.profileURL} alt="" style={{ width: "40%", marginTop: '30px' }} />
+                                <div></div>
+
+                            </div>
                         )
                     )}
                 </Grid>
                 <Grid item xs={12} md={8}>
                     {/* 닉네임 */}
-                    <Typography variant="h4" gutterBottom>
-                        {/* 로딩 중일 때 CircularProgress 표시 */}
-                        {loading ? (
-                            <CircularProgress size={20} />
-                        ) : (
-                            // 로딩이 완료되면 멤버 닉네임 표시
-                            member?.nickname
-                        )}
-                    </Typography>
+                    <div style={{ textAlign: 'center' }}>
+                        <Typography variant="h4" gutterBottom>
+                            {/* 로딩 중일 때 CircularProgress 표시 */}
+                            {loading ? (
+                                <CircularProgress size={20} />
+                            ) : (
+                                // 로딩이 완료되면 멤버 닉네임 표시
+                                member?.nickname
+                            )}
+                        </Typography>
+                    </div>
                     {/* UpdateMemberForm 사용 */}
                     <UpdateMemberForm member={member} onUpdateSuccess={handleUpdateSuccess} />
                 </Grid>

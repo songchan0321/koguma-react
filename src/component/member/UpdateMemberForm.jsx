@@ -1,18 +1,20 @@
-// UpdateMemberForm.jsx
-
 import React, { useState, useEffect } from "react";
 import { TextField, Button, Input } from "@mui/material";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Typography from '@mui/material/Typography';
 import { authInstance } from "../../apis/utils/instance";
-import {memberImageAddAPI} from "../../apis/api/member";
+import { memberImageAddAPI } from "../../apis/api/member";
 import Back from "../../component/common/Back";
+import BottomBar from "../../component/common/BottomBar";
 
 const UpdateMemberForm = ({ member, onUpdateSuccess }) => {
     const [newNickname, setNewNickname] = useState(member?.nickname || "");
-    const [imageId, setImageId] = useState(null);
-    const [file, setFile] = useState(null); // 추가된 부분: 업로드할 파일 상태
+    const [imageId, setImageId] = useState(member?.profileURL || null);
+    const [file, setFile] = useState(null);
 
     useEffect(() => {
         setNewNickname(member?.nickname || "");
+        setImageId(member?.profileURL || null);
     }, [member]);
 
     const handleNicknameChange = (e) => {
@@ -21,14 +23,13 @@ const UpdateMemberForm = ({ member, onUpdateSuccess }) => {
 
     const handleUpdate = async () => {
         try {
-            console.log(newNickname,imageId)
             const response = await authInstance.put("/member/update", {
                 nickname: newNickname,
                 profileURL: imageId,
             });
 
             if (response.status === 200) {
-                onUpdateSuccess(imageId); // onUpdateSuccess에 imageId 전달
+                onUpdateSuccess(imageId);
             } else {
                 console.error("업데이트 실패");
             }
@@ -59,56 +60,41 @@ const UpdateMemberForm = ({ member, onUpdateSuccess }) => {
         }
     };
 
-    const handleImageUpdate = async () => {
-        try {
-            const response = await memberImageAddAPI(imageId);
-            console.log(response)
-        } catch (error) {
-            console.error("이미지 등록 중 오류 발생: ", error);
-        }
-    };
-
     return (
         <div>
+            <BottomBar />
             <Back />
+            <div style={{ textAlign: 'center' }}>
+
+                <div style={{ marginTop: 10 }}>
+                    <label htmlFor="upload-input">
+                        <Input
+                            id="upload-input"
+                            type="file"
+                            style={{ display: 'none' }}
+                            onChange={(e) => setFile(e.target.files[0])}
+                        />
+                        <Button
+                            color="secondary"
+                            variant="contained"
+                            component="label"
+                            htmlFor="upload-input"
+                            startIcon={<CloudUploadIcon />}
+                            onClick={handleImageUpload}
+                            style={{ fontSize: '12px' }}
+                        >
+
+                        </Button>
+                    </label>
+                </div>
+            </div>
+
             <TextField
                 label="새 닉네임"
                 value={newNickname}
                 onChange={handleNicknameChange}
+                style={{ width: '100%', marginTop: '10px' }}
             />
-
-            {/* 이미지 업로드 */}
-            <div style={{ marginTop: 10 }}>
-                <Input
-                    type="file"
-                    onChange={(e) => setFile(e.target.files[0])}
-                />
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={handleImageUpload}
-                >
-                    프로필 이미지 업로드
-                </Button>
-            </div>
-
-            {/* 이미지 수정 */}
-            {imageId && (
-                <div style={{ marginTop: 10 }}>
-                    <TextField
-                        label="이미지 ID 등록"
-                        value={imageId}
-                        onChange={(e) => setImageId(e.target.value)}
-                    />
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={handleImageUpdate}
-                    >
-                        이미지 등록
-                    </Button>
-                </div>
-            )}
 
             <div style={{ marginTop: 10 }}>
                 <Button
@@ -116,13 +102,11 @@ const UpdateMemberForm = ({ member, onUpdateSuccess }) => {
                     color="secondary"
                     onClick={handleUpdate}
                 >
-                    업데이트
+                    변경
                 </Button>
             </div>
         </div>
-
     );
-
 };
 
 export default UpdateMemberForm;
