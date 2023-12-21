@@ -5,16 +5,6 @@ import PostForm from "../../component/community/PostForm";
 import { addPostAPI } from "../../apis/api/community";
 
 const AddPost = () => {
-  const location = useLocation();
-  const [addPost, setAddPost] = useState([]);
-
-  // useEffect(() => {
-  //   async () => {
-  //     await addPostAPI().then(({ result }) => {
-  //       setAddPost(result);
-  //     });
-  //   };
-  // });
   return (
     <Fragment>
       <PostForm />

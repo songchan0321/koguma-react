@@ -1,103 +1,64 @@
 import React, { Fragment, useState } from "react";
+<<<<<<< Updated upstream
+import ListComment from "../../component/community/ListCommment";
+import DetailOption from "../../component/community/DetailOption";
+import GetPostForm from "../../component/community/GetPostForm";
+
+import Back from "../../component/common/Back";
+
+import MarginEmpty from "../../component/payment/MarginEmpty";
+import { Divider, Paper } from "@mui/material";
+
+=======
 import Button from "@mui/material/Button";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
-import CommentList from "../../component/community/CommmentList";
+import ListComment from "../../component/community/ListCommment";
+import DetailOption from "../../component/community/DetailOption";
+import GetPostForm from "../../component/community/GetPostForm";
+import LoadingProgress from "../../component/common/LoadingProgress";
+import Back from "../../component/common/Back";
+import OtherProfileForm from "../../component/member/OtherProfileForm";
+import MarginEmpty from "../../component/payment/MarginEmpty";
+import { Grid, TextField } from "@mui/material";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+>>>>>>> Stashed changes
+import AddComment from "../../component/community/AddComment";
 
 const GetPost = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleMoreVertClick = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleEdit = () => {
-    // Edit logic here
-    console.log("Edit clicked");
-    handleModalClose();
-  };
-
-  const handleDelete = () => {
-    // Delete logic here
-    console.log("Delete clicked");
-    handleModalClose();
-  };
-
-  const handleReport = () => {
-    // Report logic here
-    console.log("Report clicked");
-    handleModalClose();
-  };
+  const [loading, setLoading] = useState(true);
 
   return (
     <Fragment>
-      <div>GetPost</div>
-      <Button variant="text" color="secondary" onClick={handleMoreVertClick}>
-        <MoreVertIcon />
-      </Button>
-
-      <Modal
-        open={isModalOpen}
-        onClose={handleModalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+<<<<<<< Updated upstream
+      <Paper
+        sx={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1100 }}
+        elevation={3}
       >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            게시물 옵션
-          </Typography>
-
-          <Button
-            variant="contained"
-            onClick={handleEdit}
-            color="secondary"
-            component={Link}
-            to="/post/update"
-          >
-            수정
-          </Button>
-
-          <Button
-            variant="contained"
-            onClick={handleDelete}
-            color="secondary"
-            component={Link}
-            to="/post/delete"
-          >
-            삭제
-          </Button>
-
-          <Button
-            variant="contained"
-            onClick={handleReport}
-            color="secondary"
-            component={Link}
-            to="/common/" //신고로 Navigation 연결
-          >
-            신고
-          </Button>
-        </Box>
-      </Modal>
-      <CommentList />
+        <Back />
+        <DetailOption
+          editTo="update"
+          reportTo="/member/report/add"
+          title="게시글 관리"
+        />
+      </Paper>
+      <Divider />
+      <MarginEmpty />
+      <GetPostForm />
+      <Divider />
+      <AddComment />
+      <Divider />
+=======
+      <Back />
+      <DetailOption editTo="update" reportTo="common/" title="게시글 옵션" />
+      <MarginEmpty />
+      <GetPostForm />
+      <AddComment />
+>>>>>>> Stashed changes
+      <ListComment />
     </Fragment>
   );
 };

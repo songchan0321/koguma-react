@@ -14,15 +14,32 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
+import { Badge, Drawer, Paper } from "@mui/material";
+import LocationBox from "../location/LocationBox";
 
-const PostTopBar = () => {
-  const [dong, setDong] = React.useState("");
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-
-  const handleChange = (event) => {
-    setDong(event.target.value);
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import SearchDrawer from "../common/SearchDrawer";
+const PostTopBar = ({ location, setLocation }) => {
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const toggleDrawer = (open) => {
+    setIsDrawerOpen(open);
   };
-
+  const categories = [
+<<<<<<< Updated upstream
+    { id: "view", name: "인기글" },
+=======
+    { id: "views", name: "인기글" },
+>>>>>>> Stashed changes
+    { id: 23, name: "동네소식" },
+    { id: 24, name: "동네맛집" },
+    { id: 25, name: "동네질문" },
+    { id: 26, name: "취미생활" },
+    { id: 27, name: "일상" },
+    { id: 28, name: "분실/실종" },
+  ];
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
@@ -31,66 +48,72 @@ const PostTopBar = () => {
     setIsModalOpen(false);
   };
 
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        "& > *": {
-          m: 1,
-        },
-      }}
-    >
-      <FormControl fullWidth sx={{ minWidth: 120 }}>
-        <InputLabel htmlFor="demo-simple-select-label">비전이동</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={dong}
-          onChange={handleChange}
-          input={<OutlinedInput label="대표동" id="demo-simple-select-label" />}
-          sx={{
-            fontSize: 18,
-            padding: "8px",
-            "& .MuiSelect-outlined": { borderBottom: "none" },
-          }}
-          inputProps={{ maxLength: 5 }} // 최대 5글자 설정
-        >
-          <MenuItem value={"비전이동"}>비전이동</MenuItem>
-          <MenuItem value={"송삼동"}>송삼동</MenuItem>
-          <MenuItem value={"고기동"}>고기동</MenuItem>
-        </Select>
-      </FormControl>
-      <ButtonGroup variant="text" aria-label="text button group">
-        <Button onClick={handleModalOpen}>
-          <MenuOpenIcon sx={{ fontSize: 30 }} color="secondary" />
-        </Button>
-        {/* 통합 검색 완성 후  Navi */}
-        <Button>
-          <SearchIcon sx={{ fontSize: 30 }} color="secondary" />
-        </Button>
-        <Button>
-          <NotificationsNoneIcon sx={{ fontSize: 30 }} color="secondary" />
-        </Button>
-      </ButtonGroup>
+  const handleCategorySelect = (selectedCategoryId) => {
+    console.log(selectedCategoryId);
+    // useNavigate를 사용하여 페이지 이동
+<<<<<<< Updated upstream
+    navigate(`/post/list/category/${selectedCategoryId.id}`);
+=======
+    navigate(`/post/list/category/${selectedCategoryId}`);
+>>>>>>> Stashed changes
+  };
 
-      {/* Modal */}
-      <Dialog open={isModalOpen} onClose={handleModalClose}>
-        <DialogTitle>게시글 카테고리</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            <MenuItem>인기글</MenuItem>
-            <MenuItem>동네소식</MenuItem>
-            <MenuItem>동네맛집</MenuItem>
-            <MenuItem>동네질문</MenuItem>
-            <MenuItem>취미생활</MenuItem>
-            <MenuItem>일상</MenuItem>
-            <MenuItem>분실/실종</MenuItem>
-          </DialogContentText>
-        </DialogContent>
-      </Dialog>
-    </Box>
+  return (
+    <Paper
+      sx={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1100 }}
+      elevation={3}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          "& > *": {
+            m: 1,
+          },
+        }}
+      >
+        <LocationBox
+          variant="text"
+          location={location}
+          setLocation={setLocation}
+        />
+        <ButtonGroup variant="text" aria-label="text button group">
+          <Button onClick={handleModalOpen}>
+            <MenuOpenIcon sx={{ fontSize: 30 }} color="secondary" />
+          </Button>
+          {/* 통합 검색 완성 후  Navi */}
+          <Button onClick={() => toggleDrawer(true)}>
+            <SearchIcon sx={{ fontSize: 30 }} color="secondary" />
+          </Button>
+          <Button onClick={() => navigate("/alert/list")}>
+            <NotificationsNoneIcon sx={{ fontSize: 30 }} color="secondary" />
+          </Button>
+        </ButtonGroup>
+
+        {/* Modal */}
+        <Dialog open={isModalOpen} onClose={handleModalClose}>
+          <DialogTitle>카테고리 선택</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              {categories.map((category) => (
+                <MenuItem
+                  key={category.id}
+<<<<<<< Updated upstream
+                  onClick={() => handleCategorySelect(category)}
+=======
+                  onClick={() => handleCategorySelect(category.id)}
+>>>>>>> Stashed changes
+                >
+                  {category.name}
+                </MenuItem>
+              ))}
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
+      </Box>
+      <SearchDrawer open={isDrawerOpen} toggleDrawer={toggleDrawer} />
+    </Paper>
   );
 };
 

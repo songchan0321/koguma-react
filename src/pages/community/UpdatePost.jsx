@@ -5,18 +5,18 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Fragment, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Fragment, useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from "@mui/material/Button";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import Back from "../common/Back";
-import { Typography, Grid } from "@mui/material";
-import { addPostAPI } from "../../apis/api/community";
-import { useNevigate } from "react-router-dom";
 
-const PostForm = ({ text }) => {
+import { Typography, Grid } from "@mui/material";
+import { addPostAPI, updatePostAPI } from "../../apis/api/community";
+import Back from "../../component/common/Back";
+
+const UpdatePost = () => {
   const categorys = [
     "동네소식",
     "동네맛집",
@@ -25,10 +25,10 @@ const PostForm = ({ text }) => {
     "일상",
     "분실/실종",
   ];
-
+  const { postId } = useParams();
   const navigate = useNavigate();
 
-  //Data 양식
+  // Data 양식
   const [formData, setFormData] = useState({
     categoryId: 0,
     categoryName: "",
@@ -43,7 +43,6 @@ const PostForm = ({ text }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(e.target);
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
@@ -51,18 +50,12 @@ const PostForm = ({ text }) => {
   };
 
   const handleSubmit = async (event) => {
-    //이미지 추가사항 적용해야함
-
-    //Data
     try {
-      const { data } = await addPostAPI(formData);
-      console.log(data);
-
-      const postId = data.postId;
-
-      // navigate(`/post/get/${postId}`);
+      const { data } = await updatePostAPI(postId, formData);
+      const updatedPostId = data.postId;
+      navigate(`/post/${updatedPostId}`);
     } catch (error) {
-      console.error("Error Point : addPostAPI", error);
+      console.error("Error Point: updatePostAPI", error);
     }
   };
 
@@ -75,6 +68,27 @@ const PostForm = ({ text }) => {
     </Button>,
   ];
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const postData = await updatePostAPI(postId);
+        setFormData({
+          categoryName: postData.categoryName,
+          title: postData.title,
+          content: postData.content,
+          latitude: postData.latitude,
+          longitude: postData.longitude,
+          views: postData.views,
+        });
+        console.log(postData);
+      } catch (error) {
+        console.error("Error fetching post data:", error);
+      }
+    };
+
+    fetchData();
+  }, [postId]);
+
   return (
     <Fragment>
       <Back />
@@ -84,7 +98,7 @@ const PostForm = ({ text }) => {
         component="h2"
         sx={{ textAlign: "center", mb: 1.5 }}
       >
-        <i>동네생활 글쓰기</i>
+        <i>게시글 수정</i>
 
         <Button
           style={{
@@ -95,8 +109,8 @@ const PostForm = ({ text }) => {
           }}
           variant="text"
           onClick={handleSubmit}
-          // component={Link}
-          // to="/post/get"
+          component={Link}
+          to={`/post/${postId}`}
         >
           완료
         </Button>
@@ -112,11 +126,6 @@ const PostForm = ({ text }) => {
             onChange={(event) => {
               const selectedCategory = event.target.value;
               const categoryIndex = categorys.indexOf(selectedCategory);
-              console.log(
-                `Selected Category: ${selectedCategory}, CategoryId: ${
-                  categoryIndex + 23
-                }`
-              );
               setFormData((prevFormData) => ({
                 ...prevFormData,
                 categoryName: selectedCategory,
@@ -138,7 +147,7 @@ const PostForm = ({ text }) => {
       <Box
         component="form"
         sx={{
-          "& > :not(style)": { m: 1, width: "100%" }, // width 값을 "100%"로 변경
+          "& > :not(style)": { m: 1, width: "100%" },
         }}
         noValidate
         autoComplete="off"
@@ -155,7 +164,7 @@ const PostForm = ({ text }) => {
       <Box
         component="form"
         sx={{
-          "& > :not(style)": { m: 1, width: "100%" }, // width 값을 "100%"로 변경
+          "& > :not(style)": { m: 1, width: "100%" },
         }}
         noValidate
         autoComplete="off"
@@ -174,9 +183,9 @@ const PostForm = ({ text }) => {
       <Box
         sx={{
           display: "flex",
-          alignItems: "flex-start", // 왼쪽으로 정렬되도록 변경
-          justifyContent: "flex-end", // 하단으로 정렬되도록 변경
-          position: "fixed", // 고정 위치로 변경
+          alignItems: "flex-start",
+          justifyContent: "flex-end",
+          position: "fixed",
           bottom: 0,
           left: 0,
           "& > *": {
@@ -194,4 +203,5 @@ const PostForm = ({ text }) => {
     </Fragment>
   );
 };
-export default PostForm;
+
+export default UpdatePost;

@@ -5,28 +5,18 @@ import AddIcon from "@mui/icons-material/Add";
 import PostTopBar from "../../component/community/PostTopBar";
 import BottomBar from "../../component/common/BottomBar";
 import { authInstance } from "../../apis/utils/instance";
+import PostThumbnail from "../../component/community/PostThumbnail";
+import { callPostListAPI } from "../../apis/api/community";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const ListPost = () => {
-  const [callPostList, setListPost] = useState([]);
-
-  //axios를 통해 게시판 목록을 조회하는 함수
-  const getListPost = async () => {
-    const resp = (await authInstance.get("//localhost:8080/post/list")).data;
-    setListPost(resp.data);
-    console.log(resp.data);
-  };
-
-  useEffect(() => {
-    getListPost();
-  }, []);
-
   return (
     <Fragment>
-      <div>
-        <PostTopBar />
-      </div>
+      <PostTopBar />
+      <MarginEmpty />
+      <PostThumbnail callAPI={callPostListAPI} />
 
-      <div style={{ position: "absolute", bottom: "80px", right: "30px" }}>
+      <div style={{ position: "fixed", bottom: "80px", right: "30px" }}>
         <Fab
           variant="contained"
           color="secondary"
@@ -37,6 +27,7 @@ const ListPost = () => {
           <AddIcon />
         </Fab>
       </div>
+      <MarginEmpty />
       <BottomBar />
     </Fragment>
   );

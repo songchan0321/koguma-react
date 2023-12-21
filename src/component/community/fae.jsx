@@ -1,15 +1,20 @@
 import React, { useState } from "react";
-import { Box, Paper, Tab, Tabs, Typography } from "@mui/material";
-import Back from "../../component/common/Back";
-import PostThumbnail from "../../component/community/PostThumbnail";
-import {
-  callCommentedPostListByMemberAPI,
-  callPostListByMemberAPI,
-} from "../../apis/api/community";
-import BottomBar from "../../component/common/BottomBar";
-import MarginEmpty from "../../component/payment/MarginEmpty";
+import CategoryList from "../../component/club/CategoryList";
+import ClubListByCategory from "../../component/club/ClubListByCategory";
+import { Box, Divider, Paper, Tab, Tabs, Typography } from "@mui/material";
+
+import { useParams } from "react-router-dom";
+
+import MyClubList from "../../component/club/MyClubList";
+
+import MyClubPostList from "../../component/club/board/MyClubPostList";
+import Back from "../common/Back";
+import PostThumbnail from "./PostThumbnail";
+import { callPostListByMemberAPI } from "../../apis/api/community";
+import BottomBar from "../common/BottomBar";
 
 function CommnunityByMember() {
+  const { memberId } = useParams();
   const [myPostList, setMyPostList] = useState(false);
 
   const handleTabChange = (event, newValue) => {
@@ -32,7 +37,9 @@ function CommnunityByMember() {
         >
           <i>나의 동네생활</i>
         </Typography>
-
+      </Paper>
+      {/* 게시글/댓글 구분 탭  */}
+      <div>
         <div style={{ textAlign: "center" }}>
           <Box
             sx={{
@@ -43,7 +50,6 @@ function CommnunityByMember() {
               borderColor: "divider",
             }}
           >
-            <MarginEmpty />
             <Tabs
               value={myPostList ? 1 : 0} // 탭 구분 작성한 글 :댓글단 글
               onChange={handleTabChange} // 탭 변경
@@ -56,15 +62,23 @@ function CommnunityByMember() {
             </Tabs>
           </Box>
         </div>
-      </Paper>
-      <MarginEmpty value={"100px"} />
-      <div>
         <br />
-
+        {/* 댓글단 게시글  */}
         {myPostList ? (
-          <PostThumbnail callAPI={callCommentedPostListByMemberAPI} />
+          <div style={{ margin: "10px" }}>
+            <MyClubList />
+            <Divider />
+            <div style={{ margin: "10px" }}>
+              <MyClubPostList />
+            </div>
+          </div>
         ) : (
-          <PostThumbnail callAPI={callPostListByMemberAPI} />
+          //현재 접속 맴버 아이디로 댓글을 뽑고 거기서 postId만 넘겨 출력?
+          // 내가 작성한 게시글
+          <PostThumbnail
+            callAPI={callPostListByMemberAPI}
+            callParam={memberId}
+          />
         )}
         <BottomBar />
       </div>
