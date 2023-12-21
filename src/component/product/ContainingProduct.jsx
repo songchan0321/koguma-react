@@ -66,7 +66,6 @@ const ContainingProduct = ({ data }) => {
                         type={{ tradeStatus: data.tradeStatus }}
                       />
                     )}
-                    &nbsp;
                     {formatMoney(data.price)}원
                   </Typography>
                 </div>

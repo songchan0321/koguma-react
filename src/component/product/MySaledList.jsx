@@ -146,7 +146,6 @@ const MyList = ({
                               type={{ tradeStatus: prod.tradeStatus }}
                             />
                           )}
-                          &nbsp;
                           {formatMoney(prod.price)}원
                         </Typography>
                       </div>
