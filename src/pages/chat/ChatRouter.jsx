@@ -4,6 +4,7 @@ import { useIsLoginState } from "../../context/LoginContextProvider";
 import ChatRoomList from "./ListChatRoom";
 import GetChatRoom from "./GetChatRoom";
 import NewChatRoom from "./NewChatRoom";
+import TestBubble from "../../component/chat/bubble/TestBubble";
 
 const ChatRouter = () => {
   const isLogin = useIsLoginState();
@@ -25,6 +26,7 @@ const ChatRouter = () => {
         path="/new"
         element={isLogin ? <NewChatRoom /> : <Navigate to="/common/login" />}
       />
+      <Route path="/test" element={<TestBubble />} />
     </Routes>
   );
 };
