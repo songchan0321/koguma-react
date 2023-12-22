@@ -203,7 +203,7 @@ const AddMemberForm = ({ onSubmit }) => {
                 paymentBalance: null,
                 paymentPw: null,
                 memberRoleType: "MEMBER",
-                image_URL: null,
+                profile_URL: "https://koguma.kr.object.ncloudstorage.com/image.webp",
             });
 
             if (response.status === 200) {

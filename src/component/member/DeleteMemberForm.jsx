@@ -1,15 +1,14 @@
-// DeleteMemberForm.jsx
-
 import React, { useState } from "react";
 import { TextField, Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { authInstance } from "../../apis/utils/instance";
+import { authInstance, defaultInstance } from "../../apis/utils/instance";
 
 const DeleteMemberForm = ({ onSubmit }) => {
     const navigate = useNavigate();
     const [phone, setPhone] = useState("");
     const [confirmationCode, setConfirmationCode] = useState("");
-    const [isConfirmationSent, setIsConfirmationSent] = useState(false);
+    const [confirmationStep, setConfirmationStep] = useState("sendConfirmation");
+    const [isSmsVerified, setIsSmsVerified] = useState(false);
 
     const handleSendConfirmation = async () => {
         try {
@@ -20,7 +19,23 @@ const DeleteMemberForm = ({ onSubmit }) => {
             // 인증번호가 성공적으로 전송되었다면 화면 전환을 막음
             if (response.status === 200) {
                 window.alert('인증번호가 발송되었습니다.');
-                setIsConfirmationSent(true);
+                setConfirmationStep("confirmCode");
+            }
+        } catch (error) {
+            console.error("오류 발생:", error);
+        }
+    };
+
+    const handleVerifyAuthNum = async () => {
+        try {
+            const response = await defaultInstance.post("/auth/verifySms", {
+                to: phone,
+                authNumber: confirmationCode,
+            });
+            console.log(response);
+            if (response.status === 200) {
+                setIsSmsVerified(true);
+                window.alert('휴대폰 인증 성공!');
             }
         } catch (error) {
             console.error("오류 발생:", error);
@@ -29,26 +44,23 @@ const DeleteMemberForm = ({ onSubmit }) => {
 
     const handleDeleteMember = async () => {
         try {
-            if (!isConfirmationSent) {
-                // 휴대폰 인증을 완료하지 않은 경우 알림 창 표시
-                window.alert('휴대폰 인증을 완료해야 합니다.');
+            if (!isSmsVerified) {
+                window.alert("휴대폰 인증이 필요합니다.");
                 return;
             }
+            const confirmed = window.confirm("정말로 회원 탈퇴하시겠습니까?");
+            if (confirmed) {
+                const response = await authInstance.put("/member/delete", { phone, confirmationCode });
 
-            // TODO: 서버에 회원 탈퇴 요청하는 API 호출
-            const response = await authInstance.post("/auth/verifySms", {
-                to: phone,
-                authNum: confirmationCode,
-            });
-
-            // 실제로는 서버 응답에 따른 로직을 추가해야 합니다.
-            if (response.status === 200) {
-                // 성공 시 부모 컴포넌트에서 전달받은 onSubmit 함수 호출
-                await onSubmit();
-            } else {
-                // 실패 시 에러 처리
-                console.error("회원 탈퇴 실패:", response.statusText);
-                window.alert("회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
+                // 실제로는 서버 응답에 따른 로직을 추가해야 합니다.
+                if (response.status === 200) {
+                    // 성공 시 부모 컴포넌트에서 전달받은 onSubmit 함수 호출
+                    await onSubmit();
+                } else {
+                    // 실패 시 에러 처리
+                    console.error("회원 탈퇴 실패:", response.statusText);
+                    window.alert("회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
+                }
             }
         } catch (error) {
             console.error("오류 발생:", error);
@@ -58,7 +70,7 @@ const DeleteMemberForm = ({ onSubmit }) => {
 
     return (
         <Grid container spacing={2}>
-            {!isConfirmationSent ? (
+            {confirmationStep === "sendConfirmation" && (
                 <>
                     <Grid item xs={12} sx={{ marginTop: 30 }}>
                         <TextField
@@ -80,9 +92,10 @@ const DeleteMemberForm = ({ onSubmit }) => {
                         </Button>
                     </Grid>
                 </>
-            ) : (
+            )}
+            {confirmationStep === "confirmCode" && (
                 <>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sx={{ marginTop: '250px' }}>
                         <TextField
                             label="인증 코드"
                             variant="outlined"
@@ -95,9 +108,19 @@ const DeleteMemberForm = ({ onSubmit }) => {
                         <Button
                             variant="contained"
                             color="secondary"
+                            onClick={handleVerifyAuthNum}
+                            fullWidth
+                        >
+                            인증 번호 확인
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button
+                            variant="contained"
+                            color="secondary"
                             onClick={handleDeleteMember}
                             fullWidth
-                            marginBottom='60px'
+                            style={{ marginBottom: '60px' }}
                         >
                             회원 탈퇴
                         </Button>
