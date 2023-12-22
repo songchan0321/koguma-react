@@ -30,6 +30,7 @@ const DetailOption = ({ editTo, deleteTo, reportTo, title }) => {
 
   const handleEdit = () => {
     console.log("수정 클릭");
+    console.log(postId);
     handleModalClose();
   };
 
@@ -39,8 +40,8 @@ const DetailOption = ({ editTo, deleteTo, reportTo, title }) => {
 
   const handleDeleteConfirm = async () => {
     try {
-      await deletePostAPI(postId, { activeFlag: false });
-      navigate("/post/list");
+      await deletePostAPI({ postId });
+      console.log(postId);
     } catch (error) {
       console.error("포스트 삭제 오류:", error);
     } finally {
@@ -91,7 +92,12 @@ const DetailOption = ({ editTo, deleteTo, reportTo, title }) => {
           >
             수정
           </Button>
-          <Button onClick={handleDelete} color="secondary">
+          <Button
+            onClick={handleDelete}
+            color="secondary"
+            component={Link}
+            // to={`/post/list`}
+          >
             삭제
           </Button>
           <Button

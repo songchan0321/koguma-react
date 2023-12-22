@@ -7,6 +7,7 @@ import CommunityByMember from "./CommunityByMember";
 import UpdatePost from "./UpdatePost";
 import ListPostByCategory from "./ListPostByCategory";
 import ListPostByView from "./ListPostByView";
+import DetailOption from "../../component/community/DetailOption";
 
 const CommunityRouter = () => {
   return (
@@ -15,7 +16,7 @@ const CommunityRouter = () => {
       <Route path="add" element={<AddPost />} />
       <Route path=":postId" element={<GetPost />} />
       <Route path=":postId/update" element={<UpdatePost />} />
-      {/* <Route path=":postId/delete" element={<DeletePost />} /> */}
+      <Route path=":postId/delete" element={<DetailOption />} />
 
       <Route path="list/community" element={<CommunityByMember />} />
 

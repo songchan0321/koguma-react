@@ -8,10 +8,8 @@ import {
   Box,
   Divider,
 } from "@mui/material";
-import DetailOption from "./DetailOption";
 import { useParams } from "react-router-dom";
 import ListReply from "./ListReply";
-import MarginEmpty from "../payment/MarginEmpty";
 import CommunityAavatarForm from "./CommunityAvatarFrom";
 import AddReply from "./AddReply";
 import CommentOption from "./CommentOption";
@@ -40,7 +38,7 @@ const GetComment = () => {
           <div key={comment.id}>
             <Grid container spacing={0}>
               <Grid item xs={12}>
-                <Card sx={{ maxWidth: "90%" }}>
+                <Card sx={{ maxWidth: "100%" }}>
                   <Box
                     sx={{
                       display: "flex",
@@ -55,7 +53,7 @@ const GetComment = () => {
                   </Box>
                   <CardContent sx={{ marginLeft: "30px", marginBottom: 0 }}>
                     <Typography variant="body1">{comment.content}</Typography>
-                    <ListReply />
+                    <ListReply commentId={comment.id} />
                     <AddReply commentId={comment.id} />
                     <Divider />
                   </CardContent>

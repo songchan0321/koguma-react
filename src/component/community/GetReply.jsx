@@ -6,15 +6,15 @@ import { useParams } from "react-router-dom";
 import CommunityAavatarForm from "./CommunityAvatarFrom";
 import CommentOption from "./CommentOption";
 
-const GetReply = () => {
+const GetReply = ({ commentId }) => {
   const [listReply, setListReply] = useState([]);
-  const { postId } = useParams();
-
+  // const { commentId } = useParams();
+  console.log(commentId);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await callReplyListAPI(postId);
-        console.log(data);
+        const data = await callReplyListAPI(commentId);
+        console.log(commentId);
         setListReply(data);
       } catch (err) {
         console.error(err);

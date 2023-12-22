@@ -93,11 +93,8 @@ export const updatePostAPI = async (postId, updateData) => {
   return data;
 };
 
-export const deletePostAPI = async (postId, updateData) => {
-  const { data } = await authInstance.put(
-    `${POST_API_URI}/${postId}/delete`,
-    updateData
-  );
+export const deletePostAPI = async (postId) => {
+  const { data } = await authInstance.put(`${POST_API_URI}/${postId}/delete`);
   return data;
 };
 
@@ -106,10 +103,14 @@ export const callCommentListAPI = async (postId) => {
   return data;
 };
 
-export const callReplyListAPI = async (postId) => {
+export const callReplyListAPI = async (commentId) => {
   const { data } = await authInstance.get(
-    `${COMMENT_API_URI}/list/reply/${postId}`
+    `${COMMENT_API_URI}/list/reply/${commentId}`,
+    {
+      id: commentId,
+    }
   );
+  console.log(data);
   return data;
 };
 

@@ -59,8 +59,6 @@ const PostForm = ({ text }) => {
       console.log(data);
 
       const postId = data.postId;
-
-      // navigate(`/post/get/${postId}`);
     } catch (error) {
       console.error("Error Point : addPostAPI", error);
     }

@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 
-import { Card, CardContent, Divider, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Divider,
+  Grid,
+  Typography,
+} from "@mui/material";
 
 import { callPostListAPI } from "../../apis/api/community";
 
@@ -38,9 +45,9 @@ const PostThumbnail = ({ callAPI, callParam }) => {
                 <Grid item xs={8}>
                   <PostContent>
                     {/* 선택한 카테고리 */}
-                    <Typography variant="body1" color="text.secondary">
+                    <Box variant="body3" color="text.secondary">
                       {post.categoryName}
-                    </Typography>
+                    </Box>
                     {/* 게시글 제목 */}
                     <Typography variant="body1">
                       {post.title.slice(0, 20)}
@@ -51,7 +58,7 @@ const PostThumbnail = ({ callAPI, callParam }) => {
                     </Typography>
                     {/* 대표 동 */}
                     <Typography variant="body2" color="text.secondary">
-                      {post.dong}
+                      {post.dong} · 조회 {post.views}
                     </Typography>
 
                     {/* 타임스탬프 추가 */}
