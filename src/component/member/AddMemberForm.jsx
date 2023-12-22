@@ -160,10 +160,10 @@ const AddMemberForm = ({ onSubmit }) => {
                 return;
             }
 
-            /*if (!isSmsVerified) {
+            if (!isSmsVerified) {
               window.alert("휴대폰 인증이 필요합니다.");
               return;
-            }*/
+            }
 
             if (!isAgeChecked) {
                 window.alert("개인정보 수집 및 이용 동의에 동의해 주세요.");

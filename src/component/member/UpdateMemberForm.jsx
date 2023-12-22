@@ -81,7 +81,7 @@ const UpdateMemberForm = ({ member, onUpdateSuccess }) => {
                             htmlFor="upload-input"
                             startIcon={<CloudUploadIcon />}
                             onClick={handleImageUpload}
-                            style={{ fontSize: '12px' }}
+                            style={{ fontSize: '5px' }}
                         >
 
                         </Button>
