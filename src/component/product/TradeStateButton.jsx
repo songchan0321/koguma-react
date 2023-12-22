@@ -8,6 +8,7 @@ const TradeStateButton = ({ type }) => {
       <Button
         color="success"
         variant="contained"
+        sx={{ mr: 1 }}
         style={{
           fontSize: "9px",
           height: "24px",
@@ -22,6 +23,7 @@ const TradeStateButton = ({ type }) => {
       <Button
         color="secondary"
         variant="contained"
+        sx={{ mr: 1 }}
         style={{
           fontSize: "9px",
           height: "24px",
@@ -36,6 +38,7 @@ const TradeStateButton = ({ type }) => {
       <Button
         color="secondary"
         variant="contained"
+        sx={{ mr: 1 }}
         style={{
           fontSize: "9px",
           height: "24px",

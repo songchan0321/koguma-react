@@ -1,12 +1,7 @@
-import {
-  Box,
-  Button,
-  Container,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import TopBarAddClub from "../../component/club/common/TopBarAddClub";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const AddClubNicknameForm = ({ onPrev, onNext, data }) => {
   const [formData, setFormData] = useState({
@@ -31,98 +26,80 @@ const AddClubNicknameForm = ({ onPrev, onNext, data }) => {
   };
 
   const handleNextClick = () => {
-    const nickname = document.getElementById("nickname").value;
-    const memberContent = document.getElementById("memberContent").value;
-    alert(nickname);
-    alert(memberContent);
+    // const nickname = document.getElementById("nickname").value;
+    // const memberContent = document.getElementById("memberContent").value;
 
-    alert(formData);
-    console.log(`handleNextClick 555`);
-    console.log(formData);
-    console.log(`handleNextClick 555`);
     onNext(formData);
   };
 
   return (
     <>
-      <div>
-        <Typography
-          variant="h5"
-          style={{ marginTop: "20px", marginLeft: "30px" }}
-        >
-          활동명을 설정해주세요 !
-        </Typography>
-        <Typography
-          variant="h6"
-          color="text.secondary"
-          style={{ marginTop: "20px", marginLeft: "30px" }}
-        >
-          활동명은 이 모임에서만 사용하는 닉네임 입니다.
+      <TopBarAddClub />
+      <MarginEmpty value={70} />
+      <div style={{ marginLeft: "30px" }}>
+        <Typography variant="h5">활동명을 설정해주세요 !</Typography>
+        <Typography variant="h6" color="text.secondary">
+          활동명은 이 모임만 사용하는 닉네임 입니다.
         </Typography>
 
-        <Container style={{ marginTop: "30px", marginLeft: "20px" }}>
-          <Typography variant="h6" style={{ marginLeft: "" }}>
-            활동명
-          </Typography>
-          <Box
-            sx={{
-              width: 300,
-              maxWidth: "100%",
-            }}
-          >
-            <TextField
-              fullWidth
-              label="활동명을 입력해주세요 ! "
-              id="nickname"
-              color="secondary"
-              value={formData.nickname}
-              onChange={handleInputChange}
-            />
-          </Box>
-        </Container>
+        <MarginEmpty value={20} />
+        <Typography variant="h6" style={{ marginLeft: "" }}>
+          활동명
+        </Typography>
 
-        <Container style={{ marginTop: "30px", marginLeft: "20px" }}>
-          <Typography variant="h6" style={{ marginLeft: "" }}>
-            활동명
-          </Typography>
-          <Box
-            sx={{
-              width: 300,
-              maxWidth: "100%",
-            }}
-          >
-            <TextField
-              fullWidth
-              label="자기소개  "
-              id="memberContent"
-              color="secondary"
-              value={formData.memberContent}
-              onChange={handleInputChange}
-            />
-          </Box>
-        </Container>
-
-        <Paper
-          sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
-          elevation={3}
+        <Box
+          sx={{
+            width: 300,
+            maxWidth: "100%",
+          }}
         >
-          <Button
-            variant="contained"
+          <TextField
+            fullWidth
+            label="활동명을 입력해주세요 ! "
+            id="nickname"
             color="secondary"
-            style={backButtonStyle}
-            onClick={handlePrevClick}
-          >
-            이전
-          </Button>
-          <Button
-            variant="contained"
+            value={formData.nickname}
+            onChange={handleInputChange}
+          />
+        </Box>
+
+        <MarginEmpty value={20} />
+
+        <Typography variant="h6" style={{ marginLeft: "" }}>
+          자기소개
+        </Typography>
+        <Box
+          sx={{
+            width: 300,
+            maxWidth: "100%",
+          }}
+        >
+          <TextField
+            fullWidth
+            label="자기소개  "
+            id="memberContent"
             color="secondary"
-            style={nextButtonStyle}
-            onClick={handleNextClick}
-          >
-            다음
-          </Button>
-        </Paper>
+            value={formData.memberContent}
+            onChange={handleInputChange}
+          />
+        </Box>
+
+        <Button
+          variant="contained"
+          color="secondary"
+          style={backButtonStyle}
+          onClick={handlePrevClick}
+        >
+          이전
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          style={nextButtonStyle}
+          onClick={handleNextClick}
+        >
+          다음
+        </Button>
       </div>
     </>
   );

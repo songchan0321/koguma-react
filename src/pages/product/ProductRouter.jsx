@@ -17,6 +17,7 @@ import {
   useIsLoginState,
 } from "../../context/LoginContextProvider";
 import Login from "../../component/common/Login";
+import ProductCategoryList from "./ProductCategoryList";
 
 const ProductRouter = () => {
   const isLogin = useIsLoginState(IsLoginContext);
@@ -28,6 +29,7 @@ const ProductRouter = () => {
             <Route path="/main" element={<Main />}/> */}
       <Route path="/get/:productId" element={<ProductGet />} />
       <Route path="/update/:productId" element={<ProductUpdate />} />
+      <Route path="/list/category" element={<ProductCategoryList />} />
       <Route path="/list" element={isLogin ? <ProductList /> : <Login />} />
       <Route path="/add" element={<ProductAdd />} />
       <Route path="/suggest/:productId" element={<SuggestPrice />} />

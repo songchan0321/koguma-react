@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { categoryListAPI } from "../../apis/api/club";
-import { Tabs, Tab, Box, Button, Typography } from "@mui/material";
-import styled from "styled-components";
+import { Tabs, Tab, Box, Typography } from "@mui/material";
 
 const CategoryList = ({ onCategorySelect }) => {
   const [category, setCategory] = useState([]);
@@ -30,7 +29,9 @@ const CategoryList = ({ onCategorySelect }) => {
 
   return (
     <div>
-      <Typography variant="h5">우리 동네 모임</Typography>
+      <Typography variant="h6" style={{ marginLeft: "10px" }}>
+        우리 동네 모임
+      </Typography>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={selectedCategory}

@@ -59,10 +59,12 @@ export const updateProductAPI = async (productDTO) => {
     }
   );
 };
-export const ListProductAPI = async (keyword) => {
+export const ListProductAPI = async (keyword, categoryId) => {
   try {
     const response = await authInstance.get(
-      `${PRODUCT_API_URI}/list?keyword=${keyword || ""}`
+      `${PRODUCT_API_URI}/list?keyword=${keyword || ""}&category=${
+        categoryId || ""
+      }`
     );
     console.log(response);
     return response;

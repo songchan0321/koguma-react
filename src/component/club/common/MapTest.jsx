@@ -1,6 +1,6 @@
-// MapTest.js
-
+import { Paper, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
+import MarginEmpty from "../../payment/MarginEmpty";
 
 function useDidMountEffect(func, deps) {
   const didMount = useRef(false);
@@ -14,6 +14,7 @@ function useDidMountEffect(func, deps) {
 function MapTest({ onAddressUpdate }) {
   const [map, setMap] = useState();
   const [marker, setMarker] = useState();
+  const [clickedAddr, setClickedAddr] = useState(null);
 
   useEffect(() => {
     window.kakao.maps.load(() => {
@@ -51,6 +52,7 @@ function MapTest({ onAddressUpdate }) {
             marker.setMap(map);
 
             onAddressUpdate(addr);
+            setClickedAddr(addr);
           }
         }
       );
@@ -59,7 +61,16 @@ function MapTest({ onAddressUpdate }) {
 
   return (
     <div>
-      <div id="map" style={{ width: "100%", height: "400px" }}></div>
+      <Paper>
+        {" "}
+        <div id="map" style={{ width: "100%", height: "400px" }}></div>
+        <MarginEmpty value={10} />
+        {clickedAddr && (
+          <div style={{ marginLeft: "10px" }}>
+            <Typography variant="body1">주소: {clickedAddr}</Typography>
+          </div>
+        )}
+      </Paper>
     </div>
   );
 }

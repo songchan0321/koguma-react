@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { categoryListAPI } from "../../apis/api/club";
-import { Button, Grid, Paper, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 
 const AddClubCategoryForm = ({ onNext }) => {
   const [categories, setCategories] = useState([]);

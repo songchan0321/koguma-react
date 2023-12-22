@@ -1,15 +1,17 @@
 import { Button, Grid, Paper, Typography } from "@mui/material";
 import { useState } from "react";
+import TopBarAddClub from "../../component/club/common/TopBarAddClub";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const AddClubMaxCapacity = ({ onPrev, onNext, data }) => {
-  const [formData, setFormData] = useState({
-    categoryId: data.categoryId || "",
-    title: data.title || "",
-    content: data.content || "",
-    urls: data.urls || "",
+  // const [formData, setFormData] = useState({
+  //   categoryId: data.categoryId || "",
+  //   title: data.title || "",
+  //   content: data.content || "",
+  //   urls: data.urls || "",
 
-    maxCapacity: data.maxCapacity || 0,
-  });
+  //   maxCapacity: data.maxCapacity || 0,
+  // });
 
   const [selectedMaxCapacity, setSelectedMaxCapacity] = useState();
   const maxCapacityList = [10, 20, 30, 40, 50];
@@ -24,11 +26,13 @@ const AddClubMaxCapacity = ({ onPrev, onNext, data }) => {
 
   return (
     <>
+      <TopBarAddClub />
+      <MarginEmpty value={70} />
       <Typography
         variant="h4"
         style={{ marginTop: "20px", marginLeft: "30px" }}
       >
-        어떤 모임을 만들까요?
+        모임 규모를 설정해주세요
       </Typography>
       <Grid
         container

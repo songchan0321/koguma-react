@@ -99,7 +99,6 @@ const RequestRefundPoint = () => {
               sx={{ mt: 1, backgroundColor: "#D070FB" }}
               size="large"
               variant="contained"
-              color="secondary"
               onClick={buttonClickHandler}
             >
               환급하기

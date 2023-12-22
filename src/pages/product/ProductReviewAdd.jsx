@@ -21,7 +21,7 @@ import MarginEmpty from "../../component/payment/MarginEmpty";
 import { addReviewAPI, getProductAPI } from "../../apis/api/Product";
 const ProductReviewAdd = () => {
   //   const { clubId } = useParams();
-  const location = useLocation();
+  const { state } = useLocation();
   const [product, setProduct] = useState();
   const [review, setReview] = useState({
     productDTO: product,
@@ -31,7 +31,7 @@ const ProductReviewAdd = () => {
   });
   const navigate = useNavigate();
 
-  console.log(location.state.productId);
+  console.log(state.productId);
   const commetHandler = (e) => {
     const { name, value } = e.target;
     setReview({
@@ -70,7 +70,7 @@ const ProductReviewAdd = () => {
 
   const getProduct = async () => {
     try {
-      const data = await getProductAPI(location.state.productId);
+      const data = await getProductAPI(state.productId);
       setProduct(data);
 
       // 상태 업데이트를 비동기적으로 처리하기 위해 함수 인자로 이전 상태를 받는 형태로 업데이트
@@ -94,7 +94,9 @@ const ProductReviewAdd = () => {
 
   return (
     <>
-      <Back url={"/product/list/sale"} />
+      <Back
+        url={state?.roomId ? `/chat/get/${state.roomId}` : "/product/list/sale"}
+      />
       <TopBar>후기 작성하기</TopBar>
       <MarginEmpty value="60px" />
       {product && (

@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import {
-  checkClubMemberAPI,
-  countClubMemberAPI,
-  listClubMemberAPI,
-} from "../../../apis/api/club";
-import ListClubMember from "./ListClubMember";
-import { Button, Card, CardContent } from "@mui/material";
+import { countClubMemberAPI, listClubMemberAPI } from "../../../apis/api/club";
+import { Avatar, Button, Card, CardContent } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import MarginEmpty from "../../payment/MarginEmpty";
 
 const ClubHomeClubMember = ({ clubId, clubMember }) => {
   const navigator = useNavigate();
@@ -47,20 +43,41 @@ const ClubHomeClubMember = ({ clubId, clubMember }) => {
           </span>
           {clubMembers.length > 0 &&
             clubMembers.slice(0, 3).map((clubMember) => (
-              <Card key={clubMember.id} style={{ marginBottom: 10 }}>
-                <CardContent
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: 10,
+                }}
+              >
+                <Card
+                  key={clubMember.id}
+                  style={{ marginRight: 10, boxShadow: "none" }}
+                >
+                  <Avatar
+                    alt="Remy Sharp"
+                    src={clubMember.memberDTO.profileURL}
+                    sx={{ width: 56, height: 56 }}
+                  />
+                </Card>
+                <Card
+                  key={clubMember.id}
+                  style={{ flexGrow: 1, cursor: "pointer", boxShadow: "none" }}
                   onClick={() => navigator(`/club/member/${clubMember.id}`)}
                 >
-                  <div>{clubMember.nickname}</div>
-                  {/* 여기에 다른 멤버 정보 표시 (예: meetUpMember.email, meetUpMember.role 등) */}
-                </CardContent>
-              </Card>
+                  <CardContent>
+                    <div>{clubMember.nickname}</div>
+                  </CardContent>
+                </Card>
+              </div>
             ))}
+          <MarginEmpty value={15} />
           <Button
             variant="contained"
             color="secondary"
             style={fixedButtonStyle}
             onClick={listClubMember}
+            size="large"
           >
             참여 모임원 전체 보기
           </Button>
@@ -74,8 +91,8 @@ export default ClubHomeClubMember;
 
 const fixedButtonStyle = {
   bottom: 0,
-  left: 20,
-  width: "90%",
+  left: 0,
+  width: "100%",
   padding: "5px",
   textAlign: "center",
 };

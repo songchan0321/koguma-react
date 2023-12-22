@@ -51,7 +51,7 @@ const SearchDrawer = ({ open, toggleDrawer }) => {
     // 검색 기록 업데이트
     setSearchHistory(newSearchHistory);
 
-    navigator("/search/tab");
+    navigator("/search/tab", { state: { query: searchQuery } });
   };
   useEffect(() => {
     // 페이지 로딩 시 로컬 스토리지에서 검색 기록을 가져옴
