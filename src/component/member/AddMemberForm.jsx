@@ -16,6 +16,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { defaultInstance } from "../../apis/utils/instance";
 import { useNavigate } from "react-router-dom";
 import StorageIcon from '@mui/icons-material/Storage';
+import modal from "../../pages/club/board/Modal";
 
 const AddMemberForm = ({ onSubmit }) => {
     const [nickname, setNickname] = useState("");
@@ -36,6 +37,7 @@ const AddMemberForm = ({ onSubmit }) => {
     const [alertMessage, setAlertMessage] = useState("");
     const [openAlert, setOpenAlert] = useState(false);
 
+
     const navigate = useNavigate();
 
     const handleNicknameChange = (e) => {
@@ -46,15 +48,6 @@ const AddMemberForm = ({ onSubmit }) => {
         } else {
             setNicknameError(false);
         }
-    };
-
-    const showAlert = (message) => {
-        setAlertMessage(message);
-        setOpenAlert(true);
-    };
-
-    const handleCloseAlert = () => {
-        setOpenAlert(false);
     };
 
     const handlePasswordChange = (e) => {
@@ -146,45 +139,46 @@ const AddMemberForm = ({ onSubmit }) => {
     };
 
     const handleSubmit = async () => {
+
         try {
             // Your existing code for submitting the form
             if (nickname.length < 2) {
-                window.alert("닉네임은 2자 이상이어야 합니다.");
+                window.alert( "닉네임은 2자 이상이어야 합니다.");
                 return;
             }
             if (password.length < 8) {
-                window.alert("비밀번호는 8자 이상이어야 합니다.");
+                window.alert( "비밀번호는 8자 이상이어야 합니다.");
                 return;
             }
             if (confirmPassword.length < 8) {
-                window.alert("비밀번호 확인은 8자 이상이어야 합니다.");
+                window.alert( "비밀번호 확인은 8자 이상이어야 합니다.");
                 return;
             }
             if (phone.length !== 11) {
-                window.alert("휴대폰 번호는 11자여야 합니다.");
+                window.alert( "휴대폰 번호는 11자여야 합니다.");
                 return;
             }
             if (authNum.length !== 6) {
-                window.alert("인증 번호는 6자여야 합니다.");
+                window.alert( "인증 번호는 6자여야 합니다.");
                 return;
             }
 
             if (password !== confirmPassword) {
-                window.alert("비밀번호가 일치하지 않습니다.");
+                window.alert( "비밀번호가 일치하지 않습니다.");
                 return;
             }
 
             if (!isSmsVerified) {
-              window.alert("휴대폰 인증이 필요합니다.");
-              return;
+                window.alert( "휴대폰 인증이 필요합니다.");
+                return;
             }
 
             if (!isAgeChecked) {
-                window.alert("개인정보 수집 및 이용 동의에 동의해 주세요.");
+                window.alert( "개인정보 수집 및 이용 동의에 동의해 주세요.");
                 return;
             }
             if (!isUseChecked) {
-                window.alert("이용 약관에 동의해 주세요.");
+                window.alert( "이용 약관에 동의해 주세요.");
                 return;
             }
             await handleVerifyAuthNum();
@@ -209,12 +203,12 @@ const AddMemberForm = ({ onSubmit }) => {
             if (response.status === 200) {
                 // 성공
                 onSubmit();
-                showAlert("회원가입 성공!");
+                window.alert("회원가입 성공!");
                 navigate("/member/add/complete");
             } else {
                 // 에러 처리
                 const data = await response.json();
-                showAlert(`회원 가입 실패: ${data.message}`);
+                window.alert(`회원 가입 실패: ${data.message}`);
             }
         } catch (error) {
             console.log(error);
@@ -249,6 +243,8 @@ const AddMemberForm = ({ onSubmit }) => {
     };
 
     return (
+
+
         <Grid container justifyContent="center" alignItems="center" minHeight="100vh">
             <Grid item xs={12} sm={8} md={6} lg={4}>
                 <Paper elevation={3} sx={{ padding: 4, display: "flex", flexDirection: "column", alignItems: "center" }}>
