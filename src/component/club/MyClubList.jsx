@@ -64,7 +64,6 @@ const MyClubList = () => {
                       margin: "auto",
                       borderRadius: "50%",
                     }}
-                    image={club.profileImage[0].url}
                     alt={club.title}
                   />
                 </Card>

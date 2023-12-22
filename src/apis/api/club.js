@@ -240,8 +240,8 @@ export const addMeetUpAPI = async (
   title,
   content,
   maxCapacity,
-  roadAddr,
-  meetUpData
+  roadAddr
+  // meetUpData
 ) => {
   alert(roadAddr);
   try {
@@ -257,7 +257,7 @@ export const addMeetUpAPI = async (
         content: content,
         maxCapacity: maxCapacity,
         roadAddr: roadAddr,
-        meetUpData: meetUpData,
+        // meetUpData: meetUpData,
         meetUpType: "null",
       }),
 
