@@ -23,7 +23,7 @@ const AddMemberForm = ({ onSubmit }) => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [phone, setPhone] = useState("");
     const [authNum, setAuthNum] = useState("");
-    const [isSmsVerified] = useState(false);
+    const [isSmsVerified, setIsSmsVerified] = useState(false);
     const [isAgreed, setIsAgreed] = useState(false);
     const [isAgeChecked, setIsAgeChecked] = useState(false);
     const [isUseChecked, setIsUseChecked] = useState(false);
@@ -33,6 +33,8 @@ const AddMemberForm = ({ onSubmit }) => {
     const [confirmPasswordError, setConfirmPasswordError] = useState(false);
     const [phoneError, setPhoneError] = useState(false);
     const [authNumError, setAuthNumError] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
+    const [openAlert, setOpenAlert] = useState(false);
 
     const navigate = useNavigate();
 
@@ -44,6 +46,15 @@ const AddMemberForm = ({ onSubmit }) => {
         } else {
             setNicknameError(false);
         }
+    };
+
+    const showAlert = (message) => {
+        setAlertMessage(message);
+        setOpenAlert(true);
+    };
+
+    const handleCloseAlert = () => {
+        setOpenAlert(false);
     };
 
     const handlePasswordChange = (e) => {
@@ -79,7 +90,7 @@ const AddMemberForm = ({ onSubmit }) => {
 
     const handleAuthNumChange = (e) => {
         // Allow only numbers and limit input to 6 characters
-        const inputValue = e.target.value.replace(/\D/g, "").slice(0, 6);
+        const inputValue = (e.target.value)
         setAuthNum(inputValue);
         if (inputValue.length === 6) {
             setAuthNumError(false);
@@ -96,12 +107,12 @@ const AddMemberForm = ({ onSubmit }) => {
             console.log(response);
 
             // 인증번호가 성공적으로 전송되었다면 화면 전환을 막음
-            if (response === 200) {
+            if (response.status === 200) {
                 window.alert('인증번호가 발송되었습니다.');
                 // 추가로 필요한 작업 수행...
             }
         } catch (error) {
-            console.error("SMS 인증 번호 전송 중 오류 발생:", error);
+            window.alert("SMS 인증 번호 전송 중 오류 발생:", error);
         }
     };
 
@@ -109,11 +120,14 @@ const AddMemberForm = ({ onSubmit }) => {
         try {
             const response = await defaultInstance.post("/auth/verifySms", {
                 to: phone,
-                authNum,
+                authNumber: authNum,
             });
             console.log(response);
+            if (response.status === 200) {
+                setIsSmsVerified(true);
+                window.alert('휴대폰 인증 성공!');
+            }
         } catch (error) {
-            console.error("SMS 인증 번호 확인 중 오류 발생:", error);
         }
     };
 
@@ -195,12 +209,12 @@ const AddMemberForm = ({ onSubmit }) => {
             if (response.status === 200) {
                 // 성공
                 onSubmit();
-                window.alert("회원가입 성공!");
+                showAlert("회원가입 성공!");
                 navigate("/member/add/complete");
             } else {
                 // 에러 처리
                 const data = await response.json();
-                window.alert(`회원 가입 실패: ${data.message}`);
+                showAlert(`회원 가입 실패: ${data.message}`);
             }
         } catch (error) {
             console.log(error);
