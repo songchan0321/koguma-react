@@ -97,6 +97,7 @@ const DeleteMemberForm = ({ onSubmit }) => {
                             color="secondary"
                             onClick={handleDeleteMember}
                             fullWidth
+                            marginBottom='60px'
                         >
                             회원 탈퇴
                         </Button>
