@@ -31,7 +31,7 @@ export const kakaoLoginAPI = async () => {
 
   try {
     const response = await defaultInstance.get(
-      `https://api.5quys.com/common/kakao/callback/?code=${code}`
+      `https://api.5quys.com/common/kakao/callback?code=${code}`
     );
     return response;
   } catch (err) {
