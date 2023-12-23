@@ -37,7 +37,9 @@ const ProductSearchList = ({ query }) => {
           <ListContainingProduct type="report" data={data} />
         </>
       ) : (
-        <NotData>해당 검색어의 상품이 없어요.</NotData>
+        <NotData>
+          <div style={{ color: "lightgray" }}>검색된 상품이 없어요.</div>
+        </NotData>
       )}
       <MarginEmpty />
     </>

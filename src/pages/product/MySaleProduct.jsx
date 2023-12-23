@@ -147,8 +147,6 @@ const MySaleProduct = () => {
     <>
       <Back url="/member/profile" />
       <TopBar>내 판매 내역</TopBar>
-      <MarginEmpty />
-      <MarginEmpty value={"160px"} />
       <AppBar
         position="fixed"
         style={{

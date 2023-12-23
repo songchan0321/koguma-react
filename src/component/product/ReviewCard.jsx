@@ -25,7 +25,7 @@ const ReviewCard = ({ review }) => {
               <CardMedia
                 component="img"
                 height="140"
-                image="/login/mayuko-vermeulen--4HCai3y6yY-unsplash.jpg"
+                image="https://koguma.kr.object.ncloudstorage.com/mayuko-vermeulen--4HCai3y6yY-unsplash.jpg"
                 alt="green iguana"
               />
               <CardContent sx={{ width: "90%" }}>

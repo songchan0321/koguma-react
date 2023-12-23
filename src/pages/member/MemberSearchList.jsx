@@ -39,7 +39,9 @@ const MemberSearchList = ({ query }) => {
           <LocationByMember data={data} />
         </>
       ) : (
-        <NotData>값이 없어요!</NotData>
+        <NotData>
+          <div style={{ color: "lightgray" }}>검색된 회원이 없어요.</div>
+        </NotData>
       )}
       <MarginEmpty />
     </>
