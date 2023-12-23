@@ -11,9 +11,9 @@ const AddMemberCompleteForm = ({ navigate }) => {
         <Box>
             <Button
                 variant="contained"
-                color="primary"
+                color="secondary"
                 onClick={() => handleNavigate("/common/login")}
-                style={{ marginLeft: 10, marginTop: 300 }}
+                style={{ marginLeft: 10, marginTop: 200 }}
             >
                 로그인
             </Button>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Button, CardHeader, Avatar, AppBar } from "@mui/material";
 import Back from "../../component/common/Back";
 import MarginEmpty from "../../component/payment/MarginEmpty";
@@ -10,6 +10,7 @@ import LoadingProgress from "../../component/common/LoadingProgress";
 const OtherMemberSaleList = () => {
   const { memberId } = useParams();
   const navigate = useNavigate();
+  const { state } = useLocation();
   const [selectedMenu, setSelectedMenu] = useState("거래 중");
   const [selectedMenuType, setSelectedMenuType] = useState("SALE");
   const menuList = ["거래 중", "거래 완료"];
@@ -29,7 +30,8 @@ const OtherMemberSaleList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getMemberAPI(memberId);
+        console.log(memberId);
+        const data = await getProfileAPI(memberId);
         setMember(data);
         console.log(data);
       } catch (error) {
@@ -48,7 +50,7 @@ const OtherMemberSaleList = () => {
         <LoadingProgress />
       ) : (
         <>
-          <Back url={`/member/other/get/${member.id}`} />
+          <Back url={`/member/other/get/${state.memberId}`} />
           <AppBar
             position="fixed"
             style={{

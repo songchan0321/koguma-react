@@ -1,17 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, CircularProgress, Grid, IconButton, Typography } from "@mui/material";
+import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ProfileForm from "../../component/member/ProfileForm";
 import { authInstance } from "../../apis/utils/instance";
 import BottomBar from "../../component/common/BottomBar";
 import SettingsIcon from "@mui/icons-material/Settings";
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import LinearProgress from '@mui/material/LinearProgress';
+import CircularProgress from '@mui/material/CircularProgress';
+import { styled } from "@mui/system";
+import { linearProgressClasses } from "@mui/joy";
 
 const Profile = () => {
   const navigate = useNavigate();
   const [member, setMember] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState(null);
   const [loading, setLoading] = useState(true);
+  const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+    height: 10,
+    borderRadius: 5,
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+      backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+      borderRadius: 5,
+      backgroundColor: theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8',
+    },
+  }));
 
   useEffect(() => {
     const fetchMemberData = async () => {
@@ -55,14 +70,13 @@ const Profile = () => {
                 startIcon={<SettingsIcon />}
             >
               <SettingsIcon sx={{ fontSize: 20 }} />
-              <Typography variant="body2" sx={{  fontSize: 12 }}>
+              <Typography variant="body2" sx={{ fontSize: 12 }}>
                 내 정보 수정
               </Typography>
             </IconButton>
           </Grid>
           {/* 로그아웃 버튼 */}
           <Grid item>
-            {/* 수정: marginLeft 속성 추가 */}
             <IconButton
                 onClick={() => {
                   localStorage.removeItem("token");
@@ -73,7 +87,7 @@ const Profile = () => {
                 sx={{ width: '100px', height: '40px' }}
                 startIcon={<MeetingRoomIcon />}
             >
-              <MeetingRoomIcon sx={{fontSize: 20}}/>
+              <MeetingRoomIcon sx={{ fontSize: 20 }} />
               <Typography variant="body2" sx={{ fontSize: 12 }}>
                 로그아웃
               </Typography>
@@ -89,10 +103,11 @@ const Profile = () => {
                 // 로딩이 완료되면 멤버 이미지 표시
                 member && member.profileURL ? (
                     <img src={member.profileURL} alt="" style={{
-                      width: "120px",
-                      marginLeft: '120px',
+                      width: "8rem",
+                      height: "8rem",
+                      marginLeft: '110px',
                       marginTop: '30px',
-                      borderRadius: '50%',
+                      clipPath: 'circle(50% at 50% 50%)',
                     }} />
                 ) : (
                     // 이미지가 없을 때 아이콘 등의 대체 컨텐츠를 표시
@@ -117,8 +132,10 @@ const Profile = () => {
                 {loading ? (
                     <CircularProgress size={20} />
                 ) : (
-                    // 로딩이 완료되면 멤버 Score 표시
-                    `매너온도: ${member?.score}℃`
+                    <>
+                      <Typography>{`매너온도 : ${member?.score}℃`}</Typography>
+                      <BorderLinearProgress variant="determinate" value={(member?.score / 100) * 100} />
+                    </>
                 )}
               </Typography>
             </div>

@@ -17,6 +17,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { defaultInstance } from "../../apis/utils/instance";
 import { useNavigate } from "react-router-dom";
 import StorageIcon from "@mui/icons-material/Storage";
+import modal from "../../pages/club/board/Modal";
 
 const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
   const [nickname, setNickname] = useState("");
@@ -24,7 +25,7 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [authNum, setAuthNum] = useState("");
-  const [isSmsVerified] = useState(false);
+  const [isSmsVerified, setIsSmsVerified] = useState(false);
   const [isAgreed, setIsAgreed] = useState(false);
   const [isAgeChecked, setIsAgeChecked] = useState(false);
   const [isUseChecked, setIsUseChecked] = useState(false);
@@ -34,6 +35,8 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [authNumError, setAuthNumError] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [openAlert, setOpenAlert] = useState(false);
 
   const navigate = useNavigate();
 
@@ -80,7 +83,7 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
 
   const handleAuthNumChange = (e) => {
     // Allow only numbers and limit input to 6 characters
-    const inputValue = e.target.value.replace(/\D/g, "").slice(0, 6);
+    const inputValue = e.target.value;
     setAuthNum(inputValue);
     if (inputValue.length === 6) {
       setAuthNumError(false);
@@ -97,12 +100,12 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
       console.log(response);
 
       // 인증번호가 성공적으로 전송되었다면 화면 전환을 막음
-      if (response === 200) {
+      if (response.status === 200) {
         window.alert("인증번호가 발송되었습니다.");
         // 추가로 필요한 작업 수행...
       }
     } catch (error) {
-      console.error("SMS 인증 번호 전송 중 오류 발생:", error);
+      window.alert("SMS 인증 번호 전송 중 오류 발생:", error);
     }
   };
 
@@ -110,12 +113,14 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
     try {
       const response = await defaultInstance.post("/auth/verifySms", {
         to: phone,
-        authNum,
+        authNumber: authNum,
       });
       console.log(response);
-    } catch (error) {
-      console.error("SMS 인증 번호 확인 중 오류 발생:", error);
-    }
+      if (response.status === 200) {
+        setIsSmsVerified(true);
+        window.alert("휴대폰 인증 성공!");
+      }
+    } catch (error) {}
   };
 
   const handleCheckAll = () => {
@@ -161,10 +166,10 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
         return;
       }
 
-      /*if (!isSmsVerified) {
-              window.alert("휴대폰 인증이 필요합니다.");
-              return;
-            }*/
+      if (!isSmsVerified) {
+        window.alert("휴대폰 인증이 필요합니다.");
+        return;
+      }
 
       if (!isAgeChecked) {
         window.alert("개인정보 수집 및 이용 동의에 동의해 주세요.");
@@ -175,6 +180,7 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
         return;
       }
       await handleVerifyAuthNum();
+
       const response = await defaultInstance.post("/auth/member/add", {
         nickname,
         pw: password,
@@ -190,6 +196,7 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
         paymentPw: null,
         memberRoleType: "MEMBER",
         image_URL: null,
+        profile_URL: "https://koguma.kr.object.ncloudstorage.com/image.webp",
       });
 
       if (response.status === 200) {

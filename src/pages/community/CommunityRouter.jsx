@@ -3,17 +3,28 @@ import { Route, Routes } from "react-router-dom";
 import ListPost from "./ListPost";
 import AddPost from "./AddPost";
 import GetPost from "./GetPost";
-import CommnunityByMember from "./CommunityByMember";
+import CommunityByMember from "./CommunityByMember";
+import UpdatePost from "./UpdatePost";
+import ListPostByCategory from "./ListPostByCategory";
+import ListPostByView from "./ListPostByView";
+import DetailOption from "../../component/community/DetailOption";
 
 const CommunityRouter = () => {
   return (
     <Routes>
       <Route path="list" element={<ListPost />} />
       <Route path="add" element={<AddPost />} />
-      <Route path="get" element={<GetPost />} />
-      <Route path="list/community" element={<CommnunityByMember />} />
-      {/* <Route path="Views" element={<ListPostViews />} />
-      <Route path="/category/:category" element={<CategoryId />} /> */}
+      <Route path=":postId" element={<GetPost />} />
+      <Route path=":postId/update" element={<UpdatePost />} />
+      <Route path=":postId/delete" element={<DetailOption />} />
+
+      <Route path="list/community" element={<CommunityByMember />} />
+
+      <Route path="list/category/View" element={<ListPostByView />} />
+      <Route
+        path="list/category/:categoryId"
+        element={<ListPostByCategory />}
+      />
     </Routes>
   );
 };

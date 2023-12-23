@@ -36,7 +36,7 @@ const OtherProfileForm = () => {
     navigate(`/member/relationship/following/add`, { state: { id: id } });
   };
   const getOtherMemberProduct = () => {
-    navigate(`/product/get/other/product/${id}`);
+    navigate(`/product/get/other/product/${id}`, { state: { memberId: id } });
   };
 
   return (

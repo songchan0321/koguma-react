@@ -4,17 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d9194628-c3e2-496e-8bab-64cb2d20ca51" name="Changes" comment="feat : UpdateMember 페이지 추가&#10;&#10;페이지 추가 및 로직 추가&#10;&#10;2023.12.11 / 21:22 / SIC">
-      <change afterPath="$PROJECT_DIR$/src/apis/api/community.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/component/community/PostForm.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/community/GetPost.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="95e60e63-c969-468c-a634-d8977ada3c8e" name="Changes" comment="fix : 오류 수정 중 테스트&#10;&#10;&#10;&#10;2023.12.22 / 03:29 / HSC">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AppRouter.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppRouter.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/community/AddPostTopBar.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/community/ListCategoryForSelect.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/community/ListCategoryForSelect.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/community/AddPost.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/community/AddPost.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/community/CommunityRouter.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/community/CommunityRouter.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/apis/api/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/apis/api/community.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/community/AddComment.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/community/AddComment.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/community/AddReply.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/community/AddReply.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/community/CommunityAvatarFrom.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/community/CommunityAvatarFrom.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/community/GetComment.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/community/GetComment.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/community/PostForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/community/PostForm.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/community/ListPost.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/community/ListPost.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,122 +19,17 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="JavaScript File" />
-      </list>
-    </option>
-  </component>
-  <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="origin/master" />
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="master" />
-      </map>
-    </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 4
-}</component>
-  <component name="ProjectId" id="2ZCaMs255dTlRmZ9Ay8JVMPRvAT" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "hsc",
-    "last_opened_file_path": "C:/intelliJWorkspace/koguma-react",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.general",
-    "ts.external.directory.path": "/Applications/IntelliJ IDEA.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+    "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
-  <component name="RunManager" selected="npm.npm start">
-    <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
-      <method v="2" />
-    </configuration>
-    <configuration name="npm start" type="js.build_tools.npm">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="start" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-  </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="d9194628-c3e2-496e-8bab-64cb2d20ca51" name="Changes" comment="" />
-      <created>1701928469777</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1701928469777</updated>
-      <workItem from="1701928470953" duration="4509000" />
-      <workItem from="1702254249900" duration="30764000" />
-      <workItem from="1702341052226" duration="11754000" />
-    </task>
-    <task id="LOCAL-00001" summary="feat : AddMember, Profile, AddMemberComplete 페이지 추가&#10;&#10;페이지 추가 및 Form 추가&#10;&#10;2023.12.11 / 16:19 / SIC">
-      <option name="closed" value="true" />
-      <created>1702279170599</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1702279170599</updated>
-    </task>
-    <task id="LOCAL-00002" summary="feat : UpdateMember 페이지 추가&#10;&#10;페이지 추가 및 로직 추가&#10;&#10;2023.12.11 / 21:22 / SIC">
-      <option name="closed" value="true" />
-      <created>1702297338851</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1702297338851</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat : AddMember, Profile, AddMemberComplete 페이지 추가&#10;&#10;페이지 추가 및 Form 추가&#10;&#10;2023.12.11 / 16:19 / SIC" />
-    <MESSAGE value="feat : UpdateMember 페이지 추가&#10;&#10;페이지 추가 및 로직 추가&#10;&#10;2023.12.11 / 21:22 / SIC" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat : UpdateMember 페이지 추가&#10;&#10;페이지 추가 및 로직 추가&#10;&#10;2023.12.11 / 21:22 / SIC" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
+    <MESSAGE value="fix : 오류 수정 중 테스트&#10;&#10;&#10;&#10;2023.12.22 / 03:29 / HSC" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix : 오류 수정 중 테스트&#10;&#10;&#10;&#10;2023.12.22 / 03:29 / HSC" />
   </component>
 </project>

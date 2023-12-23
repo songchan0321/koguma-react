@@ -6,8 +6,8 @@ import BottomBar from "../../component/common/BottomBar";
 const OtherProfile = () => {
   return (
     <div>
-      <OtherProfileForm url={`/product/list`} />
-      <Back />
+      <OtherProfileForm />
+      <Back url={`/product/list`} />
       <BottomBar />
     </div>
   );

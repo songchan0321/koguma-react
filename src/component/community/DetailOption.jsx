@@ -4,10 +4,20 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { deletePostAPI, updatePostAPI } from "../../apis/api/community";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 
-const DetailOption = () => {
+const DetailOption = ({ editTo, deleteTo, reportTo, title }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const { postId } = useParams();
+  const navigate = useNavigate();
 
   const handleMoreVertClick = () => {
     setIsModalOpen(true);
@@ -15,87 +25,105 @@ const DetailOption = () => {
 
   const handleModalClose = () => {
     setIsModalOpen(false);
+    setIsDeleteModalOpen(false);
   };
 
   const handleEdit = () => {
-    // Edit logic here
-    console.log("Edit clicked");
+    console.log("수정 클릭");
+    console.log(postId);
     handleModalClose();
   };
 
   const handleDelete = () => {
-    // Delete logic here
-    console.log("Delete clicked");
-    handleModalClose();
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      await deletePostAPI({ postId });
+      console.log(postId);
+    } catch (error) {
+      console.error("포스트 삭제 오류:", error);
+    } finally {
+      handleModalClose();
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setIsDeleteModalOpen(false);
   };
 
   const handleReport = () => {
-    // Report logic here
-    console.log("Report clicked");
+    console.log("신고 클릭");
     handleModalClose();
   };
 
   return (
     <Fragment>
-      <Button variant="text" color="secondary" onClick={handleMoreVertClick}>
+      <Button
+        sx={{ color: "#000000" }}
+        variant="text"
+        color="secondary"
+        onClick={handleMoreVertClick}
+        style={{ position: "absolute", right: 0 }}
+      >
         <MoreVertIcon />
       </Button>
 
-      <Modal
-        open={isModalOpen}
-        onClose={handleModalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      <Modal open={isModalOpen} onClose={handleModalClose}>
         <Box
           sx={{
             position: "absolute",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: 400,
             bgcolor: "background.paper",
-            border: "2px solid #000",
             boxShadow: 24,
             p: 4,
           }}
         >
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            게시물 옵션
-          </Typography>
-
+          <Typography variant="h6">{title}</Typography>
+          <Typography variant="body1">{/* 내용 입력 */}</Typography>
           <Button
-            variant="contained"
             onClick={handleEdit}
             color="secondary"
             component={Link}
-            to="/post/update"
+            to={editTo}
           >
             수정
           </Button>
-
           <Button
-            variant="contained"
             onClick={handleDelete}
             color="secondary"
             component={Link}
-            to="/post/delete"
+            // to={`/post/list`}
           >
             삭제
           </Button>
-
           <Button
-            variant="contained"
             onClick={handleReport}
             color="secondary"
             component={Link}
-            to="/common/" //신고로 Navigation 연결
+            to={reportTo}
           >
             신고
           </Button>
         </Box>
       </Modal>
+
+      <Dialog open={isDeleteModalOpen} onClose={handleDeleteCancel}>
+        <DialogTitle>정말 삭제하시겠습니까?</DialogTitle>
+        <DialogActions>
+          <Button onClick={handleDeleteConfirm} color="secondary">
+            확인
+          </Button>
+          <Button onClick={handleDeleteCancel} color="secondary">
+            취소
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Fragment>
   );
 };
+
 export default DetailOption;

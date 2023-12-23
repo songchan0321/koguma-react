@@ -70,7 +70,7 @@ const ClubListByCategory = ({ categoryId }) => {
                     </Typography>
                     {/* 모임 인원수 */}
                     <Typography variant="body2" color="text.secondary">
-                      인원: {club.maxCapacity}/{club.maxCapacity}
+                      인원: {club.currentCount}/{club.maxCapacity}
                     </Typography>
                   </ClubContent>
                 </Grid>

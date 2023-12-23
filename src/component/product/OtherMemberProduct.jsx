@@ -50,6 +50,7 @@ const OtherMemberProduct = ({
   const navigate = useNavigate();
   const fetchData = async () => {
     try {
+      console.log(memberId);
       const { data } = await listProductBySaleOtherMemberAPI(
         selectedMenuType,
         memberId
