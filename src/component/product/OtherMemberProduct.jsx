@@ -10,17 +10,12 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import NotData from "./NotData";
 import {
   listProductByBuyAPI,
   listProductBySaleAPI,
+  listProductBySaleOtherMemberAPI,
 } from "../../apis/api/Product";
 import { formatMoney } from "../../apis/services/product";
 import {
@@ -44,35 +39,23 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const MyList = ({
+const OtherMemberProduct = ({
   selectedMenuType,
-  buttonNM,
-  selectedActions,
-  onClick,
   onClickGetProduct,
+  memberId,
 }) => {
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [prodNo, setProdNo] = React.useState(null);
-  const [change, setChange] = React.useState(0);
   const [product, setProduct] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const navigate = useNavigate();
-  const handleModalOpen = (prodNo) => {
-    setProdNo(prodNo);
-    setIsModalOpen(true);
-  };
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
   const fetchData = async () => {
     try {
-      if (selectedMenuType === "BUY") {
-        await listProductByBuyAPI().then(({ data }) => setProduct(data));
-      } else {
-        await listProductBySaleAPI(selectedMenuType).then(({ data }) =>
-          setProduct(data)
-        );
-      }
+      console.log(memberId);
+      const { data } = await listProductBySaleOtherMemberAPI(
+        selectedMenuType,
+        memberId
+      );
+      setProduct(data);
     } catch (error) {
       setLoading(false);
       console.error("Error fetching data:", error);
@@ -83,7 +66,7 @@ const MyList = ({
 
   React.useEffect(() => {
     fetchData();
-  }, [selectedMenuType, isModalOpen, change]); // selectedMenuType가 변경될 때마다 fetchData 실행
+  }, [selectedMenuType]); // selectedMenuType가 변경될 때마다 fetchData 실행
 
   return (
     <>
@@ -139,11 +122,7 @@ const MyList = ({
                           >
                             <div>
                               <Typography variant="body1" color="textPrimary">
-                                {selectedMenuType === "BUY" ? (
-                                  <TradeStateButton
-                                    type={{ tradeStatus: "BUY" }}
-                                  />
-                                ) : (
+                                {selectedMenuType === "SALED" && (
                                   <TradeStateButton
                                     type={{ tradeStatus: prod.tradeStatus }}
                                   />
@@ -176,54 +155,13 @@ const MyList = ({
                       }
                       onClick={() => onClickGetProduct(prod.id)}
                     />
-                    <div style={{ display: "flex", marginBottom: "10px" }}>
-                      <Button
-                        variant="outlined"
-                        color="secondary"
-                        style={{ flex: 6, marginLeft: "10px" }}
-                        onClick={() => {
-                          onClick(prod.id);
-                          setChange(change + 1);
-                        }}
-                      >
-                        {buttonNM}
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        color="secondary"
-                        onClick={() => handleModalOpen(prod.id)}
-                        style={{
-                          flex: 1,
-                          marginLeft: "10px",
-                          marginRight: "10px",
-                        }}
-                      >
-                        <MoreHorizIcon />
-                      </Button>
-                    </div>
                   </Card>
-                  <Dialog open={isModalOpen} onClose={handleModalClose}>
-                    <DialogTitle>상품 설정</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText>
-                        {selectedActions.map((selectedAction, idx) => (
-                          <MenuItem
-                            key={idx}
-                            // onClick={() => navigate("/product/review/add")}
-                            onClick={() => selectedAction.action(prodNo)}
-                          >
-                            {selectedAction.name}
-                          </MenuItem>
-                        ))}
-                      </DialogContentText>
-                    </DialogContent>
-                  </Dialog>
                 </React.Fragment>
               ))}
             </>
           ) : (
             <NotData>
-              <div style={{ color: "lightgray" }}>상품이 존재하지 않아요.</div>
+              <div>상품이 존재하지 않아요.</div>
             </NotData>
           )}
         </>
@@ -231,4 +169,4 @@ const MyList = ({
     </>
   );
 };
-export default MyList;
+export default OtherMemberProduct;

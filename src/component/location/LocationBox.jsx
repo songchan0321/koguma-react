@@ -128,7 +128,7 @@ const LocationBox = ({ location, setLocation }) => {
                       (async () => {
                         await updateRepLocation(location.id);
                         await setDong(location.dong);
-                        await setLocation(location.id);
+                        await setLocation(location);
                       })();
 
                       // setDong(location.dong);

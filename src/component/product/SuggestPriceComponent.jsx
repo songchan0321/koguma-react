@@ -17,6 +17,8 @@ import {
 } from "../../apis/api/chat";
 import { Navigate, useNavigate } from "react-router-dom";
 import { CHAT_EVENT, SocketContext } from "../../context/socket";
+import { formatTimeAgo } from "../../apis/utils/timestamp";
+import ScoreColor from "../common/ScoreColor";
 
 const SuggestPriceComponent = (suggestData) => {
   const socket = useContext(SocketContext);
@@ -99,7 +101,22 @@ const SuggestPriceComponent = (suggestData) => {
   return (
     <Card sx={{ maxWidth: "100%" }}>
       <CardHeader
-        avatar={<Avatar aria-label="recipe">R</Avatar>}
+        avatar={
+          <Avatar
+            aria-label="recipe"
+            style={{ width: "48px", height: "48px" }} // Avatar 크기 조정
+          >
+            <img
+              src={suggestData.data.memberDTO.profileURL}
+              alt="profile"
+              style={{
+                width: "100%",
+                height: "100%",
+                borderRadius: "50%",
+              }} // 이미지 크기 및 모양 조정
+            />
+          </Avatar>
+        }
         // onClick={() => getMember(data.sellerDTO.id)}
 
         title={
@@ -108,14 +125,15 @@ const SuggestPriceComponent = (suggestData) => {
               {suggestData.data.memberDTO.nickname}
             </Typography>
             <Typography variant="subtitle3" color="text">
-              {suggestData.data.memberDTO.score}°C
+              <ScoreColor score={suggestData.data.memberDTO.score} />
             </Typography>
           </Box>
         }
         subheader={
           <>
             <Typography variant="subtitle2" color="textSecondary">
-              {suggestData.data.regDate}
+              {suggestData.data.dong} ·{" "}
+              {formatTimeAgo(suggestData.data.regDate)}
             </Typography>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <div>

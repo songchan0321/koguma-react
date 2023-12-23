@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import BottomBar from "../../component/common/BottomBar";
 import ProductTopBar from "../../component/product/ProductTopBar";
 import AddFloatingButton from "../../component/common/AddFloatingButton";
@@ -10,13 +10,14 @@ import { ListProductAPI } from "../../apis/api/Product";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 import { loginMemberhasLocationAPI } from "../../apis/api/common";
+import NotData from "../../component/product/NotData";
 
 const ProductList = () => {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [location, setLocation] = useState();
-  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const handleCategoryClick = (category, index) => {
     navigate("/product/list/category", {
       state: {
@@ -44,6 +45,8 @@ const ProductList = () => {
       setData(result.data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,8 +54,10 @@ const ProductList = () => {
   //   loginMemberhasLocation();
   // }, []);
   useEffect(() => {
+    console.log(location);
     listProduct();
   }, [location]);
+
   return (
     <>
       <ProductTopBar
@@ -60,17 +65,25 @@ const ProductList = () => {
         setLocation={setLocation}
         handleCategory={handleCategoryClick}
       />
-      <MarginEmpty value={80}></MarginEmpty>
+
       <BottomBar />
       <AddFloatingButton arrival={"/product/add"} />
 
-      {data ? (
-        <ListContainingProduct type="report" data={data} />
-      ) : (
+      {loading ? (
         <LoadingProgress />
+      ) : data.length > 0 ? (
+        <>
+          <MarginEmpty value={80}></MarginEmpty>
+          <ListContainingProduct type="report" data={data} />
+        </>
+      ) : (
+        <NotData>
+          <div style={{ color: "lightgray" }}>해당 동네에 상품이 없어요.</div>
+          <br />
+          <div style={{ color: "lightgray" }}>다른 동네를 선택해 보세요.</div>
+        </NotData>
       )}
-      <br />
-      <br />
+      <MarginEmpty />
     </>
   );
 };

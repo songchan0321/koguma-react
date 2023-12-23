@@ -26,6 +26,7 @@ import ImageList from "../common/ImageList";
 import { addImageAPI, uploadImageAPI } from "../../apis/api/common";
 import { addProductAPI } from "../../apis/api/Product";
 import { Navigate, useNavigate } from "react-router-dom";
+import LoadingProgress from "../common/LoadingProgress";
 
 const ProductForm = ({ text }) => {
   const categorys = [
@@ -47,8 +48,8 @@ const ProductForm = ({ text }) => {
     "기타",
   ];
   const defaultTheme = createTheme();
-  const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const [formattedPrice, setFormattedPrice] = useState(""); // 가격 표시용
@@ -120,16 +121,25 @@ const ProductForm = ({ text }) => {
   };
   const addProduct = async (productDTO) => {
     try {
+      setLoading(true);
       await addProductAPI(productDTO).then((response) => {
         navigate(`/product/get/${response.data.id}`, { replace: true });
       });
     } catch (err) {
+      setLoading(false);
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
   const uploadProduct = async () => {
     try {
+      if (!formData.thumbnail || formData.thumbnail.length === 0) {
+        alert("이미지를 등록해주세요");
+        return;
+      }
+
       const imageList = new FormData();
       formData.thumbnail.forEach((el) => {
         imageList.append("file", el);
@@ -149,128 +159,135 @@ const ProductForm = ({ text }) => {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Backdrop
-          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={loading}
-        ></Backdrop>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "100vh",
-          }}
-        >
-          <br />
+    <>
+      {loading ? (
+        <LoadingProgress />
+      ) : (
+        <ThemeProvider theme={defaultTheme}>
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <Backdrop
+              sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+              open={loading}
+            ></Backdrop>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "100vh",
+              }}
+            >
+              <br />
 
-          <ImageList
-            images={images}
-            setImages={setImages}
-            imageRegHandler={imageRegHandler}
-            imageDelHandler={imageDelHandler}
-          />
+              <ImageList
+                images={images}
+                setImages={setImages}
+                imageRegHandler={imageRegHandler}
+                imageDelHandler={imageDelHandler}
+              />
 
-          <Box noValidate sx={{ mt: 1 }}>
-            <Grid container spacing={2} justifyContent="flex-end">
-              <Grid item xs={7}>
+              <Box noValidate sx={{ mt: 1 }}>
+                <Grid container spacing={2} justifyContent="flex-end">
+                  <Grid item xs={7}>
+                    <TextField
+                      margin="normal"
+                      required
+                      id="title"
+                      label="상품 이름"
+                      name="title"
+                      autoComplete="title"
+                      onChange={handleChange}
+                      autoFocus
+                      fullWidth
+                    />
+                  </Grid>
+
+                  <Grid item mt={2} xs={5}>
+                    <FormControl sx={{ width: 140 }}>
+                      <InputLabel id="category">카테고리</InputLabel>
+                      <Select
+                        labelId="category"
+                        id="category"
+                        value={formData.categoryName || ""}
+                        label="카테고리"
+                        onChange={(event) => {
+                          const selectedCategory = event.target.value;
+                          const categoryIndex =
+                            categorys.indexOf(selectedCategory);
+                          console.log(
+                            `Selected Category: ${selectedCategory}, Category Number: ${
+                              categoryIndex + 1
+                            }`
+                          );
+                          setFormData((prevFormData) => ({
+                            ...prevFormData,
+                            categoryName: selectedCategory,
+                            categoryId: categoryIndex + 1,
+                          }));
+                        }}
+                        MenuProps={MenuProps}
+                      >
+                        <MenuItem value="" disabled>
+                          카테고리 선택
+                        </MenuItem>
+                        {categorys.map((category) => (
+                          <MenuItem key={category} value={category}>
+                            {category}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                </Grid>
                 <TextField
                   margin="normal"
                   required
-                  id="title"
-                  label="상품 이름"
-                  name="title"
-                  autoComplete="title"
-                  onChange={handleChange}
-                  autoFocus
                   fullWidth
+                  id="price"
+                  name="price"
+                  type="text"
+                  label="제안 가격"
+                  value={formattedPrice}
+                  onChange={handlePriceChange}
+                  autoComplete="price"
+                  InputProps={{
+                    inputProps: {
+                      maxLength: 7, // 10자리의 숫자 + 3자리의 콤마
+                    },
+                    endAdornment: (
+                      <InputAdornment position="end">원</InputAdornment>
+                    ),
+                  }}
                 />
-              </Grid>
 
-              <Grid item mt={2} xs={5}>
-                <FormControl sx={{ width: 140 }}>
-                  <InputLabel id="category">카테고리</InputLabel>
-                  <Select
-                    labelId="category"
-                    id="category"
-                    value={formData.categoryName || ""}
-                    label="카테고리"
-                    onChange={(event) => {
-                      const selectedCategory = event.target.value;
-                      const categoryIndex = categorys.indexOf(selectedCategory);
-                      console.log(
-                        `Selected Category: ${selectedCategory}, Category Number: ${
-                          categoryIndex + 1
-                        }`
-                      );
-                      setFormData((prevFormData) => ({
-                        ...prevFormData,
-                        categoryName: selectedCategory,
-                        categoryId: categoryIndex + 1,
-                      }));
-                    }}
-                    MenuProps={MenuProps}
-                  >
-                    <MenuItem value="" disabled>
-                      카테고리 선택
-                    </MenuItem>
-                    {categorys.map((category) => (
-                      <MenuItem key={category} value={category}>
-                        {category}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-            </Grid>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="price"
-              name="price"
-              type="text"
-              label="제안 가격"
-              value={formattedPrice}
-              onChange={handlePriceChange}
-              autoComplete="price"
-              InputProps={{
-                inputProps: {
-                  maxLength: 7, // 10자리의 숫자 + 3자리의 콤마
-                },
-                endAdornment: (
-                  <InputAdornment position="end">원</InputAdornment>
-                ),
-              }}
-            />
-
-            <Grid mt={2}>
-              <TextField
-                label="상품 내용"
-                name="content"
-                value={formData.content}
-                multiline
-                fullWidth
-                rows={4}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Button
-              onClick={() => uploadProduct()}
-              fullWidth
-              color="secondary"
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              {text}
-            </Button>
-          </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
+                <Grid mt={2}>
+                  <TextField
+                    label="상품 내용"
+                    name="content"
+                    value={formData.content}
+                    multiline
+                    fullWidth
+                    rows={4}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Button
+                  onClick={() => uploadProduct()}
+                  fullWidth
+                  color="secondary"
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  {text}
+                </Button>
+              </Box>
+            </Box>
+          </Container>
+        </ThemeProvider>
+      )}
+    </>
   );
 };
 

@@ -24,6 +24,7 @@ import {
   updateTradeStateAPI,
   deleteProductAPI,
 } from "../../apis/api/Product";
+import { getMemberAPI } from "../../apis/api/member";
 
 const MySaleProduct = () => {
   //   const { clubId } = useParams();
@@ -105,13 +106,14 @@ const MySaleProduct = () => {
   const [selectedMenuType, setSelectedMenuType] = useState("SALE");
   const menuList = ["판매 중", "판매 완료", "예약 중", "숨김 중"];
   const menuListEng = ["SALE", "SALED", "RESERVATION", "HIDE"];
+  const [member, setMember] = useState();
   const [alert, setAlert] = useState(null);
 
   const getProductReview = (productId) => {
     navigate(`/product/review/get/${productId}`);
   };
   const changeHide = (productId) => {
-    updateTradeState(productId, "SALE");
+    updateTradeState(productId, "RESTORE");
   };
 
   const handleMenuClick = (idx) => {
@@ -142,13 +144,22 @@ const MySaleProduct = () => {
   const deleteProduct = async (productId) => {
     await deleteProductAPI(productId);
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getMemberAPI();
+        setMember(data);
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching member data:", error);
+      }
+    };
 
+    fetchData();
+  }, []);
   return (
     <>
       <Back url="/member/profile" />
-      <TopBar>내 판매 내역</TopBar>
-      <MarginEmpty />
-      <MarginEmpty value={"160px"} />
       <AppBar
         position="fixed"
         style={{
@@ -160,7 +171,27 @@ const MySaleProduct = () => {
         <CardHeader
           sx={{ m: 4, color: "black" }}
           title="나의 판매내역"
-          // avatar={<Avatar aria-label="recipe">R</Avatar>}
+          action={
+            member && (
+              <Avatar
+                aria-label="recipe"
+                sx={{
+                  width: "80px",
+                  height: "80px",
+                }}
+              >
+                <img
+                  src={member.profileURL}
+                  alt="profile"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "50%",
+                  }}
+                />
+              </Avatar>
+            )
+          }
         />
 
         <div style={{ display: "flex", width: "100%" }}>

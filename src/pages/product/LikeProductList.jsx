@@ -28,10 +28,13 @@ import ListContainingProduct from "../../component/product/ListContainingProduct
 import Back from "../../component/common/Back";
 import TopBar from "../../component/payment/TopBar";
 import MarginEmpty from "../../component/payment/MarginEmpty";
+import LoadingProgress from "../../component/common/LoadingProgress";
+import NotData from "../../component/product/NotData";
 
 const ProductList = () => {
   const navigator = useNavigate();
   const [product, setProduct] = React.useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {
@@ -39,7 +42,10 @@ const ProductList = () => {
       setProduct(data);
       console.log(data);
     } catch (error) {
+      setLoading(false);
       console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -50,8 +56,18 @@ const ProductList = () => {
     <>
       <Back />
       <TopBar>관심 상품 리스트</TopBar>
-      <MarginEmpty />
-      {product && <ListContainingProduct data={product} type={"like"} />}
+      {loading ? (
+        <LoadingProgress />
+      ) : product.length > 0 ? (
+        <>
+          <MarginEmpty />
+          {product && <ListContainingProduct data={product} type={"like"} />}
+        </>
+      ) : (
+        <NotData>
+          <div style={{ color: "lightgray" }}>관심상품이 존재하지 않아요.</div>
+        </NotData>
+      )}
     </>
   );
 };

@@ -39,12 +39,14 @@ export const getProductAPI = async (productId) => {
     data,
     countSuggestPriceAPI(data.id),
     countProductChatRoom(data.id),
+    validSuggestAPI(data.id),
   ]);
-
+  console.log(results);
   return {
     ...results[0],
     suggestCount: results[1],
     chatroom: results[2].result,
+    validSuggest: results[3],
   };
 };
 export const updateProductAPI = async (productDTO) => {
@@ -105,6 +107,12 @@ export const listSuggestPriceAPI = async (productId) => {
   );
   return data;
 };
+export const validSuggestAPI = async (productId) => {
+  const { data } = await authInstance.get(
+    `${PRODUCT_API_URI}/suggest/valid/${productId}`
+  );
+  return data;
+};
 export const countSuggestPriceAPI = async (productId) => {
   const { data } = await authInstance.get(
     `${PRODUCT_API_URI}/suggest/count/${productId}`
@@ -116,6 +124,17 @@ export const listProductBySaleAPI = async (type) => {
   try {
     const response = await authInstance.get(
       `${PRODUCT_API_URI}/sale/list?type=${type}`
+    );
+    console.log(response);
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const listProductBySaleOtherMemberAPI = async (type, memberId) => {
+  try {
+    const response = await authInstance.get(
+      `${PRODUCT_API_URI}/sale/list/${memberId}?type=${type}`
     );
     console.log(response);
     return response;

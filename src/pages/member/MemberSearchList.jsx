@@ -5,15 +5,17 @@ import ListContainingProduct from "../../component/product/ListContainingProduct
 import { ListProductAPI } from "../../apis/api/Product";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import NotData from "../../component/product/NotData";
+import { getMemberSearchByLocationAPI } from "../../apis/api/member";
+import LocationByMember from "../../component/member/LocationByMember";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 
-const ProductSearchList = ({ query }) => {
+const MemberSearchList = ({ query }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const listProduct = async () => {
     try {
-      const { data } = await ListProductAPI(query);
+      const data = await getMemberSearchByLocationAPI(query);
       console.log(data);
       setData(data);
     } catch (error) {
@@ -34,15 +36,15 @@ const ProductSearchList = ({ query }) => {
       ) : data.length > 0 ? (
         <>
           <MarginEmpty value={"8.0rem"} />
-          <ListContainingProduct type="report" data={data} />
+          <LocationByMember data={data} />
         </>
       ) : (
         <NotData>
-          <div style={{ color: "lightgray" }}>검색된 상품이 없어요.</div>
+          <div style={{ color: "lightgray" }}>검색된 회원이 없어요.</div>
         </NotData>
       )}
       <MarginEmpty />
     </>
   );
 };
-export default ProductSearchList;
+export default MemberSearchList;

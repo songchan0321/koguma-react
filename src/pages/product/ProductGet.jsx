@@ -19,6 +19,8 @@ import MarginEmpty from "../../component/payment/MarginEmpty";
 import ImgCarousel from "../../component/product/ImgCarousel";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import { formatTimeAgo } from "../../apis/utils/timestamp";
+import TradeStateButton from "../../component/product/TradeStateButton";
+import ScoreColor from "../../component/common/ScoreColor";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -46,6 +48,7 @@ const ProductGet = () => {
     const fetchData = async () => {
       try {
         const result = await getProductAPI(productId);
+        console.log(result);
         setData(result);
         const valid = await validProductAPI(productId);
         setIsMine(valid);
@@ -58,9 +61,7 @@ const ProductGet = () => {
   }, []);
   return (
     <>
-      <Back
-        url={state?.roomId ? `/chat/get/${state.roomId}` : "/product/list"}
-      />
+      <Back url={state?.roomId ? `/chat/get/${state.roomId}` : -1} />
       <TopBar>상품 조회</TopBar>
       <MarginEmpty />
       {data ? (
@@ -86,14 +87,7 @@ const ProductGet = () => {
                 </Avatar>
               }
               onClick={() => getMember(data.sellerDTO.id)}
-              action={
-                <IconButton aria-label="settings">
-                  <Typography variant="body1" color="textPrimary">
-                    {data.sellerDTO.score}℃
-                    <ThermostatIcon />
-                  </Typography>
-                </IconButton>
-              }
+              action={<ScoreColor score={data.sellerDTO.score}></ScoreColor>}
               title={
                 <Typography variant="h6" color="textPrimary">
                   {data.sellerDTO.nickname}
@@ -110,6 +104,7 @@ const ProductGet = () => {
           </Card>
           <CardContent>
             <Typography variant="h6" color="textPrimary" sx={{ mb: 1 }}>
+              <TradeStateButton type={{ tradeStatus: data.tradeStatus }} />
               <b>{data.title}</b>
             </Typography>
             <Typography variant="caption" color="text.secondary" sx={{ mb: 3 }}>
@@ -123,7 +118,8 @@ const ProductGet = () => {
               {data.content}
             </Typography>
             <Typography variant="caption" color="text.secondary" sx={{ mb: 3 }}>
-              관심 {data.likeCount} · 조회 {data.views}
+              채팅 {data.chatroomCount} · 관심 {data.likeCount} · 조회{" "}
+              {data.views}
             </Typography>
           </CardContent>
           <GetProductBottomBar

@@ -19,10 +19,12 @@ import Back from "../../component/common/Back";
 import TopBar from "../../component/payment/TopBar";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 import { addReviewAPI, getProductAPI } from "../../apis/api/Product";
+import LoadingProgress from "../../component/common/LoadingProgress";
 const ProductReviewAdd = () => {
   //   const { clubId } = useParams();
   const { state } = useLocation();
   const [product, setProduct] = useState();
+  const [loading, setLoading] = useState(false);
   const [review, setReview] = useState({
     productDTO: product,
     rating: undefined,
@@ -61,10 +63,14 @@ const ProductReviewAdd = () => {
   };
   const addReview = async () => {
     try {
+      setLoading(true);
       const data = await addReviewAPI(review); // navigate
       await navigate(`/product/list/sale`, { replace: true });
     } catch (err) {
       console.log(err);
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -94,53 +100,65 @@ const ProductReviewAdd = () => {
 
   return (
     <>
-      <Back
-        url={state?.roomId ? `/chat/get/${state.roomId}` : "/product/list/sale"}
-      />
-      <TopBar>후기 작성하기</TopBar>
-      <MarginEmpty value="60px" />
-      {product && (
+      {loading ? (
+        <LoadingProgress />
+      ) : (
         <>
-          <ReviewProductBar data={product} />
-          <BasicRating
-            buyer={product.buyerDTO.nickname}
-            rating={review.rating}
-            setRating={(newValue) => setReview({ ...review, rating: newValue })}
+          <Back
+            url={
+              state?.roomId ? `/chat/get/${state.roomId}` : "/product/list/sale"
+            }
           />
+          <TopBar>후기 작성하기</TopBar>
+          <MarginEmpty value="60px" />
+          {product && (
+            <>
+              <ReviewProductBar data={product} />
+              <BasicRating
+                buyer={product.buyerDTO.nickname}
+                rating={review.rating}
+                setRating={(newValue) =>
+                  setReview({ ...review, rating: newValue })
+                }
+              />
+            </>
+          )}
+          {review.rating && (review.rating === 1 || review.rating === 2) ? (
+            <Commet
+              type="bad"
+              commetHandler={commetHandler}
+              checkboxHandler={handleCheckboxChange}
+              checkBoxClear={checkBoxClear}
+            />
+          ) : null}
+          {review.rating &&
+          (review.rating === 3 ||
+            review.rating === 4 ||
+            review.rating === 5) ? (
+            <Commet
+              type="good"
+              commetHandler={commetHandler}
+              checkboxHandler={handleCheckboxChange}
+              checkBoxClear={checkBoxClear}
+            />
+          ) : null}
+          {review.rating && (
+            <Paper
+              sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+              elevation={3}
+            >
+              <Button
+                onClick={() => addReview()}
+                // onClick={() => console.log(review)}
+                fullWidth
+                color="secondary"
+                variant="contained"
+              >
+                거래후기 등록하기
+              </Button>
+            </Paper>
+          )}
         </>
-      )}
-      {review.rating && (review.rating === 1 || review.rating === 2) ? (
-        <Commet
-          type="bad"
-          commetHandler={commetHandler}
-          checkboxHandler={handleCheckboxChange}
-          checkBoxClear={checkBoxClear}
-        />
-      ) : null}
-      {review.rating &&
-      (review.rating === 3 || review.rating === 4 || review.rating === 5) ? (
-        <Commet
-          type="good"
-          commetHandler={commetHandler}
-          checkboxHandler={handleCheckboxChange}
-          checkBoxClear={checkBoxClear}
-        />
-      ) : null}
-      {review.rating && (
-        <Paper
-          sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
-          elevation={3}
-        >
-          <Button
-            onClick={() => addReview()}
-            // onClick={() => console.log(review)}
-            fullWidth
-            color="secondary"
-            variant="contained"
-          >
-            거래후기 등록하기
-          </Button>
-        </Paper>
       )}
     </>
   );

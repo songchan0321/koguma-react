@@ -90,8 +90,16 @@ const GetProductBottomBar = ({ data, isMine, productId }) => {
           ) : (
             <BottomButton
               navTarget={() => navigate(`/product/suggest/${data.id}`)}
-              isBlock={data.tradeStatus === "SALED" ? false : true}
-              child={`가격제안 하기`}
+              isBlock={
+                data.tradeStatus === "SALED"
+                  ? false
+                  : true && data.validSuggest === false
+                  ? true
+                  : false
+              }
+              child={
+                data.validSuggest === false ? `가격제안 하기` : `가격제안 완료`
+              }
             />
           )}
           {isMine ? (

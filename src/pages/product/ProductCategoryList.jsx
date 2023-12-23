@@ -18,12 +18,16 @@ const ProductCategoryList = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const listProduct = async () => {
     try {
       const result = await ListProductAPI("", state.categoryIndex);
       setData(result.data);
     } catch (error) {
       console.error(error);
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -32,18 +36,29 @@ const ProductCategoryList = () => {
   }, []);
   return (
     <>
-      <Back url="/product/list" />
-      <TopBar>{state.category}</TopBar>
-      <MarginEmpty />
-      {data ? (
-        <ListContainingProduct type="report" data={data} />
+      {loading ? (
+        <LoadingProgress />
       ) : (
-        <NotData>
-          <div>해당 카테고리에 상품이 존재하지 않아요.</div>
-        </NotData>
-      )}
-      <br />
-      <br />
+        <>
+          <Back url="/product/list" />
+          <TopBar>{state.category}</TopBar>
+
+          {data.length > 0 ? (
+            <>
+              <MarginEmpty />
+              <ListContainingProduct type="report" data={data} />
+            </>
+          ) : (
+            <NotData>
+              <div style={{ color: "lightgray" }}>해당 카테고리에 상품이</div>
+              <br />
+              <div style={{ color: "lightgray" }}>존재하지 않아요.</div>
+            </NotData>
+          )}
+          <br />
+          <br />
+        </>
+      )}{" "}
     </>
   );
 };
