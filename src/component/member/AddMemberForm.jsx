@@ -25,7 +25,7 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [authNum, setAuthNum] = useState("");
-  const [isSmsVerified, setIsSmsVerified] = useState(false);
+  const [isSmsVerified, setIsSmsVerified] = useState(true); // 테스트로 잠시 true 놓음
   const [isAgreed, setIsAgreed] = useState(false);
   const [isAgeChecked, setIsAgeChecked] = useState(false);
   const [isUseChecked, setIsUseChecked] = useState(false);
