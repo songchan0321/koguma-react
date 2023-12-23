@@ -148,7 +148,7 @@ const Login = () => {
                   }}
                   onClick={() =>
                     (window.location.href =
-                      "https://kauth.kakao.com/oauth/authorize?client_id=ef2f330de7db2127b41280db652748e5&redirect_uri=https://koguma.5quys.com/common/kakao/callback&response_type=code&prompt=login")
+                      "https://kauth.kakao.com/oauth/authorize?client_id=ef2f330de7db2127b41280db652748e5&redirect_uri=https://api.5quys.com/common/kakao/callback&response_type=code&prompt=login")
                   }
                 >
                   {/* <div style={{ paddingTop: "0.3rem", color: "black" }}>
