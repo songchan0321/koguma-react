@@ -13,6 +13,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import BottomBar from "../../component/common/BottomBar";
 import ProductSearchList from "../product/ProductSearchList";
 import MemberSearchList from "../member/MemberSearchList";
+import { Paper } from "@mui/material";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -90,25 +91,36 @@ const SearchTab = () => {
         setLocation={setLocation}
         handleCategory={handleCategoryClick}
       />
-      <MarginEmpty value={"5.1rem"} />
       {/* <Margin */}
+
       <Box sx={{ bgcolor: "background.paper" }}>
-        <AppBar position="static" sx={{ backgroundColor: "#D070FB" }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            TabIndicatorProps={{ style: { background: "#ffffff" } }}
-            textColor="inherit"
-            variant="fullWidth"
-            style={indicatorColorStyle}
-            aria-label="full width tabs example"
-          >
-            <Tab label="중고거래" {...a11yProps(0)} />
-            <Tab label="동네생활" {...a11yProps(1)} />
-            <Tab label="모임" {...a11yProps(2)} />
-            <Tab label="이웃" {...a11yProps(3)} />
-          </Tabs>
-        </AppBar>
+        <Paper
+          sx={{
+            position: "fixed",
+            top: "5.1rem",
+            left: 0,
+            right: 0,
+            zIndex: 1100,
+          }}
+          elevation={3}
+        >
+          <AppBar position="static" sx={{ backgroundColor: "#D070FB" }}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              TabIndicatorProps={{ style: { background: "#ffffff" } }}
+              textColor="inherit"
+              variant="fullWidth"
+              style={indicatorColorStyle}
+              aria-label="full width tabs example"
+            >
+              <Tab label="중고거래" {...a11yProps(0)} />
+              <Tab label="동네생활" {...a11yProps(1)} />
+              <Tab label="모임" {...a11yProps(2)} />
+              <Tab label="이웃" {...a11yProps(3)} />
+            </Tabs>
+          </AppBar>
+        </Paper>
         <SwipeableViews
           key={location}
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}

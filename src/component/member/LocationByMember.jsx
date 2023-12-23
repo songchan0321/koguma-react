@@ -1,5 +1,6 @@
 import { Avatar, Box, Card, CardHeader, Typography } from "@mui/material";
 import { Navigate, useNavigate } from "react-router-dom";
+import ScoreColor from "../common/ScoreColor";
 
 const LocationByMember = ({ data }) => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const LocationByMember = ({ data }) => {
                 {member.nickname}
               </Typography>
               <Typography variant="subtitle3" color="text">
-                {member.score}°C
+                <ScoreColor score={member.score}></ScoreColor>
               </Typography>
             </Box>
           }

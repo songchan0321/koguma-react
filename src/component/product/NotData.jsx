@@ -18,7 +18,9 @@ const NotData = ({ children }) => {
           transform: "translateY(-50%)", // 세로 중앙 정렬을 위한 추가 조정
         }}
       >
-        {children}
+        <h5>
+          <b>{children}</b>
+        </h5>
       </Box>
     </Box>
   );

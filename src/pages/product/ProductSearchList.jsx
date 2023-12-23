@@ -5,6 +5,7 @@ import ListContainingProduct from "../../component/product/ListContainingProduct
 import { ListProductAPI } from "../../apis/api/Product";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import NotData from "../../component/product/NotData";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const ProductSearchList = ({ query }) => {
   const [data, setData] = useState(null);
@@ -31,10 +32,14 @@ const ProductSearchList = ({ query }) => {
       {loading ? (
         <LoadingProgress />
       ) : data.length > 0 ? (
-        <ListContainingProduct type="report" data={data} />
+        <>
+          <MarginEmpty value={"8.0rem"} />
+          <ListContainingProduct type="report" data={data} />
+        </>
       ) : (
-        <NotData>값이 없어요!</NotData>
+        <NotData>해당 검색어의 상품이 없어요.</NotData>
       )}
+      <MarginEmpty />
     </>
   );
 };

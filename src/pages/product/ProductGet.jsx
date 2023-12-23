@@ -20,6 +20,7 @@ import ImgCarousel from "../../component/product/ImgCarousel";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import { formatTimeAgo } from "../../apis/utils/timestamp";
 import TradeStateButton from "../../component/product/TradeStateButton";
+import ScoreColor from "../../component/common/ScoreColor";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -88,14 +89,7 @@ const ProductGet = () => {
                 </Avatar>
               }
               onClick={() => getMember(data.sellerDTO.id)}
-              action={
-                <IconButton aria-label="settings">
-                  <Typography variant="body1" color="textPrimary">
-                    {data.sellerDTO.score}℃
-                    <ThermostatIcon />
-                  </Typography>
-                </IconButton>
-              }
+              action={<ScoreColor score={data.sellerDTO.score}></ScoreColor>}
               title={
                 <Typography variant="h6" color="textPrimary">
                   {data.sellerDTO.nickname}

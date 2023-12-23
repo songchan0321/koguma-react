@@ -7,6 +7,7 @@ import LoadingProgress from "../../component/common/LoadingProgress";
 import NotData from "../../component/product/NotData";
 import { getMemberSearchByLocationAPI } from "../../apis/api/member";
 import LocationByMember from "../../component/member/LocationByMember";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const MemberSearchList = ({ query }) => {
   const [data, setData] = useState(null);
@@ -33,10 +34,14 @@ const MemberSearchList = ({ query }) => {
       {loading ? (
         <LoadingProgress />
       ) : data.length > 0 ? (
-        <LocationByMember data={data} />
+        <>
+          <MarginEmpty value={"8.0rem"} />
+          <LocationByMember data={data} />
+        </>
       ) : (
         <NotData>값이 없어요!</NotData>
       )}
+      <MarginEmpty />
     </>
   );
 };
