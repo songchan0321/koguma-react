@@ -18,6 +18,7 @@ import {
 import { Navigate, useNavigate } from "react-router-dom";
 import { CHAT_EVENT, SocketContext } from "../../context/socket";
 import { formatTimeAgo } from "../../apis/utils/timestamp";
+import ScoreColor from "../common/ScoreColor";
 
 const SuggestPriceComponent = (suggestData) => {
   const socket = useContext(SocketContext);
@@ -124,13 +125,14 @@ const SuggestPriceComponent = (suggestData) => {
               {suggestData.data.memberDTO.nickname}
             </Typography>
             <Typography variant="subtitle3" color="text">
-              {suggestData.data.memberDTO.score}°C
+              <ScoreColor score={suggestData.data.memberDTO.score} />
             </Typography>
           </Box>
         }
         subheader={
           <>
             <Typography variant="subtitle2" color="textSecondary">
+              {suggestData.data.dong} ·{" "}
               {formatTimeAgo(suggestData.data.regDate)}
             </Typography>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>

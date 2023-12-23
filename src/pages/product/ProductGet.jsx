@@ -61,9 +61,7 @@ const ProductGet = () => {
   }, []);
   return (
     <>
-      <Back
-        url={state?.roomId ? `/chat/get/${state.roomId}` : "/product/list"}
-      />
+      <Back url={state?.roomId ? `/chat/get/${state.roomId}` : -1} />
       <TopBar>상품 조회</TopBar>
       <MarginEmpty />
       {data ? (

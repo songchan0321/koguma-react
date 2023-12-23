@@ -4,13 +4,13 @@ import Back from "../../component/common/Back";
 import BottomBar from "../../component/common/BottomBar";
 
 const OtherProfile = () => {
-    return (
-        <div>
-            <OtherProfileForm />
-            <Back/>
-            <BottomBar/>
-        </div>
-    );
+  return (
+    <div>
+      <OtherProfileForm url={`/product/list`} />
+      <Back />
+      <BottomBar />
+    </div>
+  );
 };
 
 export default OtherProfile;

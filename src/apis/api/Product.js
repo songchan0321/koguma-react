@@ -131,6 +131,17 @@ export const listProductBySaleAPI = async (type) => {
     console.log(err);
   }
 };
+export const listProductBySaleOtherMemberAPI = async (type, memberId) => {
+  try {
+    const response = await authInstance.get(
+      `${PRODUCT_API_URI}/sale/list/${memberId}?type=${type}`
+    );
+    console.log(response);
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+};
 export const listProductByBuyAPI = async () => {
   const { data } = await authInstance.get(`${PRODUCT_API_URI}/buy/list`);
   console.log(data);

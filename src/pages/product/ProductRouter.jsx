@@ -19,6 +19,7 @@ import {
 import Login from "../../component/common/Login";
 import ProductCategoryList from "./ProductCategoryList";
 import ScrollToTop from "../../component/common/ScrollToTop";
+import OtherMemberSaleList from "./OtherMemberSaleList";
 
 const ProductRouter = () => {
   const isLogin = useIsLoginState(IsLoginContext);
@@ -42,6 +43,10 @@ const ProductRouter = () => {
         <Route path="/get/review/:reviewId" element={<ProductReviewGet />} />
         <Route path="/suggest/list/:productId" element={<ListSuggestPrice />} />
         <Route path="/get/seller/:productId" element={<ListChoiceBuyer />} />
+        <Route
+          path="/get/other/product/:memberId"
+          element={<OtherMemberSaleList />}
+        />
       </Routes>
     </ScrollToTop>
   );
