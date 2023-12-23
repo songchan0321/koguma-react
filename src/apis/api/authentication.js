@@ -31,11 +31,11 @@ export const kakaoLoginAPI = async () => {
 
   try {
     const response = await defaultInstance.get(
-      `http://localhost:8080/common/kakao/callback/?code=${code}`
+      `https://api.5quys.com/common/kakao/callback/?code=${code}`
     );
     return response;
   } catch (err) {
-    throw err;
+    console.log(err);
   }
 };
 
