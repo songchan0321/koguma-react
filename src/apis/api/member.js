@@ -179,3 +179,10 @@ export const getProfileAPI = async (memberId) => {
   );
   return data;
 };
+export const getMemberSearchByLocationAPI = async (keyword) => {
+  const { data } = await authInstance.get(
+    `${MEMBER_API_URI}/get/location?keyword=${keyword || ""}`
+  );
+  console.log(data);
+  return data;
+};

@@ -9,11 +9,17 @@ const NotData = ({ children }) => {
         alignItems: "center", // 세로 중앙 정렬
         justifyContent: "center", // 가로 중앙 정렬
         height: "100vh", // 전체 화면 높이
-        mt: 3,
-        mb: 3,
       }}
     >
-      {children}
+      <Box
+        sx={{
+          position: "sticky",
+          top: "50%", // 세로 중앙 정렬을 위한 위치 조정
+          transform: "translateY(-50%)", // 세로 중앙 정렬을 위한 추가 조정
+        }}
+      >
+        {children}
+      </Box>
     </Box>
   );
 };

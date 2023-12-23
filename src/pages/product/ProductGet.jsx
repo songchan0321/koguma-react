@@ -19,6 +19,7 @@ import MarginEmpty from "../../component/payment/MarginEmpty";
 import ImgCarousel from "../../component/product/ImgCarousel";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import { formatTimeAgo } from "../../apis/utils/timestamp";
+import TradeStateButton from "../../component/product/TradeStateButton";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -46,6 +47,7 @@ const ProductGet = () => {
     const fetchData = async () => {
       try {
         const result = await getProductAPI(productId);
+        console.log(result);
         setData(result);
         const valid = await validProductAPI(productId);
         setIsMine(valid);
@@ -110,6 +112,7 @@ const ProductGet = () => {
           </Card>
           <CardContent>
             <Typography variant="h6" color="textPrimary" sx={{ mb: 1 }}>
+              <TradeStateButton type={{ tradeStatus: data.tradeStatus }} />
               <b>{data.title}</b>
             </Typography>
             <Typography variant="caption" color="text.secondary" sx={{ mb: 3 }}>
@@ -123,7 +126,8 @@ const ProductGet = () => {
               {data.content}
             </Typography>
             <Typography variant="caption" color="text.secondary" sx={{ mb: 3 }}>
-              관심 {data.likeCount} · 조회 {data.views}
+              채팅 {data.chatroomCount} · 관심 {data.likeCount} · 조회{" "}
+              {data.views}
             </Typography>
           </CardContent>
           <GetProductBottomBar

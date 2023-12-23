@@ -11,6 +11,7 @@ import {
   Container,
   Grid,
   TextField,
+  Link,
   createTheme,
   ThemeProvider,
 } from "@mui/material";
@@ -46,7 +47,6 @@ const Login = () => {
         navigator("/product/list");
       } catch (err) {
         console.error(err);
-        alert(err);
         alert("로그인 실패");
       } finally {
         setLoading(false);
@@ -87,7 +87,7 @@ const Login = () => {
               required
               fullWidth
               id="id"
-              label="id"
+              label="아이디"
               name="id"
               autoComplete="id"
               autoFocus
@@ -97,49 +97,89 @@ const Login = () => {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="비밀번호"
               type="password"
               id="password"
               autoComplete="current-password"
             />
-            <Button
-              type="submit"
-              fullWidth
-              color="secondary"
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              로그인
-            </Button>
+
             <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={6}>
                 <Button
-                  // type="submit"
+                  type="submit"
                   fullWidth
-                  color="secondary"
                   variant="contained"
-                  sx={{ height: "100%" }} // 높이 조절
-                  onClick={() => navigator("/member/add")}
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    backgroundColor: "#D070FB",
+                    color: "#000000",
+                  }}
                 >
-                  회원가입
+                  {/* <div style={{ paddingTop: "0.3rem", color: "black" }}>
+                    로그인
+                  </div> */}
+                  로그인
                 </Button>
               </Grid>
-              <Grid item xs={12} md={6}>
-                <img
-                  className="kakaoBar"
-                  src="/login/kakao_login_medium_narrow (1).png"
-                  alt="Kakao Login"
+              <Grid item xs={6}>
+                {/* <Box sx={{ mt: 3, mb: 2 }}>
+                  <img
+                    className="kakaoBar"
+                    src="/login/kakao_login_medium_narrow (1).png"
+                    alt="Kakao Login"
+                    onClick={() =>
+                      (window.location.href =
+                        "https://kauth.kakao.com/oauth/authorize?client_id=ef2f330de7db2127b41280db652748e5&redirect_uri=http://localhost:3000/common/kakao/callback&response_type=code&prompt=login")
+                    }
+                  />
+                </Box> */}
+                <Button
+                  fullWidth
+                  variant="contained"
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    backgroundColor: "#FEE500",
+                    color: "#000000",
+                    "&:active, &:focus": {
+                      backgroundColor: "#FEE500", // 클릭 또는 포커스 시 배경색을 기존 색상으로 유지
+                    },
+                  }}
                   onClick={() =>
                     (window.location.href =
-                      "https://kauth.kakao.com/oauth/authorize?client_id=ef2f330de7db2127b41280db652748e5&redirect_uri=http://localhost:3000/common/kakao/callback&response_type=code&prompt=login")
+                      "https://kauth.kakao.com/oauth/authorize?client_id=ef2f330de7db2127b41280db652748e5&redirect_uri=https://koguma.5quys.com/common/kakao/callback&response_type=code&prompt=login")
                   }
-                  // onClick={() =>
-                  //   (window.location.href =
-                  //     "https://kauth.kakao.com/oauth/authorize?client_id=ef2f330de7db2127b41280db652748e5&redirect_uri=https://koguma.5quys/com/common/kakao/callback&response_type=code&prompt=login")
-                  // }
-                />
+                >
+                  {/* <div style={{ paddingTop: "0.3rem", color: "black" }}>
+                    로그인
+                  </div> */}
+                  카카오로그인
+                </Button>
               </Grid>
             </Grid>
+            <Grid container>
+              <Grid item xs></Grid>
+              <Grid item>
+                <Link
+                  href="#"
+                  variant="body2"
+                  onClick={() => navigator("/member/add")}
+                >
+                  회원이 아니신가요?
+                </Link>
+              </Grid>
+            </Grid>
+
+            {/* <Button
+              // type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={() => navigator("/member/add")}
+            >
+              회원가입
+            </Button> */}
           </Box>
         </Box>
       </Container>

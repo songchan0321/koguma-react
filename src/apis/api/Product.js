@@ -39,12 +39,14 @@ export const getProductAPI = async (productId) => {
     data,
     countSuggestPriceAPI(data.id),
     countProductChatRoom(data.id),
+    validSuggestAPI(data.id),
   ]);
-
+  console.log(results);
   return {
     ...results[0],
     suggestCount: results[1],
     chatroom: results[2].result,
+    validSuggest: results[3],
   };
 };
 export const updateProductAPI = async (productDTO) => {
@@ -102,6 +104,12 @@ export const addSuggestPriceAPI = async (suggest) => {
 export const listSuggestPriceAPI = async (productId) => {
   const { data } = await authInstance.get(
     `${PRODUCT_API_URI}/suggest/list/${productId}`
+  );
+  return data;
+};
+export const validSuggestAPI = async (productId) => {
+  const { data } = await authInstance.get(
+    `${PRODUCT_API_URI}/suggest/valid/${productId}`
   );
   return data;
 };

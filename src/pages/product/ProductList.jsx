@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import BottomBar from "../../component/common/BottomBar";
 import ProductTopBar from "../../component/product/ProductTopBar";
 import AddFloatingButton from "../../component/common/AddFloatingButton";
@@ -15,8 +15,7 @@ const ProductList = () => {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [location, setLocation] = useState();
-  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+
   const handleCategoryClick = (category, index) => {
     navigate("/product/list/category", {
       state: {
@@ -53,6 +52,7 @@ const ProductList = () => {
   useEffect(() => {
     listProduct();
   }, [location]);
+
   return (
     <>
       <ProductTopBar

@@ -29,11 +29,14 @@ export const loginAPI = async (id, pw) => {
 export const kakaoLoginAPI = async () => {
   const code = new URL(window.location.href).searchParams.get("code");
 
-  const response = await defaultInstance.get(
-    `http://localhost:3000/common/kakao/callback/?code=${code}`
-  );
-
-  return response;
+  try {
+    const response = await defaultInstance.get(
+      `http://localhost:8080/common/kakao/callback/?code=${code}`
+    );
+    return response;
+  } catch (err) {
+    throw err;
+  }
 };
 
 // export const checkAccountNameAPI = async (name, account, code) => {

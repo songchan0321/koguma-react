@@ -9,9 +9,10 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import ProductTopBar from "../../component/product/ProductTopBar";
 import MarginEmpty from "../../component/payment/MarginEmpty";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import BottomBar from "../../component/common/BottomBar";
 import ProductSearchList from "../product/ProductSearchList";
+import MemberSearchList from "../member/MemberSearchList";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -25,7 +26,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -49,9 +50,24 @@ function a11yProps(index) {
 const SearchTab = () => {
   const theme = useTheme();
   const { state } = useLocation();
+  const navigate = useNavigate();
   const query = state ? state.query : "defaultQuery";
   const [value, setValue] = React.useState(0);
   console.log(state);
+
+  const [location, setLocation] = React.useState();
+
+  const [selectedCategoryIndex, setSelectedCategoryIndex] =
+    React.useState(null);
+  const [selectedCategory, setSelectedCategory] = React.useState(null);
+  const handleCategoryClick = (category, index) => {
+    navigate("/product/list/category", {
+      state: {
+        category: category,
+        categoryIndex: index,
+      },
+    });
+  };
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -62,10 +78,18 @@ const SearchTab = () => {
   const indicatorColorStyle = {
     indicatorColor: "rgb(255, 0, 0)", // 빨간색을 나타냄
   };
+  React.useEffect(() => {
+    // location이 변경될 때 수행할 동작
+    console.log("Location changed in ProductSearchList:", location);
+  }, [location]);
 
   return (
     <>
-      <ProductTopBar />
+      <ProductTopBar
+        location={location}
+        setLocation={setLocation}
+        handleCategory={handleCategoryClick}
+      />
       <MarginEmpty value={"5.1rem"} />
       {/* <Margin */}
       <Box sx={{ bgcolor: "background.paper" }}>
@@ -86,6 +110,7 @@ const SearchTab = () => {
           </Tabs>
         </AppBar>
         <SwipeableViews
+          key={location}
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={value}
           onChangeIndex={handleChangeIndex}
@@ -102,7 +127,9 @@ const SearchTab = () => {
             Item Three
           </TabPanel>
           <TabPanel value={value} index={3} dir={theme.direction}>
-            Item Four
+            <>
+              <MemberSearchList query={query} />
+            </>
           </TabPanel>
         </SwipeableViews>
         <BottomBar />

@@ -34,12 +34,15 @@ const ExpandMore = styled((props) => {
 
 const ListContainingProduct = ({ data, index, type }) => {
   const navigate = useNavigate();
-  console.log(data);
-  console.log(type);
+  // const divRefs = React.useRef([]);
   const getProduct = (productId) => {
     navigate(`/product/get/${productId}`);
   };
-
+  // React.useEffect(() => {
+  //   if (divRefs.current[state.productId]) {
+  //     divRefs.current[state.productId].scrollIntoView({ behavior: "smooth" });
+  //   }
+  // }, [state.productId]);
   return (
     <>
       {data && data.length > 0 ? (
@@ -48,8 +51,10 @@ const ListContainingProduct = ({ data, index, type }) => {
             ? data.map((prod, idx) => (
                 <Card
                   sx={{ maxWidth: "100%" }}
-                  id={prod.id}
+                  id={prod.productDTO.id}
                   onClick={() => getProduct(prod.productDTO.id)}
+                  // key={prod.id}
+                  // ref={(el) => (divRefs.current[idx] = el)}
                 >
                   <CardHeader
                     avatar={
@@ -86,13 +91,15 @@ const ListContainingProduct = ({ data, index, type }) => {
                         >
                           <div>
                             <Typography variant="body1" color="textPrimary">
-                              {prod.tradeStatus === "BUY" ? (
+                              {prod.productDTO.tradeStatus === "BUY" ? (
                                 <TradeStateButton
                                   type={{ tradeStatus: "BUY" }}
                                 />
                               ) : (
                                 <TradeStateButton
-                                  type={{ tradeStatus: prod.tradeStatus }}
+                                  type={{
+                                    tradeStatus: prod.productDTO.tradeStatus,
+                                  }}
                                 />
                               )}
                               {formatMoney(prod.productDTO.price)}원
@@ -108,13 +115,13 @@ const ListContainingProduct = ({ data, index, type }) => {
                                 </span>
                               </>
                             )}
-                            {prod.likeCount > 0 && (
+                            {prod.productDTO.likeCount > 0 && (
                               <>
-                                <span style={{ marginRight: "5px" }}>
+                                {/* <span style={{ marginRight: "5px" }}>
                                   <FavoriteBorder sx={{ fontSize: 16 }} />
                                   &nbsp;
                                   {prod.productDTO.likeCount}
-                                </span>
+                                </span> */}
                               </>
                             )}
                           </div>

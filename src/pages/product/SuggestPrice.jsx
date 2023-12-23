@@ -45,16 +45,23 @@ const SuggestPrice = () => {
   const [formattedPrice, setFormattedPrice] = useState(""); // 가격 표시용
   const [numericPrice, setNumericPrice] = useState(null); // 실제 가격
 
+  const maxPrice = productDTO ? productDTO.price : 0;
   const handlePriceChange = (event) => {
     let inputValue = event.target.value.replace(/[^0-9]/g, "");
 
-    // 콤마로 포맷된 문자열 생성
-    const formattedValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    setFormattedPrice(formattedValue);
+    const newNumericPrice = parseInt(inputValue, 10);
 
-    // 숫자 값으로 상태 업데이트
-    setNumericPrice(parseInt(inputValue, 10));
+    // maxPrice보다 높아지지 않도록 체크
+    if (newNumericPrice <= maxPrice) {
+      // 콤마로 포맷된 문자열 생성
+      const formattedValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+      // 상태 업데이트
+      setFormattedPrice(formattedValue);
+      setNumericPrice(newNumericPrice);
+    }
   };
+
   const addSuggestPrice = async (suggest) => {
     return await addSuggestPriceAPI(suggest);
   };
@@ -119,6 +126,9 @@ const SuggestPrice = () => {
               maxLength: 7, // 10자리의 숫자 + 3자리의 콤마
             },
             endAdornment: <InputAdornment position="end">원</InputAdornment>,
+          }}
+          inputProps={{
+            max: maxPrice,
           }}
         />
         <Button
