@@ -9,7 +9,7 @@ export const getAlertCountAPI = async () => {
 
 export const listAlertAPI = async () => {
   const { data } = await authInstance.get(`${ALERT_API_URI}/list`);
-  return data;
+  return data.sort((a, b) => new Date(b.regDate) - new Date(a.regDate));
 };
 
 export const readAlertAPI = async (alertId) => {

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { CHAT_EVENT, SocketContext } from "../../context/socket";
+import { CALL_EVENT, CHAT_EVENT, SocketContext } from "../../context/socket";
 import { getMemberAPI, getReverseBlockAPI } from "../../apis/api/member";
 import {
   checkEnterRoomByMemberAPI,
@@ -53,9 +53,6 @@ const GetChatRoom = () => {
         : chatRoom.buyerDTO.id
     );
     // 로그인한 회원(구매 예정자)이 채팅방이 리얼 처음인가
-    console.log(block_flag);
-    console.log(exist_flag);
-    console.log("------------------------");
     await getChatRoomAPI(roomId)
       .then((room) => {
         if (block_flag == null) return enterChatRoomAPI(room.id);
@@ -74,46 +71,10 @@ const GetChatRoom = () => {
             : room.buyerEnterDate,
           message: text,
         });
-        navigator(`/chat/get/${room.id}`);
+        // navigator(`/chat/get/${room.id}`);
       });
   };
 
-  const sendTextMessageHandler = async ({ text, toId, type }) => {
-    // 차단 여부 check true:
-    // 나간 여부 check 그냥 emit 후 서버에서 알림 발송 x
-    // 차단 여부 check false: emit하기 전에
-    // enter_date 설정, emit 후 서버에서 알림 발송
-    await enterChatRoomAPI(chatRoom.id).then((data) => {
-      console.log("???????????????????????????????????");
-      console.log(data);
-      if (data) {
-        (async () => {
-          const updateChatroom = await getChatRoomAPI(roomId);
-          console.log("---------------------------");
-          console.log(updateChatroom);
-          socket.emit(CHAT_EVENT.SEND_MESSAGE, {
-            roomId: chatRoom.id,
-            toId: toId,
-            type: type,
-            token: `${localStorage.getItem("token")}`,
-            enter_date:
-              updateChatroom.sellerEnterDate < updateChatroom.buyerEnterDate
-                ? updateChatroom.buyerEnterDate
-                : updateChatroom.sellerEnterDate,
-            message: text,
-          });
-        })();
-      } else {
-        socket.emit(CHAT_EVENT.SEND_MESSAGE, {
-          roomId: chatRoom.id,
-          toId: toId,
-          type: type,
-          token: `${localStorage.getItem("token")}`,
-          message: text,
-        });
-      }
-    });
-  };
   const textEvent = (flag, roomId) => {
     socket.emit(CHAT_EVENT.IS_WRITING, {
       roomId,
@@ -190,13 +151,31 @@ const GetChatRoom = () => {
       >
         <CallIcon
           sx={{ fontSize: "1.8rem" }}
-          onClick={() =>
-            (window.location.href = `tel:${
-              chatRoom.buyerDTO.id === chatRoom.id
-                ? chatRoom.productDTO.sellerDTO.phone
-                : chatRoom.buyerDTO.phone
-            }`)
-          }
+          onClick={() => {
+            sendTextMessageHandler_temp({
+              text: "전화를 요청했어요!",
+              type: "CALL_PENDING",
+            });
+            socket.emit(CALL_EVENT.CALL, {
+              roomId: roomId,
+              sourceMember: member,
+              targetMemberId:
+                chatRoom.buyerDTO.id === member.id
+                  ? chatRoom.productDTO.sellerDTO.id
+                  : chatRoom.buyerDTO.id,
+            });
+            navigator("/chat/call/pending", {
+              state: {
+                roomId: roomId,
+                isOwner: true,
+                next: window.location.pathname,
+                targetMember:
+                  chatRoom.buyerDTO.id === member.id
+                    ? chatRoom.productDTO.sellerDTO
+                    : chatRoom.buyerDTO,
+              },
+            });
+          }}
         />
       </div>
       <TopBar>

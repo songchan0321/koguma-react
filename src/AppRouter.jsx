@@ -12,17 +12,16 @@ import PaymentRouter from "./pages/payment/PaymentRouter";
 import ProductRouter from "./pages/product/ProductRouter";
 import CommunityRouter from "./pages/community/CommunityRouter";
 import { useContext, useEffect, useRef, useState } from "react";
-import { CHAT_EVENT, SocketContext } from "./context/socket";
+import { CALL_EVENT, CHAT_EVENT, SocketContext } from "./context/socket";
 import {
   IsLoginContext,
   useIsLoginState,
 } from "./context/LoginContextProvider";
-import ProductList from "./pages/product/ProductList";
 import { getAlertCountAPI } from "./apis/api/alert";
 import ListAlert from "./pages/common/ListAlert";
 import SearchTab from "./pages/common/SearchTab";
 import Landing from "./Landing";
-import { Alert, Box, Slide, Snackbar } from "@mui/material";
+import { Alert, Slide, Snackbar } from "@mui/material";
 
 function TransitionRight(props) {
   return <Slide {...props} direction="right" />;
@@ -86,12 +85,26 @@ const AppRouter = ({ messageAlertHandler }) => {
             }
           }
         })();
-      }, 5000);
+      }, process.env.REACT_APP_ALERT_TIMEOUT);
       // clearInterval(alertIntervalRef.current);
     }
     socket.on(CHAT_EVENT.EVENT_ALERT, (message) => {
       messageAlertHandler(message);
     });
+
+    socket.on(CALL_EVENT.CALL, (data) => {
+      console.log("roomID!!!");
+      console.log(data);
+      navigator("/chat/call/pending", {
+        state: {
+          roomId: data.roomId,
+          sourceMember: data.sourceMember,
+          isOwner: false,
+          next: window.location.pathname,
+        },
+      });
+    });
+
     return () => {
       console.log("AppRouter unmount");
       clearInterval(socketIntervalRef.current);
