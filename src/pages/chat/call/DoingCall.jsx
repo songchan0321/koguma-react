@@ -15,15 +15,16 @@ const DoingCall = () => {
   const socketRef = useRef();
   const myVideoRef = useRef();
   const remoteVideoRef = useRef();
-  const [change, setChange] = useState(false);
+  // const [change, setChange] = useState(false);
   const pcRef = useRef();
   let stream;
-  const [cam, setCam] = useState("environment");
+  // const [cam, setCam] = useState("environment");
   const getMedia = async () => {
     stream = await navigator.mediaDevices.getUserMedia({
       // video: true,
       video: {
-        facingMode: cam == null ? "environment" : cam,
+        // facingMode: cam == null ? "environment" : cam,
+        facingMode: "user",
       },
       audio: true,
     });
@@ -139,16 +140,16 @@ const DoingCall = () => {
       await pcRef.current.addIceCandidate(candidate);
     });
 
-    socketRef.current.on("cam change", () => {
-      setChange((prev) => !prev);
-    });
+    // socketRef.current.on("cam change", () => {
+    //   setChange((prev) => !prev);
+    // });
 
     socketRef.current.on("exit room", () => {
       console.log("room exit");
       navigate(`${next}`);
     });
 
-    // getMedia();
+    getMedia();
     // socketRef.current.emit("join_room", {
     //   room: roomName,
     // });
@@ -164,9 +165,9 @@ const DoingCall = () => {
     };
   }, []);
 
-  useEffect(() => {
-    getMedia();
-  }, [cam, change]);
+  // useEffect(() => {
+  //   getMedia();
+  // }, [cam, change]);
   return (
     <div
       style={{
@@ -215,7 +216,7 @@ const DoingCall = () => {
           autoPlay
         />
       </div>
-      <div
+      {/* <div
         style={{
           position: "fixed",
           top: "0.8rem",
@@ -242,7 +243,7 @@ const DoingCall = () => {
             />
           </IconButton>
         </Avatar>
-      </div>
+      </div> */}
       <div
         style={{
           position: "fixed",
