@@ -228,7 +228,7 @@ const DoingCall = () => {
           <IconButton
             onClick={() => {
               setCam((prev) => (prev === "user" ? "environment" : "user"));
-              socketRef.emit("cam change", { roomId: roomId });
+              socketRef.current.emit("cam change", { roomId: roomId });
             }}
           >
             <CameraswitchIcon
