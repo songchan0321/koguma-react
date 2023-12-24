@@ -166,7 +166,7 @@ const DoingCall = () => {
 
   useEffect(() => {
     getMedia();
-  }, [cam]);
+  }, [cam, change]);
   return (
     <div
       style={{
@@ -177,7 +177,6 @@ const DoingCall = () => {
         height: "100%",
       }}
     >
-      {console.log(change, "재렌더링")}
       <video
         playsinline="true"
         id="remotevideo"
