@@ -15,6 +15,7 @@ const DoingCall = () => {
   const socketRef = useRef();
   const myVideoRef = useRef();
   const remoteVideoRef = useRef();
+  const [change, setChange] = useState(false);
   const pcRef = useRef();
   let stream;
   const [cam, setCam] = useState("environment");
@@ -139,7 +140,7 @@ const DoingCall = () => {
     });
 
     socketRef.current.on("cam change", () => {
-      getMedia();
+      setChange((prev) => !prev);
     });
 
     socketRef.current.on("exit room", () => {
@@ -176,6 +177,7 @@ const DoingCall = () => {
         height: "100%",
       }}
     >
+      {console.log(change, "재렌더링")}
       <video
         playsinline="true"
         id="remotevideo"
