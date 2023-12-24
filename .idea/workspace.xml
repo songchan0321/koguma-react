@@ -4,32 +4,76 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95e60e63-c969-468c-a634-d8977ada3c8e" name="Changes" comment="fix : 오류 수정 중 테스트&#10;&#10;&#10;&#10;2023.12.22 / 03:29 / HSC">
+    <list default="true" id="95e60e63-c969-468c-a634-d8977ada3c8e" name="Changes" comment="refactor : 회원가입 컴포넌트 수정&#10;&#10;alert 전부 modal로 변경&#10;&#10;2023.12.24 / 04:08 / SIC">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apis/api/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/apis/api/community.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/community/AddComment.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/community/AddComment.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/community/AddReply.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/community/AddReply.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/community/CommunityAvatarFrom.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/community/CommunityAvatarFrom.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/community/GetComment.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/community/GetComment.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/community/PostForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/community/PostForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/community/ListPost.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/community/ListPost.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/member/AddMemberForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/member/AddMemberForm.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="2ZyDXPqQm0pq0F8phayqnTTQrRO" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "hsc",
-    "node.js.selected.package.tslint": "(autodetect)"
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "dev",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task id="LOCAL-00001" summary="refactor : 회원가입 컴포넌트 수정&#10;&#10;alert 전부 modal로 변경&#10;&#10;2023.12.24 / 04:08 / SIC">
+      <option name="closed" value="true" />
+      <created>1703358543253</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1703358543253</updated>
+    </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="95e60e63-c969-468c-a634-d8977ada3c8e" name="Changes" comment="refactor : 회원가입 컴포넌트 수정&#10;&#10;alert 전부 modal로 변경&#10;&#10;2023.12.24 / 04:08 / SIC" />
+      <created>1703385467105</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1703385467105</updated>
+      <workItem from="1703385468217" duration="3765000" />
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fix : 오류 수정 중 테스트&#10;&#10;&#10;&#10;2023.12.22 / 03:29 / HSC" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix : 오류 수정 중 테스트&#10;&#10;&#10;&#10;2023.12.22 / 03:29 / HSC" />
+    <MESSAGE value="feat : 휴대폰 인증 부활(주석은 쳐둠), 회원 탈퇴 휴대폰 인증 추가&#10;&#10;로직 추가&#10;&#10;2023.12.12 / 02:53 / SIC" />
+    <MESSAGE value="refactor : 회원가입 컴포넌트 수정&#10;&#10;alert 전부 modal로 변경&#10;&#10;2023.12.24 / 04:08 / SIC" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor : 회원가입 컴포넌트 수정&#10;&#10;alert 전부 modal로 변경&#10;&#10;2023.12.24 / 04:08 / SIC" />
   </component>
 </project>

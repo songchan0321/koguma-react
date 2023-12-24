@@ -17,7 +17,6 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { defaultInstance } from "../../apis/utils/instance";
 import { useNavigate } from "react-router-dom";
 import StorageIcon from "@mui/icons-material/Storage";
-import DialogContentText from "@mui/material/DialogContentText";
 
 const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
   const [nickname, setNickname] = useState("");
@@ -25,7 +24,7 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [authNum, setAuthNum] = useState("");
-  const [isSmsVerified, setIsSmsVerified] = useState(true); // 테스트로 잠시 true 놓음
+  const [isSmsVerified, setIsSmsVerified] = useState(false); // 테스트로 잠시 true 놓음
   const [isAgreed, setIsAgreed] = useState(false);
   const [isAgeChecked, setIsAgeChecked] = useState(false);
   const [isUseChecked, setIsUseChecked] = useState(false);
@@ -35,18 +34,8 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [authNumError, setAuthNumError] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
-  const [openAlert, setOpenAlert] = useState(false);
-  const [isModalOpen, setModalOpen] = useState(false);
 
   const navigate = useNavigate();
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
 
   const handleNicknameChange = (e) => {
     const inputValue = e.target.value;
@@ -109,7 +98,7 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
 
       // 인증번호가 성공적으로 전송되었다면 화면 전환을 막음
       if (response.status === 200) {
-        window.alert("인증번호가 발송되었습니다.");
+        handleOpenDialog13("인증번호가 발송되었습니다.");
         // 추가로 필요한 작업 수행...
       }
     } catch (error) {
@@ -126,7 +115,7 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
       console.log(response);
       if (response.status === 200) {
         setIsSmsVerified(true);
-        window.alert("휴대폰 인증 성공!");
+        handleOpenDialog14("휴대폰 인증 성공!");
       }
     } catch (error) {}
   };
@@ -235,6 +224,8 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
   const [openDialog10, setOpenDialog10] = useState(false);
   const [openDialog11, setOpenDialog11] = useState(false);
   const [openDialog12, setOpenDialog12] = useState(false);
+  const [openDialog13, setOpenDialog13] = useState(false);
+  const [openDialog14, setOpenDialog14] = useState(false);
 
   const handleOpenDialog1 = () => {
     setOpenDialog1(true);
@@ -319,6 +310,20 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
 
   const handleCloseDialog12 = () => {
     setOpenDialog12(false);
+  };
+  const handleOpenDialog13 = () => {
+    setOpenDialog13(true);
+  };
+
+  const handleCloseDialog13 = () => {
+    setOpenDialog13(false);
+  };
+  const handleOpenDialog14 = () => {
+    setOpenDialog14(true);
+  };
+
+  const handleCloseDialog14 = () => {
+    setOpenDialog14(false);
   };
 
   return (
@@ -893,6 +898,44 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
             </DialogContent>
             <DialogActions>
               <Button autoFocus onClick={handleCloseDialog12}>
+                확인
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+              onClose={handleCloseDialog13}
+              open={openDialog13}
+              aria-labelledby="customized-dialog-title"
+          >
+            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+              안내
+            </DialogTitle>
+            <DialogContent dividers>
+              <Typography gutterBottom>
+                휴대폰 인증 번호가 발송되었습니다!
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleCloseDialog13}>
+                확인
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+              onClose={handleCloseDialog14}
+              open={openDialog14}
+              aria-labelledby="customized-dialog-title"
+          >
+            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+              안내
+            </DialogTitle>
+            <DialogContent dividers>
+              <Typography gutterBottom>
+                휴대폰 인증 성공!
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleCloseDialog14}>
                 확인
               </Button>
             </DialogActions>
