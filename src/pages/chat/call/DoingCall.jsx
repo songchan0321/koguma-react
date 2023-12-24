@@ -138,12 +138,16 @@ const DoingCall = () => {
       await pcRef.current.addIceCandidate(candidate);
     });
 
+    socketRef.current.on("cam change", () => {
+      getMedia();
+    });
+
     socketRef.current.on("exit room", () => {
       console.log("room exit");
       navigate(`${next}`);
     });
 
-    getMedia();
+    // getMedia();
     // socketRef.current.emit("join_room", {
     //   room: roomName,
     // });
@@ -158,6 +162,10 @@ const DoingCall = () => {
       stream.getTracks().forEach((track) => track.stop());
     };
   }, []);
+
+  useEffect(() => {
+    getMedia();
+  }, [cam]);
   return (
     <div
       style={{
@@ -220,7 +228,7 @@ const DoingCall = () => {
           <IconButton
             onClick={() => {
               setCam((prev) => (prev === "user" ? "environment" : "user"));
-              getMedia();
+              socketRef.emit("cam change", { roomId: roomId });
             }}
           >
             <CameraswitchIcon
