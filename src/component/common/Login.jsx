@@ -21,6 +21,8 @@ import { useNavigate } from "react-router-dom";
 import { IsLoginContext } from "../../context/LoginContextProvider";
 import { loginAPI } from "../../apis/api/authentication";
 import { CHAT_EVENT, SocketContext } from "../../context/socket";
+import { useModal } from "../../context/ModalContext";
+import Modal from "./Modal";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -29,7 +31,7 @@ const Login = () => {
   const defaultTheme = createTheme();
   const navigator = useNavigate();
   const { setIsLogin } = React.useContext(IsLoginContext);
-
+  const { openModal } = useModal();
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
@@ -38,8 +40,8 @@ const Login = () => {
         setLoading(true);
         const currentQuery = window.location.search;
         const data = await loginAPI(form.get("id"), form.get("password"));
-
-        alert("로그인 성공");
+        openModal("로그인 성공", true);
+        // alert("로그인 성공");
         socket.emit(CHAT_EVENT.FIRST_CONNECT, {
           token: `${localStorage.getItem("token")}`,
         });
@@ -47,7 +49,8 @@ const Login = () => {
         navigator("/product/list");
       } catch (err) {
         console.error(err);
-        alert("로그인 실패");
+        openModal("로그인 실패", false);
+        // alert("로그인 실패");
       } finally {
         setLoading(false);
       }
@@ -56,6 +59,7 @@ const Login = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
+        <Modal />
         <CssBaseline />
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}

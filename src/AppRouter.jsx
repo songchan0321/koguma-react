@@ -22,6 +22,7 @@ import ListAlert from "./pages/common/ListAlert";
 import SearchTab from "./pages/common/SearchTab";
 import Landing from "./Landing";
 import { Alert, Slide, Snackbar } from "@mui/material";
+import { ModalProvider } from "./context/ModalContext";
 
 function TransitionRight(props) {
   return <Slide {...props} direction="right" />;
@@ -143,25 +144,20 @@ const AppRouter = ({ messageAlertHandler }) => {
           </Alert>
         </Snackbar>
       </div>
-      {/* <Alert
-          variant="filled"
-          severity="info"
-          onClick={() => navigator("/alert/list")}
-        >
-          `알림이 왔어요!`
-        </Alert> */}
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/chat/*" element={<ChatRouter />} />
-        <Route path="/club/*" element={<ClubRouter />} />
-        <Route path="/common/*" element={<CommonRouter />} />
-        <Route path="/post/*" element={<CommunityRouter />} />
-        <Route path="/member/*" element={<MemberRouter />} />
-        <Route path="/payment/*" element={<PaymentRouter />} />
-        <Route path="/product/*" element={<ProductRouter />} />
-        <Route path="/alert/list" element={<ListAlert />} />
-        <Route path="/search/tab" element={<SearchTab />} />
-      </Routes>
+      <ModalProvider>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/chat/*" element={<ChatRouter />} />
+          <Route path="/club/*" element={<ClubRouter />} />
+          <Route path="/common/*" element={<CommonRouter />} />
+          <Route path="/post/*" element={<CommunityRouter />} />
+          <Route path="/member/*" element={<MemberRouter />} />
+          <Route path="/payment/*" element={<PaymentRouter />} />
+          <Route path="/product/*" element={<ProductRouter />} />
+          <Route path="/alert/list" element={<ListAlert />} />
+          <Route path="/search/tab" element={<SearchTab />} />
+        </Routes>
+      </ModalProvider>
     </>
   );
 };
