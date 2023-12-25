@@ -16,7 +16,7 @@ const ChatThumbnail = ({ room }) => {
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           {/* !!image 처리 필요 */}
-          <Avatar alt="" src={room.imageId && "s"} />
+          <Avatar alt="" src={room?.profileURL} />
         </ListItemAvatar>
         <ListItemText
           //   primary={room.nickname}
