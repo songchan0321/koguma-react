@@ -40,13 +40,14 @@ const Login = () => {
         setLoading(true);
         const currentQuery = window.location.search;
         const data = await loginAPI(form.get("id"), form.get("password"));
-        openModal("로그인 성공", true);
+        openModal("로그인 성공", true, () => {
+          navigator("/product/list");
+        });
         // alert("로그인 성공");
         socket.emit(CHAT_EVENT.FIRST_CONNECT, {
           token: `${localStorage.getItem("token")}`,
         });
         setIsLogin(true);
-        navigator("/product/list");
       } catch (err) {
         console.error(err);
         openModal("로그인 실패", false);
