@@ -97,7 +97,7 @@ const SearchTab = () => {
         <Paper
           sx={{
             position: "fixed",
-            top: "5.1rem",
+            top: "3.55rem",
             left: 0,
             right: 0,
             zIndex: 1100,

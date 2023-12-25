@@ -88,7 +88,7 @@ const LocationBox = ({ location, setLocation }) => {
   }, [dong]);
 
   return (
-    <FormControl sx={{ minWidth: 120 }}>
+    <FormControl sx={{ minWidth: 110 }}>
       {locationList.length > 0 ? (
         <>
           {/* <InputLabel>name</InputLabel> */}
@@ -102,7 +102,7 @@ const LocationBox = ({ location, setLocation }) => {
             }
             sx={{
               fontSize: 14,
-              padding: "0px",
+              // padding: "0px",
               // "& .MuiSelect-outlined": { borderBottom: "none" },
               "& .MuiOutlinedInput-notchedOutline": {
                 border: "none", // 테두리 없애기
