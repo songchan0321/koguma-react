@@ -136,7 +136,10 @@ const AppRouter = ({ messageAlertHandler }) => {
           key={transition ? transition.name : ""}
         >
           <Alert
-            onClose={handleClose}
+            onClose={(e) => {
+              e.stopPropagation();
+              handleClose();
+            }}
             severity="success"
             sx={{ width: "100%" }}
           >
