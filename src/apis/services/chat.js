@@ -17,10 +17,12 @@ export const chatRoomListService = (data, memberId) => {
         room.latestMessage.content,
         25
       );
+      const productURL = room.productDTO.imageDTO[0].url;
       return {
         id: room.id,
         nickname,
         profileURL,
+        productURL,
         dong,
         count: room.count,
         latestMessage: room.latestMessage,
