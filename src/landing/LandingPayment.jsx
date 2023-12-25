@@ -1,4 +1,4 @@
-import { Card, CardContent, Stack, Typography } from "@mui/material";
+import { Card, CardContent, CardMedia, Stack, Typography } from "@mui/material";
 import AddCardOutlinedIcon from "@mui/icons-material/AddCardOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import PriceCheckOutlinedIcon from "@mui/icons-material/PriceCheckOutlined";
@@ -27,13 +27,18 @@ const LandingPayment = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        pb: "1.5rem",
+        // pb: "1.5rem",
         //   justifyContent: "center",
       }}
     >
-      <CardContent>
+      <CardContent sx={{ pb: "3rem" }}>
         <Typography
-          sx={{ fontSize: 14, textAlign: "center", color: "#FF6F0F" }}
+          sx={{
+            fontSize: 14,
+            textAlign: "center",
+            color: "#FF6F0F",
+            pt: "1.5rem",
+          }}
           color="text.secondary"
           gutterBottom
         >
@@ -77,6 +82,14 @@ const LandingPayment = () => {
           </ItemStack>
         </div>
       </CardContent>
+      <CardMedia
+        component="img"
+        height="320"
+        image="landing/getpay.png"
+        sx={{
+          objectFit: "contain",
+        }}
+      />
     </Card>
   );
 };

@@ -11,6 +11,7 @@ import LandingPayment from "./landing/LandingPayment";
 import LandingCommunity from "./landing/LandingCommunity";
 import LandingClub from "./landing/LandingClub";
 import { Link } from "react-router-dom";
+import { CardMedia } from "@mui/material";
 
 const Landing = () => {
   return (
@@ -22,7 +23,8 @@ const Landing = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          pb: "1.5rem",
+          pt: "1.2rem",
+          pb: "5rem",
         }}
       >
         <CardContent>
@@ -46,7 +48,7 @@ const Landing = () => {
         <CardActions>
           <Button
             variant="contained"
-            sx={{ backgroundColor: "#4AD395" }}
+            sx={{ backgroundColor: "#4AD395", padding: "0.5rem 0.8rem" }}
             size="small"
             component={Link}
             to="/product/list"
@@ -54,6 +56,20 @@ const Landing = () => {
             고구마 이용하기
           </Button>
         </CardActions>
+        <CardMedia
+          component="img"
+          height="320"
+          image="koguma/hi.png"
+          // alt={"alt"}
+          // title={"titleasdasdsada"}
+          sx={{
+            pt: "1rem",
+            // padding: "1em 1em 0 1em",
+            // borderRadius: "17rem",
+
+            objectFit: "contain",
+          }}
+        />
       </Card>
       <LandingMember />
       <LandingProduct />
