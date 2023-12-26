@@ -117,7 +117,7 @@ const ProductGet = () => {
               color="textPrimary"
               sx={{ mt: 3, mb: 1 }}
             >
-              {data.content}
+              <div style={{ whiteSpace: "pre-line" }}>{data.content}</div>
             </Typography>
             <Typography variant="caption" color="text.secondary" sx={{ mb: 3 }}>
               채팅 {data.chatroomCount} · 관심 {data.likeCount} · 조회{" "}
