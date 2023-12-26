@@ -22,7 +22,6 @@ const ListClubPostByCategory = ({ category }) => {
     const fetchData = async () => {
       try {
         const data = await listClubPostByCategory(category.id);
-        alert(data);
         setClubPosts(data);
         console.log(data);
       } catch (err) {

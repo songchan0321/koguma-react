@@ -61,7 +61,7 @@ const ListClubMap = () => {
         style={{
           // 지도의 크기
           width: "100%",
-          height: "600px",
+          height: "800px",
         }}
         level={4} // 지도의 확대 레벨
       >

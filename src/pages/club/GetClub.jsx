@@ -20,8 +20,11 @@ import Diversity3Icon from "@mui/icons-material/Diversity3";
 import ClubHomePostList from "../../component/club/board/ClubHomePostList";
 import GetClubChat from "./chat/GetClubChat";
 import MarginEmpty from "../../component/payment/MarginEmpty";
+import Modal from "../../component/common/Modal";
+import { useModal } from "../../context/ModalContext";
 
 const GetClub = () => {
+  const { openModal } = useModal();
   const navigator = useNavigate();
   const { clubId } = useParams();
   const [club, setClub] = useState({});
@@ -45,7 +48,7 @@ const GetClub = () => {
 
   const handleMenuClick = async (menu) => {
     if (menu !== "홈" && clubMember.activeFlag === null) {
-      alert("모임원만 이용할 수 있습니다.");
+      await openModal("모임원만 이용할 수 있습니다.", true, () => {});
       return;
     }
 
@@ -66,19 +69,12 @@ const GetClub = () => {
 
   return (
     <>
-      <TopBarClub children={"asd"}>{club.title}</TopBarClub>
+      <Modal />;<TopBarClub children={"asd"}>{club.title}</TopBarClub>
       <MarginEmpty />
       <Box sx={{ overflowY: "auto", maxHeight: "calc(100vh - 80px)" }}>
         <Box style={{ display: "flex", alignItems: "center" }}>
           <CardMedia
             component="img"
-            style={{
-              width: "200px",
-              height: "200px",
-              margin: "auto",
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
             image={club.profileImage?.[0]?.url || "fallback_image_url"}
             alt="Paella dish"
           />
