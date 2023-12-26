@@ -8,7 +8,6 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Skeleton,
   styled,
 } from "@mui/material";
 import MarkChatReadIcon from "@mui/icons-material/MarkChatRead";
@@ -16,8 +15,10 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import ArticleIcon from "@mui/icons-material/Article";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import ChatBubbleTwoToneIcon from "@mui/icons-material/ChatBubbleTwoTone";
-import RequestQuoteTwoToneIcon from "@mui/icons-material/RequestQuoteTwoTone";
 import PaidTwoToneIcon from "@mui/icons-material/PaidTwoTone";
+import CardGiftcardTwoToneIcon from "@mui/icons-material/CardGiftcardTwoTone";
+import SellTwoToneIcon from "@mui/icons-material/SellTwoTone";
+import NotificationsNoneTwoToneIcon from "@mui/icons-material/NotificationsNoneTwoTone";
 import { useEffect, useRef, useState } from "react";
 import Back from "../../component/common/Back";
 import TopBar from "../../component/payment/TopBar";
@@ -27,7 +28,6 @@ import {
   readAlertAPI,
   readAlertAllAPI,
 } from "../../apis/api/alert";
-import LoadingProgress from "../../component/common/LoadingProgress";
 import { formatTimeAgo } from "../../apis/utils/timestamp";
 import { useNavigate } from "react-router-dom";
 import ListAlertSkeleton from "../../component/common/ListAlertSkeleton";
@@ -41,9 +41,9 @@ const icon = {
   동네생활: <ArticleIcon />,
   모임: <Diversity3Icon />,
   채팅: <ChatBubbleTwoToneIcon />,
-  상품: <ChatBubbleTwoToneIcon />,
+  상품: <CardGiftcardTwoToneIcon />,
   거래: <PaidTwoToneIcon />,
-  가격제인: <RequestQuoteTwoToneIcon />,
+  가격제안: <SellTwoToneIcon />,
 };
 const ListAlert = () => {
   const navigator = useNavigate();
@@ -113,35 +113,6 @@ const ListAlert = () => {
                   모두 읽음 처리
                 </Button>
               )}
-
-              {/* {dummy.map((alertObject) => {
-                return (
-                  <>
-                    <ListItem
-                      secondaryAction={
-                        <IconButton
-                          edge="end"
-                          aria-label="delete"
-                          onClick={() => alert("읽음 처리")}
-                        >
-                          <MarkChatReadIcon />
-                        </IconButton>
-                      }
-                    >
-                      <ListItemAvatar>
-                        <Avatar sx={{ backgroundColor: "#D070FB" }}>
-                          {icon[alertObject.title]}
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={alertObject.content}
-                        secondary={"3일전"}
-                      />
-                    </ListItem>
-                    <Divider />
-                  </>
-                );
-              })} */}
               <ListItem></ListItem>
               {alerts.map((alertObject) => {
                 return (
@@ -163,7 +134,9 @@ const ListAlert = () => {
                     >
                       <ListItemAvatar>
                         <Avatar sx={{ backgroundColor: "#D070FB" }}>
-                          {icon[alertObject.title]}
+                          {icon[alertObject.title] || (
+                            <NotificationsNoneTwoToneIcon />
+                          )}
                         </Avatar>
                       </ListItemAvatar>
                       <ListItemText

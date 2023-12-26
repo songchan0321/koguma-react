@@ -19,7 +19,6 @@ const MessageBubble = ({ msg, isOwnMessage, roomId, member }) => {
         textAlign: isOwnMessage ? "right" : "left",
       }}
     >
-      {/* <Message /> */}
       <div
         style={{
           display: "flex",

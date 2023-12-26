@@ -68,7 +68,8 @@ const ChatMessageList = ({
           display: "flex",
           flexDirection: "column",
           gap: "10px",
-          // paddingBottom: "125px",
+          backgroundColor: "#E9ECEF",
+          minHeight: "40rem",
           paddingBottom: room.id ? "60px" : "125px",
         }}
       >
@@ -142,14 +143,11 @@ const ChatMessageList = ({
             newMessageOpen &&
             messages[messages.length - 1].senderId !== member.id
           }
-          // onClose={handleClose}
           TransitionComponent={SlideTransition}
-          // message="I love snacks"
           message="새로운 채팅을 보냈어요!"
           style={{
             marginBottom: "4rem",
           }}
-          // key={state.Transition.name}
         />
         <ChatForm
           roomId={room.id}

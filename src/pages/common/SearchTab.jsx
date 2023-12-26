@@ -8,7 +8,6 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import ProductTopBar from "../../component/product/ProductTopBar";
-import MarginEmpty from "../../component/payment/MarginEmpty";
 import { useLocation, useNavigate } from "react-router-dom";
 import BottomBar from "../../component/common/BottomBar";
 import ProductSearchList from "../product/ProductSearchList";
@@ -58,9 +57,6 @@ const SearchTab = () => {
 
   const [location, setLocation] = React.useState();
 
-  const [selectedCategoryIndex, setSelectedCategoryIndex] =
-    React.useState(null);
-  const [selectedCategory, setSelectedCategory] = React.useState(null);
   const handleCategoryClick = (category, index) => {
     navigate("/product/list/category", {
       state: {
@@ -91,7 +87,6 @@ const SearchTab = () => {
         setLocation={setLocation}
         handleCategory={handleCategoryClick}
       />
-      {/* <Margin */}
 
       <Box sx={{ bgcolor: "background.paper" }}>
         <Paper

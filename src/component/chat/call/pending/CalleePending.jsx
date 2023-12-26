@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { Avatar, IconButton, Stack, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
 const CalleePending = ({
   roomId,
@@ -10,7 +9,6 @@ const CalleePending = ({
   clickHandler,
   closeHandler,
 }) => {
-  const navigate = useNavigate();
   return (
     <>
       <div

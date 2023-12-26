@@ -57,9 +57,8 @@ const DeletePayment = () => {
       if (data.result) {
         const data = await deletePaymentAPI(password);
         if (data.result) {
+          setOpen(false);
           openModal("삭제 완료", true, () => navigator("/member/profile"));
-          // alert("삭제 완료");
-          // navigator("/member/profile");
         } else {
           alert("알수 없는 오류");
         }
@@ -133,36 +132,61 @@ const DeletePayment = () => {
                   >
                     삭제
                   </Button>
-                  {/* <Button size="small">Learn More</Button> */}
                 </CardActions>
-                <Dialog open={open} onClose={handleClose}>
+                <Dialog
+                  open={open}
+                  onClose={handleClose}
+                  PaperProps={{
+                    sx: { borderRadius: "1rem", padding: "0 0.4rem" },
+                  }}
+                >
                   <DialogTitle>페이 비밀번호</DialogTitle>
                   <DialogContent>
                     <DialogContentText color="error">{error}</DialogContentText>
                     <TextField
-                      //   label="Standard warning"
-                      //   variant="standard"
                       color="error"
                       fullWidth
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      // label="Multiline Placeholder"
+                      placeholder="페이 비밀번호 6자리를 입력하세요."
                       type="password"
                       inputProps={{ maxLength: 6 }}
                       focused
                     />
-                    {/* <TextField
-                      autoFocus
-                      margin="dense"
-                      id="name"
-                      label="Email Address"
-                      type="email"
-                      fullWidth
-                      variant="standard"
-                    /> */}
                   </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleClose}>취소</Button>
-                    <Button color="error" onClick={deletePaymentHandler}>
+                  <DialogActions
+                    sx={{ pt: 0, display: "flex", justifyContent: "center" }}
+                  >
+                    <Button
+                      variant="outlined"
+                      fullWidth
+                      sx={{
+                        backgroundColor: "white",
+                        border: "1px solid rgba(0,0,0, 0.2)",
+                        color: "black",
+                        width: "90%",
+                      }}
+                      onClick={handleClose}
+                    >
+                      취소
+                    </Button>
+                  </DialogActions>
+                  <DialogActions
+                    sx={{
+                      pt: 0,
+                      pb: 3,
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      // fullWidth
+                      sx={{ width: "90%" }}
+                      color="error"
+                      onClick={deletePaymentHandler}
+                    >
                       삭제
                     </Button>
                   </DialogActions>

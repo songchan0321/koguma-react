@@ -1,24 +1,13 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { CALL_EVENT, SocketContext } from "../../../context/socket";
 import { useLocation, useNavigate } from "react-router-dom";
 import CalleePending from "../../../component/chat/call/pending/CalleePending";
 import CallerPending from "../../../component/chat/call/pending/CallerPending";
-import { getMemberAPI } from "../../../apis/api/member";
 const PendingCall = () => {
   const socket = useContext(SocketContext);
   const { state } = useLocation();
   const navigator = useNavigate();
-  //   const [member, setMember] = useState();
-  //   if (!(state.roomId && state.isOwner != null)) {
-  //     navigator(state?.next ? state.next : "/product/list");
-  //   }
   const { roomId, isOwner, next } = state;
-  //   if (isOwner && !state.targetMember) {
-  //     navigator(state?.next ? state.next : "/product/list");
-  //   }
-  //   if (!isOwner && !state.sourceMember) {
-  //     navigator(state?.next ? state.next : "/product/list");
-  //   }
   const cancelBtnClickHandler = () => {
     console.log("calcel event");
     console.log(isOwner);
@@ -26,7 +15,6 @@ const PendingCall = () => {
     console.log(state.sourceMember);
     socket.emit(CALL_EVENT.CALL_CANCEL, {
       targetMemberId: isOwner ? state.targetMember.id : state.sourceMember.id,
-      //   targetMemberId: state?.targetMember ? state.targetMember.id : member.id,
     });
   };
   const acceptBtnClickHandler = () => {
@@ -41,9 +29,6 @@ const PendingCall = () => {
     });
   };
   useEffect(() => {
-    // (async () => {
-    //   await getMemberAPI().then((data) => setMember(data));
-    // })();
     console.log("CALL CANCEL EVENT ON");
     socket.on(CALL_EVENT.CALL_CANCEL, () => {
       console.log("CALL CANCEL");

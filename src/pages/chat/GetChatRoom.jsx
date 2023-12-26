@@ -71,7 +71,6 @@ const GetChatRoom = () => {
             : room.buyerEnterDate,
           message: text,
         });
-        // navigator(`/chat/get/${room.id}`);
       });
   };
 

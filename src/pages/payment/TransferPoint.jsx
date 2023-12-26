@@ -99,6 +99,7 @@ const TransferPoint = () => {
         .then((data) => {
           setMember(data);
           if (data.paymentAccount === null) {
+            setOpen(false);
             openModal(
               "고구마 페이가 없습니다! 먼저 등록해주세요.",
               false,
@@ -106,8 +107,6 @@ const TransferPoint = () => {
                 navigator("/payment/get", { replace: true, state: { roomId } });
               }
             );
-            // alert("고구마 페이가 없습니다! 먼저 등록해주세요.");
-            // navigator("/payment/get", { replace: true, state: { roomId } });
           }
           return data;
         })
@@ -137,6 +136,7 @@ const TransferPoint = () => {
             });
           })
           .catch((err) => {
+            setOpen(false);
             openModal(
               "상대방의 고구마 페이가 등록되어있지 않습니다.",
               false,
@@ -144,8 +144,6 @@ const TransferPoint = () => {
                 handleClose();
               }
             );
-            // alert("상대방의 고구마 페이가 등록되어있지 않습니다.");
-            // handleClose();
           });
       } else {
         setError("비밀번호가 일치하지 않습니다!");
@@ -176,16 +174,7 @@ const TransferPoint = () => {
       {member === null || chatRoom === null ? (
         <LoadingProgress />
       ) : (
-        <Box
-          component="form"
-          sx={{
-            "& .MuiTextField-root": {
-              //   width: "90%",
-            },
-          }}
-          noValidate
-          autoComplete="off"
-        >
+        <Box component="form" noValidate autoComplete="off">
           <TextField
             fullWidth
             name="point"
@@ -210,15 +199,11 @@ const TransferPoint = () => {
               point <= 0 ? (
                 `고구마 포인트 잔액: ${balance.toLocaleString("ko-KR") + "원"}`
               ) : balance - point < 0 ? (
-                // `${
-                //     -(balance - point).toLocaleString("ko-KR") + "원"
-                //   }만큼 잔액이 부족해요...`
                 <Fragment>
                   {(-balance + point).toLocaleString("ko-KR") + "원"}만큼 잔액이
                   부족해요...
                   <Button
                     sx={{ fontSize: "0.7rem" }}
-                    // size="small"
                     color="primary"
                     onClick={() => navigator(`/payment/charge`)}
                   >
@@ -237,10 +222,15 @@ const TransferPoint = () => {
           <Box sx={{ textAlign: "center" }}>
             <Button
               disabled={balance - point < 0 || point <= 0}
-              sx={{ mt: 1 }}
+              sx={{
+                mt: 1,
+                backgroundColor: "#D070FB",
+                "&:hover": {
+                  backgroundColor: "#D070FB", // hover 효과 시 변경할 배경색
+                },
+              }}
               size="large"
               variant="contained"
-              color="secondary"
               onClick={handleClickOpen}
             >
               송금하기
@@ -253,8 +243,6 @@ const TransferPoint = () => {
         <DialogContent>
           <DialogContentText color="error">{error}</DialogContentText>
           <TextField
-            //   label="Standard warning"
-            //   variant="standard"
             color="error"
             fullWidth
             value={password}
@@ -263,15 +251,6 @@ const TransferPoint = () => {
             inputProps={{ maxLength: 6 }}
             focused
           />
-          {/* <TextField
-                      autoFocus
-                      margin="dense"
-                      id="name"
-                      label="Email Address"
-                      type="email"
-                      fullWidth
-                      variant="standard"
-                    /> */}
         </DialogContent>
         <DialogActions>
           <Button color="error" onClick={handleClose}>

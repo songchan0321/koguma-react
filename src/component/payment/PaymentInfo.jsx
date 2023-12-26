@@ -26,21 +26,18 @@ const UnregistedPaymentCard = () => {
       <CardActions sx={{ justifyContent: "center", mb: 2.0 }}>
         <Button
           variant="contained"
-          // color="secondary"
           sx={{ backgroundColor: "#D070FB" }}
           component={Link}
           to="/payment/add"
         >
           등록 하러가기
         </Button>
-        {/* <Button size="small">Learn More</Button> */}
       </CardActions>
     </Fragment>
   );
 };
 const PaymentCard = () => {
   const [payment, setPayment] = useState({});
-  // const [member, setMember] = useState({});
   useEffect(() => {
     (async () => {
       await getMemberAPI(3)
@@ -65,7 +62,12 @@ const PaymentCard = () => {
         <Button
           variant="contained"
           // color="secondary"
-          sx={{ backgroundColor: "#D070FB" }}
+          sx={{
+            backgroundColor: "#D070FB",
+            "&:hover": {
+              backgroundColor: "#D070FB", // hover 효과 시 변경할 배경색
+            },
+          }}
           size="large"
           component={Link}
           to="/payment/charge"
@@ -75,14 +77,18 @@ const PaymentCard = () => {
         </Button>
         <Button
           variant="contained"
-          sx={{ backgroundColor: "#D070FB" }}
+          sx={{
+            backgroundColor: "#D070FB",
+            "&:hover": {
+              backgroundColor: "#D070FB", // hover 효과 시 변경할 배경색
+            },
+          }}
           size="large"
           component={Link}
           to="/payment/requestRefund"
         >
           환급 요청
         </Button>
-        {/* <Button size="small">Learn More</Button> */}
       </CardActions>
     </Fragment>
   );

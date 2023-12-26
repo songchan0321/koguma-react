@@ -27,12 +27,6 @@ const RequestRefundPoint = () => {
       pointString.length < value.length
         ? value.replaceAll("원", "").replace(/,/g, "")
         : value.substring(0, value.length - 1).replace(/,/g, "");
-    // if (point.length === 2 && value.length === 1) {
-    //   setPoint("");
-    //   return;
-    // }
-    // const replaceValue = value.replaceAll("원", "").replace(/,/g, "");
-    // value.replace(/,/g, '');
     const onlyNumbersPattern = /^\d+$/; // 숫자만 허용하는 정규식
 
     if (value.length > 1 && !onlyNumbersPattern.test(replaceValue)) {
@@ -62,16 +56,7 @@ const RequestRefundPoint = () => {
       {balance === null ? (
         <LoadingProgress />
       ) : (
-        <Box
-          component="form"
-          sx={{
-            "& .MuiTextField-root": {
-              //   width: "90%",
-            },
-          }}
-          noValidate
-          autoComplete="off"
-        >
+        <Box component="form" noValidate autoComplete="off">
           <TextField
             fullWidth
             name="point"

@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { Avatar, IconButton, Stack, Typography } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CALL_EVENT, SocketContext } from "../../../../context/socket";
 
 const CallerPending = ({ roomId, targetMember, closeHandler }) => {

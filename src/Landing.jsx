@@ -12,6 +12,7 @@ import LandingCommunity from "./landing/LandingCommunity";
 import LandingClub from "./landing/LandingClub";
 import { Link } from "react-router-dom";
 import { CardMedia } from "@mui/material";
+import LandingFooter from "./landing/LandingFooter";
 
 const Landing = () => {
   return (
@@ -77,6 +78,7 @@ const Landing = () => {
       <LandingPayment />
       <LandingCommunity />
       <LandingClub />
+      <LandingFooter />
     </>
   );
 };
