@@ -46,22 +46,24 @@ const GetPost = () => {
           title="게시글 관리"
         />
       </Paper>
-      <Divider />
-      <MarginEmpty />
+      <div style={{ marginTop: "64px" }}>
+        <Divider />
+        <MarginEmpty />
 
-      {loading ? (
-        // 로딩 중이면 CircularProgress 표시
-        <CircularProgress />
-      ) : (
-        // 로딩이 완료되면 게시글 및 댓글 컴포넌트 랜더링
-        <Fragment>
-          <GetPostForm postData={postData} />
-          <Divider />
-          <AddComment />
-          <Divider />
-          <ListComment />
-        </Fragment>
-      )}
+        {loading ? (
+          // 로딩 중이면 CircularProgress 표시
+          <CircularProgress />
+        ) : (
+          // 로딩이 완료되면 게시글 및 댓글 컴포넌트 랜더링
+          <Fragment>
+            <GetPostForm postData={postData} />
+            <Divider />
+            <AddComment />
+            <Divider />
+            <ListComment />
+          </Fragment>
+        )}
+      </div>
     </Fragment>
   );
 };

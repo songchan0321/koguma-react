@@ -10,9 +10,10 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import ListReply from "./ListReply";
-import CommunityAavatarForm from "./CommunityAvatarFrom";
 import AddReply from "./AddReply";
 import CommentOption from "./CommentOption";
+import CommentAavatarForm from "./CommentAvatarForm";
+import { formatTimeAgo } from "../../apis/utils/timestamp";
 
 const GetComment = () => {
   const [listComment, setListComment] = useState([]);
@@ -22,7 +23,8 @@ const GetComment = () => {
     const fetchData = async () => {
       try {
         const data = await callCommentListAPI(postId);
-        console.log(data);
+        console.log("regDate");
+        console.log(data.regDate);
         setListComment(data);
       } catch (err) {
         console.error(err);
@@ -37,6 +39,8 @@ const GetComment = () => {
         listComment.map((comment) => (
           <div key={comment.id}>
             <Grid container spacing={0}>
+              {console.log("comment.id")}
+              {console.log(comment.id)}
               <Grid item xs={12}>
                 <Card sx={{ maxWidth: "100%" }}>
                   <Box
@@ -46,9 +50,17 @@ const GetComment = () => {
                       alignItems: "center",
                     }}
                   >
-                    <CommunityAavatarForm />
+                    <CommentAavatarForm comment={comment} />
+
                     <Box sx={{ marginLeft: "auto" }}>
-                      <CommentOption />
+                      {/* <CommentOption /> */}
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        sx={{ mb: 1 }}
+                      >
+                        {formatTimeAgo(comment.regDate)}
+                      </Typography>
                     </Box>
                   </Box>
                   <CardContent sx={{ marginLeft: "30px", marginBottom: 0 }}>

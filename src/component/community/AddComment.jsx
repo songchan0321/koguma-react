@@ -1,8 +1,18 @@
-import { Box, Button, Fab, Grid, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Fab,
+  Grid,
+  TextField,
+  Modal,
+  Typography,
+} from "@mui/material";
+import ReportIcon from "@mui/icons-material/Report";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { useState, useEffect } from "react";
-import { addCommentAPI, addPostAPI } from "../../apis/api/community";
+import { addCommentAPI } from "../../apis/api/community";
 import { useParams } from "react-router-dom";
+import { red } from "@mui/material/colors";
 
 const AddComment = () => {
   const { postId } = useParams();
@@ -14,7 +24,16 @@ const AddComment = () => {
     parentId: null,
   });
 
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const red = "#FF0000";
   const handleSubmit = async (event) => {
+    if (formData.content.length === 0) {
+      // 텍스트 필드에 아무것도 입력되지 않았을 때 모달 열기
+      setModalOpen(true);
+      return;
+    }
+
     try {
       const { data } = await addCommentAPI(
         formData.postId,
@@ -47,11 +66,10 @@ const AddComment = () => {
     }));
   };
 
-  // useEffect를 사용하여 완료 버튼 클릭 후 입력창 초기화
-  useEffect(() => {
-    // 여기에 원하는 조건을 추가하여 입력창 초기화가 필요한 경우에만 실행되도록 설정 가능
-    // 예: 특정 상태가 변할 때에만 실행
-  }, [formData.content]);
+  const handleCloseModal = () => {
+    // 모달을 닫을 때 모달 상태 업데이트
+    setModalOpen(false);
+  };
 
   return (
     <Box
@@ -82,10 +100,10 @@ const AddComment = () => {
             variant="contained"
             color="secondary"
             style={{
-              height: "35px", // 조정 가능한 높이
-              width: "35px", // 조정 가능한 너비
-              borderRadius: "60%", // 동그라미 모양
-              aspectRatio: 1, // 너비와 높이를 동일하게 유지하여 완전한 동그라미로 만들기
+              height: "35px",
+              width: "35px",
+              borderRadius: "60%",
+              aspectRatio: 1,
             }}
             onClick={handleSubmit}
           >
@@ -93,6 +111,52 @@ const AddComment = () => {
           </Fab>
         </Grid>
       </Grid>
+
+      {/* 모달 */}
+      <Modal
+        open={modalOpen}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "white",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            sx={{
+              color: red,
+              fontWeight: "bold",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <ReportIcon sx={{ fontSize: "2rem", marginRight: "8px" }} />
+            주의!
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            한 글자 이상 작성해야합니다.
+          </Typography>
+          <Button
+            onClick={handleCloseModal}
+            variant="contained"
+            color="secondary"
+            sx={{ mt: 2 }}
+          >
+            확인
+          </Button>
+        </Box>
+      </Modal>
     </Box>
   );
 };

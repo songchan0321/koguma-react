@@ -8,6 +8,7 @@ import UpdatePost from "./UpdatePost";
 import ListPostByCategory from "./ListPostByCategory";
 import ListPostByView from "./ListPostByView";
 import DetailOption from "../../component/community/DetailOption";
+import CommentAavatarForm from "../../component/community/CommentAvatarForm";
 
 const CommunityRouter = () => {
   return (
@@ -25,6 +26,7 @@ const CommunityRouter = () => {
         path="list/category/:categoryId"
         element={<ListPostByCategory />}
       />
+      {/* <Route path="comment/get/:commentId" element={<CommentAavatarForm />} /> */}
     </Routes>
   );
 };

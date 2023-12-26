@@ -4,10 +4,13 @@ import { getPostAPI } from "../../apis/api/community";
 import { Container, Button, Typography, Box } from "@mui/material";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import { useNavigate, useParams } from "react-router-dom";
-import CommunityAavatarForm from "./CommunityAvatarFrom";
+import CommunityAavatarForm from "./PostAvatarFrom";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import { authInstance } from "../../apis/utils/instance";
+import PostAavatarForm from "./PostAvatarFrom";
+import CommentCounts from "./CommentCounts";
+import { formatTimeAgo } from "../../apis/utils/timestamp";
 
 const GetPostForm = () => {
   const { setIsLogin } = useContext(IsLoginContext);
@@ -26,6 +29,7 @@ const GetPostForm = () => {
         const result = await getPostAPI(postId);
         setData(result);
         setLoading(false);
+        console.log("getIMage");
         console.log(result);
 
         // 조회수 증가 작업
@@ -70,7 +74,20 @@ const GetPostForm = () => {
           >
             <LocationCityIcon /> {data.categoryName}
           </Button>
-          <CommunityAavatarForm />
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <PostAavatarForm />
+            <Box sx={{ marginLeft: "auto" }}>
+              {/* <CommentOption /> */}
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{ mb: 1, fontSize: "1.0rem" }}
+              >
+                {formatTimeAgo(data.regDate)}
+              </Typography>
+            </Box>
+          </Box>
+
           <h1>{data.title}</h1>
           <Box sx={{ mb: 10, overflowY: "auto" }}>
             <h3>{data.content}</h3>
@@ -93,6 +110,7 @@ const GetPostForm = () => {
               {data.views + 1}명이 봤어요
             </span>
           </Typography>
+          <CommentCounts postId={data.id} />
         </>
       )}
     </Container>

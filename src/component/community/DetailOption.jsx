@@ -65,7 +65,7 @@ const DetailOption = ({ editTo, deleteTo, reportTo, title }) => {
         variant="text"
         color="secondary"
         onClick={handleMoreVertClick}
-        style={{ position: "absolute", right: 0 }}
+        style={{ position: "fixed", right: 0 }}
       >
         <MoreVertIcon />
       </Button>
