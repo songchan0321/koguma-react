@@ -1,34 +1,10 @@
 import * as React from "react";
+import { Button, Box, TextField } from "@mui/material";
 
-import {
-  Avatar,
-  Button,
-  CssBaseline,
-  Backdrop,
-  Box,
-  Typography,
-  Container,
-  Grid,
-  TextField,
-  createTheme,
-  ThemeProvider,
-} from "@mui/material";
-import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
-
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { Fragment, useEffect, useState } from "react";
-import {
-  addSuggestPriceAPI,
-  getProductAPI,
-  memberchecAPI,
-} from "../../apis/api/Product";
-import BottomBar from "../../component/common/BottomBar";
-import ProductTopBar from "../../component/product/ProductTopBar";
-import AddFloatingButton from "../../component/common/AddFloatingButton";
-import ListContainingProduct from "../../component/product/ListContainingProduct";
+import { addSuggestPriceAPI, getProductAPI } from "../../apis/api/Product";
 
 import { useParams } from "react-router-dom";
 import Back from "../../component/common/Back";
@@ -37,11 +13,15 @@ import MarginEmpty from "../../component/payment/MarginEmpty";
 import ContainingProduct from "../../component/product/ContainingProduct";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import InputAdornment from "@mui/material/InputAdornment";
+import { useModal } from "../../context/ModalContext";
+import Modal from "../../component/common/Modal";
 
 const SuggestPrice = () => {
   const [productDTO, setProductDTO] = useState(null);
   const navigator = useNavigate();
   const { productId } = useParams();
+  const { openModal } = useModal();
+
   const [formattedPrice, setFormattedPrice] = useState(""); // 가격 표시용
   const [numericPrice, setNumericPrice] = useState(null); // 실제 가격
 
@@ -66,15 +46,18 @@ const SuggestPrice = () => {
     return await addSuggestPriceAPI(suggest);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const submitData = {
       productId: `${productDTO.id}`,
 
       price: `${numericPrice}`,
     };
     console.log(submitData);
-    const { data } = addSuggestPrice(submitData);
-    navigator(-1);
+    const { data } = await addSuggestPrice(submitData);
+
+    await openModal("상품 수정 성공", true, () => {
+      navigator(-1);
+    });
   };
   console.log(productDTO);
   useEffect(() => {
@@ -94,6 +77,8 @@ const SuggestPrice = () => {
     <>
       <Back />
       <TopBar>가격 제안 하기</TopBar>
+      <Modal />
+
       <MarginEmpty />
       <Box
         sx={{

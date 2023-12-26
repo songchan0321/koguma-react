@@ -25,21 +25,17 @@ export const uploadImageAPI = async (file) => {
   }
 };
 export const addLocationAPI = async (locationDTO) => {
-  try {
-    const response = await authInstance.post(
-      `/location/new`,
-      locationDTO,
-      JSON.stringify(locationDTO),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response;
-  } catch (err) {
-    alert("위치등록은 3개까지만 가능합니다");
-  }
+  const response = await authInstance.post(
+    `/location/new`,
+    locationDTO,
+    JSON.stringify(locationDTO),
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response;
 };
 
 export const listLocationAPI = async () => {

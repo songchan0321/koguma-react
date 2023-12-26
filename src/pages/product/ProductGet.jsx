@@ -74,16 +74,18 @@ const ProductGet = () => {
                 <Avatar
                   aria-label="recipe"
                   style={{ width: "48px", height: "48px" }} // Avatar 크기 조정
+                  src={data.sellerDTO?.profileURL}
+                  alt=""
                 >
-                  <img
-                    src={data.sellerDTO.profileURL}
+                  {/* <img
+                    src={data.sellerDTO?.profileURL}
                     alt="profile"
                     style={{
                       width: "100%",
                       height: "100%",
                       borderRadius: "50%",
                     }} // 이미지 크기 및 모양 조정
-                  />
+                  /> */}
                 </Avatar>
               }
               onClick={() => getMember(data.sellerDTO.id)}

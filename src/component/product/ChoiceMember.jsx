@@ -6,16 +6,11 @@ const ChoiceMember = ({ data }) => {
     <CardHeader
       avatar={
         <Avatar
-          alt="/photo.png"
-          // src={
-          //     data.buyerDTO.image &&
-
-          //     ? prod.productDTO.imageDTO[0].url
-          //     : "/photo.png"
-          // }
-          // variant="square"
-          // sx={{ width: 100, height: 100, mr: 1 }}
-        />
+          aria-label="recipe"
+          style={{ width: "48px", height: "48px" }} // Avatar 크기 조정
+          src={data.buyerDTO?.profileURL}
+          alt=""
+        ></Avatar>
       }
       title={data.buyerDTO.nickname}
       subheader={<>최근 대화일 {formatTimeAgo(data.regDate)}</>}

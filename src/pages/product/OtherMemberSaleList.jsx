@@ -70,17 +70,9 @@ const OtherMemberSaleList = () => {
                       width: "80px",
                       height: "80px",
                     }}
-                  >
-                    <img
-                      src={member.profileURL}
-                      alt="profile"
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        borderRadius: "50%",
-                      }}
-                    />
-                  </Avatar>
+                    src={member?.profileURL}
+                    alt=""
+                  ></Avatar>
                 )
               }
             />

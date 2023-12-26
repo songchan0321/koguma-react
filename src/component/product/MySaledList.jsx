@@ -51,10 +51,11 @@ const MyList = ({
   selectedActions,
   onClick,
   onClickGetProduct,
+  setChange,
+  change,
 }) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [prodNo, setProdNo] = React.useState(null);
-  const [change, setChange] = React.useState(0);
   const [product, setProduct] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const navigate = useNavigate();
@@ -66,6 +67,16 @@ const MyList = ({
     setIsModalOpen(false);
   };
 
+  const alertEvent = async (prod) => {
+    console.log(prod);
+    await onClick(prod.id);
+    setChange(change + 1);
+  };
+  const selectedEvent = async (selectedAction) => {
+    setIsModalOpen(false);
+    await selectedAction.action(prodNo);
+    setChange(change + 1);
+  };
   const getReviewNavigate = (isSeller, productId) => {
     navigate(`/product/get/review`, {
       state: {
@@ -210,6 +221,9 @@ const MyList = ({
                             variant="outlined"
                             color="secondary"
                             onClick={() => handleModalOpen(prod.id)}
+                            // onClick={() => {
+                            //   alertEvent(prod);
+                            // }}
                             style={{
                               flex: 1,
                               marginLeft: "10px",
@@ -285,24 +299,27 @@ const MyList = ({
                       )}
                     </div>
                   </Card>
-                  <Dialog open={isModalOpen} onClose={handleModalClose}>
-                    <DialogTitle>상품 설정</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText>
-                        {selectedActions.map((selectedAction, idx) => (
-                          <MenuItem
-                            key={idx}
-                            // onClick={() => navigate("/product/review/add")}
-                            onClick={() => selectedAction.action(prodNo)}
-                          >
-                            {selectedAction.name}
-                          </MenuItem>
-                        ))}
-                      </DialogContentText>
-                    </DialogContent>
-                  </Dialog>
                 </React.Fragment>
               ))}
+              <Dialog open={isModalOpen} onClose={handleModalClose}>
+                <DialogTitle>상품 설정</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    {selectedActions.map((selectedAction, idx) => (
+                      <MenuItem
+                        key={idx}
+                        // onClick={() => navigate("/product/review/add")}
+                        // onClick={() => selectedAction.action(prodNo)}
+                        onClick={() => {
+                          selectedEvent(selectedAction);
+                        }}
+                      >
+                        {selectedAction.name}
+                      </MenuItem>
+                    ))}
+                  </DialogContentText>
+                </DialogContent>
+              </Dialog>
             </>
           ) : (
             <NotData>

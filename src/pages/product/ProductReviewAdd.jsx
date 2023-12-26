@@ -1,16 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import TopReturnBar from "./TopReturnBar";
-import {
-  Button,
-  CardHeader,
-  Avatar,
-  IconButton,
-  Typography,
-  Paper,
-} from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import MyList from "../../component/product/MyList";
+import { Button, Paper } from "@mui/material";
 import BasicRating from "../../component/product/Rating";
 import Commet from "../../component/product/Commet";
 import ReviewProductBar from "../../component/product/ReviewProductBar";
@@ -20,10 +10,13 @@ import TopBar from "../../component/payment/TopBar";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 import { addReviewAPI, getProductAPI } from "../../apis/api/Product";
 import LoadingProgress from "../../component/common/LoadingProgress";
+import { useModal } from "../../context/ModalContext";
+import Modal from "../../component/common/Modal";
 const ProductReviewAdd = () => {
   //   const { clubId } = useParams();
   const { state } = useLocation();
   const [product, setProduct] = useState();
+  const { openModal } = useModal();
   const [loading, setLoading] = useState(false);
   const [review, setReview] = useState({
     productDTO: product,
@@ -63,11 +56,14 @@ const ProductReviewAdd = () => {
   };
   const addReview = async () => {
     try {
+      const data = await addReviewAPI(review);
+
+      await openModal("리뷰 등록 성공", true, () => {
+        navigate(`/product/list/sale`, { replace: true });
+      });
       setLoading(true);
-      const data = await addReviewAPI(review); // navigate
-      await navigate(`/product/list/sale`, { replace: true });
     } catch (err) {
-      console.log(err);
+      await openModal("리뷰 등록 실패", false, () => {});
       setLoading(false);
     } finally {
       setLoading(false);
@@ -79,7 +75,6 @@ const ProductReviewAdd = () => {
       const data = await getProductAPI(state.productId);
       setProduct(data);
 
-      // 상태 업데이트를 비동기적으로 처리하기 위해 함수 인자로 이전 상태를 받는 형태로 업데이트
       setReview((prevReview) => ({
         ...prevReview,
         productDTO: data,
@@ -111,6 +106,7 @@ const ProductReviewAdd = () => {
           />
           <TopBar>후기 작성하기</TopBar>
           <MarginEmpty value="60px" />
+          <Modal />
           {product && (
             <>
               <ReviewProductBar data={product} />

@@ -83,11 +83,11 @@ const OtherMemberProduct = ({
                     <CardHeader
                       avatar={
                         <Avatar
-                          alt="/photo.png"
+                          alt=""
                           src={
                             prod.imageDTO && prod.imageDTO.length > 0
                               ? prod.imageDTO[0].url
-                              : "/photo.png"
+                              : undefined
                           }
                           variant="square"
                           sx={{ width: 100, height: 100, mr: 1 }}
