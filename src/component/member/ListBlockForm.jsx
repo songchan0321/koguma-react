@@ -62,7 +62,11 @@ const ListBlockForm = () => {
                                     key={block.id}
                                     sx={{ justifyContent: 'flex-start' }}
                                 >
-                                    <SentimentDissatisfiedOutlinedIcon/>
+                                    <img src={block.targetMember.profileURL} style={{
+                                        width: "2rem",
+                                        height: "2rem",
+                                        clipPath: 'circle(50% at 50% 50%)',
+                                    }} />
                                     <ListItemText
                                         primary={block.targetMember.nickname}
                                         sx={{ marginLeft: '15px' }}
@@ -77,8 +81,10 @@ const ListBlockForm = () => {
                             ))
                         ) : (
                             <>
-                                <HelpIcon sx={{ fontSize: 64, marginBottom: 2, marginLeft: 19, marginTop:30 }} />
-                                <Typography variant="h5" sx={{ marginLeft: 8, marginBottom: 30 }}>
+                            <div style={{ textAlign: 'center' }}>
+                                <HelpIcon sx={{ fontSize: 64, marginBottom: 2, marginTop:30 }} />
+                            </div>
+                                <Typography variant="h5" sx={{ marginBottom: 30, textAlign: 'center' }}>
                                     차단 목록이 없습니다!
                                 </Typography>
                             </>
