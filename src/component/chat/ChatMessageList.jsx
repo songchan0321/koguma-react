@@ -68,8 +68,8 @@ const ChatMessageList = ({
           display: "flex",
           flexDirection: "column",
           gap: "10px",
-          backgroundColor: "#E9ECEF",
-          minHeight: "75vh",
+          // backgroundColor: "#E9ECEF",
+          // minHeight: "75vh",
           paddingBottom: room.id ? "60px" : "125px",
         }}
       >
