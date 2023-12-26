@@ -16,6 +16,7 @@ import { listMyClubPostAPI } from "../../../apis/api/club";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import MarginEmpty from "../../payment/MarginEmpty";
+import { formatTimeAgo } from "../../../apis/utils/timestamp";
 
 const MyClubPostList = () => {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const MyClubPostList = () => {
 
   return (
     <>
-      <div>
+      <div style={{ margin: "10px" }}>
         <Typography variant="h5">피드</Typography>
       </div>
 
@@ -56,58 +57,71 @@ const MyClubPostList = () => {
             }
             key={index}
           >
-            <Grid container spacing={{ xs: 1, md: 2 }}>
-              <Grid item xs={1.5}>
+            <div style={{ margin: "10px" }}>
+              <Grid container spacing={{ xs: 1, md: 2 }} sx={{ padding: 0 }}>
+                <Grid item xs={1.5} sx={{ padding: 0 }}>
+                  <CardMedia
+                    component="img"
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "10%",
+                      marginTop: "15px",
+                    }}
+                    image={clubPost.profileImage[0].url}
+                    alt={clubPost.title}
+                  />
+                </Grid>
+                <Grid item xs={10}>
+                  <ClubContent>
+                    {/* 모임 타이틀 */}
+                    <Typography
+                      variant="body1"
+                      style={{
+                        width: "80px",
+                        fontSize: "15px",
+                      }}
+                    >
+                      {clubPost.clubName}
+                    </Typography>
+                    {/* 작성 모임원 닉네임 */}
+
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      style={{
+                        width: "100px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {clubPost.clubMemberNickname}
+                    </Typography>
+                    <Typography
+                      variant="subtitle2"
+                      color="textSecondary"
+                      sx={{ mb: -3 }}
+                      style={{ fontSize: "10px" }}
+                    >
+                      {formatTimeAgo(clubPost.regDate)}
+                    </Typography>
+                  </ClubContent>
+                </Grid>
+              </Grid>
+            </div>
+            <div style={{ margin: "10px" }}>
+              <Typography variant="body1" style={{}}>
+                {clubPost.title}
+              </Typography>
+              <div>{clubPost.content}</div>
+              <MarginEmpty value={8} />
+              <Box style={{ display: "flex", alignItems: "center" }}>
                 <CardMedia
                   component="img"
-                  style={{
-                    width: "50px",
-                    height: "50px",
-                    borderRadius: "10%",
-                    marginTop: "10px",
-                  }}
-                  image={clubPost.profileImage[0].url}
-                  alt={clubPost.title}
+                  image={clubPost.images || "fallback_image_url"}
+                  alt="Paella dish"
                 />
-              </Grid>
-              <Grid item xs={10}>
-                <ClubContent>
-                  {/* 모임 타이틀 */}
-                  <Typography
-                    variant="body1"
-                    style={{
-                      width: "80px",
-                    }}
-                  >
-                    {clubPost.clubName}
-                  </Typography>
-                  {/* 작성 모임원 닉네임 */}
-
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    style={{
-                      width: "100px",
-                    }}
-                  >
-                    {clubPost.clubMemberNickname}
-                  </Typography>
-                </ClubContent>
-              </Grid>
-            </Grid>
-            <Typography variant="body1" style={{}}>
-              {clubPost.title}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {clubPost.content}
-            </Typography>
-            <Box style={{ display: "flex", alignItems: "center" }}>
-              <CardMedia
-                component="img"
-                image={clubPost.images || "fallback_image_url"}
-                alt="Paella dish"
-              />
-            </Box>
+              </Box>
+            </div>
             {/* 
             <Checkbox
               icon={<ThumbUpOffAltIcon />}

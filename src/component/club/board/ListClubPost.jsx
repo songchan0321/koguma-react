@@ -1,45 +1,37 @@
-import { useEffect, useState } from "react";
-import { listClubPostByCategory } from "../../../apis/api/club";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { listClubPost } from "../../../apis/api/club";
 import {
   Box,
   CardContent,
   CardMedia,
-  Checkbox,
   Divider,
   Grid,
   Typography,
 } from "@mui/material";
 import styled from "styled-components";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import MarginEmpty from "../../payment/MarginEmpty";
+import { useNavigate } from "react-router-dom";
 import { formatTimeAgo } from "../../../apis/utils/timestamp";
 
-const ListClubPostByCategory = ({ category }) => {
+const ListClubPost = ({ clubId }) => {
   const navigate = useNavigate();
+
   const [clubPosts, setClubPosts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await listClubPostByCategory(category.id);
-        console.log(data);
-        const reponse = await listClubPostByCategory(category.id);
-        setClubPosts(reponse);
-        console.log(reponse);
+        const data = await listClubPost(clubId);
+        setClubPosts(data);
       } catch (err) {
         console.log(err);
       }
     };
     fetchData();
-  }, [category]);
+  }, [clubId]);
 
   return (
-    <>
-      <div></div>
-
+    <div>
       {clubPosts &&
         clubPosts.map((clubPost, index) => (
           <>
@@ -127,11 +119,12 @@ const ListClubPostByCategory = ({ category }) => {
             <Divider style={{ height: 1, backgroundColor: "grey" }} />{" "}
           </>
         ))}
-    </>
+    </div>
   );
 };
 
-export default ListClubPostByCategory;
+export default ListClubPost;
+
 const ClubContent = styled(CardContent)({
   flex: 1,
   width: "200",
@@ -139,8 +132,3 @@ const ClubContent = styled(CardContent)({
   flexDirection: "column",
   justifyContent: "space-between",
 });
-
-const backgroundStyle = {
-  boxShadow: "0px 0px 1px rgba(0, 0, 0, 0.1)",
-  padding: "0.2px",
-};

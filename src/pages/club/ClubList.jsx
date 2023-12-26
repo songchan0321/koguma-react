@@ -60,10 +60,12 @@ function ClubList() {
         </div>
         <br />
         {myClubList ? (
-          <div style={{ margin: "10px" }}>
-            <MyClubList style={backgroundStyle} />
-            <Divider style={{ height: 1, backgroundColor: "grey" }} />
+          <div>
             <div style={{ margin: "10px" }}>
+              <MyClubList style={backgroundStyle} />
+            </div>
+            <Divider style={{ height: 1, backgroundColor: "grey" }} />
+            <div>
               <MyClubPostList style={backgroundStyle} />
             </div>
           </div>
