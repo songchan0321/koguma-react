@@ -42,7 +42,7 @@ const ClubHomeClubMember = ({ clubId, clubMember }) => {
             <h3>모임원 {countClubMember}</h3>
           </span>
           {clubMembers.length > 0 &&
-            clubMembers.slice(0, 3).map((clubMember) => (
+            clubMembers.slice(0, 3).map((clubMember, index) => (
               <div
                 style={{
                   display: "flex",
@@ -57,11 +57,11 @@ const ClubHomeClubMember = ({ clubId, clubMember }) => {
                   <Avatar
                     alt="Remy Sharp"
                     src={clubMember.memberDTO.profileURL}
-                    sx={{ width: 56, height: 56 }}
+                    sx={{ width: 40, height: 40 }}
                   />
                 </Card>
                 <Card
-                  key={clubMember.id}
+                  key={index}
                   style={{ flexGrow: 1, cursor: "pointer", boxShadow: "none" }}
                   onClick={() => navigator(`/club/member/${clubMember.id}`)}
                 >

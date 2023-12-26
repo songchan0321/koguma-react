@@ -8,6 +8,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 
 import { listClubPostCategories } from "../../../apis/api/club";
+import { Typography } from "@mui/material";
 
 export default function SwipeableBottomDrawer({
   clubId,
@@ -48,7 +49,6 @@ export default function SwipeableBottomDrawer({
       onKeyDown={toggleDrawer("bottom", false)}
     >
       <List>
-        {/* Fetch and render club post categories */}
         {categories.map((category) => (
           <ListItem key={category.id} disablePadding>
             <ListItemButton onClick={() => handleCategoryClick(category.id)}>
@@ -83,6 +83,8 @@ export default function SwipeableBottomDrawer({
           onClose={toggleDrawer("bottom", false)}
           onOpen={toggleDrawer("bottom", true)}
         >
+          {" "}
+          <Typography>게시글 주제를 선택해주세요.</Typography>
           {list}
         </SwipeableDrawer>
       </React.Fragment>

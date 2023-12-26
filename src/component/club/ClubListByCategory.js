@@ -10,16 +10,14 @@ import {
 import { listClubByCategoryAPI } from "../../apis/api/club";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import TopBarClub from "./common/TopBarClub";
 
-const ClubListByCategory = ({ categoryId }) => {
+const ClubListByCategory = ({ categoryId, keyword }) => {
   const [listClub, setListClub] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await listClubByCategoryAPI(categoryId);
-        console.log(data);
+        const data = await listClubByCategoryAPI(categoryId, keyword);
         setListClub(data);
       } catch (err) {
         console.error(err);

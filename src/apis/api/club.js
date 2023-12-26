@@ -52,7 +52,6 @@ export const listClubAPI = async () => {
 export const allClubAPI = async () => {
   try {
     const { data } = await authInstance.get(`${CLUB_API_URI}/all`);
-    console.log(data);
     return data;
   } catch (err) {
     console.log(err);
@@ -68,10 +67,12 @@ export const categoryListAPI = async () => {
   }
 };
 
-export const listClubByCategoryAPI = async (onCategorySelect) => {
+export const listClubByCategoryAPI = async (onCategorySelect, keyword) => {
   try {
     const { data } = await authInstance.get(
-      `${CLUB_API_URI}/list/category/${onCategorySelect}`
+      `${CLUB_API_URI}/list?keyword=${keyword || ""}&category=${
+        onCategorySelect || ""
+      }`
     );
     return data;
   } catch (err) {
@@ -113,7 +114,6 @@ export const checkJoinRequestAPI = async (clubId) => {
 
 export const joinRequestAPI = async (clubId, joinProfile) => {
   try {
-    alert(joinProfile.nickname);
     const { data } = await authInstance.post(
       `${CLUB_API_URI}/join/request`,
       JSON.stringify({
@@ -213,16 +213,6 @@ export const listClubJoinRequest = async (clubId) => {
 };
 
 //--3. 모임 일정-- //
-// export const getMeetUpAPI = async (clubId) => {
-//   try {
-//     const { data } = await authInstance.get(
-//       `${CLUB_API_URI}/meet-up/${clubId}`
-//     );
-//     return data;
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
 
 export const listMeetUpAPI = async (clubId, type) => {
   try {
@@ -240,10 +230,10 @@ export const addMeetUpAPI = async (
   title,
   content,
   maxCapacity,
-  roadAddr
+  roadAddr,
+  combinedDateTime
   // meetUpData
 ) => {
-  alert(roadAddr);
   try {
     await authInstance.post(
       `${CLUB_API_URI}/add/meet-up`,
@@ -257,7 +247,7 @@ export const addMeetUpAPI = async (
         content: content,
         maxCapacity: maxCapacity,
         roadAddr: roadAddr,
-        // meetUpData: meetUpData,
+        meetUpData: combinedDateTime,
         meetUpType: "null",
       }),
 
@@ -286,8 +276,9 @@ export const getClubMeetUp = async (meetUpId) => {
 export const listJoinMeetUpMemberAPI = async (meetUpId) => {
   try {
     const { data } = await authInstance.get(
-      `${CLUB_API_URI}/meet-up/${meetUpId}`
+      `${CLUB_API_URI}/meet-up/members/${meetUpId}`
     );
+
     return data;
   } catch (err) {
     console.log(err);
@@ -298,6 +289,17 @@ export const checkJoinMeetUpAPI = async (clubId, meetUpId) => {
   try {
     const { data } = await authInstance.get(
       `${CLUB_API_URI}/meet-up/check/join?clubId=${clubId}&meetUpId=${meetUpId}`
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const joinMeetUpRequestAPI = async (meetUpId, clubMember) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/meet-up/join?clubMeetUpId=${meetUpId}&clubMemberId=${clubMember.id}`
     );
     return data;
   } catch (err) {
@@ -320,6 +322,17 @@ export const joinMeetUpCancelAPI = async (clubId, meetUpId, isJoined) => {
         },
       }
     );
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const countMeetUpJoinMember = async (meetUpId) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/meet-up/join/count/${meetUpId}`
+    );
+    return data;
   } catch (err) {
     console.log(err);
   }
@@ -388,7 +401,7 @@ export const addClubPostCategory = async (clubId, name) => {
   }
 };
 
-export const addClubPost = async (clubId, formData) => {
+export const addClubPost = async (clubId, formData, selectedCategory) => {
   try {
     const { data } = await authInstance.post(
       `${CLUB_API_URI}/post/add`,
@@ -412,6 +425,29 @@ export const getClubPostAPI = async (clubPostId) => {
     const { data } = await authInstance.get(
       `${CLUB_API_URI}/post/${clubPostId}`
     );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// == 5. meetUp map == //
+
+export const getGeo = async (address) => {
+  try {
+    const { data } = await authInstance.get(
+      `${CLUB_API_URI}/meet-up/addr?address=${address}`
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const nearClubMapAPI = async () => {
+  try {
+    const { data } = await authInstance.get(`${CLUB_API_URI}/near/map`);
+    console.log(data);
     return data;
   } catch (err) {
     console.log(err);

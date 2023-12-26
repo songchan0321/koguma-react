@@ -19,7 +19,7 @@ const ClubHomePostList = ({ clubId, clubMember }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [clubId]);
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category === "전체" ? "전체" : category);
@@ -48,11 +48,7 @@ const ClubHomePostList = ({ clubId, clubMember }) => {
               label={category === "전체" ? "전체" : category.name}
               key={index}
               onClick={() => handleCategoryClick(category)}
-              variant={
-                selectedCategory === categories[index]
-                  ? "contained"
-                  : "outlined"
-              }
+              variant={selectedCategory === category ? "contained" : "outlined"}
               color="secondary"
             />
           ))}

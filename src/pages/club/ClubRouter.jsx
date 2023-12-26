@@ -14,6 +14,9 @@ import AddClubPost from "./board/AddClubPost";
 import MapTest from "../../component/club/common/MapTest";
 import AddClubForm from "./AddClubForm";
 import GetClubPost from "./board/GetClubPost";
+import ListClubMapMarker from "./ListClubMapMarker";
+import ListClubMap from "../../component/club/common/ListClubMap";
+import ListClubNear from "./ListClubNear";
 
 const ClubRouter = () => {
   return (
@@ -31,6 +34,7 @@ const ClubRouter = () => {
       <Route path="/post/add" element={<AddClubPost />} />
       <Route path="/post/:clubPostId" element={<GetClubPost />} />
       <Route path="/meet-up/add/location" element={<MapTest />} />
+      <Route path="/list/near" element={<ListClubNear />} />
     </Routes>
   );
 };
