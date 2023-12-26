@@ -55,7 +55,7 @@ const SuggestPrice = () => {
     console.log(submitData);
     const { data } = await addSuggestPrice(submitData);
 
-    await openModal("상품 수정 성공", true, () => {
+    await openModal("가격 제안 완료!!", true, () => {
       navigator(-1);
     });
   };

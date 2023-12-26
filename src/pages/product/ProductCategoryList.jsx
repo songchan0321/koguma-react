@@ -50,9 +50,9 @@ const ProductCategoryList = () => {
             </>
           ) : (
             <NotData>
-              <div style={{ color: "lightgray" }}>해당 카테고리에 상품이</div>
+              <div style={{ color: "lightgray" }}>해당 카테고리에</div>
               <br />
-              <div style={{ color: "lightgray" }}>존재하지 않아요.</div>
+              <div style={{ color: "lightgray" }}>상품이 존재하지 않아요.</div>
             </NotData>
           )}
           <br />
