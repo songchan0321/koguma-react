@@ -6,7 +6,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { listClubPostCategories } from "../../../apis/api/club";
 import { Typography } from "@mui/material";
 
@@ -43,7 +43,11 @@ export default function SwipeableBottomDrawer({
 
   const list = (
     <Box
-      sx={{ width: "auto" }}
+      sx={{
+        width: "auto",
+        borderRadius: "10px", // 테두리를 둥글게 만드는 속성
+        overflow: "hidden",
+      }}
       role="presentation"
       onClick={toggleDrawer("bottom", false)}
       onKeyDown={toggleDrawer("bottom", false)}
@@ -76,15 +80,36 @@ export default function SwipeableBottomDrawer({
   return (
     <div>
       <React.Fragment key="bottom">
-        <Button onClick={toggleDrawer("bottom", true)}>{list}</Button>
+        {/* 아이콘을 포함하는 Typography */}
+        <Typography
+          onClick={toggleDrawer("bottom", true)}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between", // 내용을 좌우로 공간 배분
+          }}
+        >
+          {list}
+          <ArrowForwardIosIcon sx={{ marginRight: "20px" }} />{" "}
+          {/* 오른쪽 여백 추가 */}
+        </Typography>
         <SwipeableDrawer
+          sx={{
+            width: "auto",
+            borderRadius: "10px", // 테두리를 둥글게 만드는 속성
+            overflow: "hidden",
+          }}
           anchor="bottom"
           open={state.bottom}
           onClose={toggleDrawer("bottom", false)}
           onOpen={toggleDrawer("bottom", true)}
         >
-          {" "}
-          <Typography>게시글 주제를 선택해주세요.</Typography>
+          <Typography
+            variant="h6"
+            style={{ marginLeft: "10px", marginTop: "10px" }}
+          >
+            게시글 주제를 선택해주세요 !
+          </Typography>
           {list}
         </SwipeableDrawer>
       </React.Fragment>

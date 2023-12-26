@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CategoryList from "../../component/club/CategoryList";
 import ClubListByCategory from "../../component/club/ClubListByCategory";
-import { Box, Divider, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Divider, Fab, Tab, Tabs, Typography } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Link, useNavigate } from "react-router-dom";
 import TopBarClub from "../../component/club/common/TopBarClub";
@@ -11,6 +11,8 @@ import MyClubPostList from "../../component/club/board/MyClubPostList";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 import GeoLocationClub from "../../component/club/GeoLocationClub";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import AddIcon from "@mui/icons-material/Add";
+import ClubImageCarousel from "../../component/club/common/ClubImageCarousel";
 
 function ClubList() {
   const navigate = useNavigate();
@@ -64,8 +66,8 @@ function ClubList() {
             <div style={{ margin: "10px" }}>
               <MyClubList style={backgroundStyle} />
             </div>
-            <Divider style={{ height: 1, backgroundColor: "grey" }} />
-            <div>
+            <Divider style={{ height: 10, backgroundColor: "grey" }} />
+            <div style={{ marginTop: "20px" }}>
               <MyClubPostList style={backgroundStyle} />
             </div>
           </div>
@@ -94,8 +96,9 @@ function ClubList() {
                 <GeoLocationClub />
               </div>
             </div>
+            <Divider style={{ height: 10, backgroundColor: "grey" }} />
 
-            <div>
+            <div style={{ marginTop: "10px" }}>
               <CategoryList onCategorySelect={setSelectedCategoryId} />
               <br />
               <div style={{ padding: "10px" }}>
@@ -107,7 +110,15 @@ function ClubList() {
                 to={{ pathname: "/club/add" }}
                 style={{ position: "fixed", bottom: "20px", right: "20px" }}
               >
-                <AddCircleIcon style={buttonStyle} />
+                <Fab
+                  sx={{
+                    backgroundColor: "#D070FB",
+                  }}
+                  color="secondary"
+                  aria-label="add"
+                >
+                  <AddIcon />
+                </Fab>
               </Link>
             </div>
           </div>
