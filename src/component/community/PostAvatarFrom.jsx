@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { CardHeader, Avatar } from "@mui/material";
 import { getPostAPI } from "../../apis/api/community";
 
-const CommunityAavatarForm = () => {
+const PostAavatarForm = () => {
   const { postId } = useParams();
   const [data, setData] = useState(null);
   const [isMine, setIsMine] = useState();
@@ -38,8 +38,19 @@ const CommunityAavatarForm = () => {
         <CardHeader
           sx={{ maxWidth: "100%" }}
           avatar={
-            <Avatar sx={{ bgcolor: "ThreeDShadow" }} aria-label="recipe">
-              R
+            <Avatar
+              aria-label="recipe"
+              style={{ width: "48px", height: "48px" }} // Avatar 크기 조정
+            >
+              <img
+                src={data.memberDTO.profileURL}
+                alt="profile"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "50%",
+                }} // 이미지 크기 및 모양 조정
+              />
             </Avatar>
           }
           onClick={() => getMember(data.memberDTO?.id)}
@@ -50,4 +61,4 @@ const CommunityAavatarForm = () => {
     </>
   );
 };
-export default CommunityAavatarForm;
+export default PostAavatarForm;

@@ -1,20 +1,18 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
+import React, { Fragment, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
+import Back from "../common/Back";
+import { Typography, Grid, Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Fragment, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Button from "@mui/material/Button";
-import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import Back from "../common/Back";
-import { Typography, Grid } from "@mui/material";
 import { addPostAPI } from "../../apis/api/community";
-import { useNevigate } from "react-router-dom";
+import { uploadImageAPI } from "../../apis/api/common";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const PostForm = ({ text }) => {
   const categorys = [
@@ -27,8 +25,16 @@ const PostForm = ({ text }) => {
   ];
 
   const navigate = useNavigate();
+  const imageRegHandler = (images) => {
+    setFormData((prev) => ({ ...prev, thumbnail: images }));
+  };
+  const imageDelHandler = (id) => {
+    setFormData((prev) => ({
+      ...prev,
+      thumbnail: prev.thumbnail.filter((_, index) => index !== id),
+    }));
+  };
 
-  //Data 양식
   const [formData, setFormData] = useState({
     categoryId: 0,
     categoryName: "",
@@ -39,39 +45,60 @@ const PostForm = ({ text }) => {
     postType: true,
     activeFlag: true,
     views: 0,
+    thumbnail: [], // Updated to include thumbnail property
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(e.target);
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
     }));
   };
 
-  const handleSubmit = async (event) => {
-    //이미지 추가사항 적용해야함
+  const handleFileChange = async (e) => {
+    const files = e.target.files;
+    const imageList = new FormData();
+    imageList.append("file", files[0]); // Assuming you only handle one file for simplicity
 
-    //Data
+    try {
+      const imageUrlList = await uploadImageAPI(imageList);
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        thumbnail: imageUrlList,
+      }));
+    } catch (error) {
+      console.error("Error during image upload:", error);
+    }
+  };
+
+  const handleSubmit = async () => {
     try {
       const { data } = await addPostAPI(formData);
       console.log(data);
 
       const postId = data.postId;
+      navigate(`/post/list`, { replace: true });
     } catch (error) {
-      console.error("Error Point : addPostAPI", error);
+      console.error("Error during post submission:", error);
     }
   };
 
-  const buttons = [
-    <Button key="one">
-      <InsertPhotoIcon /> 사진
-    </Button>,
-    <Button key="two">
-      <LocationOnIcon /> 장소
-    </Button>,
-  ];
+  // const buttons = [
+  //   <Button component="label" htmlFor="fileInput" key="one">
+  //     <InsertPhotoIcon /> 사진
+  //     <input
+  //       type="file"
+  //       id="fileInput"
+  //       accept="image/*"
+  //       style={{ display: "none" }}
+  //       onChange={handleFileChange}
+  //     />
+  //   </Button>,
+    // <Button key="two">
+    //   <LocationOnIcon /> 장소
+    // </Button>,
+  // ];
 
   return (
     <Fragment>
@@ -83,7 +110,6 @@ const PostForm = ({ text }) => {
         sx={{ textAlign: "center", mb: 1.5 }}
       >
         <i>동네생활 글쓰기</i>
-
         <Button
           style={{
             position: "absolute",
@@ -110,11 +136,6 @@ const PostForm = ({ text }) => {
             onChange={(event) => {
               const selectedCategory = event.target.value;
               const categoryIndex = categorys.indexOf(selectedCategory);
-              console.log(
-                `Selected Category: ${selectedCategory}, CategoryId: ${
-                  categoryIndex + 23
-                }`
-              );
               setFormData((prevFormData) => ({
                 ...prevFormData,
                 categoryName: selectedCategory,
@@ -133,48 +154,34 @@ const PostForm = ({ text }) => {
           </Select>
         </FormControl>
       </Grid>
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": { m: 1, width: "100%" }, // width 값을 "100%"로 변경
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField
-          name="title"
-          id="title"
-          label="제목을 입력하세요."
-          variant="standard"
-          value={formData.title}
-          onChange={handleChange}
-        />
-      </Box>
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": { m: 1, width: "100%" }, // width 값을 "100%"로 변경
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField
-          name="content"
-          id="content"
-          label="궁금한 마을 이야기를 나누어보세요 "
-          multiline
-          rows={15}
-          variant="standard"
-          value={formData.content}
-          onChange={handleChange}
-        />
-      </Box>
+      <TextField
+        name="title"
+        id="title"
+        label="제목을 입력하세요."
+        variant="standard"
+        value={formData.title}
+        onChange={handleChange}
+        sx={{ width: "100%" }} // 좌우로 꽉 차게 설정
+      />
+      <br />
+      <TextField
+        name="content"
+        id="content"
+        label="궁금한 마을 이야기를 나누어보세요 "
+        multiline
+        rows={15}
+        variant="standard"
+        value={formData.content}
+        onChange={handleChange}
+        sx={{ width: "100%" }} // 좌우로 꽉 차게 설정
+      />
+
       <Box
         sx={{
           display: "flex",
-          alignItems: "flex-start", // 왼쪽으로 정렬되도록 변경
-          justifyContent: "flex-end", // 하단으로 정렬되도록 변경
-          position: "fixed", // 고정 위치로 변경
+          alignItems: "flex-start",
+          justifyContent: "flex-end",
+          position: "fixed",
           bottom: 0,
           left: 0,
           "& > *": {
@@ -182,14 +189,21 @@ const PostForm = ({ text }) => {
           },
         }}
       >
-        <ButtonGroup
+        {/* <ButtonGroup
           color="secondary"
           aria-label="medium secondary button group"
         >
           {buttons}
-        </ButtonGroup>
+        </ButtonGroup> */}
       </Box>
+      {/* <ImageList
+        images={images}
+        setImages={setImages}
+        imageRegHandler={imageRegHandler}
+        imageDelHandler={imageDelHandler}
+      /> */}
     </Fragment>
   );
 };
+
 export default PostForm;

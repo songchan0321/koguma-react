@@ -52,8 +52,6 @@ export const callPostListByViewAPI = async () => {
   }
 };
 
-//img, location 추가 해야함
-// img, location 추가 해야함
 export const addPostAPI = async (postDTO) => {
   try {
     const { categoryId, ...rest } = postDTO;
@@ -94,7 +92,7 @@ export const updatePostAPI = async (postId, updateData) => {
 };
 
 export const deletePostAPI = async (postId) => {
-  const { data } = await authInstance.put(`${POST_API_URI}/${postId}/delete`);
+  const { data } = await authInstance.get(`${POST_API_URI}/${postId}/delete`);
   return data;
 };
 
@@ -105,10 +103,11 @@ export const callCommentListAPI = async (postId) => {
 
 export const callReplyListAPI = async (commentId) => {
   const { data } = await authInstance.get(
-    `${COMMENT_API_URI}/list/reply/${commentId}`,
-    {
-      id: commentId,
-    }
+    `${COMMENT_API_URI}/list/reply/${commentId}`
+    // ,
+    // {
+    //   id: commentId,
+    // }
   );
   console.log(data);
   return data;
@@ -149,4 +148,25 @@ export const addCommentAPI = async (
     console.log(err);
     throw err;
   }
+};
+
+export const getCommentAPI = async (commentId) => {
+  const { data } = await authInstance.get(
+    `${COMMENT_API_URI}/get/${commentId}`
+  );
+  return data;
+};
+
+export const deleteCommentAPI = async (commentId) => {
+  const { data } = await authInstance.get(
+    `${COMMENT_API_URI}/${commentId}/delete`
+  );
+  return data;
+};
+
+export const getCommentCountsAPI = async (postId) => {
+  const { data } = await authInstance.get(
+    `${COMMENT_API_URI}/counts/${postId}`
+  );
+  return data;
 };

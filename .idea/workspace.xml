@@ -6,7 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="95e60e63-c969-468c-a634-d8977ada3c8e" name="Changes" comment="refactor : 회원가입 컴포넌트 수정&#10;&#10;alert 전부 modal로 변경&#10;&#10;2023.12.24 / 04:08 / SIC">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/src/component/member/AddMemberForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/member/AddMemberForm.jsx" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/apis/api/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/apis/api/community.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/community/AddComment.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/community/AddComment.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/community/AddReply.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/community/AddReply.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/community/PostForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/community/PostForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/community/PostThumbnail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/community/PostThumbnail.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/community/GetPost.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/community/GetPost.jsx" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,21 +23,31 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+<<<<<<< Updated upstream
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
+=======
+>>>>>>> Stashed changes
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
+<<<<<<< Updated upstream
   "associatedIndex": 4
 }]]></component>
   <component name="ProjectId" id="2ZyDXPqQm0pq0F8phayqnTTQrRO" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+=======
+  "customColor": "",
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2ZxIvgjQGPOByqaDg31ltyXv9Jc" />
+>>>>>>> Stashed changes
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -38,7 +57,11 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+<<<<<<< Updated upstream
     "git-widget-placeholder": "dev",
+=======
+    "git-widget-placeholder": "hsc",
+>>>>>>> Stashed changes
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -48,6 +71,7 @@
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+<<<<<<< Updated upstream
     <task id="LOCAL-00001" summary="refactor : 회원가입 컴포넌트 수정&#10;&#10;alert 전부 modal로 변경&#10;&#10;2023.12.24 / 04:08 / SIC">
       <option name="closed" value="true" />
       <created>1703358543253</created>
@@ -65,6 +89,16 @@
       <workItem from="1703385468217" duration="3765000" />
     </task>
     <option name="localTasksCounter" value="2" />
+=======
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="95e60e63-c969-468c-a634-d8977ada3c8e" name="Changes" comment="fix : 오류 수정 중 테스트&#10;&#10;&#10;&#10;2023.12.22 / 03:29 / HSC" />
+      <created>1703357551146</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1703357551146</updated>
+      <workItem from="1703357556536" duration="221000" />
+    </task>
+>>>>>>> Stashed changes
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

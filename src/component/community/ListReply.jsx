@@ -1,10 +1,10 @@
 import { Fragment } from "react";
 import GetReply from "./GetReply";
 
-const ListReply = () => {
+const ListReply = ({commentId}) => {
   return (
     <Fragment>
-      <GetReply />
+      <GetReply commentId={commentId}/>
     </Fragment>
   );
 };

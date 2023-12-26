@@ -406,10 +406,16 @@ export const addClubPostCategory = async (clubId, name) => {
 
 export const addClubPost = async (clubId, formData, selectedCategory) => {
   try {
+    console.log(`이미지가 잘 들어왔느 ${formData.selectedFile[0]}`);
+
     const { data } = await authInstance.post(
       `${CLUB_API_URI}/post/add`,
       JSON.stringify({
         clubId: clubId,
+        clubCategoryId: selectedCategory,
+        title: formData.title,
+        content: formData.content,
+        images: formData.selectedFile[0],
       }),
       {
         headers: {

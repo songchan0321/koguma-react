@@ -13,12 +13,13 @@ import {
   Card,
   CardMedia,
   Divider,
+  Input,
   Paper,
   TextField,
 } from "@mui/material";
 import styled from "styled-components";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { uploadImageAPI } from "../../../apis/api/common";
+import PhotoIcon from "@mui/icons-material/Photo";
 
 const AddClubPost = () => {
   const location = useLocation();
@@ -77,8 +78,11 @@ const AddClubPost = () => {
     e.preventDefault();
 
     // 폼 데이터 생성
-    const formData = { title, content };
+    const formData = { title, content, selectedFile };
 
+    console.log(`clubId _ > ${clubId}`);
+    console.log(`formData => ${formData.selectedFile}`);
+    console.log(`selectedCategory  = >${selectedCategory}`);
     // 서버로 데이터 전송
     try {
       setIsSubmitting(true);
@@ -151,43 +155,64 @@ const AddClubPost = () => {
         </div>
         <br />
         <Divider />
-        <TextField
-          label="내용"
-          variant="standard"
-          fullWidth
-          multiline
-          rows={4}
-          value={content}
-          onChange={handleContentChange}
-          onFocus={handleContentFocus}
-          InputProps={{
-            disableUnderline: true,
-            style: { borderBottom: "5px solid white" },
-          }}
-        />
-      </Paper>
-      <Paper elevation={0}>
-        <div>
-          {selectedFile && (
-            <Card style={{ maxWidth: 345, margin: "20px 0" }}>
-              <CardMedia
-                component="img"
-                image={selectedFile}
-                style={{ width: "100%" }} // 이미지를 Card 폭에 맞게 조절
-              />
-            </Card>
-          )}
+        <div style={{ marginTop: "20px" }}>
+          <TextField
+            label="내용"
+            variant="standard"
+            fullWidth
+            multiline
+            rows={4}
+            value={content}
+            onChange={handleContentChange}
+            onFocus={handleContentFocus}
+            InputProps={{
+              disableUnderline: true,
+              style: { borderBottom: "5px solid white" },
+            }}
+          />
         </div>
-        <Button
-          component="label"
-          variant="contained"
-          startIcon={<CloudUploadIcon />}
-          onChange={handleUpload}
-        >
-          Upload file
-          <VisuallyHiddenInput type="file" />
-        </Button>
       </Paper>
+
+      <Paper elevation={0} style={{ marginLeft: "10px", marginTop: "160px" }}>
+        <Divider style={{ height: 2, backgroundColor: "grey" }} />
+
+        <div
+          style={{ display: "flex", alignItems: "center", marginTop: "10px" }}
+        >
+          <div>
+            <Button
+              component="label"
+              variant="text"
+              onChange={handleUpload}
+              style={{
+                color: "grey",
+                fontSize: "20px",
+                backgroundColor: "transparent",
+                border: "1px solid grey",
+                borderRadius: "10px",
+                padding: "10px",
+              }}
+            >
+              <PhotoIcon style={{ fontSize: "30px", color: "grey" }} />
+              <VisuallyHiddenInput type="file" />
+            </Button>
+          </div>
+          <div style={{ marginLeft: "10px" }}>
+            {selectedFile && (
+              <Card style={{ maxWidth: 345, margin: "20px 0" }} elevation={0}>
+                <CardMedia
+                  component="img"
+                  image={selectedFile}
+                  style={{ width: "30%", maxHeight: "200px" }} // 이미지 크기 제어
+                />
+              </Card>
+            )}
+          </div>
+        </div>
+      </Paper>
+      <div style={{ marginTop: "10px" }}>
+        <Divider style={{ height: 2, backgroundColor: "grey" }} />
+      </div>
       <div>
         <Button
           style={fixedButtonStyle}

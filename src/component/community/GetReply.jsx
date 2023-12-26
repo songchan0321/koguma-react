@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { callReplyListAPI } from "../../apis/api/community";
-import { Grid, Typography, CardContent, Card, Box } from "@mui/material";
-
-import { useParams } from "react-router-dom";
-import CommunityAavatarForm from "./CommunityAvatarFrom";
+import { Grid, Typography, CardContent, Box } from "@mui/material";
+import CommunityAavatarForm from "./PostAvatarFrom";
 import CommentOption from "./CommentOption";
+import CommentAavatarForm from "./CommentAvatarForm";
+import { formatTimeAgo } from "../../apis/utils/timestamp";
 
 const GetReply = ({ commentId }) => {
   const [listReply, setListReply] = useState([]);
-  // const { commentId } = useParams();
+  console.log("commentId");
   console.log(commentId);
   useEffect(() => {
     const fetchData = async () => {
@@ -21,7 +21,7 @@ const GetReply = ({ commentId }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [commentId]);
 
   return (
     <>
@@ -44,10 +44,20 @@ const GetReply = ({ commentId }) => {
                     alignItems: "center",
                   }}
                 >
-                  <CommunityAavatarForm />
+                  <CommentAavatarForm comment={Reply} />
                   <Box sx={{ marginLeft: "auto" }}>
-                    <CommentOption />
+                    {/* <CommentOption /> */}
+                    <Typography
+                      variant="caption"
+                      color="text.secondary"
+                      sx={{ mb: 1 }}
+                    >
+                      {formatTimeAgo(Reply.regDate)}
+                    </Typography>
                   </Box>
+                  {/* <Box sx={{ marginLeft: "auto" }}>
+                    <CommentOption />
+                  </Box> */}
                 </Box>
                 <CardContent sx={{ marginLeft: "30px" }}>
                   <Typography variant="body1">{Reply.content}</Typography>

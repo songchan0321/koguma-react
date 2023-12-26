@@ -14,7 +14,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import { Badge, Drawer, Paper } from "@mui/material";
+import { Badge, Drawer, Paper, Typography } from "@mui/material";
 import LocationBox from "../location/LocationBox";
 
 import { useState, useEffect } from "react";
@@ -65,23 +65,23 @@ const PostTopBar = ({ location, setLocation }) => {
           },
         }}
       >
-        <LocationBox
-          variant="text"
-          location={location}
-          setLocation={setLocation}
-        />
         <ButtonGroup variant="text" aria-label="text button group">
           <Button onClick={handleModalOpen}>
             <MenuOpenIcon sx={{ fontSize: 30 }} color="secondary" />
           </Button>
-          {/* 통합 검색 완성 후  Navi */}
-          <Button onClick={() => toggleDrawer(true)}>
-            <SearchIcon sx={{ fontSize: 30 }} color="secondary" />
-          </Button>
-          <Button onClick={() => navigate("/alert/list")}>
-            <NotificationsNoneIcon sx={{ fontSize: 30 }} color="secondary" />
-          </Button>
         </ButtonGroup>
+
+        <Typography
+          variant="h5"
+          color="secondary"
+          align="center"
+          sx={{
+            flex: "1",
+            marginRight: "40px", // 아이콘 크기만큼 왼쪽으로 당기기
+          }}
+        >
+          동네생활
+        </Typography>
 
         {/* Modal */}
         <Dialog open={isModalOpen} onClose={handleModalClose}>
@@ -100,6 +100,7 @@ const PostTopBar = ({ location, setLocation }) => {
           </DialogContent>
         </Dialog>
       </Box>
+
       <SearchDrawer open={isDrawerOpen} toggleDrawer={toggleDrawer} />
     </Paper>
   );
