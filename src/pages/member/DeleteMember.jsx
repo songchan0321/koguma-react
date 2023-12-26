@@ -11,8 +11,6 @@ const DeleteMember = () => {
     const navigate = useNavigate();
 
     const handleDeleteMember = () => {
-        // 회원 탈퇴 시 페이지 이동을 담당
-        window.alert("회원 탈퇴가 완료되었습니다.");
         navigate("/common/login"); // 확인을 누르면 /common/login으로 이동
     };
 

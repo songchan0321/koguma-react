@@ -22,7 +22,7 @@ const JoinMeetUpStateButton = ({ clubId, meetUpId, clubMember }) => {
     };
 
     fetchData();
-  }, [joinState, clubId, meetUpId]); // clubId와 meetUpId를 의존성으로 추가
+  }, [clubId, meetUpId]); // clubId와 meetUpId를 의존성으로 추가
 
   const handleButtonJoin = async () => {
     try {
@@ -35,7 +35,7 @@ const JoinMeetUpStateButton = ({ clubId, meetUpId, clubMember }) => {
 
   const handleButtonCancel = async () => {
     try {
-      await joinMeetUpCancelAPI(clubId, meetUpId, joinState);
+      await joinMeetUpCancelAPI(clubId, meetUpId);
       await openModal("일정 참여가 취소되었습니다.", true, () => {});
     } catch (err) {
       console.log(err);
@@ -69,8 +69,8 @@ export default JoinMeetUpStateButton;
 
 const fixedButtonStyle = {
   bottom: 0,
-  left: 20,
-  width: "90%",
-  padding: "5px",
+  left: 0,
+  width: "95%",
+  padding: "10px",
   textAlign: "center",
 };

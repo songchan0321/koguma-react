@@ -17,6 +17,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { defaultInstance } from "../../apis/utils/instance";
 import { useNavigate } from "react-router-dom";
 import StorageIcon from "@mui/icons-material/Storage";
+import { useModal } from "../../context/ModalContext";
+import Modal from "../common/Modal";
 
 const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
   const [nickname, setNickname] = useState("");
@@ -34,6 +36,7 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [authNumError, setAuthNumError] = useState(false);
+  const { openModal } = useModal();
 
   const navigate = useNavigate();
 
@@ -199,8 +202,9 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
       if (response.status === 200) {
         // 성공
         onSubmit();
-        window.alert("회원가입 성공!");
-        navigate("/member/add/complete");
+        openModal("회원가입이 완료되었습니다!", true, () => {
+          navigate("/member/add/complete");
+        });
       } else {
         // 에러 처리
         const data = await response.json();
@@ -347,6 +351,7 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
           <Typography component="h1" variant="h5" sx={{ marginBottom: 2 }}>
             가입하기
           </Typography>
+          <Modal/>
           <TextField
             label="닉네임"
             fullWidth
@@ -938,6 +943,7 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
               <Button autoFocus onClick={handleCloseDialog14}>
                 확인
               </Button>
+
             </DialogActions>
           </Dialog>
         </Paper>

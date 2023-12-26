@@ -65,7 +65,11 @@ const ListFollowingForm = () => {
                                     key={following.id}
                                     sx={{ justifyContent: 'flex-start' }}
                                 >
-                                    <SentimentSatisfiedAltOutlinedIcon />
+                                    <img src={following.targetMember.profileURL} style={{
+                                        width: "2rem",
+                                        height: "2rem",
+                                        clipPath: 'circle(50% at 50% 50%)',
+                                    }} />
                                     <ListItemText
                                         primary={following.targetMember.nickname}
                                         sx={{ marginLeft: '15px' }}
@@ -80,8 +84,10 @@ const ListFollowingForm = () => {
                             ))
                         ) : (
                             <>
-                                <HelpIcon sx={{ fontSize: 64, marginBottom: 2, marginLeft: 19, marginTop:30 }} />
-                                <Typography variant="h5" sx={{ marginLeft: 5, marginBottom: 30 }}>
+                                <div style={{ textAlign: 'center' }}>
+                                    <HelpIcon sx={{ fontSize: 64, marginBottom: 2, marginTop:30 }} />
+                                </div>
+                                <Typography variant="h5" sx={{ marginBottom: 30, textAlign: 'center' }}>
                                     팔로우한 회원이 없습니다!
                                 </Typography>
                             </>
