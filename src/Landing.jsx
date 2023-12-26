@@ -11,8 +11,10 @@ import LandingPayment from "./landing/LandingPayment";
 import LandingCommunity from "./landing/LandingCommunity";
 import LandingClub from "./landing/LandingClub";
 import { Link } from "react-router-dom";
-import { CardMedia } from "@mui/material";
+import { Avatar, CardMedia } from "@mui/material";
 import LandingFooter from "./landing/LandingFooter";
+import TopBar from "./component/payment/TopBar";
+import MarginEmpty from "./component/payment/MarginEmpty";
 
 const Landing = () => {
   return (
@@ -29,6 +31,10 @@ const Landing = () => {
         }}
       >
         <CardContent>
+          <TopBar>
+            <img style={{ width: "32px" }} src="/koguma_logo.png" />
+          </TopBar>
+          <MarginEmpty />
           <Typography
             sx={{ maxWidth: "15rem", textAlign: "center", mt: "1.5rem" }}
             variant="h5"
