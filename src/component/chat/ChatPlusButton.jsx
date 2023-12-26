@@ -118,7 +118,6 @@ const ChatPlusButton = ({ roomId, product, sendTextMessageHandler }) => {
         .then((data) => {
           data.forEach((image) => {
             sendTextMessageHandler({ text: `${image.url}`, type: "IMAGE" });
-            // sendTextMessageHandler(`${image.url}`, roomId, null, "IMAGE");
           });
         })
         .catch((err) => {
@@ -272,7 +271,6 @@ const ChatPlusButton = ({ roomId, product, sendTextMessageHandler }) => {
   return (
     <div>
       <Fragment key={"bottom"}>
-        {/* <Button >{"bottom"}</Button> */}
         <IconButton
           onClick={toggleDrawer(true)}
           sx={{ p: "10px" }}

@@ -16,12 +16,8 @@ const ClubListStepper = ({ clubId, clubMember }) => {
         const categories = await categoryListAPI();
         setCategoryList(categories);
 
-        console.log(categories);
-
         const clubs = await allClubAPI();
-        console.log(clubs);
         setClubList(clubs);
-        console.log(clubList);
       } catch (err) {
         console.log(err);
       }

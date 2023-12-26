@@ -44,15 +44,6 @@ const ListChatRoom = () => {
         );
       return updatedChatRooms;
     });
-    // console.log(rooms);
-    // const updateRoom = rooms.find((item) => item.id === roomId);
-    // 메시지 타입 체크해야함
-    // updateRoom.content = message.content;
-    // const newRooms = [
-    //   updateRoom,
-    //   ...rooms.filter((room) => room.id !== roomId),
-    // ];
-    // setRooms(newRooms);
   };
   useEffect(() => {
     socket.on(CHAT_EVENT.EVENT_CHAT_LIST_ALERT, (message) => {

@@ -84,7 +84,6 @@ const PaymentForm = () => {
       setActiveSubmit(false);
     }
   }, [payment]);
-  // const validate
 
   const handleBankModalOpen = () => {
     setOpenBankModal(true);
@@ -145,7 +144,6 @@ const PaymentForm = () => {
       )}
 
       <TextField
-        // id="outlined-required"
         value={payment.name}
         name="name"
         onChange={handleInput}
@@ -156,8 +154,6 @@ const PaymentForm = () => {
         label="예금주 이름"
       />
       <TextField
-        // id="outlined-disabled"
-        // inputProps={{ maxLength: 6, pattern: "[0-9]*", onInput: handleInput }}
         label="계좌번호(-제외)"
         inputProps={{
           inputMode: "numeric",
@@ -167,10 +163,8 @@ const PaymentForm = () => {
         value={payment.accountNumber}
         name="accountNumber"
         onChange={handleInput}
-        // defaultValue="계좌번호를 입력하세요"
       />
       <TextField
-        // id="outlined-disabled"
         InputProps={{
           readOnly: !nextStep,
           disabled: nextStep,
@@ -189,18 +183,9 @@ const PaymentForm = () => {
         onClose={handleBankModalClose}
         onSelectBank={handleBankSelect}
       />
-      {/* <TextField
-        // id="outlined-disabled"
-        label="주민번호 앞자리(6자리)"
-        inputProps={{ maxLength: 6, inputMode: "numeric", pattern: "[0-9]*" }}
-        value={payment.birthDate}
-        name="birthDate"
-        onChange={handleInput}
-      /> */}
       {nextStep && (
         <>
           <TextField
-            // id="outlined-password-input"
             label="페이 비밀번호 6자리"
             inputProps={{
               maxLength: 6,
@@ -208,13 +193,11 @@ const PaymentForm = () => {
               pattern: "[0-9]*",
             }}
             type="password"
-            // autoComplete="current-password"
             value={payment.password1}
             name="password1"
             onChange={handleInput}
           />
           <TextField
-            // id="outlined-password-input"
             label="페이 비밀번호 6자리 확인"
             inputProps={{
               maxLength: 6,
@@ -222,7 +205,6 @@ const PaymentForm = () => {
               pattern: "[0-9]*",
             }}
             type="password"
-            // autoComplete="current-password"
             value={payment.password2}
             name="password2"
             onChange={handleInput}
@@ -234,7 +216,7 @@ const PaymentForm = () => {
         <Button
           disabled={nextStep && !activeSubmit}
           variant="contained"
-          color="secondary"
+          sx={{ backgroundColor: "#D070FB" }}
           onClick={!nextStep ? checkAccountName : addPayment}
         >
           {!nextStep ? "예금주 확인하기" : "페이 등록하기"}

@@ -13,13 +13,14 @@ const ClubHomePostList = ({ clubId, clubMember }) => {
       try {
         const data = await listClubPostCategories(clubId);
         setCategories(["전체", ...data]);
+        console.log(data);
         setSelectedCategory("전체");
       } catch (err) {
         console.log(err);
       }
     };
     fetchData();
-  }, []);
+  }, [clubId]);
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category === "전체" ? "전체" : category);
@@ -48,11 +49,7 @@ const ClubHomePostList = ({ clubId, clubMember }) => {
               label={category === "전체" ? "전체" : category.name}
               key={index}
               onClick={() => handleCategoryClick(category)}
-              variant={
-                selectedCategory === categories[index]
-                  ? "contained"
-                  : "outlined"
-              }
+              variant={selectedCategory === category ? "contained" : "outlined"}
               color="secondary"
             />
           ))}

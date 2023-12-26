@@ -2,7 +2,6 @@ import {
   AppBar,
   Avatar,
   Button,
-  CircularProgress,
   Dialog,
   IconButton,
   List,
@@ -10,14 +9,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import {
-  Fragment,
-  forwardRef,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { Fragment, forwardRef, useRef, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import PlaceIcon from "@mui/icons-material/Place";
 import { Map } from "react-kakao-maps-sdk";
@@ -35,13 +27,6 @@ const AddShareLocation = ({
   product,
   sendTextMessageHandler,
 }) => {
-  const [locationState, setLocationState] = useState({
-    center: {
-      lat: lat,
-      lng: lng,
-    },
-  });
-  const [feedback, setFeedback] = useState(false);
   const locationRef = useRef({
     level: 4,
     // latitude: 37.49934209591508,
@@ -111,7 +96,6 @@ const AddShareLocation = ({
                 position: "fixed",
                 bottom: "1rem",
                 right: "1rem",
-                // transform: "translate(-50%, -50%)",
               }}
             >
               <Avatar
@@ -135,7 +119,6 @@ const AddShareLocation = ({
               style={{
                 position: "fixed",
                 width: "100%",
-                // overflow: "hidd",
                 height: "100vh",
               }}
               isPanto={true}

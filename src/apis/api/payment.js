@@ -135,4 +135,3 @@ export const listPaymentHistoryAPI = async (type) => {
   );
   return data;
 };
-// export const addPaymentAPI = authInstance.post(`${PAYMENT_API_URI}/add`, {})

@@ -1,8 +1,10 @@
+import { Typography } from "@mui/material";
+
 const ClubHome = ({ club }) => {
   return (
     <>
       <div>
-        <h2>소 개</h2>
+        <Typography variant="h5">소 개</Typography>
       </div>
       <br />
       <div>

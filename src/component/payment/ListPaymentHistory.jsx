@@ -47,7 +47,6 @@ const ListPaymentHistory = ({ type }) => {
                 ) : (
                   formatCommaNumber(payment.price) + "원"
                 )}
-                {/* {formatCommaNumber(payment.price) + "원"} */}
               </div>
               <ListItemText
                 primary={
@@ -57,14 +56,6 @@ const ListPaymentHistory = ({ type }) => {
                 }
                 secondary={
                   <Fragment>
-                    {/* <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body2"
-                    color="text.primary"
-                  >
-                    Ali Connors
-                  </Typography> */}
                     {absoulte_timestamp(payment.regDate, true)}{" "}
                     {payment.type === "REFUND_REQUEST" && "(환급 요청)"}
                   </Fragment>

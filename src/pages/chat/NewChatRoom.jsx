@@ -121,7 +121,6 @@ const NewChatRoom = () => {
           }
         />
       </div>
-      {/* <AlertBubble contetnt={"123"} /> */}
       <List
         style={{
           display: "flex",

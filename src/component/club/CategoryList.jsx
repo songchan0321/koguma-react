@@ -11,7 +11,6 @@ const CategoryList = ({ onCategorySelect }) => {
       try {
         const data = await categoryListAPI();
         setCategory(data);
-        console.log(data);
         onCategorySelect(29);
         setSelectedCategory(29);
       } catch (err) {

@@ -1,10 +1,6 @@
-import { getUnreadCount } from "../api/chat";
-import { authInstance } from "../utils/instance";
-
 export const chatRoomListService = (data, memberId) => {
   if (data) {
     return data.map((room) => {
-      //   const count = await getUnreadCount(room.id);
       const memberCheck = room.productDTO.sellerDTO.id !== memberId;
       const nickname = memberCheck
         ? room.productDTO.sellerDTO.nickname

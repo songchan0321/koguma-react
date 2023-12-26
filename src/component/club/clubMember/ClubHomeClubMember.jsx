@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { countClubMemberAPI, listClubMemberAPI } from "../../../apis/api/club";
-import { Avatar, Button, Card, CardContent } from "@mui/material";
+import { Avatar, Button, Card, CardContent, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MarginEmpty from "../../payment/MarginEmpty";
 
@@ -39,10 +39,10 @@ const ClubHomeClubMember = ({ clubId, clubMember }) => {
       ) : (
         <div>
           <span>
-            <h3>모임원 {countClubMember}</h3>
+            <Typography variant="h6">모임원 {countClubMember}</Typography>
           </span>
           {clubMembers.length > 0 &&
-            clubMembers.slice(0, 3).map((clubMember) => (
+            clubMembers.slice(0, 3).map((clubMember, index) => (
               <div
                 style={{
                   display: "flex",
@@ -57,16 +57,18 @@ const ClubHomeClubMember = ({ clubId, clubMember }) => {
                   <Avatar
                     alt="Remy Sharp"
                     src={clubMember.memberDTO.profileURL}
-                    sx={{ width: 56, height: 56 }}
+                    sx={{ width: 40, height: 40 }}
                   />
                 </Card>
                 <Card
-                  key={clubMember.id}
+                  key={index}
                   style={{ flexGrow: 1, cursor: "pointer", boxShadow: "none" }}
                   onClick={() => navigator(`/club/member/${clubMember.id}`)}
                 >
                   <CardContent>
-                    <div>{clubMember.nickname}</div>
+                    <Typography variant="body2">
+                      {clubMember.nickname}
+                    </Typography>
                   </CardContent>
                 </Card>
               </div>

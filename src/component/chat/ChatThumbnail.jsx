@@ -30,7 +30,6 @@ const ChatThumbnail = ({ room }) => {
           />
         </ListItemAvatar>
         <ListItemText
-          //   primary={room.nickname}
           secondary={
             <>
               <Fragment>
@@ -46,7 +45,6 @@ const ChatThumbnail = ({ room }) => {
                 <Typography
                   sx={{ display: "inline" }}
                   component="span"
-                  // variant="body3"
                   fontSize="0.8rem"
                   color="text.disabled"
                 >
@@ -56,10 +54,7 @@ const ChatThumbnail = ({ room }) => {
               </Fragment>
               <br />
               <Fragment>
-                <div
-                  // variant="h6"
-                  style={{ position: "relative", display: "inline-block" }}
-                >
+                <div style={{ position: "relative", display: "inline-block" }}>
                   {room.latestMessage.type === "LOCATION"
                     ? "장소가 공유되었어요!"
                     : room.latestMessage.type === "PLAN"
@@ -92,7 +87,6 @@ const ChatThumbnail = ({ room }) => {
           }
         />
         <ListItemAvatar>
-          {/* !!image 처리 필요 */}
           <Avatar
             sx={{
               border: "solid 1px rgba(120, 120, 120, 0.5)",

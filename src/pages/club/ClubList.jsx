@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import CategoryList from "../../component/club/CategoryList";
 import ClubListByCategory from "../../component/club/ClubListByCategory";
-import { Box, Divider, Tab, Tabs } from "@mui/material";
+import { Box, Divider, Tab, Tabs, Typography } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TopBarClub from "../../component/club/common/TopBarClub";
 import MyClubList from "../../component/club/MyClubList";
 import ClubListStepper from "../../component/club/ClubListStepper";
 import MyClubPostList from "../../component/club/board/MyClubPostList";
 import MarginEmpty from "../../component/payment/MarginEmpty";
+import GeoLocationClub from "../../component/club/GeoLocationClub";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 function ClubList() {
+  const navigate = useNavigate();
   const [selectedCategoryId, setSelectedCategoryId] = useState(0); // 초기 값은 0으로 설정
   const [myClubList, setMyClubList] = useState(false);
 
@@ -59,7 +62,7 @@ function ClubList() {
         {myClubList ? (
           <div style={{ margin: "10px" }}>
             <MyClubList style={backgroundStyle} />
-            <Divider />
+            <Divider style={{ height: 1, backgroundColor: "grey" }} />
             <div style={{ margin: "10px" }}>
               <MyClubPostList style={backgroundStyle} />
             </div>
@@ -67,8 +70,29 @@ function ClubList() {
         ) : (
           <div>
             <div>
-              <ClubListStepper />
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <Typography variant="h6" style={{ marginLeft: "10px" }}>
+                  내 근처 모임
+                </Typography>
+                <div onClick={() => navigate(`/club/list/near`)}>
+                  <ArrowForwardIosIcon style={{ marginLeft: "5px" }} />
+                </div>
+              </div>
+              <Divider sx={{ backgroundColor: "black" }} />
+              <MarginEmpty value={15} />
+
+              <div
+                style={{
+                  ...backgroundStyle,
+                  marginBottom: "20px",
+                  marginLeft: "32px",
+                  marginRight: "37px",
+                }}
+              >
+                <GeoLocationClub />
+              </div>
             </div>
+
             <div>
               <CategoryList onCategorySelect={setSelectedCategoryId} />
               <br />

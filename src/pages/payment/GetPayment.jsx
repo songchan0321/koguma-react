@@ -1,11 +1,10 @@
 import { Chip, Container, Stack } from "@mui/material";
 import PaymentInfo from "../../component/payment/PaymentInfo";
 import TopBar from "../../component/payment/TopBar";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { existPaymentAPI } from "../../apis/api/payment";
 import { useLocation } from "react-router-dom";
 import LoadingProgress from "../../component/common/LoadingProgress";
-import { IsLoginContext } from "../../context/LoginContextProvider";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 import ListPaymentHistory from "../../component/payment/ListPaymentHistory";
 import Back from "../../component/common/Back";
@@ -65,8 +64,6 @@ const GetPayment = () => {
                     />
                   );
                 })}
-                {/* <Chip label="Small" size="small" />
-                <Chip label="Small" size="small" variant="outlined" /> */}
               </Stack>
               <ListPaymentHistory type={type} />
             </>

@@ -8,6 +8,8 @@ import {
   TextField,
 } from "@mui/material";
 import { forwardRef, useState } from "react";
+import { useModal } from "../../context/ModalContext";
+import Modal from "../common/Modal";
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -19,6 +21,7 @@ const RequestTransferForm = ({
   sendTextMessageHandler,
 }) => {
   const [point, setPoint] = useState(0);
+  const { openModal } = useModal();
   const [pointString, setPointString] = useState("0원");
   const pointResetHandler = () => {
     setPoint(0);
@@ -27,16 +30,9 @@ const RequestTransferForm = ({
   const requestTransferClickHandler = () => {
     if (point > 0 && point <= 10000000) {
       sendTextMessageHandler({ text: `${point}, 0`, type: "REQUEST" });
-      // sendTextMessageHandler(`${point}, 0`, roomId, null, "REQUEST");
-      //   socket.emit(CHAT_EVENT.SEND_MESSAGE, {
-      //     roomId: roomId,
-      //     type: "REQUEST",
-      //     message: `${point}, 0`,
-      //     token: `${localStorage.getItem("token")}`,
-      //   });
       handleClose(pointResetHandler);
     } else {
-      alert("요청할 금액을 확인해주세요.");
+      openModal("요청할 금액을 확인해주세요.", false, () => {});
     }
   };
   const pointInputHandler = (event) => {
@@ -45,18 +41,11 @@ const RequestTransferForm = ({
       pointString.length < value.length
         ? value.replaceAll("원", "").replace(/,/g, "")
         : value.substring(0, value.length - 1).replace(/,/g, "");
-    // if (point.length === 2 && value.length === 1) {
-    //   setPoint("");
-    //   return;
-    // }
-    // const replaceValue = value.replaceAll("원", "").replace(/,/g, "");
-    // value.replace(/,/g, '');
     const onlyNumbersPattern = /^\d+$/; // 숫자만 허용하는 정규식
 
     if (value.length > 1 && !onlyNumbersPattern.test(replaceValue)) {
       return; // 숫자가 아닌 경우에는 더 이상 진행하지 않음
     }
-    // if(value !== "" && )
     setPoint(Number(replaceValue));
     setPointString(Number(replaceValue).toLocaleString("ko-KR") + "원");
   };
@@ -68,13 +57,12 @@ const RequestTransferForm = ({
       onClose={() => handleClose(pointResetHandler)}
       aria-describedby="alert-dialog-slide-description"
     >
+      <Modal />
       <DialogTitle>{"송금 요청하기"}</DialogTitle>
       <DialogContent>
         <TextField
           autoFocus
           margin="dense"
-          //   label="요청할 금액"
-          //   type="number"
           fullWidth
           color="secondary"
           onChange={pointInputHandler}
@@ -94,11 +82,42 @@ const RequestTransferForm = ({
           }}
         />
       </DialogContent>
-      <DialogActions>
-        <Button onClick={() => handleClose(pointResetHandler)} color="error">
+      <DialogActions sx={{ pt: 0, display: "flex", justifyContent: "center" }}>
+        <Button
+          variant="outlined"
+          fullWidth
+          sx={{
+            backgroundColor: "white",
+            border: "1px solid rgba(0,0,0, 0.2)",
+            color: "black",
+            width: "90%",
+          }}
+          onClick={() => handleClose(pointResetHandler)}
+        >
           취소
         </Button>
-        <Button onClick={requestTransferClickHandler}>요청</Button>
+      </DialogActions>
+      <DialogActions
+        sx={{
+          pt: 0,
+          pb: 3,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Button
+          variant="contained"
+          sx={{
+            width: "90%",
+            backgroundColor: "#D070FB",
+            "&:hover": {
+              backgroundColor: "#D070FB", // hover 효과 시 변경할 배경색
+            },
+          }}
+          onClick={requestTransferClickHandler}
+        >
+          요청
+        </Button>
       </DialogActions>
     </Dialog>
   );

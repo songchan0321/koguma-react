@@ -40,7 +40,12 @@ const Modal = () => {
             variant="contained"
             onClick={closeModal}
             fullWidth
-            sx={{ backgroundColor: "#D070FB" }}
+            sx={{
+              backgroundColor: "#D070FB",
+              "&:hover": {
+                backgroundColor: "#D070FB", // hover 효과 시 변경할 배경색
+              },
+            }}
           >
             확인
           </Button>

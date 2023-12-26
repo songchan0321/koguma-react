@@ -14,11 +14,13 @@ import FmdGoodIcon from "@mui/icons-material/FmdGood";
 
 import MapTest from "../common/MapTest";
 import MarginEmpty from "../../payment/MarginEmpty";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { TimePicker } from "@mui/x-date-pickers";
+import { DateCalendar, DateTimePicker, TimePicker } from "@mui/x-date-pickers";
+import { DateRangeCalendar } from "@mui/x-date-pickers-pro";
+import dayjs from "dayjs";
 
 const AddMeetUp = () => {
   const navigate = useNavigate();
@@ -32,7 +34,8 @@ const AddMeetUp = () => {
     content: "",
     roadAddr: "",
     maxCapacity: 0,
-    meetUpData: "",
+    selectedDate: null,
+    selectedTime: null,
   });
 
   const fixedButtonStyle = {
@@ -71,13 +74,20 @@ const AddMeetUp = () => {
 
   const handleSubmit = async () => {
     try {
+      // meetUp의 selectedDate와 selectedTime을 합쳐서 LocalDateTime 형식으로 변환
+      const combinedDateTime = `${meetUp.selectedDate.format(
+        "YYYY-MM-DD"
+      )}T${meetUp.selectedTime.format("HH:mm:ss")}`;
+
       await addMeetUpAPI(
         clubId,
         meetUp.title,
         meetUp.content,
         meetUp.maxCapacity,
-        meetUp.roadAddr
+        meetUp.roadAddr,
+        combinedDateTime
       );
+
       navigator("/club/" + clubId);
     } catch (err) {
       console.error(err);
@@ -179,26 +189,29 @@ const AddMeetUp = () => {
           <div>
             <div>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={["DatePicker"]}>
-                  <DatePicker
-                    label="날짜"
-                    value={meetUp.selectedDate} // 선택한 날짜를 저장할 필드
+                <div style={{ marginLeft: "10px" }}>
+                  <DemoContainer components={["DateCalendar", "DateCalendar"]}>
+                    <DemoItem label="일정 날짜">
+                      <DateCalendar
+                        value={meetUp.selectedDate}
+                        onChange={(newValue) => {
+                          setMeetUp({
+                            ...meetUp,
+                            selectedDate: dayjs(newValue),
+                          });
+                        }}
+                      />
+                    </DemoItem>
+                  </DemoContainer>
+                </div>
+                <div>
+                  <TimePicker
+                    label="일정시간"
                     onChange={(newValue) =>
-                      setMeetUp({ ...meetUp, selectedDate: newValue })
+                      setMeetUp({ ...meetUp, selectedTime: dayjs(newValue) })
                     }
-                    renderInput={(params) => (
-                      <TextField {...params} fullWidth />
-                    )}
-                  />{" "}
-                </DemoContainer>
-                <TimePicker
-                  label="시간"
-                  value={meetUp.selectedTime} // 선택한 시간을 저장할 필드
-                  onChange={(newValue) =>
-                    setMeetUp({ ...meetUp, selectedTime: newValue })
-                  }
-                  renderInput={(params) => <TextField {...params} fullWidth />}
-                />
+                  />
+                </div>
               </LocalizationProvider>{" "}
             </div>
 

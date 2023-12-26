@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -7,6 +7,7 @@ import {
 } from "../../../apis/api/club";
 import TopBarClub from "../../../component/club/common/TopBarClub";
 import ModalAddCategory from "./ModalAddCategory";
+import MarginEmpty from "../../../component/payment/MarginEmpty";
 
 const ListClubPostCategory = () => {
   const location = useLocation();
@@ -18,6 +19,7 @@ const ListClubPostCategory = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await listClubPostCategories(clubId);
+      alert(data);
       setCategories(data);
       console.log(data);
     };
@@ -43,14 +45,16 @@ const ListClubPostCategory = () => {
   return (
     <>
       <TopBarClub>게시판 관리</TopBarClub>
+      <MarginEmpty value={60} />
       <div>
         {categories &&
           categories.map((category) => (
-            <div key={category.id} style={backgroundStyle}>
-              {category.name}
+            <div style={backgroundStyle}>
+              <Typography variant="body1">{category.name}</Typography>
             </div>
           ))}
       </div>
+      <MarginEmpty value={13} />
       <Button
         variant="contained"
         color="secondary"

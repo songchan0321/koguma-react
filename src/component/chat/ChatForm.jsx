@@ -28,9 +28,7 @@ const ChatForm = ({ roomId, sendTextMessageHandler, textEvent, product }) => {
       }}
     >
       <Paper
-        // component="form"
         sx={{
-          // p: "2px 4px",
           display: "flex",
           alignItems: "center",
           height: "60px",

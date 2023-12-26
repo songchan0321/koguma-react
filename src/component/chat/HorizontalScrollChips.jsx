@@ -41,7 +41,6 @@ const HorizontalScrollChips = ({
           variant="outlined"
           style={chipStyle}
           onClick={() => sendTextMessageHandler({ text: item, type: "TEXT" })}
-          // Add other Chip props as needed
         />
       ))}
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

@@ -6,8 +6,7 @@ import {
   DialogTitle,
   Slide,
 } from "@mui/material";
-import { forwardRef, useContext } from "react";
-import { SocketContext } from "../../context/socket";
+import { forwardRef } from "react";
 import { leaveChatRoomAPI } from "../../apis/api/chat";
 import { useNavigate } from "react-router-dom";
 const Transition = forwardRef(function Transition(props, ref) {
@@ -32,6 +31,9 @@ const LeaveCheck = ({ open, handleClose, roomId }) => {
       TransitionComponent={Transition}
       keepMounted
       onClose={handleClose}
+      PaperProps={{
+        sx: { borderRadius: "1rem" },
+      }}
       aria-describedby="alert-dialog-slide-description"
     >
       <DialogTitle>{"채팅방 나가기"}</DialogTitle>

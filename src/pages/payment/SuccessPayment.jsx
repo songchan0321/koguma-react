@@ -10,14 +10,12 @@ import LoadingProgress from "../../component/common/LoadingProgress";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const SuccessPayment = () => {
-  //   const navigator = useNavigate();
   const { type } = useParams();
   const navigator = useNavigate();
   const [searchParams] = useSearchParams();
   const imp_uid = searchParams.get("imp_uid");
   const merchant_uid = searchParams.get("merchant_uid");
   const roomId = searchParams.get("roomId");
-  const point = searchParams.get("point");
   const [loading, setLoading] = useState(false);
   const [balance, setBalance] = useState(null);
   const [data, setData] = useState("");
@@ -100,11 +98,9 @@ const SuccessPayment = () => {
           )}
           <Box sx={{ textAlign: "center" }}>
             <Button
-              //   disabled={point <= 0 || point >= 3000000}
               sx={{ mt: 1, backgroundColor: "#D070FB" }}
               size="large"
               variant="contained"
-              // color="secondary"
               onClick={
                 type === "transfer"
                   ? () => navigator(`/chat/get/${roomId}`)

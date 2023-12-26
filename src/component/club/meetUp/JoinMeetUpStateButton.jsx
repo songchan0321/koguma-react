@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import Button from "@material-ui/core/Button";
 import {
   checkJoinMeetUpAPI,
-  toggleJoinMeetUpAPI,
+  joinMeetUpCancelAPI,
+  joinMeetUpRequestAPI,
 } from "../../../apis/api/club";
+import { Button, Divider } from "@mui/material";
+import { useModal } from "../../../context/ModalContext";
 
-const JoinMeetUpStateButton = ({ clubId, meetUpId }) => {
-  const [joinState, setJoinState] = useState(null);
+const JoinMeetUpStateButton = ({ clubId, meetUpId, clubMember }) => {
+  const { openModal } = useModal();
+  const [joinState, setJoinState] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,15 +22,21 @@ const JoinMeetUpStateButton = ({ clubId, meetUpId }) => {
     };
 
     fetchData();
-  }, [clubId, meetUpId]); // clubId와 meetUpId를 의존성으로 추가
+  }, [joinState, clubId, meetUpId]); // clubId와 meetUpId를 의존성으로 추가
 
-  const handleButtonClick = async () => {
+  const handleButtonJoin = async () => {
     try {
-      // 가입 상태를 토글하는 API 함수 (실제 API 디자인에 따라 조정해야 함)
-      await toggleJoinMeetUpAPI(clubId, meetUpId, joinState);
+      await joinMeetUpRequestAPI(meetUpId, clubMember);
+      await openModal("일정 참여가 완료되었습니다.", true, () => {});
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-      // API 호출 후 로컬 상태 업데이트
-      setJoinState((prevState) => !prevState);
+  const handleButtonCancel = async () => {
+    try {
+      await joinMeetUpCancelAPI(clubId, meetUpId, joinState);
+      await openModal("일정 참여가 취소되었습니다.", true, () => {});
     } catch (err) {
       console.log(err);
     }
@@ -35,11 +44,33 @@ const JoinMeetUpStateButton = ({ clubId, meetUpId }) => {
 
   return (
     <div>
-      <Button variant="contained" color="secondary" onClick={handleButtonClick}>
-        {joinState ? "참여하기" : "나가기"}
+      <Button
+        variant="contained"
+        color="secondary"
+        style={fixedButtonStyle}
+        onClick={joinState ? handleButtonCancel : handleButtonJoin}
+      >
+        {joinState ? "참여 취소" : "참여 하기"}
       </Button>
     </div>
   );
 };
 
 export default JoinMeetUpStateButton;
+
+// const fixedButtonStyle = {
+//   position: "fixed",
+//   bottom: 20,
+//   left: 20,
+//   width: "90%",
+//   padding: "5px",
+//   textAlign: "center",
+// };
+
+const fixedButtonStyle = {
+  bottom: 0,
+  left: 20,
+  width: "90%",
+  padding: "5px",
+  textAlign: "center",
+};

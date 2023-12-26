@@ -20,7 +20,6 @@ const TopBar = ({ children, color }) => {
             variant="h6"
             component="div"
             color={color ? color : "black"}
-            // sx={{ color: color ? color : "black" }}
           >
             {children}
           </Typography>

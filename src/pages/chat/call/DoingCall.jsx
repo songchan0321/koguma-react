@@ -7,23 +7,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 const DoingCall = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  // if (!(state.roomId && state.isOwner && state.next)) {
-  //   navigate("/product/list");
-  // }
   const { roomId, next } = state;
 
   const socketRef = useRef();
   const myVideoRef = useRef();
   const remoteVideoRef = useRef();
-  // const [change, setChange] = useState(false);
   const pcRef = useRef();
   let stream;
-  // const [cam, setCam] = useState("environment");
   const getMedia = async () => {
     stream = await navigator.mediaDevices.getUserMedia({
-      // video: true,
       video: {
-        // facingMode: cam == null ? "environment" : cam,
         facingMode: "user",
       },
       audio: true,
@@ -140,19 +133,12 @@ const DoingCall = () => {
       await pcRef.current.addIceCandidate(candidate);
     });
 
-    // socketRef.current.on("cam change", () => {
-    //   setChange((prev) => !prev);
-    // });
-
     socketRef.current.on("exit room", () => {
       console.log("room exit");
       navigate(`${next}`);
     });
 
     getMedia();
-    // socketRef.current.emit("join_room", {
-    //   room: roomName,
-    // });
 
     return () => {
       if (socketRef.current) {
@@ -165,9 +151,6 @@ const DoingCall = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   getMedia();
-  // }, [cam, change]);
   return (
     <div
       style={{
@@ -216,34 +199,7 @@ const DoingCall = () => {
           autoPlay
         />
       </div>
-      {/* <div
-        style={{
-          position: "fixed",
-          top: "0.8rem",
-          right: "0.8rem",
-          // borderRadius: "0.3rem",
-        }}
-      >
-        <Avatar
-          sx={{ width: "1.8rem", height: "1.8rem", backgroundColor: "white" }}
-        >
-          <IconButton
-            onClick={() => {
-              setCam((prev) => (prev === "user" ? "environment" : "user"));
-              socketRef.current.emit("cam change", { roomId: roomId });
-            }}
-          >
-            <CameraswitchIcon
-              sx={{
-                width: "1.3rem",
-                height: "1.3rem",
-                color: "black",
-                // backgroundColor: "gray",
-              }}
-            />
-          </IconButton>
-        </Avatar>
-      </div> */}
+
       <div
         style={{
           position: "fixed",

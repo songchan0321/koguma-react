@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 const CHAT_BASE_URL = process.env.REACT_APP_CHAT_URL;
@@ -12,7 +11,6 @@ const axiosApi = (url, options) => {
 
 // jwt 정보 필요 o
 const axiosAuthApi = (url, options) => {
-  // const token = "JWT?";
   const token = localStorage.getItem("token");
   const instance = axios.create({
     baseURL: url,

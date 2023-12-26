@@ -1,11 +1,7 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import { formatKoreanNumber } from "../../apis/utils/price";
 import { useNavigate } from "react-router-dom";
-import {
-  getMyReviewIdAPI,
-  getMyReviewIdByProductIdAPI,
-  getReviewAPI,
-} from "../../apis/api/Product";
+import { getMyReviewIdByProductIdAPI } from "../../apis/api/Product";
 import { useEffect, useState } from "react";
 const NavButton = ({ product, member, roomId, reviewId }) => {
   const navigator = useNavigate();
