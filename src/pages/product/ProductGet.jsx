@@ -17,7 +17,6 @@ import Back from "../../component/common/Back";
 import TopBar from "../../component/payment/TopBar";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 import ImgCarousel from "../../component/product/ImgCarousel";
-import ThermostatIcon from "@mui/icons-material/Thermostat";
 import { formatTimeAgo } from "../../apis/utils/timestamp";
 import TradeStateButton from "../../component/product/TradeStateButton";
 import ScoreColor from "../../component/common/ScoreColor";
@@ -48,7 +47,6 @@ const ProductGet = () => {
     const fetchData = async () => {
       try {
         const result = await getProductAPI(productId);
-        console.log(result);
         setData(result);
         const valid = await validProductAPI(productId);
         setIsMine(valid);
@@ -76,17 +74,7 @@ const ProductGet = () => {
                   style={{ width: "48px", height: "48px" }} // Avatar 크기 조정
                   src={data.sellerDTO?.profileURL}
                   alt=""
-                >
-                  {/* <img
-                    src={data.sellerDTO?.profileURL}
-                    alt="profile"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "50%",
-                    }} // 이미지 크기 및 모양 조정
-                  /> */}
-                </Avatar>
+                ></Avatar>
               }
               onClick={() => getMember(data.sellerDTO.id)}
               action={<ScoreColor score={data.sellerDTO.score}></ScoreColor>}

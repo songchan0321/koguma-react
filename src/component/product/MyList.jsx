@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Card,
@@ -23,10 +22,7 @@ import {
   listProductBySaleAPI,
 } from "../../apis/api/Product";
 import { formatMoney } from "../../apis/services/product";
-import {
-  absoulte_timestamp_new_date,
-  formatTimeAgo,
-} from "../../apis/utils/timestamp";
+import { formatTimeAgo } from "../../apis/utils/timestamp";
 import TradeStateButton from "./TradeStateButton";
 import { ChatBubbleOutline, FavoriteBorder } from "@mui/icons-material";
 import LoadingProgress from "../common/LoadingProgress";

@@ -1,25 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@mui/material";
 import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
-import { Badge, Paper } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Paper } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import LikeProduct from "../../component/product/LikeProduct";
-import {
-  Card,
-  CardHeader,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Collapse,
-  Avatar,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { CardActions, Typography } from "@mui/material";
 import { formatMoney } from "../../apis/services/product";
 import {
-  chatRoomListBySellerAPI,
   existChatRoomByProductAPI,
-  existChatRoomByProductAndBuyerAPI,
   getChatRoomByProductAndMember,
 } from "../../apis/api/chat";
 import { getMemberAPI } from "../../apis/api/member";

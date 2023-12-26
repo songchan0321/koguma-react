@@ -26,10 +26,6 @@ const ProductRouter = () => {
   return (
     <ScrollToTop>
       <Routes>
-        {/* <Route path="/:prodNo" element={<Product />}/>
-            <Route />
-            <Route path="/form" element={<ProductForm />} />
-            <Route path="/main" element={<Main />}/> */}
         <Route path="/get/:productId" element={<ProductGet />} />
         <Route path="/update/:productId" element={<ProductUpdate />} />
         <Route path="/list/category" element={<ProductCategoryList />} />

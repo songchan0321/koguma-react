@@ -1,28 +1,8 @@
 import React, { useState } from "react";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
-import HomeIcon from "@mui/icons-material/Home";
-import ArticleIcon from "@mui/icons-material/Article";
-import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
-import Diversity3Icon from "@mui/icons-material/Diversity3";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Badge, Paper } from "@mui/material";
-import { Link } from "react-router-dom";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import {
-  Card,
-  CardHeader,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Collapse,
-  Avatar,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 // 테마 생성

@@ -1,11 +1,9 @@
 import { useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useNavigate } from "react-router-dom";
 
 const ImgCarousel = ({ img }) => {
   const [index, setIndex] = useState(0);
-  const navigate = useNavigate();
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
   };

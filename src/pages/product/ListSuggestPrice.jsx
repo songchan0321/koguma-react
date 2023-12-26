@@ -1,30 +1,8 @@
-import {
-  Avatar,
-  Button,
-  CssBaseline,
-  Backdrop,
-  Box,
-  Typography,
-  Card,
-  CardHeader,
-  IconButton,
-  MoreVertIcon,
-  CardActions,
-} from "@mui/material";
-import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
-
-import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Fragment, useEffect, useState } from "react";
-import { listSuggestPriceAPI, memberchecAPI } from "../../apis/api/Product";
-import BottomBar from "../../component/common/BottomBar";
-import ProductTopBar from "../../component/product/ProductTopBar";
-import AddFloatingButton from "../../component/common/AddFloatingButton";
-import ListContainingProduct from "../../component/product/ListContainingProduct";
+import { listSuggestPriceAPI } from "../../apis/api/Product";
 
-import { formatMoney } from "../../apis/services/product";
 import Back from "../../component/common/Back";
 import TopBar from "../../component/payment/TopBar";
 import MarginEmpty from "../../component/payment/MarginEmpty";

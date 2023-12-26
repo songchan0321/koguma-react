@@ -13,8 +13,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import { Badge, Drawer, Paper } from "@mui/material";
 import LocationBox from "../location/LocationBox";
 
-import { useState, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import SearchDrawer from "../common/SearchDrawer";
 import { getAlertCountAPI } from "../../apis/api/alert";
 const ProductTopBar = ({ location, setLocation, handleCategory }) => {

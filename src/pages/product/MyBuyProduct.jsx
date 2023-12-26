@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useModal } from "../../context/ModalContext";
 import Back from "../../component/common/Back";
@@ -10,8 +10,6 @@ import { updateTradeStateAPI } from "../../apis/api/Product";
 import Modal from "../../component/common/Modal";
 
 const MyBuyProduct = () => {
-  //   const { clubId } = useParams();
-  const [product, setProduct] = useState({});
   const [change, setChange] = useState(0);
   const navigate = useNavigate();
   const { openModal } = useModal();

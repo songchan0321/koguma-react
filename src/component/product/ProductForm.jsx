@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 
 import {
   Button,
@@ -7,26 +7,21 @@ import {
   Backdrop,
   Box,
   Grid,
-  Typography,
   Container,
-  FormControlLabel,
   FormControl,
-  CardMedia,
   InputLabel,
   MenuItem,
   Select,
-  Checkbox,
   TextField,
   createTheme,
   ThemeProvider,
   InputAdornment,
 } from "@mui/material";
 
-import { formatMoney } from "../../apis/services/product";
 import ImageList from "../common/ImageList";
-import { addImageAPI, uploadImageAPI } from "../../apis/api/common";
+import { uploadImageAPI } from "../../apis/api/common";
 import { addProductAPI } from "../../apis/api/Product";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LoadingProgress from "../common/LoadingProgress";
 import { useModal } from "../../context/ModalContext";
 import Modal from "../common/Modal";

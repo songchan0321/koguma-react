@@ -1,6 +1,5 @@
 import { Checkbox, IconButton } from "@mui/material";
 import React, { useEffect } from "react";
-import LikeCheckButton from "../common/LikeCheckButton";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import {
   addProductLikeAPI,
@@ -13,14 +12,12 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 const LikeProduct = ({ prodId }) => {
   const [checked, setChecked] = React.useState(false);
   const [load, isLoad] = React.useState(false);
-  console.log(prodId);
   const handleChange = (event) => {
     const isChecked = event.target.checked;
     setChecked(isChecked);
     if (isChecked) {
       addProductLikeAPI(prodId);
     } else {
-      console.log(prodId);
       deleteProductLikeAPI(prodId);
     }
   };

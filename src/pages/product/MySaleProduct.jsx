@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button, CardHeader, Avatar, AppBar } from "@mui/material";
 import MyList from "../../component/product/MyList";
 import MySaledList from "../../component/product/MySaledList";
@@ -25,8 +25,8 @@ const MySaleProduct = () => {
     {
       name: "예약중",
       action: async (productId) => {
-        await openModal("상품을 예약중으로 바꿨습니다.", true, () => {});
         await updateTradeState(productId, "RESERVATION");
+        await openModal("상품을 예약중으로 바꿨습니다.", true, () => {});
         setChange(change + 1);
       },
     },
@@ -41,6 +41,7 @@ const MySaleProduct = () => {
     {
       name: "숨기기",
       action: async (productId) => {
+        await updateTradeState(productId, "HIDE");
         await openModal(
           <div>
             <span>상품을 숨김 상태로 바꿨습니다.</span>
@@ -52,7 +53,6 @@ const MySaleProduct = () => {
           true,
           () => {}
         );
-        await updateTradeState(productId, "HIDE");
         setChange(change + 1);
       },
     },
@@ -69,6 +69,7 @@ const MySaleProduct = () => {
     {
       name: "판매중",
       action: async (productId) => {
+        await updateTradeState(productId, "SALE");
         await openModal(
           <div>
             <span>상품을 판매중으로 바꿨습니다.</span>
@@ -78,7 +79,7 @@ const MySaleProduct = () => {
           true,
           () => {}
         );
-        await updateTradeState(productId, "SALE");
+
         setChange(change + 1);
       },
     },
@@ -89,6 +90,7 @@ const MySaleProduct = () => {
     {
       name: "숨기기",
       action: async (productId) => {
+        await updateTradeState(productId, "HIDE");
         await openModal(
           <div>
             <span>상품을 숨김 상태로 바꿨습니다.</span>
@@ -100,15 +102,16 @@ const MySaleProduct = () => {
           true,
           () => {}
         );
-        await updateTradeState(productId, "HIDE");
+
         setChange(change + 1);
       },
     },
     {
       name: "삭제",
       action: async (productId) => {
-        await openModal(<span>상품을 삭제했습니다.</span>, true, () => {});
         await deleteProduct(productId);
+        await openModal(<span>상품을 삭제했습니다.</span>, true, () => {});
+
         setChange(change + 1);
       },
     },
@@ -121,6 +124,7 @@ const MySaleProduct = () => {
     {
       name: "숨기기",
       action: async (productId) => {
+        await updateTradeState(productId, "HIDE");
         await openModal(
           <div>
             <span>상품을 숨김 상태로 바꿨습니다.</span>
@@ -132,15 +136,15 @@ const MySaleProduct = () => {
           true,
           () => {}
         );
-        await updateTradeState(productId, "HIDE");
+
         setChange(change + 1);
       },
     },
     {
       name: "삭제",
       action: async (productId) => {
-        await openModal(<span>상품을 삭제했습니다.</span>, true, () => {});
         await deleteProduct(productId);
+        await openModal(<span>상품을 삭제했습니다.</span>, true, () => {});
         setChange(change + 1);
       },
     },
@@ -148,11 +152,15 @@ const MySaleProduct = () => {
   const [selectedActionHide, setSelectedActionHide] = useState([
     {
       name: "게시글 수정",
-      action: (productId) => console.log(productId),
+      action: (productId) => navigate(`/product/update/${productId}`),
     },
     {
       name: "삭제",
-      action: async (productId) => await deleteProduct(productId),
+      action: async (productId) => {
+        await deleteProduct(productId);
+        await openModal(<span>상품을 삭제했습니다.</span>, true, () => {});
+        setChange(change + 1);
+      },
     },
   ]);
 
@@ -183,7 +191,6 @@ const MySaleProduct = () => {
   const raiseProduct = async (productId) => {
     try {
       const response = await raiseProductAPI(productId);
-      console.log(response);
       await openModal("끌어올리기 성공!", true, () => {});
     } catch (err) {
       await openModal(
@@ -205,6 +212,7 @@ const MySaleProduct = () => {
   };
   const updateTradeStateByReservation = async (prodcutId) => {
     //예약중인 상품을 판매중으로 변경
+    await updateTradeStateAPI(prodcutId, "SALE");
     await openModal(
       <div>
         예약을 해제했습니다.
@@ -215,7 +223,6 @@ const MySaleProduct = () => {
       true,
       () => {}
     );
-    await updateTradeStateAPI(prodcutId, "SALE");
   };
   const deleteProduct = async (productId) => {
     await deleteProductAPI(productId);
@@ -225,7 +232,6 @@ const MySaleProduct = () => {
       try {
         const data = await getMemberAPI();
         setMember(data);
-        console.log(data);
       } catch (error) {
         console.error("Error fetching member data:", error);
       }

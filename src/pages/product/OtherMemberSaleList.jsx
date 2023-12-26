@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Button, CardHeader, Avatar, AppBar } from "@mui/material";
 import Back from "../../component/common/Back";
 import MarginEmpty from "../../component/payment/MarginEmpty";
-import { getMemberAPI, getProfileAPI } from "../../apis/api/member";
+import { getProfileAPI } from "../../apis/api/member";
 import OtherMemberProduct from "../../component/product/OtherMemberProduct";
 import LoadingProgress from "../../component/common/LoadingProgress";
 
@@ -30,10 +30,8 @@ const OtherMemberSaleList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(memberId);
         const data = await getProfileAPI(memberId);
         setMember(data);
-        console.log(data);
       } catch (error) {
         setLoading(false);
         console.error("Error fetching member data:", error);

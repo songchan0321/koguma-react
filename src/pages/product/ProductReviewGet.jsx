@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { Button, Box, Paper } from "@mui/material";
 
-import { getMyReviewIdAPI, getReviewAPI } from "../../apis/api/Product";
+import { getReviewAPI } from "../../apis/api/Product";
 
 import Back from "../../component/common/Back";
 import TopBar from "../../component/payment/TopBar";
-import MarginEmpty from "../../component/payment/MarginEmpty";
 import NotData from "../../component/product/NotData";
 import ReviewCard from "../../component/product/ReviewCard";
 import LoadingProgress from "../../component/common/LoadingProgress";
@@ -28,14 +27,6 @@ const ProductReviewGet = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const getReviewOther = () => {
-    navigate(`/product/get/review`, {
-      state: {
-        productId: review.productDTO.id,
-      },
-    });
   };
 
   useEffect(() => {

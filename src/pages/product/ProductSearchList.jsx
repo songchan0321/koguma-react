@@ -14,7 +14,6 @@ const ProductSearchList = ({ query }) => {
   const listProduct = async () => {
     try {
       const { data } = await ListProductAPI(query);
-      console.log(data);
       setData(data);
     } catch (error) {
       console.error(error);

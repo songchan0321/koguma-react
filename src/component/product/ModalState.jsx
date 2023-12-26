@@ -1,6 +1,5 @@
-import { Fragment, forwardRef, useRef } from "react";
+import { Fragment, forwardRef } from "react";
 import { useModal } from "../../context/ModalContext";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import {
   Button,
   Dialog,

@@ -7,7 +7,6 @@ import {
 } from "@mui/material";
 
 const ReviewCard = ({ review }) => {
-  console.log(review);
   return (
     <>
       {review.role === "seller" ? (

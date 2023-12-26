@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import {
   Button,
   CssBaseline,
@@ -19,14 +19,14 @@ import {
 
 import { formatMoney } from "../../apis/services/product";
 import ImageList from "../common/ImageList";
-import { addImageAPI, uploadImageAPI } from "../../apis/api/common";
+import { uploadImageAPI } from "../../apis/api/common";
 import {
   addProductAPI,
   getProductAPI,
   updateProductAPI,
 } from "../../apis/api/Product";
 import { useModal } from "../../context/ModalContext";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import LoadingProgress from "../common/LoadingProgress";
 import Modal from "../common/Modal";
@@ -149,27 +149,6 @@ const ProductUpdateForm = () => {
       },
     },
   };
-  const imageUrlParse = async (imageList) => {
-    try {
-      const imageUrlList = await uploadImageAPI(imageList);
-      return imageUrlList;
-    } catch (error) {
-      console.error("Error uploading images:", error);
-      throw error;
-    }
-  };
-  const addProductRequest = async (productDTO) => {
-    try {
-      const response = await addProductAPI(productDTO);
-      navigate(`/product/get/${response.data.id}`, { replace: true });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const getImageDTOURL = () => {
-    const urls = product.imageDTO.map((image) => image.url);
-    console.log();
-  };
 
   const uploadProduct = async () => {
     //images에 실 데이터, thumbnail에
@@ -179,8 +158,6 @@ const ProductUpdateForm = () => {
       formData.thumbnail.forEach((el) => {
         imageList.append("file", el);
       });
-
-      // const imageUrlList = await imageUrlParse(imageList);
 
       const productDTO = {
         ...product,
@@ -272,11 +249,7 @@ const ProductUpdateForm = () => {
                               const selectedCategory = event.target.value;
                               const categoryIndex =
                                 categorys.indexOf(selectedCategory);
-                              console.log(
-                                `Selected Category: ${selectedCategory}, Category Number: ${
-                                  categoryIndex + 1
-                                }`
-                              );
+
                               setFormData((prevFormData) => ({
                                 ...prevFormData,
                                 categoryName: selectedCategory,

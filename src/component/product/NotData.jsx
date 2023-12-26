@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
 const NotData = ({ children }) => {
   return (

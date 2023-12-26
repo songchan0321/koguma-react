@@ -1,6 +1,6 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -8,17 +8,12 @@ import {
   Box,
   IconButton,
   Typography,
-  Checkbox,
 } from "@mui/material";
 import LikeCheckButton from "../../component/common/LikeCheckButton";
 import LoadingProgress from "../common/LoadingProgress";
 import { formatMoney } from "../../apis/services/product";
 import { formatTimeAgo } from "../../apis/utils/timestamp";
-import {
-  ChatBubble,
-  ChatBubbleOutline,
-  FavoriteBorder,
-} from "@mui/icons-material";
+import { ChatBubbleOutline, FavoriteBorder } from "@mui/icons-material";
 import TradeStateButton from "./TradeStateButton";
 
 const ExpandMore = styled((props) => {
@@ -38,11 +33,6 @@ const ListContainingProduct = ({ data, index, type }) => {
   const getProduct = (productId) => {
     navigate(`/product/get/${productId}`);
   };
-  // React.useEffect(() => {
-  //   if (divRefs.current[state.productId]) {
-  //     divRefs.current[state.productId].scrollIntoView({ behavior: "smooth" });
-  //   }
-  // }, [state.productId]);
   return (
     <>
       {data && data.length > 0 ? (
