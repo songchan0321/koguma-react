@@ -3,7 +3,6 @@ import { styled } from "@mui/material/styles";
 import {
   Card,
   CardHeader,
-  CardMedia,
   Box,
   IconButton,
   Typography,

@@ -72,7 +72,6 @@ const AuthLocation = () => {
     }
   };
   useEffect(() => {
-    console.log(locationList);
     if (type === "add") {
       handleAddLocationClick();
     }
@@ -85,7 +84,6 @@ const AuthLocation = () => {
     setListLocationComplete(true);
   };
   const updateSearchRange = async (newValue) => {
-    console.log(locationList[selectedLocation]);
     const updatedLocation = {
       ...locationList[selectedLocation],
       searchRange: newValue,
@@ -108,19 +106,14 @@ const AuthLocation = () => {
 
     // 나머지 위치 정보로 state 업데이트
     setLocationList(updatedLocationList);
-    console.log(newSelectedLocation);
     setSelectedLocation(newSelectedLocation);
     await handleLocationClick(0);
-    // setLocationList(updatedLocationList);
   };
   const getRepLocation = async () => {
     const { data } = await getRepLocationAPI();
-    console.log(data);
-    console.log(locationList);
     const repLocationIndex = locationList.findIndex(
       (location) => location.id === data.id
     );
-    console.log("index : " + repLocationIndex);
 
     // 대표 Location의 인덱스를 setSelectedLocation에 설정
     setSelectedLocation(repLocationIndex);
@@ -144,7 +137,6 @@ const AuthLocation = () => {
     if (!location || !location.state || !location.state.init) {
       listLocation();
     }
-    // listLocation();
   }, [latitude, longitude, level, searchRange, mapKey]);
 
   const getCurrentLocation = () => {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { Grid, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
 const Commet = ({ type, commetHandler, checkboxHandler, checkBoxClear }) => {
@@ -27,7 +27,6 @@ const Commet = ({ type, commetHandler, checkboxHandler, checkBoxClear }) => {
     ],
   });
   useEffect(() => checkBoxClear(), [type]);
-  console.log(type);
   return (
     <>
       <FormGroup>

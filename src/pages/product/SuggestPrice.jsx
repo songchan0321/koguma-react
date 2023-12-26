@@ -52,20 +52,17 @@ const SuggestPrice = () => {
 
       price: `${numericPrice}`,
     };
-    console.log(submitData);
     const { data } = await addSuggestPrice(submitData);
 
     await openModal("가격 제안 완료!!", true, () => {
       navigator(-1);
     });
   };
-  console.log(productDTO);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getProductAPI(productId);
         setProductDTO(result);
-        console.log(result);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

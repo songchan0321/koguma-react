@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BottomBar from "../../component/common/BottomBar";
 import ProductTopBar from "../../component/product/ProductTopBar";
 import AddFloatingButton from "../../component/common/AddFloatingButton";
@@ -9,7 +9,6 @@ import ListContainingProduct from "../../component/product/ListContainingProduct
 import { ListProductAPI } from "../../apis/api/Product";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import MarginEmpty from "../../component/payment/MarginEmpty";
-import { loginMemberhasLocationAPI } from "../../apis/api/common";
 import NotData from "../../component/product/NotData";
 
 const ProductList = () => {
@@ -26,19 +25,7 @@ const ProductList = () => {
       },
     });
   };
-  const loginMemberhasLocation = async () => {
-    try {
-      await loginMemberhasLocationAPI().then((data) => {
-        console.log(data);
-        if (!data) {
-          console.log(data);
-          navigate("/common/location");
-        }
-      });
-    } catch (error) {
-      navigate("/common/location", { state: { init: true } });
-    }
-  };
+
   const listProduct = async () => {
     try {
       const result = await ListProductAPI();
@@ -50,11 +37,7 @@ const ProductList = () => {
     }
   };
 
-  // useEffect(() => {
-  //   loginMemberhasLocation();
-  // }, []);
   useEffect(() => {
-    console.log(location);
     listProduct();
   }, [location]);
 

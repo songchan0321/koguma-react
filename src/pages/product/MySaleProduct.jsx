@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button, CardHeader, Avatar, AppBar } from "@mui/material";
 import MyList from "../../component/product/MyList";
 import MySaledList from "../../component/product/MySaledList";
@@ -152,7 +152,7 @@ const MySaleProduct = () => {
   const [selectedActionHide, setSelectedActionHide] = useState([
     {
       name: "게시글 수정",
-      action: (productId) => console.log(productId),
+      action: (productId) => navigate(`/product/update/${productId}`),
     },
     {
       name: "삭제",
@@ -191,7 +191,6 @@ const MySaleProduct = () => {
   const raiseProduct = async (productId) => {
     try {
       const response = await raiseProductAPI(productId);
-      console.log(response);
       await openModal("끌어올리기 성공!", true, () => {});
     } catch (err) {
       await openModal(
@@ -233,7 +232,6 @@ const MySaleProduct = () => {
       try {
         const data = await getMemberAPI();
         setMember(data);
-        console.log(data);
       } catch (error) {
         console.error("Error fetching member data:", error);
       }

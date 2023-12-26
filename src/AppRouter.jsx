@@ -1,8 +1,4 @@
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
-import Home from "./component/product/Home";
-
-// import ListPost from "./pages/community/ListPost";
-// import AddPost from "./pages/community/AddPost";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 import ChatRouter from "./pages/chat/ChatRouter";
 import ClubRouter from "./pages/club/ClubRouter";

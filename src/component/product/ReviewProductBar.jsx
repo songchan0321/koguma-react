@@ -3,16 +3,11 @@ import { styled } from "@mui/material/styles";
 import {
   Card,
   CardHeader,
-  CardMedia,
   Box,
   IconButton,
   Typography,
   Avatar,
 } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"; // 안채워진 하트
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -26,7 +21,6 @@ const ExpandMore = styled((props) => {
 }));
 
 const ReviewProductBar = ({ data }) => {
-  console.log(data);
   return (
     <>
       {data && (

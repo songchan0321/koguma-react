@@ -24,15 +24,6 @@ const SuggestPriceComponent = (suggestData) => {
   const socket = useContext(SocketContext);
   const [isExist, setIsExist] = useState();
   const navigate = useNavigate();
-  console.log(suggestData);
-  // const existChatRoomByProductAndBuyer = async () => {
-  //   // 해당 구매자의 채팅기록이 있는지
-  //   const chatIsExist = await existChatRoomByProductAndBuyerAPI(
-  //     suggestData.data.productDTO.id,
-  //     suggestData.data.memberDTO.id
-  //   );
-  //   setIsExist(chatIsExist);
-  // };
 
   const startChatting = async () => {
     // await existChatRoomByProductAndBuyer(); //구매자의 채팅기록이 있는지 확인
@@ -68,11 +59,6 @@ const SuggestPriceComponent = (suggestData) => {
         .catch((err) => {
           alert("이미 제안된 ");
         });
-      //있다면 채팅방 번호 가져옴
-      //update
-      // await updateChatRoomBySuggestAPI(data.id, suggestData.data.price); // 해당 채팅방의 가격을 설정
-
-      // navigate(`/chat/get/${data.id}`); //기존 채팅방의 가격 설정후 채팅으로 이동
     } else {
       // 구매자의 채팅기록이 없다면
       await addChatRoomBySuggest(
@@ -117,8 +103,6 @@ const SuggestPriceComponent = (suggestData) => {
             />
           </Avatar>
         }
-        // onClick={() => getMember(data.sellerDTO.id)}
-
         title={
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant="h6" color="textSecondary">
