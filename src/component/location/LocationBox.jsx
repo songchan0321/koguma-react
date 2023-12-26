@@ -32,7 +32,6 @@ const LocationBox = ({ location, setLocation }) => {
       }
     } catch (err) {
       console.log(err);
-      navigate("/common/location", { state: { init: true } });
     }
   };
   const updateRepLocation = async (id) => {
@@ -55,16 +54,37 @@ const LocationBox = ({ location, setLocation }) => {
       if (data && data.dong) {
         setDong(data.dong);
       } else {
-        await openModal(
-          "서비스를 이용하기 위해서는 위치 등록이 필요합니다.",
-          false,
-          () => {
-            navigate("/common/location", { state: { init: true } });
-          }
+        setTimeout(
+          () =>
+            openModal(
+              <div>
+                서비스를 이용하기 위해
+                <br />
+                위치 등록이 필요합니다.
+              </div>,
+              false,
+              () => {}
+            ),
+          500
         );
+
+        navigate("/common/location", { state: { init: true } });
       }
     } catch (err) {
       console.log(err);
+      setTimeout(
+        () =>
+          openModal(
+            <div>
+              서비스를 이용하기 위해
+              <br />
+              위치 등록이 필요합니다.
+            </div>,
+            false,
+            () => {}
+          ),
+        500
+      );
       navigate("/common/location", { state: { init: true } });
     }
   };
@@ -82,9 +102,9 @@ const LocationBox = ({ location, setLocation }) => {
 
   return (
     <FormControl sx={{ minWidth: 110 }}>
-      {locationList.length > 0 ? (
+      <Modal />
+      {locationList?.length > 0 ? (
         <>
-          <Modal />
           <Select
             displayEmpty
             id="demo-simple-select"
