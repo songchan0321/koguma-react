@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { nearClubMapAPI } from "../../../apis/api/club";
-import { Map } from "react-kakao-maps-sdk";
+import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import EventMarkerContainer from "./EventMarkerContainer";
+import { getMemberAPI } from "../../../apis/api/member";
+import { Typography } from "@mui/material";
 
 const ListClubMap = () => {
   const [clubList, setClubList] = useState([]);
+  const [getMember, setMember] = useState({});
   const [state, setState] = useState({
     center: {
       lat: 33.450701,
@@ -48,6 +51,9 @@ const ListClubMap = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const findMember = await getMemberAPI();
+      setMember(findMember);
+      console.log(findMember);
       const data = await nearClubMapAPI();
       setClubList(data);
     };
@@ -65,6 +71,46 @@ const ListClubMap = () => {
         }}
         level={4} // 지도의 확대 레벨
       >
+        {!state.isLoading && (
+          <>
+            <MapMarker
+              position={state.center}
+              image={{
+                src: getMember.profileURL,
+                size: {
+                  width: 64,
+                  height: 69,
+                }, // 마커이미지의 크기입니다
+                options: {
+                  offset: {
+                    x: 27,
+                    y: 69,
+                  }, // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+                },
+                style: {
+                  borderRadius: "50%",
+                },
+              }}
+              style={{
+                borderRadius: "50%",
+              }}
+              sx={{
+                borderRadius: "50%",
+              }}
+            ></MapMarker>
+            {/* <CustomOverlayMap position={state.center} yAnchor={1}>
+              <div className="customoverlay">
+                <a
+                  href="https://map.kakao.com/link/map/11394059"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="title">구의야구공원</span>
+                </a>
+              </div>
+            </CustomOverlayMap> */}
+          </>
+        )}
         {clubList.map((club, index) => (
           <EventMarkerContainer key={index} club={club} />
         ))}

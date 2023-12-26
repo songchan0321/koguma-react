@@ -34,8 +34,15 @@ const GetMeetUpMap = ({ roadAddr }) => {
   return (
     <div
       style={{
-        marginRight: "10px",
+        zIndex: 0,
+
+        // 지도의 크기
+        //   width: "80%",
+        //   height: "450px",
+        height: "10rem",
+        width: "20rem",
       }}
+      draggable={false}
     >
       <Map
         center={{
