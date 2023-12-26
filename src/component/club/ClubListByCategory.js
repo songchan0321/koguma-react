@@ -74,7 +74,7 @@ const ClubListByCategory = ({ categoryId, keyword }) => {
                 </Grid>
               </Grid>
             </Link>
-            <Divider />
+            <Divider style={{ height: 0.2, backgroundColor: "grey" }} />
           </div>
         ))}
     </>

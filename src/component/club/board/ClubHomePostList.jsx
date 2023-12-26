@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { listClubPostCategories } from "../../../apis/api/club";
 import ListClubPostByCategory from "./ListClubPostByCategory";
 import ListClubPost from "./ListClubPost";
+
 const ClubHomePostList = ({ clubId, clubMember }) => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("전체");

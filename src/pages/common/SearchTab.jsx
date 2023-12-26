@@ -13,6 +13,8 @@ import BottomBar from "../../component/common/BottomBar";
 import ProductSearchList from "../product/ProductSearchList";
 import MemberSearchList from "../member/MemberSearchList";
 import { Paper } from "@mui/material";
+import ClubListByCategory from "../../component/club/ClubListByCategory";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -131,7 +133,8 @@ const SearchTab = () => {
             Item Two
           </TabPanel>
           <TabPanel value={value} index={2} dir={theme.direction}>
-            Item Three
+            <MarginEmpty value={5} />
+            <ClubListByCategory keyword={query} />
           </TabPanel>
           <TabPanel value={value} index={3} dir={theme.direction}>
             <>
