@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import "./Modal.css"; // 스타일링을 위한 CSS 파일 import
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 
 const ModalAddCategory = ({ isOpen, onClose, onConfirm }) => {
   const [categoryName, setCategoryName] = useState("");
@@ -11,21 +16,26 @@ const ModalAddCategory = ({ isOpen, onClose, onConfirm }) => {
   };
 
   return (
-    <div className={`modal ${isOpen ? "open" : ""}`}>
-      <div className="modal-content">
-        <span className="close" onClick={onClose}>
-          &times;
-        </span>
-        <h2>카테고리 추가</h2>
-        <input
+    <Dialog open={isOpen} onClose={onClose}>
+      <DialogTitle>카테고리 추가</DialogTitle>
+      <DialogContent>
+        <TextField
+          autoFocus
+          margin="dense"
+          label="카테고리 이름"
           type="text"
-          placeholder="카테고리 이름"
+          fullWidth
           value={categoryName}
           onChange={(e) => setCategoryName(e.target.value)}
         />
-        <button onClick={handleConfirm}>확인</button>
-      </div>
-    </div>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>취소</Button>
+        <Button color="secondary" onClick={handleConfirm}>
+          확인
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

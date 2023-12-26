@@ -14,10 +14,13 @@ export default function SwipeableBottomDrawer({
   clubId,
   onSelectCategory,
   clubMember,
+  selectedCategory,
 }) {
   const [state, setState] = useState({
     bottom: true,
   });
+
+  console.log(selectedCategory);
 
   const [categories, setCategories] = useState([]);
 
@@ -55,7 +58,7 @@ export default function SwipeableBottomDrawer({
       <List>
         {categories.map((category) => (
           <ListItem key={category.id} disablePadding>
-            <ListItemButton onClick={() => handleCategoryClick(category.id)}>
+            <ListItemButton onClick={() => handleCategoryClick(category)}>
               <ListItemText primary={category.name} />
             </ListItemButton>
           </ListItem>
@@ -86,10 +89,11 @@ export default function SwipeableBottomDrawer({
           sx={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between", // 내용을 좌우로 공간 배분
+            justifyContent: "space-between",
+            marginLeft: "10px", // 내용을 좌우로 공간 배분
           }}
         >
-          {list}
+          {selectedCategory.name}
           <ArrowForwardIosIcon sx={{ marginRight: "20px" }} />{" "}
           {/* 오른쪽 여백 추가 */}
         </Typography>
@@ -113,6 +117,7 @@ export default function SwipeableBottomDrawer({
           {list}
         </SwipeableDrawer>
       </React.Fragment>
+      <></>
     </div>
   );
 }

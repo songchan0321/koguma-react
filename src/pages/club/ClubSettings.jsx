@@ -18,28 +18,28 @@ const ClubSettings = () => {
     <>
       <TopBarClub> 모임 설정 </TopBarClub>
       <MarginEmpty />
-      <Paper style={{ marginLeft: "10px" }}>
+      <Paper style={{ marginLeft: "10px", marginRight: "10px" }} elevation={0}>
         <div>
           <List>
             <Typography variant="h6">프로필</Typography>
-            <Paper>
+            <Paper elevation={0}>
               <div style={backgroundStyle}>
-                <p>내 프로필 보기</p>
+                <Typography variant="body1">내 프로필 보기</Typography>
               </div>
             </Paper>
 
             <MarginEmpty value={20} />
             <Typography variant="h6">모임 운영</Typography>
 
-            <Paper>
-              <div style={backgroundStyle}>
-                <Typography variant="body1">게시판 카테고리 관리</Typography>
-              </div>
+            <Paper elevation={0}>
               <div style={backgroundStyle}>
                 <Typography variant="body1">모임 최대 인원 관리</Typography>
               </div>
               <div style={backgroundStyle}>
-                <Typography variant="body1">모임 수정</Typography>
+                <Typography variant="body1">모임 이름 수정</Typography>
+              </div>
+              <div style={backgroundStyle}>
+                <Typography variant="body1">모임 소개 수정</Typography>
               </div>
               <div style={backgroundStyle}>
                 <Typography variant="body1">모임장 위임</Typography>
@@ -57,19 +57,6 @@ const ClubSettings = () => {
             </Paper>
 
             <MarginEmpty value={20} />
-            <Typography variant="h6">모임 운영</Typography>
-
-            <Paper>
-              <div style={backgroundStyle}>
-                <Typography variant="body1">모임 이름 수정</Typography>
-              </div>
-              <div style={backgroundStyle}>
-                <Typography variant="body1">모임 소개 수정</Typography>
-              </div>
-              <div style={backgroundStyle}>
-                <Typography variant="body1">카테고리</Typography>
-              </div>
-            </Paper>
           </List>
         </div>
       </Paper>

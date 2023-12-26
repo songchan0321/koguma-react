@@ -13,6 +13,7 @@ import GeoLocationClub from "../../component/club/GeoLocationClub";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import AddIcon from "@mui/icons-material/Add";
 import ClubImageCarousel from "../../component/club/common/ClubImageCarousel";
+import NotData from "../../component/product/NotData";
 
 function ClubList() {
   const navigate = useNavigate();
@@ -34,8 +35,8 @@ function ClubList() {
 
   return (
     <>
-      <TopBarClub children={"모임리스트"}>모임리스트</TopBarClub>
-      <MarginEmpty />
+      <TopBarClub children={"모임리스트"}>모임리스트 </TopBarClub>
+      <MarginEmpty value={50} />
 
       <div>
         <div style={{ textAlign: "center" }}>

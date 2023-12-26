@@ -309,9 +309,7 @@ export const joinMeetUpRequestAPI = async (meetUpId, clubMember) => {
 
 export const joinMeetUpCancelAPI = async (clubId, meetUpId) => {
   try {
-    alert(clubId);
-    alert(meetUpId);
-    const { data } = await authInstance.get(
+    const { data } = await authInstance.post(
       `${CLUB_API_URI}/meet-up/cancel`,
       JSON.stringify({
         clubId: clubId,
@@ -461,4 +459,32 @@ export const nearClubMapAPI = async () => {
   } catch (err) {
     console.log(err);
   }
+};
+
+export const addComment = async (clubPostId, clubId, content) => {
+  try {
+    const { data } = await authInstance.post(
+      `${CLUB_API_URI}/post/comment/add`,
+      JSON.stringify({
+        clubId: clubId,
+        clubPostId: clubPostId,
+        content: content,
+      }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const listComment = async (clubPostId) => {
+  const { data } = await authInstance.get(
+    `${CLUB_API_URI}/post/comment/list/${clubPostId}`
+  );
+  return data;
 };

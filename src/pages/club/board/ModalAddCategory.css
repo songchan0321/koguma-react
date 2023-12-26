@@ -1,3 +1,4 @@
+/* 기존 스타일 유지 */
 .modal {
   display: none;
   position: fixed;
@@ -7,15 +8,18 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
+  position: relative;
   background-color: #fefefe;
   margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 50%;
+  width: 60%; /* 수정: 가로 크기를 60%로 조절 */
+  border-radius: 10px;
 }
 
 .close {
@@ -23,15 +27,22 @@
   float: right;
   font-size: 28px;
   font-weight: bold;
-  cursor: pointer;
 }
 
 .close:hover,
 .close:focus {
   color: black;
   text-decoration: none;
+  cursor: pointer;
 }
 
+/* 추가: 좌우 여백 추가 */
+.modal-content {
+  margin-left: 10%; /* 좌측 여백 */
+  margin-right: 10%; /* 우측 여백 */
+}
+
+/* 추가: 모달 외부를 클릭해도 모달이 닫히도록 */
 .modal.open {
   display: block;
 }

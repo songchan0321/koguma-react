@@ -19,7 +19,6 @@ const ListClubPostCategory = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await listClubPostCategories(clubId);
-      alert(data);
       setCategories(data);
       console.log(data);
     };

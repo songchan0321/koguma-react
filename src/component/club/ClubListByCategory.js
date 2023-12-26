@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -10,6 +10,8 @@ import {
 import { listClubByCategoryAPI } from "../../apis/api/club";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import NotData from "../product/NotData";
+import ClubNotData from "./common/ClubNotData";
 
 const ClubListByCategory = ({ categoryId, keyword }) => {
   const [listClub, setListClub] = useState([]);
@@ -37,7 +39,7 @@ const ClubListByCategory = ({ categoryId, keyword }) => {
 
   return (
     <>
-      {listClub &&
+      {listClub.length > 0 ? (
         listClub.map((club) => (
           <div key={club.id}>
             <Link
@@ -76,7 +78,20 @@ const ClubListByCategory = ({ categoryId, keyword }) => {
             </Link>
             <Divider style={{ height: 0.2, backgroundColor: "grey" }} />
           </div>
-        ))}
+        ))
+      ) : (
+        // listClub이 비어있을 때 NotData 컴포넌트 렌더링
+        <ClubNotData
+          children={
+            <>
+              <div style={{ color: "lightgray" }}>아직 모임이 없어요...</div>
+              <div style={{ color: "lightgray" }}>
+                마을의 모임장이 되어주세요!{" "}
+              </div>
+            </>
+          }
+        />
+      )}
     </>
   );
 };
