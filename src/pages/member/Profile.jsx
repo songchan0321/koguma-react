@@ -9,24 +9,33 @@ import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import LinearProgress from '@mui/material/LinearProgress';
 import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from "@mui/system";
-import { linearProgressClasses } from "@mui/joy";
+import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied'; //30~39
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt'; //40~59
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied'; //20~29
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon'; // 60~
 
-const Profile = () => {
+const Profile = ({score}) => {
   const navigate = useNavigate();
   const [member, setMember] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-    height: 10,
+    height: 5,
     borderRadius: 5,
-    [`&.${linearProgressClasses.colorPrimary}`]: {
-      backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
-    },
-    [`& .${linearProgressClasses.bar}`]: {
-      borderRadius: 5,
-      backgroundColor: theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8',
-    },
+    backgroundColor: "lightgrey",
   }));
+  let textColor;
+
+  // Score에 따라 적절한 색상 설정
+  if (member?.score <= 36.0) {
+    textColor = "info"; // 파란색
+  } else if (member?.score > 36.0 && member?.score <= 42.0) {
+    textColor = "success"; // 초록색
+  } else if (member?.score > 42.0 && member?.score <= 50.0) {
+    textColor = "warning"; // 노란색
+  } else {
+    textColor = "error"; // 빨간색
+  }
 
   useEffect(() => {
     const fetchMemberData = async () => {
@@ -56,6 +65,17 @@ const Profile = () => {
 
     fetchMemberData();
   }, []);
+  const getEmoticonByScore = (score) => {
+    if (score >= 60) {
+      return <InsertEmoticonIcon sx={{ fontSize: 18, color: '#000000', marginLeft: '5px', marginBottom: '3px' }} />;
+    } else if (score >= 40) {
+      return <SentimentSatisfiedAltIcon sx={{ fontSize: 18, color: '#000000', marginLeft: '5px', marginBottom: '3px' }} />;
+    } else if (score >= 30) {
+      return <SentimentSatisfiedIcon sx={{ fontSize: 18, color: '#000000', marginLeft: '5px', marginBottom: '3px' }} />;
+    } else {
+      return <SentimentDissatisfiedIcon sx={{ fontSize: 18, color: '#000000', marginLeft: '5px', marginBottom: '3px' }} />;
+    }
+  };
 
   return (
       <Box p={3} sx={{ overflowY: "auto", maxHeight: "calc(100vh - 64px)" }}>
@@ -65,8 +85,7 @@ const Profile = () => {
             <IconButton
                 onClick={() => navigate('/member/update')}
                 variant="outlined"
-                color="secondary"
-                sx={{ width: '100px', height: '40px' }}
+                sx={{ width: '100px', height: '40px', color: 'black' }}
                 startIcon={<SettingsIcon />}
             >
               <SettingsIcon sx={{ fontSize: 20 }} />
@@ -83,8 +102,8 @@ const Profile = () => {
                   navigate("/common/login");
                 }}
                 variant="outlined"
-                color="secondary"
-                sx={{ width: '100px', height: '40px' }}
+                color="black"
+                sx={{ width: '100px', height: '40px', color: 'black' }}
                 startIcon={<MeetingRoomIcon />}
             >
               <MeetingRoomIcon sx={{ fontSize: 20 }} />
@@ -118,7 +137,7 @@ const Profile = () => {
           <Grid item xs={12} md={8}>
             {/* 닉네임 */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #ccc', paddingBottom: '10px' }}>
-              <Typography variant="h4" gutterBottom>
+              <Typography variant="h5" gutterBottom>
                 {/* 로딩 중일 때 CircularProgress 표시 */}
                 {loading ? (
                     <CircularProgress size={20} />
@@ -133,16 +152,16 @@ const Profile = () => {
                     <CircularProgress size={20} />
                 ) : (
                     <>
-                      <Typography>{`매너온도 : ${member?.score}℃`}</Typography>
-                      <BorderLinearProgress variant="determinate" value={(member?.score / 100) * 100} />
+                      <Typography>{`매너온도 : ${member?.score}℃`}
+                        {getEmoticonByScore(member?.score)}
+                      </Typography>
+                      <BorderLinearProgress variant="determinate" value={(member?.score / 100) * 100} color={textColor} />
                     </>
                 )}
               </Typography>
             </div>
-            {/* ProfileForm 컴포넌트 추가 */}
             <ProfileForm navigate={navigate} />
           </Grid>
-          {/* ... 나머지 컴포넌트들 추가 */}
         </Grid>
         <BottomBar />
       </Box>

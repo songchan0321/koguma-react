@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { Box, Button, Grid, Typography, Paper, List, ListItemButton, ListItemText, Collapse } from "@mui/material";
+import { Box, List, ListItemButton, ListItemText, Collapse } from "@mui/material";
 import AttachMoney from '@mui/icons-material/AttachMoney';
 import FaceRetouchingNatural from '@mui/icons-material/FaceRetouchingNatural';
-import HeadsetMic from '@mui/icons-material/HeadsetMic';
 import HolidayVillage from '@mui/icons-material/HolidayVillage';
 import Groups from '@mui/icons-material/Groups';
 import LocalMall from '@mui/icons-material/LocalMall';
-import ListItemIcon from "@mui/material/ListItemIcon";
+import HandymanIcon from '@mui/icons-material/Handyman';
 
 const ProfileForm = ({ navigate }) => {
   const handleNavigate = (url) => {
@@ -45,8 +44,8 @@ const ProfileForm = ({ navigate }) => {
   };
 
   return (
-      <Box p={3}>
-          <List>
+      <Box >
+          <List >
             {/* 포인트 섹션 */}
             <ListItemButton onClick={() => handleToggle("point")}>
               <AttachMoney/>
@@ -123,14 +122,14 @@ const ProfileForm = ({ navigate }) => {
 
             {/* 고객센터 섹션 */}
             <ListItemButton onClick={() => handleToggle("support")}>
-              <HeadsetMic/>
-              <ListItemText primary="고객센터"  sx={{ marginLeft: 2 }}/>
+              <HandymanIcon/>
+              <ListItemText primary="계정 관리"  sx={{ marginLeft: 2 }}/>
             </ListItemButton>
             <Collapse in={openSupport} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemButton onClick={() => handleNavigate("/member/report/list")} fullWidth style={{ marginTop: 10 }}>
-                  <ListItemText primary="문의 및 신고" sx={{marginLeft: 7}}/>
-                </ListItemButton>
+                {/*<ListItemButton onClick={() => handleNavigate("/member/report/list")} fullWidth style={{ marginTop: 10 }}>
+                  <ListItemText primary="문의 및 신고" sx={{marginLeft: 5}}/>
+                </ListItemButton>*/}
                 <ListItemButton onClick={() => handleNavigate("/member/delete")} fullWidth style={{ marginTop: 10 }}>
                   <ListItemText primary="회원 탈퇴" sx={{marginLeft: 7}}/>
                 </ListItemButton>

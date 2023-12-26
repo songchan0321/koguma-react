@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Button, Input } from "@mui/material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import Typography from '@mui/material/Typography';
 import { authInstance } from "../../apis/utils/instance";
-import { memberImageAddAPI } from "../../apis/api/member";
 import Back from "../../component/common/Back";
 import BottomBar from "../../component/common/BottomBar";
+import TopBar from "../../component/payment/TopBar";
 
 const UpdateMemberForm = ({ member, onUpdateSuccess }) => {
     const [newNickname, setNewNickname] = useState(member?.nickname || "");
@@ -64,6 +63,7 @@ const UpdateMemberForm = ({ member, onUpdateSuccess }) => {
         <div>
             <BottomBar />
             <Back />
+            <TopBar>회원 정보 수정</TopBar>
             <div style={{ textAlign: 'center' }}>
 
                 <div style={{ marginTop: 10 }}>
@@ -81,9 +81,9 @@ const UpdateMemberForm = ({ member, onUpdateSuccess }) => {
                             htmlFor="upload-input"
                             startIcon={<CloudUploadIcon />}
                             onClick={handleImageUpload}
-                            style={{ fontSize: '5px' }}
+                            style={{ fontSize: '12px',backgroundColor:'#D070FB' }}
                         >
-
+                            프로필 업로드
                         </Button>
                     </label>
                 </div>
@@ -99,8 +99,8 @@ const UpdateMemberForm = ({ member, onUpdateSuccess }) => {
             <div style={{ marginTop: 10 }}>
                 <Button
                     variant="contained"
-                    color="secondary"
                     onClick={handleUpdate}
+                    style={{ width: '100%', backgroundColor:'#D070FB' }}
                 >
                     변경
                 </Button>
