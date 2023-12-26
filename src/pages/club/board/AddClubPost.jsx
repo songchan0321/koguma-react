@@ -4,7 +4,7 @@ import {
   getClubAPI,
   listClubPostCategories,
 } from "../../../apis/api/club";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AddPostCategoryModal from "../../../component/club/board/AddPostCategoryModal";
 import TopBarAddClubPost from "../../../component/club/common/TopBarAddClubPost";
 import MarginEmpty from "../../../component/payment/MarginEmpty";
@@ -25,6 +25,7 @@ const AddClubPost = () => {
   const location = useLocation();
   const clubId = location.state.clubId;
   const clubMember = location.state.clubMember;
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState("제목을 입력하세요");
   const [content, setContent] = useState("내용을 입력하세요");
@@ -94,6 +95,7 @@ const AddClubPost = () => {
 
       setTitle("제목을 입력하세요");
       setContent("내용을 입력하세요");
+      navigate(`/club/${clubId}`);
     } catch (error) {
       // 작성 실패 시 에러 처리
       console.error("게시글 작성 중 오류 발생:", error);
