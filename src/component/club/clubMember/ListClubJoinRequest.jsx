@@ -4,7 +4,8 @@ import {
   listClubJoinRequest,
   rejectJoinRequestAPI,
 } from "../../../apis/api/club";
-import { Button, List } from "@mui/material";
+import { Button, List, Typography } from "@mui/material";
+import MarginEmpty from "../../payment/MarginEmpty";
 
 const ListClubJoinRequest = ({ clubId }) => {
   const [joinRequests, setJoinRequests] = useState([]);
@@ -56,13 +57,12 @@ const ListClubJoinRequest = ({ clubId }) => {
             joinRequests.map((JoinRequest) => (
               <div key={JoinRequest.id} style={backgroundStyle}>
                 <div>
-                  <span>활동명: </span>
-                  <span>{JoinRequest.nickname}</span>
+                  <Typography> 활동명: {JoinRequest.nickname}</Typography>
                 </div>
                 <div>
-                  <span>자기소개: </span>
-                  <span>{JoinRequest.content}</span>
+                  <Typography> 자기소개: {JoinRequest.content}</Typography>
                 </div>
+                <MarginEmpty value={5} />
                 <div>
                   {" "}
                   <Button
@@ -74,7 +74,7 @@ const ListClubJoinRequest = ({ clubId }) => {
                     승인
                   </Button>
                   <Button
-                    variant="contained"
+                    variant="outlined"
                     color="secondary"
                     style={{ width: "35%", left: 60 }}
                     onClick={() => handleReject(JoinRequest.id)}

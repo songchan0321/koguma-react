@@ -22,7 +22,6 @@ const MyClubList = () => {
   return (
     <div>
       <Typography variant="h5">내 모임</Typography>
-
       <Box
         sx={{
           display: "flex",
@@ -64,6 +63,7 @@ const MyClubList = () => {
                       margin: "auto",
                       borderRadius: "50%",
                     }}
+                    image={club.profileImage[0].url}
                     alt={club.title}
                   />
                 </Card>

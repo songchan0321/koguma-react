@@ -1,13 +1,14 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import TopBarClub from "../../component/club/common/TopBarClub";
 import { List, Paper, Typography } from "@mui/material";
 import { useEffect } from "react";
-import ParentComponent from "./board/ParentComponent";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const ClubSettings = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { clubId } = location.state;
+  const { clubMember } = location.state;
 
   useEffect(() => {
     const fetchData = async () => {};
@@ -32,7 +33,41 @@ const ClubSettings = () => {
 
             <Paper>
               <div style={backgroundStyle}>
-                <Typography variant="body1">모임 운영</Typography>
+                <Typography variant="body1">게시판 카테고리 관리</Typography>
+              </div>
+              <div style={backgroundStyle}>
+                <Typography variant="body1">모임 최대 인원 관리</Typography>
+              </div>
+              <div style={backgroundStyle}>
+                <Typography variant="body1">모임 수정</Typography>
+              </div>
+              <div style={backgroundStyle}>
+                <Typography variant="body1">모임장 위임</Typography>
+              </div>
+              <div
+                style={backgroundStyle}
+                onClick={() => {
+                  navigate(`/club/post/category/add`, {
+                    state: { clubId: clubId },
+                  });
+                }}
+              >
+                <Typography variant="body1">게시판 카테고리 관리</Typography>
+              </div>
+            </Paper>
+
+            <MarginEmpty value={20} />
+            <Typography variant="h6">모임 운영</Typography>
+
+            <Paper>
+              <div style={backgroundStyle}>
+                <Typography variant="body1">모임 이름 수정</Typography>
+              </div>
+              <div style={backgroundStyle}>
+                <Typography variant="body1">모임 소개 수정</Typography>
+              </div>
+              <div style={backgroundStyle}>
+                <Typography variant="body1">카테고리</Typography>
               </div>
             </Paper>
           </List>

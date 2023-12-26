@@ -23,7 +23,6 @@ const MyClubPostList = () => {
     const fetchData = async () => {
       try {
         const data = await listMyClubPostAPI();
-        console.log(data);
         setClubPost(data);
       } catch (err) {
         console.log(err);

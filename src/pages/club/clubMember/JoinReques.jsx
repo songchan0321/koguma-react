@@ -4,6 +4,7 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { Container } from "react-bootstrap";
 import { useState } from "react";
 import TopBarClub from "../../../component/club/common/TopBarClub";
+import MarginEmpty from "../../../component/payment/MarginEmpty";
 
 const JoinRequest = () => {
   const location = useLocation();
@@ -35,79 +36,61 @@ const JoinRequest = () => {
 
   return (
     <div>
-      <TopBarClub color={"secondary"}>가입 신청</TopBarClub>
-      <div>
-        <Typography variant="h4" color={"secondary"}>
-          모임장 승인이 필요합니다.{" "}
-        </Typography>
-      </div>
-      <Typography variant="h6">활동명과 자기소개를 기재해주세요. </Typography>
+      <TopBarClub>가입 신청</TopBarClub>
+      <MarginEmpty value={60} />
+      <div style={{ marginLeft: "10px" }}>
+        <div>
+          <Typography variant="h4" color={"secondary"}>
+            모임장 승인이 필요합니다.{" "}
+          </Typography>
+        </div>
+        <Typography variant="h6">활동명과 자기소개를 기재해주세요. </Typography>
 
-      <br></br>
-      <br></br>
-      <Box
-        component="form"
-        sx={{
-          "& .MuiTextField-root": {
-            m: 1,
-            width: "90%",
-          },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <Typography variant="h6">모임활동명 </Typography>
-        <TextField
-          name="nickname"
-          value={joinProfile.nickname}
-          onChange={handleInputChange}
-          label=""
-        />
-      </Box>
-      <Container>
-        <Box
-          component="form"
-          sx={{
-            "& .MuiTextField-root": {
-              m: 1,
-              width: "90%",
-            },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <Typography variant="h6">자기소개 </Typography>
+        <br></br>
+        <br></br>
+        <Container>
+          <Box
+            sx={{
+              width: 300,
+              maxWidth: "100%",
+            }}
+          >
+            <Typography variant="h6">모임활동명 </Typography>
+            <TextField
+              name="nickname"
+              value={joinProfile.nickname}
+              onChange={handleInputChange}
+              label=""
+            />
+          </Box>
+          <MarginEmpty value={20} />
+          <Box
+            sx={{
+              width: 300,
+              maxWidth: "100%",
+            }}
+          >
+            <Typography variant="h6">자기소개 </Typography>
+            <TextField
+              name="content"
+              value={joinProfile.content}
+              onChange={handleInputChange}
+              label=""
+            />
+          </Box>
+        </Container>
+        <Box sx={{ textAlign: "center" }}>
+          <Button
+            style={fixedButtonStyle}
+            //   disabled={nextStep && !activeSubmit}
+            variant="contained"
+            color="secondary"
+            onClick={handleConfirm}
+          >
+            {"확인"}
+          </Button>
         </Box>
-        <Box
-          component="form"
-          sx={{
-            "& .MuiTextField-root": {
-              m: 1,
-              width: "90%",
-            },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            name="content"
-            value={joinProfile.content}
-            onChange={handleInputChange}
-            label=""
-          />
-        </Box>
-      </Container>
-      <Box sx={{ textAlign: "center" }}>
-        <Button
-          style={fixedButtonStyle}
-          //   disabled={nextStep && !activeSubmit}
-          variant="contained"
-          color="secondary"
-          onClick={handleConfirm}
-        >
-          {"확인"}
-        </Button>
-      </Box>
+      </div>
     </div>
   );
 };

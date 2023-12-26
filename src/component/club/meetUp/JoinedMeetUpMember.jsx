@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { listJoinMeetUpMemberAPI } from "../../../apis/api/club";
-import { Button } from "@mui/material";
+import { Avatar, Button, Card, CardContent, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const JoinedMeetUpMember = ({ meetUpId }) => {
@@ -11,6 +11,7 @@ const JoinedMeetUpMember = ({ meetUpId }) => {
     const fetchData = async () => {
       try {
         const data = await listJoinMeetUpMemberAPI(meetUpId);
+        console.log(data);
         setJoinMemberList(data);
       } catch (err) {
         console.log(err);
@@ -35,14 +36,39 @@ const JoinedMeetUpMember = ({ meetUpId }) => {
 
   return (
     <div>
-      <h2>참여중인 모임원 </h2>
       {/* 배열이 비어 있는지 확인 후 slice 메서드 사용 */}
       {joinMemberList.length > 0 &&
-        joinMemberList
-          .slice(0, 3)
-          .map((meetUpMember) => (
-            <div key={meetUpMember.id}>{meetUpMember.nickname}</div>
-          ))}
+        joinMemberList.slice(0, 3).map((meetUpMember, index) => (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginBottom: 10,
+            }}
+            key={index}
+          >
+            <Card
+              key={meetUpMember.id}
+              style={{ marginLeft: "10px", boxShadow: "none" }}
+            >
+              <Avatar
+                alt="Remy Sharp"
+                src={meetUpMember.clubMemberDTO.memberDTO.profileURL || ""}
+                sx={{ width: 40, height: 40 }}
+              />
+            </Card>
+
+            <Card
+              key={index}
+              style={{ flexGrow: 1, cursor: "pointer", boxShadow: "none" }}
+              // onClick={() => navigator(`/club/member/${clubMember.id}`)}
+            >
+              <CardContent>
+                <Typography>{meetUpMember.clubMemberDTO.nickname}</Typography>
+              </CardContent>
+            </Card>
+          </div>
+        ))}
       <Button
         variant="contained"
         color="secondary"

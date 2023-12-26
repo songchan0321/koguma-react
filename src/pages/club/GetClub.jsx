@@ -33,11 +33,9 @@ const GetClub = () => {
     const fetchData = async () => {
       try {
         const data = await getClubAPI(clubId);
-        console.log(data);
         setClub(data);
         const checkClubMember = await checkClubMemberAPI(clubId);
         setClubMember(checkClubMember);
-        console.log(checkClubMember);
       } catch (err) {
         console.log(err);
       }
