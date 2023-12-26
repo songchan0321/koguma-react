@@ -62,7 +62,7 @@ function ClubList() {
         {myClubList ? (
           <div style={{ margin: "10px" }}>
             <MyClubList style={backgroundStyle} />
-            <Divider />
+            <Divider style={{ height: 1, backgroundColor: "grey" }} />
             <div style={{ margin: "10px" }}>
               <MyClubPostList style={backgroundStyle} />
             </div>

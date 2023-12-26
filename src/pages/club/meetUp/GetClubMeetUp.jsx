@@ -34,7 +34,7 @@ const GetClubMeetUp = () => {
     <>
       <TopBarClub>일정 상세 정보</TopBarClub>
       <MarginEmpty value={80} />
-      <Paper style={{ position: "relative" }} elevation={0}>
+      <div>
         <div style={{ marginLeft: "10px" }}>
           <Typography variant="h5">{meetUp.title}</Typography>
           <MarginEmpty value={15} />
@@ -42,44 +42,38 @@ const GetClubMeetUp = () => {
           <Typography>{meetUp.content}</Typography>
           <MarginEmpty value={30} />
         </div>
-        <Divider style={{ flex: 1, borderColor: "black" }} />
+        <Divider style={{ height: 1, backgroundColor: "grey" }} />
         <MarginEmpty value={15} />
         <div style={{ marginLeft: "10px" }}>
           <Typography variant="h5">참여 중인 모임원</Typography>
 
           <JoinedMeetUpMember meetUpId={meetUpId} />
-          <MarginEmpty value={30} />
-          <Divider style={{ flex: 1, borderColor: "black" }} />
-          <MarginEmpty value={15} />
         </div>
+
+        <MarginEmpty value={30} />
+        <Divider style={{ height: 8, backgroundColor: "grey" }} />
+        <MarginEmpty value={15} />
         <div style={{ marginLeft: "10px" }}>
           <Typography variant="h5">일정 장소</Typography>
           <Stack spacing={2}>
             <GetMeetUpMap roadAddr={meetUp.roadAddr} />
-            <div>
-              <PlaceOutlinedIcon />
-              <p>테스트</p>
-            </div>
+            <PlaceOutlinedIcon />
           </Stack>
         </div>
         <MarginEmpty />
-      </Paper>
-      <JoinMeetUpStateButton
-        clubId={clubId}
-        meetUpId={meetUpId}
-        clubMember={clubMember}
-      />
+      </div>
+      <div style={{ marginTop: "250px" }}>
+        <Divider style={{ height: 8, backgroundColor: "grey" }} />
+
+        <MarginEmpty value={5} />
+        <JoinMeetUpStateButton
+          clubId={clubId}
+          meetUpId={meetUpId}
+          clubMember={clubMember}
+        />
+      </div>
     </>
   );
 };
 
 export default GetClubMeetUp;
-
-const fixedButtonStyle = {
-  position: "fixed",
-  bottom: 20,
-  left: 20,
-  width: "90%",
-  padding: "5px",
-  textAlign: "center",
-};

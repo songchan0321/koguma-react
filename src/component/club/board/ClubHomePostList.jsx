@@ -13,6 +13,7 @@ const ClubHomePostList = ({ clubId, clubMember }) => {
       try {
         const data = await listClubPostCategories(clubId);
         setCategories(["전체", ...data]);
+        console.log(data);
         setSelectedCategory("전체");
       } catch (err) {
         console.log(err);

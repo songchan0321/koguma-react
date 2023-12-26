@@ -4,9 +4,11 @@ import {
   joinMeetUpCancelAPI,
   joinMeetUpRequestAPI,
 } from "../../../apis/api/club";
-import { Button } from "@mui/material";
+import { Button, Divider } from "@mui/material";
+import { useModal } from "../../../context/ModalContext";
 
 const JoinMeetUpStateButton = ({ clubId, meetUpId, clubMember }) => {
+  const { openModal } = useModal();
   const [joinState, setJoinState] = useState(true);
 
   useEffect(() => {
@@ -25,6 +27,7 @@ const JoinMeetUpStateButton = ({ clubId, meetUpId, clubMember }) => {
   const handleButtonJoin = async () => {
     try {
       await joinMeetUpRequestAPI(meetUpId, clubMember);
+      await openModal("일정 참여가 완료되었습니다.", true, () => {});
     } catch (err) {
       console.log(err);
     }
@@ -33,6 +36,7 @@ const JoinMeetUpStateButton = ({ clubId, meetUpId, clubMember }) => {
   const handleButtonCancel = async () => {
     try {
       await joinMeetUpCancelAPI(clubId, meetUpId, joinState);
+      await openModal("일정 참여가 취소되었습니다.", true, () => {});
     } catch (err) {
       console.log(err);
     }
@@ -54,9 +58,17 @@ const JoinMeetUpStateButton = ({ clubId, meetUpId, clubMember }) => {
 
 export default JoinMeetUpStateButton;
 
+// const fixedButtonStyle = {
+//   position: "fixed",
+//   bottom: 20,
+//   left: 20,
+//   width: "90%",
+//   padding: "5px",
+//   textAlign: "center",
+// };
+
 const fixedButtonStyle = {
-  position: "fixed",
-  bottom: 20,
+  bottom: 0,
   left: 20,
   width: "90%",
   padding: "5px",
