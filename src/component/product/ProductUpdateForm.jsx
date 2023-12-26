@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
+import Swal from "sweetalert2";
 import {
   Button,
   CssBaseline,
@@ -192,11 +193,26 @@ const ProductUpdateForm = () => {
         content: formData.content,
       };
       setLoading(true);
-      await updateProductAPI(productDTO).then(() => {
-        navigate(`/product/get/${productDTO.id}`, { replace: true });
+      await updateProductAPI(productDTO);
+      await Swal.fire({
+        position: "center",
+        width: "60%",
+        icon: "success",
+        text: "상품 수정 성공",
+        showConfirmButton: false,
+        timer: 1000,
       });
+
+      await navigate(`/product/get/${productDTO.id}`, { replace: true });
     } catch (error) {
-      console.error("Error during product upload:", error);
+      Swal.fire({
+        position: "center",
+        width: "60%",
+        icon: "error",
+        text: "상품 수정 실패",
+        showConfirmButton: false,
+        timer: 1000,
+      });
       setLoading(false);
     } finally {
       setLoading(false);

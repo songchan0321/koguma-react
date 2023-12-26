@@ -1,5 +1,7 @@
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
+import Swal from "sweetalert2";
+
 import {
   Button,
   CssBaseline,
@@ -122,10 +124,26 @@ const ProductForm = ({ text }) => {
   const addProduct = async (productDTO) => {
     try {
       setLoading(true);
-      await addProductAPI(productDTO).then((response) => {
-        navigate(`/product/get/${response.data.id}`, { replace: true });
+      const response = await addProductAPI(productDTO);
+      await Swal.fire({
+        position: "center",
+        width: "60%",
+        icon: "success",
+        text: "상품 등록 성공",
+        showConfirmButton: false,
+        timer: 1000,
       });
+      console.log(response);
+      await navigate(`/product/get/${response.data.id}`, { replace: true });
     } catch (err) {
+      Swal.fire({
+        position: "center",
+        width: "60%",
+        icon: "error",
+        text: "상품 등록 실패",
+        showConfirmButton: false,
+        timer: 1000,
+      });
       setLoading(false);
       console.log(err);
     } finally {

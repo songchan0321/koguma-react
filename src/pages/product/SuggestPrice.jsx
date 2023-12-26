@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import Swal from "sweetalert2";
 import {
   Avatar,
   Button,
@@ -66,15 +66,23 @@ const SuggestPrice = () => {
     return await addSuggestPriceAPI(suggest);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const submitData = {
       productId: `${productDTO.id}`,
 
       price: `${numericPrice}`,
     };
     console.log(submitData);
-    const { data } = addSuggestPrice(submitData);
-    navigator(-1);
+    const { data } = await addSuggestPrice(submitData);
+    await Swal.fire({
+      position: "center",
+      width: "60%",
+      icon: "success",
+      text: "가격제안 성공",
+      showConfirmButton: false,
+      timer: 1000,
+    });
+    await navigator(-1);
   };
   console.log(productDTO);
   useEffect(() => {

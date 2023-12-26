@@ -4,6 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import Swal from "sweetalert2";
 import {
   getRepLocationAPI,
   listLocationAPI,
@@ -67,8 +68,15 @@ const LocationBox = ({ location, setLocation }) => {
       if (data && data.dong) {
         setDong(data.dong);
       } else {
-        console.log("data 또는 data.dong이 정의되지 않았습니다.");
-        navigate("/common/location", { state: { init: true } });
+        await Swal.fire({
+          position: "center",
+          width: "60%",
+          icon: "error",
+          text: "서비스를 이용하기 위해서는 위치 등록이 필요합니다",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        await navigate("/common/location", { state: { init: true } });
       }
     } catch (err) {
       console.log(err);
@@ -129,6 +137,14 @@ const LocationBox = ({ location, setLocation }) => {
                         await updateRepLocation(location.id);
                         await setDong(location.dong);
                         await setLocation(location);
+                        await Swal.fire({
+                          position: "center",
+                          width: "60%",
+
+                          html: `동네가 <b>${location.dong}</b><br/>으로 변경되었어요.`,
+                          showConfirmButton: false,
+                          timer: 1000,
+                        });
                       })();
 
                       // setDong(location.dong);

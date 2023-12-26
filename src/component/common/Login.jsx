@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-
+import Swal from "sweetalert2";
 import {
   Avatar,
   Button,
@@ -39,15 +39,28 @@ const Login = () => {
         const currentQuery = window.location.search;
         const data = await loginAPI(form.get("id"), form.get("password"));
 
-        alert("로그인 성공");
         socket.emit(CHAT_EVENT.FIRST_CONNECT, {
           token: `${localStorage.getItem("token")}`,
         });
         setIsLogin(true);
+        Swal.fire({
+          position: "center",
+          width: "60%",
+          icon: "success",
+          text: "로그인 성공",
+          showConfirmButton: false,
+          timer: 1000,
+        });
         navigator("/product/list");
       } catch (err) {
         console.error(err);
-        alert("로그인 실패");
+        Swal.fire({
+          position: "center",
+          width: "60%",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       } finally {
         setLoading(false);
       }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import TopReturnBar from "./TopReturnBar";
+import Swal from "sweetalert2";
 import {
   Button,
   CardHeader,
@@ -29,10 +30,34 @@ import { getMemberAPI } from "../../apis/api/member";
 const MySaleProduct = () => {
   //   const { clubId } = useParams();
   const navigate = useNavigate();
+  const [change, setChange] = useState(0);
   const [selectedActionSale, setSelectedActionSale] = useState([
     {
       name: "예약중",
-      action: (productId) => updateTradeState(productId, "RESERVATION"),
+      action: async (productId) => {
+        await Swal.fire({
+          html: "상품을 예약중으로 바꾸겠습니까?",
+          icon: "info",
+          width: "60%",
+          showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+          confirmButtonColor: "#3085d6", // confrim 버튼 색깔 지정
+          cancelButtonColor: "#d33", // cancel 버튼 색깔 지정
+          confirmButtonText: "네", // confirm 버튼 텍스트 지정
+          cancelButtonText: "아니요", // cancel 버튼 텍스트 지정
+        }).then((result) => {
+          // 만약 Promise리턴을 받으면,
+          if (result.isConfirmed) {
+            // 만약 모달창에서 confirm 버튼을 눌렀다면
+
+            Swal.fire({
+              html: `상품을 예약중으로 바꿨습니다.`,
+              icon: "success",
+            });
+            updateTradeState(productId, "RESERVATION");
+          }
+        });
+        setChange(change + 1);
+      },
     },
     {
       name: "거래완료",
@@ -44,7 +69,30 @@ const MySaleProduct = () => {
     },
     {
       name: "숨기기",
-      action: (productId) => updateTradeState(productId, "HIDE"),
+      // action: (productId) => updateTradeState(productId, "HIDE"),
+      action: (productId) => {
+        Swal.fire({
+          html: "<b>상품을 숨기겠습니까?</b><br/>숨긴 상품은 상품 목록에서 볼수없습니다.",
+          icon: "info",
+          width: "60%",
+          showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+          confirmButtonColor: "#3085d6", // confrim 버튼 색깔 지정
+          cancelButtonColor: "#d33", // cancel 버튼 색깔 지정
+          confirmButtonText: "네", // confirm 버튼 텍스트 지정
+          cancelButtonText: "아니요", // cancel 버튼 텍스트 지정
+        }).then((result) => {
+          // 만약 Promise리턴을 받으면,
+          if (result.isConfirmed) {
+            // 만약 모달창에서 confirm 버튼을 눌렀다면
+
+            Swal.fire({
+              html: `상품을 숨겼습니다.`,
+              icon: "success",
+            });
+            updateTradeState(productId, "HIDE");
+          }
+        });
+      },
     },
     {
       name: "삭제",
@@ -218,6 +266,8 @@ const MySaleProduct = () => {
           onClick={raiseProduct}
           onClickGetProduct={getProduct}
           selectedActions={selectedActionSale}
+          setChange={setChange}
+          change={change}
         />
       )}
 

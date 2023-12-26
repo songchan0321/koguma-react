@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 import TopReturnBar from "./TopReturnBar";
 import {
   Button,
@@ -64,10 +65,25 @@ const ProductReviewAdd = () => {
   const addReview = async () => {
     try {
       setLoading(true);
-      const data = await addReviewAPI(review); // navigate
+      const data = await addReviewAPI(review);
+      await Swal.fire({
+        position: "center",
+        width: "60%",
+        icon: "success",
+        text: "리뷰등록 성공",
+        showConfirmButton: false,
+        timer: 1000,
+      });
       await navigate(`/product/list/sale`, { replace: true });
     } catch (err) {
-      console.log(err);
+      Swal.fire({
+        position: "center",
+        width: "60%",
+        icon: "error",
+        text: "리뷰 등록 실패",
+        showConfirmButton: false,
+        timer: 1000,
+      });
       setLoading(false);
     } finally {
       setLoading(false);

@@ -42,6 +42,7 @@
     "redux": "^5.0.0",
     "socket.io-client": "^4.7.2",
     "styled-components": "^6.1.1",
+    "sweetalert2": "^11.10.1",
     "uuid4": "^2.0.3",
     "web-vitals": "^2.1.4"
   },
