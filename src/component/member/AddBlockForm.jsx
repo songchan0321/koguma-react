@@ -17,7 +17,7 @@ import Modal from "../common/Modal";
 const theme = createTheme({
     palette: {
         primary: {
-            main: "#673AB7", // 보라색
+            main: "#673AB7",
         },
     },
 });
