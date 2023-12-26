@@ -1,8 +1,16 @@
-import { Card, CardContent, Stack, Typography } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Grow,
+  Stack,
+  Typography,
+} from "@mui/material";
 import ScheduleSendOutlinedIcon from "@mui/icons-material/ScheduleSendOutlined";
 import EmergencyShareOutlinedIcon from "@mui/icons-material/EmergencyShareOutlined";
 import CurrencyExchangeOutlinedIcon from "@mui/icons-material/CurrencyExchangeOutlined";
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
+import CallIcon from "@mui/icons-material/Call";
 const ItemStack = ({ children }) => {
   return (
     <Stack
@@ -28,13 +36,18 @@ const LandingChat = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        pb: "1.5rem",
+        // pb: "1.5rem",
         //   justifyContent: "center",
       }}
     >
-      <CardContent>
+      <CardContent sx={{ pb: "3rem" }}>
         <Typography
-          sx={{ fontSize: 14, textAlign: "center", color: "#FF6F0F" }}
+          sx={{
+            fontSize: 14,
+            textAlign: "center",
+            color: "#FF6F0F",
+            pt: "1.5rem",
+          }}
           color="text.secondary"
           gutterBottom
         >
@@ -77,11 +90,24 @@ const LandingChat = () => {
             <Typography sx={{ fontSize: "0.8rem" }}>송금</Typography>
           </ItemStack>
           <ItemStack>
-            <NotificationsActiveOutlinedIcon sx={{ fontSize: "2.0rem" }} />
-            <Typography sx={{ fontSize: "0.8rem" }}>실시간 알림</Typography>
+            <CallIcon sx={{ fontSize: "2.0rem" }} />
+            <Typography sx={{ fontSize: "0.8rem" }}>통화</Typography>
           </ItemStack>
         </div>
       </CardContent>
+      <CardMedia
+        component="img"
+        height="320"
+        image="landing/getchat.png"
+        // alt={"alt"}
+        // title={"titleasdasdsada"}
+        sx={{
+          // padding: "1em 1em 0 1em",
+          // borderRadius: "17rem",
+
+          objectFit: "contain",
+        }}
+      />
     </Card>
   );
 };

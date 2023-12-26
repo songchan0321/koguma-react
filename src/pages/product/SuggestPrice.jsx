@@ -1,34 +1,10 @@
 import * as React from "react";
-import Swal from "sweetalert2";
-import {
-  Avatar,
-  Button,
-  CssBaseline,
-  Backdrop,
-  Box,
-  Typography,
-  Container,
-  Grid,
-  TextField,
-  createTheme,
-  ThemeProvider,
-} from "@mui/material";
-import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
+import { Button, Box, TextField } from "@mui/material";
 
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { Fragment, useEffect, useState } from "react";
-import {
-  addSuggestPriceAPI,
-  getProductAPI,
-  memberchecAPI,
-} from "../../apis/api/Product";
-import BottomBar from "../../component/common/BottomBar";
-import ProductTopBar from "../../component/product/ProductTopBar";
-import AddFloatingButton from "../../component/common/AddFloatingButton";
-import ListContainingProduct from "../../component/product/ListContainingProduct";
+import { addSuggestPriceAPI, getProductAPI } from "../../apis/api/Product";
 
 import { useParams } from "react-router-dom";
 import Back from "../../component/common/Back";
@@ -37,11 +13,15 @@ import MarginEmpty from "../../component/payment/MarginEmpty";
 import ContainingProduct from "../../component/product/ContainingProduct";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import InputAdornment from "@mui/material/InputAdornment";
+import { useModal } from "../../context/ModalContext";
+import Modal from "../../component/common/Modal";
 
 const SuggestPrice = () => {
   const [productDTO, setProductDTO] = useState(null);
   const navigator = useNavigate();
   const { productId } = useParams();
+  const { openModal } = useModal();
+
   const [formattedPrice, setFormattedPrice] = useState(""); // 가격 표시용
   const [numericPrice, setNumericPrice] = useState(null); // 실제 가격
 
@@ -74,15 +54,10 @@ const SuggestPrice = () => {
     };
     console.log(submitData);
     const { data } = await addSuggestPrice(submitData);
-    await Swal.fire({
-      position: "center",
-      width: "60%",
-      icon: "success",
-      text: "가격제안 성공",
-      showConfirmButton: false,
-      timer: 1000,
+
+    await openModal("상품 수정 성공", true, () => {
+      navigator(-1);
     });
-    await navigator(-1);
   };
   console.log(productDTO);
   useEffect(() => {
@@ -102,6 +77,8 @@ const SuggestPrice = () => {
     <>
       <Back />
       <TopBar>가격 제안 하기</TopBar>
+      <Modal />
+
       <MarginEmpty />
       <Box
         sx={{

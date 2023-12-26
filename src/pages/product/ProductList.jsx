@@ -73,7 +73,7 @@ const ProductList = () => {
         <LoadingProgress />
       ) : data.length > 0 ? (
         <>
-          <MarginEmpty value={80}></MarginEmpty>
+          <MarginEmpty value={60}></MarginEmpty>
           <ListContainingProduct type="report" data={data} />
         </>
       ) : (

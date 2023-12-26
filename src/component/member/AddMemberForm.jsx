@@ -17,7 +17,6 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { defaultInstance } from "../../apis/utils/instance";
 import { useNavigate } from "react-router-dom";
 import StorageIcon from "@mui/icons-material/Storage";
-import modal from "../../pages/club/board/Modal";
 
 const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
   const [nickname, setNickname] = useState("");
@@ -25,7 +24,7 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [authNum, setAuthNum] = useState("");
-  const [isSmsVerified, setIsSmsVerified] = useState(true); // 테스트로 잠시 true 놓음
+  const [isSmsVerified, setIsSmsVerified] = useState(false); // 테스트로 잠시 true 놓음
   const [isAgreed, setIsAgreed] = useState(false);
   const [isAgeChecked, setIsAgeChecked] = useState(false);
   const [isUseChecked, setIsUseChecked] = useState(false);
@@ -35,8 +34,6 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [authNumError, setAuthNumError] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
-  const [openAlert, setOpenAlert] = useState(false);
 
   const navigate = useNavigate();
 
@@ -101,7 +98,7 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
 
       // 인증번호가 성공적으로 전송되었다면 화면 전환을 막음
       if (response.status === 200) {
-        window.alert("인증번호가 발송되었습니다.");
+        handleOpenDialog13("인증번호가 발송되었습니다.");
         // 추가로 필요한 작업 수행...
       }
     } catch (error) {
@@ -118,7 +115,7 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
       console.log(response);
       if (response.status === 200) {
         setIsSmsVerified(true);
-        window.alert("휴대폰 인증 성공!");
+        handleOpenDialog14("휴대폰 인증 성공!");
       }
     } catch (error) {}
   };
@@ -141,42 +138,42 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
     try {
       // Your existing code for submitting the form
       if (nickname.length < 2) {
-        window.alert("닉네임은 2자 이상이어야 합니다.");
+        handleOpenDialog4("닉네임은 2자 이상이어야 합니다.");
         return;
       }
       if (password.length < 8) {
-        window.alert("비밀번호는 8자 이상이어야 합니다.");
+        handleOpenDialog5("비밀번호는 8자 이상이어야 합니다.");
         return;
       }
       if (confirmPassword.length < 8) {
-        window.alert("비밀번호 확인은 8자 이상이어야 합니다.");
+        handleOpenDialog6("비밀번호 확인은 8자 이상이어야 합니다.");
         return;
       }
       if (phone.length !== 11) {
-        window.alert("휴대폰 번호는 11자여야 합니다.");
+        handleOpenDialog7("휴대폰 번호는 11자여야 합니다.");
         return;
       }
       if (authNum.length !== 6) {
-        window.alert("인증 번호는 6자여야 합니다.");
+        handleOpenDialog8("인증 번호는 6자여야 합니다.");
         return;
       }
 
       if (password !== confirmPassword) {
-        window.alert("비밀번호가 일치하지 않습니다.");
+        handleOpenDialog9("비밀번호가 일치하지 않습니다.");
         return;
       }
 
       if (!isSmsVerified) {
-        window.alert("휴대폰 인증이 필요합니다.");
+        handleOpenDialog10("휴대폰 인증이 필요합니다.");
         return;
       }
 
       if (!isAgeChecked) {
-        window.alert("개인정보 수집 및 이용 동의에 동의해 주세요.");
+        handleOpenDialog11("개인정보 수집 및 이용 동의에 동의해 주세요.");
         return;
       }
       if (!isUseChecked) {
-        window.alert("이용 약관에 동의해 주세요.");
+        handleOpenDialog12("이용 약관에 동의해 주세요.");
         return;
       }
       await handleVerifyAuthNum();
@@ -218,6 +215,17 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
   const [openDialog1, setOpenDialog1] = useState(false);
   const [openDialog2, setOpenDialog2] = useState(false);
   const [openDialog3, setOpenDialog3] = useState(false);
+  const [openDialog4, setOpenDialog4] = useState(false);
+  const [openDialog5, setOpenDialog5] = useState(false);
+  const [openDialog6, setOpenDialog6] = useState(false);
+  const [openDialog7, setOpenDialog7] = useState(false);
+  const [openDialog8, setOpenDialog8] = useState(false);
+  const [openDialog9, setOpenDialog9] = useState(false);
+  const [openDialog10, setOpenDialog10] = useState(false);
+  const [openDialog11, setOpenDialog11] = useState(false);
+  const [openDialog12, setOpenDialog12] = useState(false);
+  const [openDialog13, setOpenDialog13] = useState(false);
+  const [openDialog14, setOpenDialog14] = useState(false);
 
   const handleOpenDialog1 = () => {
     setOpenDialog1(true);
@@ -239,6 +247,83 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
 
   const handleCloseDialog3 = () => {
     setOpenDialog3(false);
+  };
+  const handleOpenDialog4 = () => {
+    setOpenDialog4(true);
+  };
+
+  const handleCloseDialog4 = () => {
+    setOpenDialog4(false);
+  };
+  const handleOpenDialog5 = () => {
+    setOpenDialog5(true);
+  };
+
+  const handleCloseDialog5 = () => {
+    setOpenDialog5(false);
+  };
+  const handleOpenDialog6 = () => {
+    setOpenDialog6(true);
+  };
+
+  const handleCloseDialog6 = () => {
+    setOpenDialog6(false);
+  };
+  const handleOpenDialog7 = () => {
+    setOpenDialog7(true);
+  };
+
+  const handleCloseDialog7 = () => {
+    setOpenDialog7(false);
+  };
+  const handleOpenDialog8 = () => {
+    setOpenDialog8(true);
+  };
+
+  const handleCloseDialog8 = () => {
+    setOpenDialog8(false);
+  };
+  const handleOpenDialog9 = () => {
+    setOpenDialog9(true);
+  };
+
+  const handleCloseDialog9 = () => {
+    setOpenDialog9(false);
+  };
+  const handleOpenDialog10 = () => {
+    setOpenDialog10(true);
+  };
+
+  const handleCloseDialog10 = () => {
+    setOpenDialog10(false);
+  };
+  const handleOpenDialog11 = () => {
+    setOpenDialog11(true);
+  };
+
+  const handleCloseDialog11 = () => {
+    setOpenDialog11(false);
+  };
+  const handleOpenDialog12 = () => {
+    setOpenDialog12(true);
+  };
+
+  const handleCloseDialog12 = () => {
+    setOpenDialog12(false);
+  };
+  const handleOpenDialog13 = () => {
+    setOpenDialog13(true);
+  };
+
+  const handleCloseDialog13 = () => {
+    setOpenDialog13(false);
+  };
+  const handleOpenDialog14 = () => {
+    setOpenDialog14(true);
+  };
+
+  const handleCloseDialog14 = () => {
+    setOpenDialog14(false);
   };
 
   return (
@@ -646,9 +731,219 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
               </Button>
             </DialogActions>
           </Dialog>
+          <Dialog
+              onClose={handleCloseDialog4}
+              open={openDialog4}
+              aria-labelledby="customized-dialog-title"
+          >
+            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+              안내
+            </DialogTitle>
+            <DialogContent dividers>
+              <Typography gutterBottom>
+                2자 이상의 닉네임을 입력해 주세요.
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleCloseDialog4}>
+                확인
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+              onClose={handleCloseDialog5}
+              open={openDialog5}
+              aria-labelledby="customized-dialog-title"
+          >
+            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+              안내
+            </DialogTitle>
+            <DialogContent dividers>
+              <Typography gutterBottom>
+                8자 이상의 비밀번호를 입력해 주세요.
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleCloseDialog5}>
+                확인
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+              onClose={handleCloseDialog6}
+              open={openDialog6}
+              aria-labelledby="customized-dialog-title"
+          >
+            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+              안내
+            </DialogTitle>
+            <DialogContent dividers>
+              <Typography gutterBottom>
+                8자 이상의 비밀번호 확인을 입력해 주세요.
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleCloseDialog6}>
+                확인
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+              onClose={handleCloseDialog7}
+              open={openDialog7}
+              aria-labelledby="customized-dialog-title"
+          >
+            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+              안내
+            </DialogTitle>
+            <DialogContent dividers>
+              <Typography gutterBottom>
+                11자의 휴대폰 번호를 입력해 주세요.
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleCloseDialog7}>
+                확인
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+              onClose={handleCloseDialog8}
+              open={openDialog8}
+              aria-labelledby="customized-dialog-title"
+          >
+            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+              안내
+            </DialogTitle>
+            <DialogContent dividers>
+              <Typography gutterBottom>
+                6자의 인증번호를 입력해 주세요.
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleCloseDialog8}>
+                확인
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+              onClose={handleCloseDialog9}
+              open={openDialog9}
+              aria-labelledby="customized-dialog-title"
+          >
+            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+              안내
+            </DialogTitle>
+            <DialogContent dividers>
+              <Typography gutterBottom>
+                비밀번호가 일치하지 않습니다.
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleCloseDialog9}>
+                확인
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+              onClose={handleCloseDialog10}
+              open={openDialog10}
+              aria-labelledby="customized-dialog-title"
+          >
+            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+              안내
+            </DialogTitle>
+            <DialogContent dividers>
+              <Typography gutterBottom>
+                휴대폰 인증이 필요합니다.
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleCloseDialog10}>
+                확인
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+              onClose={handleCloseDialog11}
+              open={openDialog11}
+              aria-labelledby="customized-dialog-title"
+          >
+            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+              안내
+            </DialogTitle>
+            <DialogContent dividers>
+              <Typography gutterBottom>
+                개인정보 수집 및 이용 동의에 동의해 주세요.
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleCloseDialog11}>
+                확인
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+              onClose={handleCloseDialog12}
+              open={openDialog12}
+              aria-labelledby="customized-dialog-title"
+          >
+            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+              안내
+            </DialogTitle>
+            <DialogContent dividers>
+              <Typography gutterBottom>
+                이용 약관에 동의해 주세요.
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleCloseDialog12}>
+                확인
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+              onClose={handleCloseDialog13}
+              open={openDialog13}
+              aria-labelledby="customized-dialog-title"
+          >
+            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+              안내
+            </DialogTitle>
+            <DialogContent dividers>
+              <Typography gutterBottom>
+                휴대폰 인증 번호가 발송되었습니다!
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleCloseDialog13}>
+                확인
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+              onClose={handleCloseDialog14}
+              open={openDialog14}
+              aria-labelledby="customized-dialog-title"
+          >
+            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+              안내
+            </DialogTitle>
+            <DialogContent dividers>
+              <Typography gutterBottom>
+                휴대폰 인증 성공!
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleCloseDialog14}>
+                확인
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Paper>
       </Grid>
     </Grid>
+
   );
 };
 

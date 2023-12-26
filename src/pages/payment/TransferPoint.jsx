@@ -22,6 +22,8 @@ import {
 } from "../../apis/api/payment";
 import { enterChatRoomAPI, getChatRoomAPI } from "../../apis/api/chat";
 import { CHAT_EVENT, SocketContext } from "../../context/socket";
+import { useModal } from "../../context/ModalContext";
+import Modal from "../../component/common/Modal";
 
 const TransferPoint = () => {
   const navigator = useNavigate();
@@ -29,6 +31,7 @@ const TransferPoint = () => {
     state: { roomId, requestPoint, messageId },
   } = useLocation();
   const socket = useContext(SocketContext);
+  const { openModal } = useModal();
   const [chatRoom, setChatRoom] = useState(null);
   const [member, setMember] = useState(null);
   const [balance, setBalance] = useState(null);
@@ -96,8 +99,15 @@ const TransferPoint = () => {
         .then((data) => {
           setMember(data);
           if (data.paymentAccount === null) {
-            alert("고구마 페이가 없습니다! 먼저 등록해주세요.");
-            navigator("/payment/get", { replace: true, state: { roomId } });
+            openModal(
+              "고구마 페이가 없습니다! 먼저 등록해주세요.",
+              false,
+              () => {
+                navigator("/payment/get", { replace: true, state: { roomId } });
+              }
+            );
+            // alert("고구마 페이가 없습니다! 먼저 등록해주세요.");
+            // navigator("/payment/get", { replace: true, state: { roomId } });
           }
           return data;
         })
@@ -127,8 +137,15 @@ const TransferPoint = () => {
             });
           })
           .catch((err) => {
-            alert("상대방의 고구마 페이가 등록되어있지 않습니다.");
-            handleClose();
+            openModal(
+              "상대방의 고구마 페이가 등록되어있지 않습니다.",
+              false,
+              () => {
+                handleClose();
+              }
+            );
+            // alert("상대방의 고구마 페이가 등록되어있지 않습니다.");
+            // handleClose();
           });
       } else {
         setError("비밀번호가 일치하지 않습니다!");
@@ -152,6 +169,7 @@ const TransferPoint = () => {
 
   return (
     <Container fixed>
+      <Modal />
       <TopBar>송금하기</TopBar>
       <Back />
       <MarginEmpty value={"70px"} />

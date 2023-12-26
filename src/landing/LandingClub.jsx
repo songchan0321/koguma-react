@@ -1,4 +1,4 @@
-import { Card, CardContent, Stack, Typography } from "@mui/material";
+import { Card, CardContent, CardMedia, Stack, Typography } from "@mui/material";
 import InsertInvitationOutlinedIcon from "@mui/icons-material/InsertInvitationOutlined";
 import ConnectWithoutContactOutlinedIcon from "@mui/icons-material/ConnectWithoutContactOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
@@ -27,13 +27,16 @@ const LandingClub = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        pb: "1.5rem",
-        //   justifyContent: "center",
       }}
     >
-      <CardContent>
+      <CardContent sx={{ pb: "3rem" }}>
         <Typography
-          sx={{ fontSize: 14, textAlign: "center", color: "#FF6F0F" }}
+          sx={{
+            fontSize: 14,
+            textAlign: "center",
+            color: "#FF6F0F",
+            pt: "1.5rem",
+          }}
           color="text.secondary"
           gutterBottom
         >
@@ -77,6 +80,19 @@ const LandingClub = () => {
           </ItemStack>
         </div>
       </CardContent>
+      <CardMedia
+        component="img"
+        height="320"
+        image="landing/clublist.png"
+        // alt={"alt"}
+        // title={"titleasdasdsada"}
+        sx={{
+          // padding: "1em 1em 0 1em",
+          // borderRadius: "17rem",
+
+          objectFit: "contain",
+        }}
+      />
     </Card>
   );
 };

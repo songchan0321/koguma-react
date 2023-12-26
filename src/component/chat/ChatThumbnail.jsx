@@ -13,10 +13,21 @@ const ChatThumbnail = ({ room }) => {
   console.log(room);
   return (
     <>
-      <ListItem alignItems="flex-start">
+      <ListItem
+        alignItems="flex-start"
+        sx={{ padding: "1rem 0.3rem 1rem 1rem" }}
+      >
         <ListItemAvatar>
           {/* !!image 처리 필요 */}
-          <Avatar alt="" src={room.imageId && "s"} />
+          <Avatar
+            sx={{
+              border: "solid 1px rgba(120, 120, 120, 0.5)",
+              width: "2.8rem",
+              height: "2.8rem",
+            }}
+            alt=""
+            src={room?.profileURL}
+          />
         </ListItemAvatar>
         <ListItemText
           //   primary={room.nickname}
@@ -26,7 +37,7 @@ const ChatThumbnail = ({ room }) => {
                 <Typography
                   sx={{ display: "inline" }}
                   component="span"
-                  variant="body2"
+                  variant="body1"
                   color="text.primary"
                 >
                   {room.nickname}
@@ -35,8 +46,8 @@ const ChatThumbnail = ({ room }) => {
                 <Typography
                   sx={{ display: "inline" }}
                   component="span"
-                  variant="body3"
-                  fontSize="0.7rem"
+                  // variant="body3"
+                  fontSize="0.8rem"
                   color="text.disabled"
                 >
                   {room.dong}&nbsp;·&nbsp;
@@ -46,7 +57,7 @@ const ChatThumbnail = ({ room }) => {
               <br />
               <Fragment>
                 <div
-                  //   variant="h6"
+                  // variant="h6"
                   style={{ position: "relative", display: "inline-block" }}
                 >
                   {room.latestMessage.type === "LOCATION"
@@ -80,6 +91,19 @@ const ChatThumbnail = ({ room }) => {
             </>
           }
         />
+        <ListItemAvatar>
+          {/* !!image 처리 필요 */}
+          <Avatar
+            sx={{
+              border: "solid 1px rgba(120, 120, 120, 0.5)",
+              width: "2.8rem",
+              height: "2.8rem",
+            }}
+            variant="rounded"
+            alt=""
+            src={room?.productURL}
+          />
+        </ListItemAvatar>
       </ListItem>
       <Divider variant="fullWidth" component="li" />
     </>

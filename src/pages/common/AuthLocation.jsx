@@ -6,6 +6,7 @@ import MapComponent from "../../component/location/MapComponent";
 import Back from "../../component/common/Back";
 import TopBar from "../../component/payment/TopBar";
 import MarginEmpty from "../../component/payment/MarginEmpty";
+import { useModal } from "../../context/ModalContext";
 
 import {
   addLocationAPI,
@@ -16,6 +17,7 @@ import {
   updateSearchRangeAPI,
 } from "../../apis/api/common";
 import { useLocation } from "react-router-dom";
+import Modal from "../../component/common/Modal";
 
 const AuthLocation = () => {
   const [level, setLevel] = useState(7);
@@ -29,6 +31,8 @@ const AuthLocation = () => {
   const [type, setType] = useState();
   const [mapKey, setMapKey] = useState(0);
   const location = useLocation();
+  const { openModal } = useModal();
+
   const handleLocationClick = async (idx) => {
     updateRepLocation(locationList[idx].id);
     setSelectedLocation(idx);
@@ -55,12 +59,17 @@ const AuthLocation = () => {
   };
 
   const addLocation = async () => {
-    const location = await getCurrentLocation();
-    const { data } = await addLocationAPI(location);
-    await (async () => {
-      setLocationList((prevList) => [...prevList, data]);
-      setType("add");
-    })();
+    try {
+      const location = await getCurrentLocation();
+      const { data } = await addLocationAPI(location);
+      await (async () => {
+        setLocationList((prevList) => [...prevList, data]);
+        setType("add");
+      })();
+    } catch (err) {
+      await openModal("위치 등록은 3개까지만 가능합니다.", false, () => {});
+      return;
+    }
   };
   useEffect(() => {
     console.log(locationList);
@@ -85,7 +94,7 @@ const AuthLocation = () => {
   };
   const deleteLocation = async (idx) => {
     if (locationList.length === 1) {
-      alert("위치는 하나이상 존재해야합니다");
+      await openModal("위치는 하나이상 존재해야합니다", false, () => {});
       return;
     }
     await deleteLocationAPI(locationList[idx].id);
@@ -168,6 +177,7 @@ const AuthLocation = () => {
       <Back url={"/product/list"} />
       <TopBar>내 동네 설정</TopBar>
       <MarginEmpty />
+      <Modal />
       <List>
         <MapComponent
           key={mapKey}
@@ -233,6 +243,7 @@ const AuthLocation = () => {
             </Button>
           </Box>
         </Grid>
+
         <Grid item xs={12}>
           <Typography
             sx={{ flex: 1, mt: 2, mb: 2, ml: 5 }}

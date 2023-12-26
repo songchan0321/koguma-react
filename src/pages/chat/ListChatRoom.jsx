@@ -119,7 +119,6 @@ const ListChatRoom = () => {
           />
         ) : (
           rooms.map((room, idx) => {
-            console.log(room.id);
             return (
               room.latestMessage && (
                 <div

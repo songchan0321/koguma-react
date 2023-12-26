@@ -1,4 +1,4 @@
-import { Card, CardContent, Stack, Typography } from "@mui/material";
+import { Card, CardContent, CardMedia, Stack, Typography } from "@mui/material";
 import SecurityUpdateGoodOutlinedIcon from "@mui/icons-material/SecurityUpdateGoodOutlined";
 import AddLocationAltOutlinedIcon from "@mui/icons-material/AddLocationAltOutlined";
 import PersonOffOutlinedIcon from "@mui/icons-material/PersonOffOutlined";
@@ -28,13 +28,16 @@ const LandingMember = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        pb: "1.5rem",
-        //   justifyContent: "center",
       }}
     >
-      <CardContent>
+      <CardContent sx={{ pb: "3rem" }}>
         <Typography
-          sx={{ fontSize: 14, textAlign: "center", color: "#FF6F0F" }}
+          sx={{
+            fontSize: 14,
+            textAlign: "center",
+            color: "#FF6F0F",
+            pt: "1.5rem",
+          }}
           color="text.secondary"
           gutterBottom
         >
@@ -82,6 +85,15 @@ const LandingMember = () => {
           </ItemStack>
         </div>
       </CardContent>
+      <CardMedia
+        component="img"
+        height="320"
+        image="landing/profile.png"
+        sx={{
+          objectFit: "contain",
+          // boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+        }}
+      />
     </Card>
   );
 };

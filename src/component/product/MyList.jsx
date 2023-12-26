@@ -214,26 +214,26 @@ const MyList = ({
                       </Button>
                     </div>
                   </Card>
-                  <Dialog open={isModalOpen} onClose={handleModalClose}>
-                    <DialogTitle>상품 설정</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText>
-                        {selectedActions.map((selectedAction, idx) => (
-                          <MenuItem
-                            key={idx}
-                            // onClick={() => navigate("/product/review/add")}
-                            onClick={() => {
-                              selectedEvent(selectedAction);
-                            }}
-                          >
-                            {selectedAction.name}
-                          </MenuItem>
-                        ))}
-                      </DialogContentText>
-                    </DialogContent>
-                  </Dialog>
                 </React.Fragment>
               ))}
+              <Dialog open={isModalOpen} onClose={handleModalClose}>
+                <DialogTitle>상품 설정</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    {selectedActions.map((selectedAction, idx) => (
+                      <MenuItem
+                        key={idx}
+                        // onClick={() => navigate("/product/review/add")}
+                        onClick={() => {
+                          selectedEvent(selectedAction);
+                        }}
+                      >
+                        {selectedAction.name}
+                      </MenuItem>
+                    ))}
+                  </DialogContentText>
+                </DialogContent>
+              </Dialog>
             </>
           ) : (
             <NotData>

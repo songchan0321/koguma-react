@@ -94,11 +94,10 @@ const ListChoiceBuyer = () => {
         <LoadingProgress />
       ) : datas.length > 0 ? (
         <>
-          (
           <>
             <MarginEmpty value="60px" />
             {product && <ContainingProduct data={product} />}
-            <FormControl sx={{ m: 2 }}>
+            <FormControl sx={{ width: "100%" }}>
               <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
@@ -113,6 +112,7 @@ const ListChoiceBuyer = () => {
                         key={idx}
                         value={data.buyerDTO.id}
                         control={<Radio />}
+                        sx={{ ml: 2 }}
                         label={<ChoiceMember data={data} />}
                       />
                       <hr style={{ borderBottom: "1px solid #ccc" }} />
@@ -128,7 +128,6 @@ const ListChoiceBuyer = () => {
                 left: 0,
                 right: 0,
                 width: "100%",
-                height: "64px",
               }}
               elevation={3}
             >
@@ -142,7 +141,6 @@ const ListChoiceBuyer = () => {
               </Button>
             </Paper>
           </>
-          )
         </>
       ) : (
         <NotData>

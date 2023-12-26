@@ -10,10 +10,11 @@ const AddFloatingButton = ({ arrival }) => {
     <div style={{ position: "fixed", bottom: "80px", right: "30px" }}>
       <Fab
         variant="contained"
-        color="secondary"
+        // color="secondary"
         aria-label="add"
         component={Link}
         to={arrival}
+        sx={{ backgroundColor: "#D070FB", color: "white" }}
       >
         <AddIcon />
       </Fab>

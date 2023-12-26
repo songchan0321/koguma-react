@@ -1,4 +1,4 @@
-import { Card, CardContent, Stack, Typography } from "@mui/material";
+import { Card, CardContent, CardMedia, Stack, Typography } from "@mui/material";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import EmergencyShareOutlinedIcon from "@mui/icons-material/EmergencyShareOutlined";
@@ -27,13 +27,16 @@ const LandingCommunity = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        pb: "1.5rem",
-        //   justifyContent: "center",
       }}
     >
-      <CardContent>
+      <CardContent sx={{ pb: "3rem" }}>
         <Typography
-          sx={{ fontSize: 14, textAlign: "center", color: "#FF6F0F" }}
+          sx={{
+            fontSize: 14,
+            textAlign: "center",
+            color: "#FF6F0F",
+            pt: "1.5rem",
+          }}
           color="text.secondary"
           gutterBottom
         >
@@ -77,6 +80,14 @@ const LandingCommunity = () => {
           </ItemStack>
         </div>
       </CardContent>
+      <CardMedia
+        component="img"
+        height="320"
+        image="landing/postlist.png"
+        sx={{
+          objectFit: "contain",
+        }}
+      />
     </Card>
   );
 };

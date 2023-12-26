@@ -4,35 +4,22 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import Swal from "sweetalert2";
+
+import { useModal } from "../../context/ModalContext";
 import {
   getRepLocationAPI,
   listLocationAPI,
-  loginMemberhasLocationAPI,
   updateRepLocationAPI,
 } from "../../apis/api/common";
 import { useNavigate } from "react-router-dom";
-import { InputLabel } from "@mui/material";
+import Modal from "../common/Modal";
 
 const LocationBox = ({ location, setLocation }) => {
   const [locationList, setLocationList] = useState([]);
   const [dong, setDong] = useState();
   const navigate = useNavigate();
+  const { openModal } = useModal();
 
-  const loginMemberhasLocation = async () => {
-    try {
-      const data = await loginMemberhasLocationAPI();
-
-      if (!data) {
-        console.log("if");
-        navigate("/common/location", { state: { init: true } });
-      }
-    } catch (error) {
-      console.log(error);
-      navigate("/common/location", { state: { init: true } });
-    }
-  };
-  // loginMemberhasLocation();
   const getRepLocation = async () => {
     try {
       const response = await getRepLocationAPI();
@@ -68,15 +55,13 @@ const LocationBox = ({ location, setLocation }) => {
       if (data && data.dong) {
         setDong(data.dong);
       } else {
-        await Swal.fire({
-          position: "center",
-          width: "60%",
-          icon: "error",
-          text: "서비스를 이용하기 위해서는 위치 등록이 필요합니다",
-          showConfirmButton: false,
-          timer: 1000,
-        });
-        await navigate("/common/location", { state: { init: true } });
+        await openModal(
+          "서비스를 이용하기 위해서는 위치 등록이 필요합니다.",
+          false,
+          () => {
+            navigate("/common/location", { state: { init: true } });
+          }
+        );
       }
     } catch (err) {
       console.log(err);
@@ -96,22 +81,19 @@ const LocationBox = ({ location, setLocation }) => {
   }, [dong]);
 
   return (
-    <FormControl sx={{ minWidth: 120 }}>
+    <FormControl sx={{ minWidth: 110 }}>
       {locationList.length > 0 ? (
         <>
-          {/* <InputLabel>name</InputLabel> */}
+          <Modal />
           <Select
             displayEmpty
             id="demo-simple-select"
-            // value={dong}
             onChange={(event) => setDong(event.target.value)}
             input={
               <OutlinedInput label="대표동" id="demo-simple-select-label" />
             }
             sx={{
               fontSize: 14,
-              padding: "0px",
-              // "& .MuiSelect-outlined": { borderBottom: "none" },
               "& .MuiOutlinedInput-notchedOutline": {
                 border: "none", // 테두리 없애기
               },
@@ -135,19 +117,15 @@ const LocationBox = ({ location, setLocation }) => {
                       console.log(location);
                       (async () => {
                         await updateRepLocation(location.id);
-                        await setDong(location.dong);
-                        await setLocation(location);
-                        await Swal.fire({
-                          position: "center",
-                          width: "60%",
+                        setDong(location.dong);
+                        setLocation(location);
 
-                          html: `동네가 <b>${location.dong}</b><br/>으로 변경되었어요.`,
-                          showConfirmButton: false,
-                          timer: 1000,
-                        });
+                        await openModal(
+                          `동네가 ${location.dong}으로 변경되었어요.`,
+                          true,
+                          () => {}
+                        );
                       })();
-
-                      // setDong(location.dong);
                     }}
                   >
                     {location.dong}
@@ -158,16 +136,7 @@ const LocationBox = ({ location, setLocation }) => {
               .filter((location) => location.repAuthLocationFlag)
               .map((location, idx) => (
                 <>
-                  <MenuItem
-                    key={idx}
-                    value={location.dong}
-                    onClick={() => {
-                      // console.log(location);
-                      // updateRepLocation(location.id);
-                      // setDong(location.dong);
-                      // setLocation(location.id);
-                    }}
-                  >
+                  <MenuItem key={idx} value={location.dong}>
                     {location.dong}
                   </MenuItem>
                 </>

@@ -12,17 +12,17 @@ import PaymentRouter from "./pages/payment/PaymentRouter";
 import ProductRouter from "./pages/product/ProductRouter";
 import CommunityRouter from "./pages/community/CommunityRouter";
 import { useContext, useEffect, useRef, useState } from "react";
-import { CHAT_EVENT, SocketContext } from "./context/socket";
+import { CALL_EVENT, CHAT_EVENT, SocketContext } from "./context/socket";
 import {
   IsLoginContext,
   useIsLoginState,
 } from "./context/LoginContextProvider";
-import ProductList from "./pages/product/ProductList";
 import { getAlertCountAPI } from "./apis/api/alert";
 import ListAlert from "./pages/common/ListAlert";
 import SearchTab from "./pages/common/SearchTab";
 import Landing from "./Landing";
-import { Alert, Box, Slide, Snackbar } from "@mui/material";
+import { Alert, Slide, Snackbar } from "@mui/material";
+import { ModalProvider } from "./context/ModalContext";
 
 function TransitionRight(props) {
   return <Slide {...props} direction="right" />;
@@ -86,12 +86,26 @@ const AppRouter = ({ messageAlertHandler }) => {
             }
           }
         })();
-      }, 5000);
+      }, process.env.REACT_APP_ALERT_TIMEOUT);
       // clearInterval(alertIntervalRef.current);
     }
     socket.on(CHAT_EVENT.EVENT_ALERT, (message) => {
       messageAlertHandler(message);
     });
+
+    socket.on(CALL_EVENT.CALL, (data) => {
+      console.log("roomID!!!");
+      console.log(data);
+      navigator("/chat/call/pending", {
+        state: {
+          roomId: data.roomId,
+          sourceMember: data.sourceMember,
+          isOwner: false,
+          next: window.location.pathname,
+        },
+      });
+    });
+
     return () => {
       console.log("AppRouter unmount");
       clearInterval(socketIntervalRef.current);
@@ -122,7 +136,10 @@ const AppRouter = ({ messageAlertHandler }) => {
           key={transition ? transition.name : ""}
         >
           <Alert
-            onClose={handleClose}
+            onClose={(e) => {
+              e.stopPropagation();
+              handleClose();
+            }}
             severity="success"
             sx={{ width: "100%" }}
           >
@@ -130,25 +147,20 @@ const AppRouter = ({ messageAlertHandler }) => {
           </Alert>
         </Snackbar>
       </div>
-      {/* <Alert
-          variant="filled"
-          severity="info"
-          onClick={() => navigator("/alert/list")}
-        >
-          `알림이 왔어요!`
-        </Alert> */}
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/chat/*" element={<ChatRouter />} />
-        <Route path="/club/*" element={<ClubRouter />} />
-        <Route path="/common/*" element={<CommonRouter />} />
-        <Route path="/post/*" element={<CommunityRouter />} />
-        <Route path="/member/*" element={<MemberRouter />} />
-        <Route path="/payment/*" element={<PaymentRouter />} />
-        <Route path="/product/*" element={<ProductRouter />} />
-        <Route path="/alert/list" element={<ListAlert />} />
-        <Route path="/search/tab" element={<SearchTab />} />
-      </Routes>
+      <ModalProvider>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/chat/*" element={<ChatRouter />} />
+          <Route path="/club/*" element={<ClubRouter />} />
+          <Route path="/common/*" element={<CommonRouter />} />
+          <Route path="/post/*" element={<CommunityRouter />} />
+          <Route path="/member/*" element={<MemberRouter />} />
+          <Route path="/payment/*" element={<PaymentRouter />} />
+          <Route path="/product/*" element={<ProductRouter />} />
+          <Route path="/alert/list" element={<ListAlert />} />
+          <Route path="/search/tab" element={<SearchTab />} />
+        </Routes>
+      </ModalProvider>
     </>
   );
 };

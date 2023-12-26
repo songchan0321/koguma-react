@@ -9,18 +9,20 @@ export const chatRoomListService = (data, memberId) => {
       const nickname = memberCheck
         ? room.productDTO.sellerDTO.nickname
         : room.buyerDTO.nickname;
-      const imageId = memberCheck
-        ? room.productDTO.sellerDTO.imageId
-        : room.buyerDTO.imageId;
+      const profileURL = memberCheck
+        ? room.productDTO.sellerDTO.profileURL
+        : room.buyerDTO.profileURL;
       const dong = room.productDTO.dong;
       room.latestMessage.content = truncatedText(
         room.latestMessage.content,
         25
       );
+      const productURL = room.productDTO.imageDTO[0].url;
       return {
         id: room.id,
         nickname,
-        imageId,
+        profileURL,
+        productURL,
         dong,
         count: room.count,
         latestMessage: room.latestMessage,

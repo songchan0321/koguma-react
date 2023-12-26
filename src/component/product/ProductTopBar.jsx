@@ -61,14 +61,21 @@ const ProductTopBar = ({ location, setLocation, handleCategory }) => {
 
   return (
     <Paper
-      sx={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1100 }}
-      elevation={3}
+      sx={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1100,
+      }}
+      elevation={1}
     >
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          height: "3.5rem",
           "& > *": {
             m: 1,
           },
@@ -82,11 +89,11 @@ const ProductTopBar = ({ location, setLocation, handleCategory }) => {
 
         <ButtonGroup variant="text" aria-label="text button group">
           <Button onClick={handleModalOpen}>
-            <MenuOpenIcon sx={{ fontSize: 30 }} color="secondary" />
+            <MenuOpenIcon sx={{ fontSize: 25, color: "#D070FB" }} />
           </Button>
           {/* 통합 검색 완성 후  Navi */}
           <Button onClick={() => toggleDrawer(true)}>
-            <SearchIcon sx={{ fontSize: 30 }} color="secondary" />
+            <SearchIcon sx={{ fontSize: 25, color: "#D070FB" }} />
           </Button>
           <Button onClick={() => navigate("/alert/list")}>
             <Badge
@@ -95,7 +102,7 @@ const ProductTopBar = ({ location, setLocation, handleCategory }) => {
               color="error"
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
             >
-              <NotificationsNoneIcon sx={{ fontSize: 30 }} color="secondary" />
+              <NotificationsNoneIcon sx={{ fontSize: 25, color: "#D070FB" }} />
             </Badge>
           </Button>
         </ButtonGroup>

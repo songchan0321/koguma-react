@@ -1,21 +1,16 @@
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
-import Swal from "sweetalert2";
 import {
   Button,
   CssBaseline,
   Backdrop,
   Box,
   Grid,
-  Typography,
   Container,
-  FormControlLabel,
   FormControl,
-  CardMedia,
   InputLabel,
   MenuItem,
   Select,
-  Checkbox,
   TextField,
   createTheme,
   ThemeProvider,
@@ -30,9 +25,11 @@ import {
   getProductAPI,
   updateProductAPI,
 } from "../../apis/api/Product";
+import { useModal } from "../../context/ModalContext";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { set } from "date-fns";
+
 import LoadingProgress from "../common/LoadingProgress";
+import Modal from "../common/Modal";
 
 const ProductUpdateForm = () => {
   const categorys = [
@@ -58,6 +55,7 @@ const ProductUpdateForm = () => {
   const [images, setImages] = useState([]);
   const [product, setProduct] = useState();
   const navigate = useNavigate();
+  const { openModal } = useModal();
   const { productId } = useParams();
   const [formattedPrice, setFormattedPrice] = useState(""); // 가격 표시용
   const [numericPrice, setNumericPrice] = useState(null); // 실제 가격
@@ -192,27 +190,14 @@ const ProductUpdateForm = () => {
         price: formData.price,
         content: formData.content,
       };
-      setLoading(true);
-      await updateProductAPI(productDTO);
-      await Swal.fire({
-        position: "center",
-        width: "60%",
-        icon: "success",
-        text: "상품 수정 성공",
-        showConfirmButton: false,
-        timer: 1000,
-      });
 
-      await navigate(`/product/get/${productDTO.id}`, { replace: true });
-    } catch (error) {
-      Swal.fire({
-        position: "center",
-        width: "60%",
-        icon: "error",
-        text: "상품 수정 실패",
-        showConfirmButton: false,
-        timer: 1000,
+      await updateProductAPI(productDTO);
+      await openModal("상품 수정 성공", true, () => {
+        navigate(`/product/get/${productDTO.id}`, { replace: true });
       });
+      setLoading(true);
+    } catch (error) {
+      openModal("상품 수정 실패", false, () => {});
       setLoading(false);
     } finally {
       setLoading(false);
@@ -230,6 +215,7 @@ const ProductUpdateForm = () => {
         <>
           {product && (
             <ThemeProvider theme={defaultTheme}>
+              <Modal />
               <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Backdrop

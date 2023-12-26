@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
-import Swal from "sweetalert2";
 
 import {
   Button,
@@ -29,6 +28,8 @@ import { addImageAPI, uploadImageAPI } from "../../apis/api/common";
 import { addProductAPI } from "../../apis/api/Product";
 import { Navigate, useNavigate } from "react-router-dom";
 import LoadingProgress from "../common/LoadingProgress";
+import { useModal } from "../../context/ModalContext";
+import Modal from "../common/Modal";
 
 const ProductForm = ({ text }) => {
   const categorys = [
@@ -52,6 +53,7 @@ const ProductForm = ({ text }) => {
   const defaultTheme = createTheme();
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { openModal } = useModal();
   const navigate = useNavigate();
 
   const [formattedPrice, setFormattedPrice] = useState(""); // 가격 표시용
@@ -123,27 +125,15 @@ const ProductForm = ({ text }) => {
   };
   const addProduct = async (productDTO) => {
     try {
-      setLoading(true);
       const response = await addProductAPI(productDTO);
-      await Swal.fire({
-        position: "center",
-        width: "60%",
-        icon: "success",
-        text: "상품 등록 성공",
-        showConfirmButton: false,
-        timer: 1000,
+      openModal("상품등록 성공", true, () => {
+        console.log("모달 나옴");
+        navigate(`/product/get/${response.data.id}`, { replace: true });
       });
+
       console.log(response);
-      await navigate(`/product/get/${response.data.id}`, { replace: true });
     } catch (err) {
-      Swal.fire({
-        position: "center",
-        width: "60%",
-        icon: "error",
-        text: "상품 등록 실패",
-        showConfirmButton: false,
-        timer: 1000,
-      });
+      openModal("상품등록 실패", false, () => {});
       setLoading(false);
       console.log(err);
     } finally {
@@ -154,7 +144,7 @@ const ProductForm = ({ text }) => {
   const uploadProduct = async () => {
     try {
       if (!formData.thumbnail || formData.thumbnail.length === 0) {
-        alert("이미지를 등록해주세요");
+        openModal("이미지를 등록해주세요", false, () => {});
         return;
       }
 
@@ -182,6 +172,7 @@ const ProductForm = ({ text }) => {
         <LoadingProgress />
       ) : (
         <ThemeProvider theme={defaultTheme}>
+          <Modal />
           <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Backdrop

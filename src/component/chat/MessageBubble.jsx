@@ -6,6 +6,7 @@ import TransferBubble from "./bubble/TransferBubble";
 import AlertBubble from "./bubble/AlertBubble";
 import SharedLocationBubble from "./bubble/SharedLocationBubble";
 import PlanBubble from "./bubble/PlanBubble";
+import CallBubble from "./bubble/CallBubble";
 
 const MessageBubble = ({ msg, isOwnMessage, roomId, member }) => {
   return (
@@ -62,6 +63,8 @@ const MessageBubble = ({ msg, isOwnMessage, roomId, member }) => {
           />
         ) : msg.type === "PLAN" ? (
           <PlanBubble content={msg.content} isOwnMessage={isOwnMessage} />
+        ) : msg.type === "CALL_PENDING" ? (
+          <CallBubble content={msg.content} isOwnMessage={isOwnMessage} />
         ) : (
           <Paper
             style={{

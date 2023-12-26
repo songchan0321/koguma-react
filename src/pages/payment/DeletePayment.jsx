@@ -25,9 +25,12 @@ import {
   checkPaymentPasswordAPI,
   deletePaymentAPI,
 } from "../../apis/api/payment";
+import Modal from "../../component/common/Modal";
+import { useModal } from "../../context/ModalContext";
 
 const DeletePayment = () => {
   const navigator = useNavigate();
+  const { openModal } = useModal();
   const [open, setOpen] = useState(false);
   const [payment, setPayment] = useState(null);
   const [password, setPassword] = useState(null);
@@ -45,7 +48,8 @@ const DeletePayment = () => {
       payment.balance.replace("원", "").replace(/,/g, "")
     );
     if (balance !== 0) {
-      alert("잔액을 환급한 뒤 삭제해주세요.");
+      setOpen(false);
+      openModal("잔액을 환급한 뒤 삭제해주세요.", false);
       return;
     }
     (async () => {
@@ -53,8 +57,9 @@ const DeletePayment = () => {
       if (data.result) {
         const data = await deletePaymentAPI(password);
         if (data.result) {
-          alert("삭제 완료");
-          navigator("/member/profile");
+          openModal("삭제 완료", true, () => navigator("/member/profile"));
+          // alert("삭제 완료");
+          // navigator("/member/profile");
         } else {
           alert("알수 없는 오류");
         }
@@ -74,6 +79,7 @@ const DeletePayment = () => {
         <LoadingProgress />
       ) : (
         <>
+          <Modal />
           <TopBar color="secondary">
             <i>Pay</i>
           </TopBar>

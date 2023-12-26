@@ -19,3 +19,9 @@ export const CHAT_EVENT = {
   NEW_MESSAGE: "new message",
   UPDATE_MESSAGE: "update message",
 };
+
+export const CALL_EVENT = {
+  CALL: "call",
+  ACCEPT: "accept",
+  CALL_CANCEL: "call cancel",
+};

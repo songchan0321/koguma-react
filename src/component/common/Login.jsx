@@ -21,6 +21,8 @@ import { useNavigate } from "react-router-dom";
 import { IsLoginContext } from "../../context/LoginContextProvider";
 import { loginAPI } from "../../apis/api/authentication";
 import { CHAT_EVENT, SocketContext } from "../../context/socket";
+import { useModal } from "../../context/ModalContext";
+import Modal from "./Modal";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -29,7 +31,7 @@ const Login = () => {
   const defaultTheme = createTheme();
   const navigator = useNavigate();
   const { setIsLogin } = React.useContext(IsLoginContext);
-
+  const { openModal } = useModal();
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
@@ -38,29 +40,18 @@ const Login = () => {
         setLoading(true);
         const currentQuery = window.location.search;
         const data = await loginAPI(form.get("id"), form.get("password"));
-
-        socket.emit(CHAT_EVENT.FIRST_CONNECT, {
-          token: `${localStorage.getItem("token")}`,
+        openModal("로그인 성공", true, () => {
+          navigator("/product/list");
+          socket.emit(CHAT_EVENT.FIRST_CONNECT, {
+            token: `${localStorage.getItem("token")}`,
+          });
+          setIsLogin(true);
         });
-        setIsLogin(true);
-        Swal.fire({
-          position: "center",
-          width: "60%",
-          icon: "success",
-          text: "로그인 성공",
-          showConfirmButton: false,
-          timer: 1000,
-        });
-        navigator("/product/list");
+        // alert("로그인 성공");
       } catch (err) {
         console.error(err);
-        Swal.fire({
-          position: "center",
-          width: "60%",
-          icon: "error",
-          showConfirmButton: false,
-          timer: 1000,
-        });
+        openModal("로그인 실패", false);
+        // alert("로그인 실패");
       } finally {
         setLoading(false);
       }
@@ -69,6 +60,7 @@ const Login = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
+        <Modal />
         <CssBaseline />
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -97,7 +89,6 @@ const Login = () => {
           >
             <TextField
               margin="normal"
-              required
               fullWidth
               id="id"
               label="아이디"
@@ -107,7 +98,6 @@ const Login = () => {
             />
             <TextField
               margin="normal"
-              required
               fullWidth
               name="password"
               label="비밀번호"

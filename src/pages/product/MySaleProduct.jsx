@@ -1,61 +1,32 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import TopReturnBar from "./TopReturnBar";
-import Swal from "sweetalert2";
-import {
-  Button,
-  CardHeader,
-  Avatar,
-  IconButton,
-  Typography,
-  AppBar,
-  Alert,
-  AlertTitle,
-} from "@mui/material";
+import { Button, CardHeader, Avatar, AppBar } from "@mui/material";
 import MyList from "../../component/product/MyList";
 import MySaledList from "../../component/product/MySaledList";
 
 import Back from "../../component/common/Back";
-import TopBar from "../../component/payment/TopBar";
 import MarginEmpty from "../../component/payment/MarginEmpty";
+import { useModal } from "../../context/ModalContext";
 import {
-  listProductBySaleAPI,
-  listProductByBuyAPI,
   raiseProductAPI,
   updateTradeStateAPI,
   deleteProductAPI,
 } from "../../apis/api/Product";
 import { getMemberAPI } from "../../apis/api/member";
+import Modal from "../../component/common/Modal";
 
 const MySaleProduct = () => {
   //   const { clubId } = useParams();
   const navigate = useNavigate();
   const [change, setChange] = useState(0);
+  const { openModal } = useModal();
+
   const [selectedActionSale, setSelectedActionSale] = useState([
     {
       name: "예약중",
       action: async (productId) => {
-        await Swal.fire({
-          html: "상품을 예약중으로 바꾸겠습니까?",
-          icon: "info",
-          width: "60%",
-          showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
-          confirmButtonColor: "#3085d6", // confrim 버튼 색깔 지정
-          cancelButtonColor: "#d33", // cancel 버튼 색깔 지정
-          confirmButtonText: "네", // confirm 버튼 텍스트 지정
-          cancelButtonText: "아니요", // cancel 버튼 텍스트 지정
-        }).then((result) => {
-          // 만약 Promise리턴을 받으면,
-          if (result.isConfirmed) {
-            // 만약 모달창에서 confirm 버튼을 눌렀다면
-
-            Swal.fire({
-              html: `상품을 예약중으로 바꿨습니다.`,
-              icon: "success",
-            });
-            updateTradeState(productId, "RESERVATION");
-          }
-        });
+        await openModal("상품을 예약중으로 바꿨습니다.", true, () => {});
+        await updateTradeState(productId, "RESERVATION");
         setChange(change + 1);
       },
     },
@@ -69,40 +40,47 @@ const MySaleProduct = () => {
     },
     {
       name: "숨기기",
-      // action: (productId) => updateTradeState(productId, "HIDE"),
-      action: (productId) => {
-        Swal.fire({
-          html: "<b>상품을 숨기겠습니까?</b><br/>숨긴 상품은 상품 목록에서 볼수없습니다.",
-          icon: "info",
-          width: "60%",
-          showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
-          confirmButtonColor: "#3085d6", // confrim 버튼 색깔 지정
-          cancelButtonColor: "#d33", // cancel 버튼 색깔 지정
-          confirmButtonText: "네", // confirm 버튼 텍스트 지정
-          cancelButtonText: "아니요", // cancel 버튼 텍스트 지정
-        }).then((result) => {
-          // 만약 Promise리턴을 받으면,
-          if (result.isConfirmed) {
-            // 만약 모달창에서 confirm 버튼을 눌렀다면
-
-            Swal.fire({
-              html: `상품을 숨겼습니다.`,
-              icon: "success",
-            });
-            updateTradeState(productId, "HIDE");
-          }
-        });
+      action: async (productId) => {
+        await openModal(
+          <div>
+            <span>상품을 숨김 상태로 바꿨습니다.</span>
+            <br />
+            <span>숨긴 상품은 상품 목록에서</span>
+            <br />
+            <span>볼 수 없습니다.</span>
+          </div>,
+          true,
+          () => {}
+        );
+        await updateTradeState(productId, "HIDE");
+        setChange(change + 1);
       },
     },
     {
       name: "삭제",
-      action: (productId) => deleteProduct(productId),
+      action: async (productId) => {
+        await openModal(<span>상품을 삭제했습니다.</span>, true, () => {});
+        await deleteProduct(productId);
+        setChange(change + 1);
+      },
     },
   ]);
   const [selectedActionSaled, setSelectedActionSaled] = useState([
     {
       name: "판매중",
-      action: (productId) => updateTradeState(productId, "SALE"),
+      action: async (productId) => {
+        await openModal(
+          <div>
+            <span>상품을 판매중으로 바꿨습니다.</span>
+            <br />
+            <span>작성된 리뷰는 삭제됩니다.</span>
+          </div>,
+          true,
+          () => {}
+        );
+        await updateTradeState(productId, "SALE");
+        setChange(change + 1);
+      },
     },
     {
       name: "게시글 수정",
@@ -110,33 +88,61 @@ const MySaleProduct = () => {
     },
     {
       name: "숨기기",
-      action: (productId) => updateTradeState(productId, "HIDE"),
+      action: async (productId) => {
+        await openModal(
+          <div>
+            <span>상품을 숨김 상태로 바꿨습니다.</span>
+            <br />
+            <span>숨긴 상품은 상품 목록에서</span>
+            <br />
+            <span>볼 수 없습니다.</span>
+          </div>,
+          true,
+          () => {}
+        );
+        await updateTradeState(productId, "HIDE");
+        setChange(change + 1);
+      },
     },
     {
       name: "삭제",
-      action: (productId) => deleteProduct(productId),
+      action: async (productId) => {
+        await openModal(<span>상품을 삭제했습니다.</span>, true, () => {});
+        await deleteProduct(productId);
+        setChange(change + 1);
+      },
     },
   ]);
   const [selectedActionReservation, setSelectedActionReservation] = useState([
     {
-      name: "판매중",
-      action: (productId) => updateTradeState(productId, "SALE"),
-    },
-    {
-      name: "거래완료",
-      action: (productId) => navigate(`/product/get/seller/${productId}`),
-    },
-    {
       name: "게시글 수정",
       action: (productId) => navigate(`/product/update/${productId}`),
     },
     {
       name: "숨기기",
-      action: (productId) => updateTradeState(productId, "HIDE"),
+      action: async (productId) => {
+        await openModal(
+          <div>
+            <span>상품을 숨김 상태로 바꿨습니다.</span>
+            <br />
+            <span>숨긴 상품은 상품 목록에서</span>
+            <br />
+            <span>볼 수 없습니다.</span>
+          </div>,
+          true,
+          () => {}
+        );
+        await updateTradeState(productId, "HIDE");
+        setChange(change + 1);
+      },
     },
     {
       name: "삭제",
-      action: (productId) => deleteProduct(productId),
+      action: async (productId) => {
+        await openModal(<span>상품을 삭제했습니다.</span>, true, () => {});
+        await deleteProduct(productId);
+        setChange(change + 1);
+      },
     },
   ]);
   const [selectedActionHide, setSelectedActionHide] = useState([
@@ -146,7 +152,7 @@ const MySaleProduct = () => {
     },
     {
       name: "삭제",
-      action: (productId) => deleteProduct(productId),
+      action: async (productId) => await deleteProduct(productId),
     },
   ]);
 
@@ -160,8 +166,9 @@ const MySaleProduct = () => {
   const getProductReview = (productId) => {
     navigate(`/product/review/get/${productId}`);
   };
-  const changeHide = (productId) => {
-    updateTradeState(productId, "RESTORE");
+  const changeHide = async (productId) => {
+    await updateTradeState(productId, "RESTORE");
+    await openModal("상품을 숨김상태에서 해제했어요.", true, () => {});
   };
 
   const handleMenuClick = (idx) => {
@@ -177,7 +184,18 @@ const MySaleProduct = () => {
     try {
       const response = await raiseProductAPI(productId);
       console.log(response);
+      await openModal("끌어올리기 성공!", true, () => {});
     } catch (err) {
+      await openModal(
+        <div>
+          끌어올리기 가능 시간까지
+          <br />
+          {err.response.data}
+        </div>,
+        false,
+        () => {}
+      );
+
       console.log(err);
     }
   };
@@ -187,6 +205,16 @@ const MySaleProduct = () => {
   };
   const updateTradeStateByReservation = async (prodcutId) => {
     //예약중인 상품을 판매중으로 변경
+    await openModal(
+      <div>
+        예약을 해제했습니다.
+        <br />
+        해제된 상품은 판매중에서
+        <br />볼 수 있습니다.
+      </div>,
+      true,
+      () => {}
+    );
     await updateTradeStateAPI(prodcutId, "SALE");
   };
   const deleteProduct = async (productId) => {
@@ -227,17 +255,9 @@ const MySaleProduct = () => {
                   width: "80px",
                   height: "80px",
                 }}
-              >
-                <img
-                  src={member.profileURL}
-                  alt="profile"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "50%",
-                  }}
-                />
-              </Avatar>
+                src={member.profileURL === null ? undefined : member.profileURL}
+                alt=""
+              ></Avatar>
             )
           }
         />
@@ -256,6 +276,7 @@ const MySaleProduct = () => {
           ))}
         </div>
       </AppBar>
+      <Modal />
 
       <hr></hr>
 
@@ -278,6 +299,8 @@ const MySaleProduct = () => {
           onClick={getProductReview}
           onClickGetProduct={getProduct}
           selectedActions={selectedActionSaled}
+          setChange={setChange}
+          change={change}
         />
       )}
       {selectedMenu === "예약 중" && (
@@ -287,6 +310,8 @@ const MySaleProduct = () => {
           onClick={updateTradeStateByReservation}
           onClickGetProduct={getProduct}
           selectedActions={selectedActionReservation}
+          setChange={setChange}
+          change={change}
         />
       )}
       {selectedMenu === "숨김 중" && (
@@ -296,6 +321,8 @@ const MySaleProduct = () => {
           onClick={changeHide}
           onClickGetProduct={getProduct}
           selectedActions={selectedActionHide}
+          setChange={setChange}
+          change={change}
         />
       )}
     </>
