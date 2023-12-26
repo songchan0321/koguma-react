@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { listClubPostCategories } from "../../../apis/api/club";
 import ListClubPostByCategory from "./ListClubPostByCategory";
+import ListClubPost from "./ListClubPost";
 const ClubHomePostList = ({ clubId, clubMember }) => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("전체");
@@ -57,8 +58,7 @@ const ClubHomePostList = ({ clubId, clubMember }) => {
 
         {selectedCategory === "전체" ? (
           <div>
-            {/* 전체 카테고리를 클릭한 경우에 보여줄 내용 */}
-            {/* 예: 전체 포스트 리스트 */}
+            <ListClubPost clubId={clubId} />
           </div>
         ) : (
           <div>

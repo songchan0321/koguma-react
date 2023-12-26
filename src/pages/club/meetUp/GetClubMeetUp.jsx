@@ -62,8 +62,8 @@ const GetClubMeetUp = () => {
         </div>
         <MarginEmpty />
       </div>
-      <div style={{ marginTop: "250px" }}>
-        <Divider style={{ height: 8, backgroundColor: "grey" }} />
+      <div style={fixedButtonStyle}>
+        <Divider style={{ height: 4, backgroundColor: "grey" }} />
 
         <MarginEmpty value={5} />
         <JoinMeetUpStateButton
@@ -77,3 +77,13 @@ const GetClubMeetUp = () => {
 };
 
 export default GetClubMeetUp;
+
+const fixedButtonStyle = {
+  position: "fixed",
+
+  bottom: 0,
+  left: 0,
+  width: "100%",
+  padding: "5px",
+  textAlign: "center",
+};

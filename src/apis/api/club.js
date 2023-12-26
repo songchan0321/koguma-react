@@ -307,14 +307,15 @@ export const joinMeetUpRequestAPI = async (meetUpId, clubMember) => {
   }
 };
 
-export const joinMeetUpCancelAPI = async (clubId, meetUpId, isJoined) => {
+export const joinMeetUpCancelAPI = async (clubId, meetUpId) => {
   try {
+    alert(clubId);
+    alert(meetUpId);
     const { data } = await authInstance.get(
       `${CLUB_API_URI}/meet-up/cancel`,
       JSON.stringify({
         clubId: clubId,
         meetUpId: meetUpId,
-        isJoined: isJoined,
       }),
       {
         headers: {
@@ -322,6 +323,7 @@ export const joinMeetUpCancelAPI = async (clubId, meetUpId, isJoined) => {
         },
       }
     );
+    return data;
   } catch (err) {
     console.log(err);
   }
@@ -362,8 +364,9 @@ export const listClubPost = async (clubId) => {
 export const listClubPostByCategory = async (categoryId) => {
   try {
     const { data } = await authInstance.get(
-      `${CLUB_API_URI}/post/list/category/${categoryId}`
+      `${CLUB_API_URI}/post/lists/category/${categoryId}`
     );
+
     return data;
   } catch (err) {
     console.log(err);

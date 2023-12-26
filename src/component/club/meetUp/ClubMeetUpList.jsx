@@ -62,7 +62,9 @@ const ClubMeetUpList = ({ clubId, meetUpState, clubMember }) => {
           {meetUpList.length > 0 && (
             <div
               onClick={() =>
-                navigate(`/club/meet-up/${meetUpList[activeStep].id}`)
+                navigate(`/club/meet-up/${meetUpList[activeStep].id}`, {
+                  state: { clubId: clubId },
+                })
               }
             >
               <Grid container spacing={2}>
