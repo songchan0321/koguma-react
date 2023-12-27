@@ -102,7 +102,7 @@ const MyList = ({
         <>
           {Array.isArray(product) && product.length > 0 ? (
             <>
-              <MarginEmpty value={"250px"} />
+              <MarginEmpty value={"13.2rem"} />
               {product.map((prod, idx) => (
                 <React.Fragment key={idx}>
                   <Card sx={{ maxWidth: "100%" }} id={prod.id}>
@@ -116,7 +116,12 @@ const MyList = ({
                               : "/photo.png"
                           }
                           variant="square"
-                          sx={{ width: 100, height: 100, mr: 1 }}
+                          sx={{
+                            width: 100,
+                            height: 100,
+                            mr: 1,
+                            border: "solid 1px rgba(120, 120, 120, 0.5)",
+                          }}
                         />
                       }
                       title={

@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid, IconButton, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Grid,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ProfileForm from "../../component/member/ProfileForm";
 import { authInstance } from "../../apis/utils/instance";
@@ -114,19 +121,19 @@ const Profile = ({ score }) => {
   };
 
   return (
-    <Box p={3} sx={{ overflowY: "auto", maxHeight: "calc(100vh - 64px)" }}>
-      <Grid
-        container
-        spacing={2}
-        justifyContent="flex-end"
-        alignItems="flex-start"
-      >
-        {/* 내 정보 수정 버튼 */}
-        <Grid item>
+    <Box
+      sx={{
+        overflowY: "auto",
+        maxHeight: "calc(100vh - 64px)",
+        padding: "1.5rem 1.5rem 0 1.5rem",
+      }}
+    >
+      <div style={{ position: "fixed", top: "0.8rem", right: 0 }}>
+        <Stack direction={"row"}>
           <IconButton
             onClick={() => navigate("/member/update")}
             variant="outlined"
-            sx={{ width: "100px", height: "40px", color: "black" }}
+            sx={{ width: "100px", height: "40px", color: "black", pr: 0 }}
             startIcon={<SettingsIcon />}
           >
             <SettingsIcon sx={{ fontSize: 20 }} />
@@ -134,9 +141,9 @@ const Profile = ({ score }) => {
               내 정보 수정
             </Typography>
           </IconButton>
-        </Grid>
-        {/* 로그아웃 버튼 */}
-        <Grid item>
+
+          {/* 로그아웃 버튼 */}
+
           <IconButton
             onClick={() => {
               localStorage.removeItem("token");
@@ -144,7 +151,13 @@ const Profile = ({ score }) => {
             }}
             variant="outlined"
             color="black"
-            sx={{ width: "100px", height: "40px", color: "black" }}
+            sx={{
+              width: "100px",
+              height: "40px",
+              color: "black",
+              pl: 0,
+              pr: 0,
+            }}
             startIcon={<MeetingRoomIcon />}
           >
             <MeetingRoomIcon sx={{ fontSize: 20 }} />
@@ -152,7 +165,15 @@ const Profile = ({ score }) => {
               로그아웃
             </Typography>
           </IconButton>
-        </Grid>
+        </Stack>
+      </div>
+      <Grid
+        container
+        // spacing={2}
+        justifyContent="flex-end"
+        alignItems="flex-start"
+      >
+        {/* 내 정보 수정 버튼 */}
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
@@ -161,18 +182,28 @@ const Profile = ({ score }) => {
             <CircularProgress />
           ) : // 로딩이 완료되면 멤버 이미지 표시
           member && member.profileURL ? (
-            <img
-              src={member.profileURL}
-              alt=""
-              style={{
-                width: "8rem",
-                height: "8rem",
-                marginLeft: "110px",
-                marginTop: "30px",
-                clipPath: "circle(50% at 50% 50%)",
-              }}
-            />
+            <div>
+              <Avatar
+                src={member?.profileURL}
+                sx={{
+                  width: "5.5rem",
+                  height: "5.5rem",
+                  border: "solid 1px rgba(120, 120, 120, 0.5)",
+                }}
+              />
+            </div>
           ) : (
+            // <img
+            //   src={member.profileURL}
+            //   alt=""
+            //   style={{
+            //     width: "8rem",
+            //     height: "8rem",
+            //     marginLeft: "110px",
+            //     marginTop: "30px",
+            //     clipPath: "circle(50% at 50% 50%)",
+            //   }}
+            // />
             // 이미지가 없을 때 아이콘 등의 대체 컨텐츠를 표시
             <div></div>
           )}
@@ -197,7 +228,7 @@ const Profile = ({ score }) => {
                 member?.nickname
               )}
             </Typography>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom sx={{ pb: "0.4rem" }}>
               {/* 로딩 중일 때 CircularProgress 표시 */}
               {loading ? (
                 <CircularProgress size={20} />

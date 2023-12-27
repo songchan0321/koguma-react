@@ -258,8 +258,9 @@ const MySaleProduct = () => {
               <Avatar
                 aria-label="recipe"
                 sx={{
-                  width: "80px",
-                  height: "80px",
+                  width: "4.3rem",
+                  height: "4.3rem",
+                  border: "solid 1px rgba(120, 120, 120, 0.5)",
                 }}
                 src={member.profileURL === null ? undefined : member.profileURL}
                 alt=""

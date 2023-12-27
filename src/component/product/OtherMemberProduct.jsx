@@ -67,7 +67,7 @@ const OtherMemberProduct = ({
         <>
           {Array.isArray(product) && product.length > 0 ? (
             <>
-              <MarginEmpty value={"250px"} />
+              {/* <MarginEmpty value={"250px"} /> */}
               {product.map((prod, idx) => (
                 <React.Fragment key={idx}>
                   <Card sx={{ maxWidth: "100%" }} id={prod.id}>

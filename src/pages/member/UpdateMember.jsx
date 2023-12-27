@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Box, CircularProgress, Grid, Typography } from "@mui/material";
+import { Avatar, Box, CircularProgress, Grid, Typography } from "@mui/material";
 import UpdateMemberForm from "../../component/member/UpdateMemberForm";
 import { authInstance } from "../../apis/utils/instance";
+import MarginEmpty from "../../component/payment/MarginEmpty";
 
 const UpdateMember = () => {
   const [member, setMember] = useState();
@@ -44,29 +45,30 @@ const UpdateMember = () => {
 
   return (
     <Box p={3} sx={{ overflowY: "auto", maxHeight: "calc(100vh - 64px)" }}>
+      <MarginEmpty />
       <Grid container>
         <Grid item xs={12} md={4}>
-          {/* 로딩 중일 때 CircularProgress 표시 */}
-          {loading ? (
-            <CircularProgress />
-          ) : (
-            // 로딩이 완료되면 멤버 이미지 표시
-            member && (
-              <div style={{ textAlign: "center", marginTop: "50px" }}>
-                <img
-                  src={member.profileURL}
-                  alt=""
-                  style={{
-                    width: "8rem",
-                    height: "8rem",
-                    marginTop: "30px",
-                    clipPath: "circle(50% at 50% 50%)",
-                  }}
-                />
-                <div></div>
-              </div>
-            )
-          )}
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Avatar
+              src={member?.profileURL}
+              sx={{
+                width: "7.5rem",
+                height: "7.5rem",
+                border: "solid 1px rgba(120, 120, 120, 0.5)",
+              }}
+            />
+            {/* <img
+              src={member?.profileURL}
+              alt=""
+              style={{
+                width: "8rem",
+                height: "8rem",
+                marginTop: "30px",
+                clipPath: "circle(50% at 50% 50%)",
+              }}
+            /> */}
+            <div></div>
+          </div>
         </Grid>
         <Grid xs={12} style={{ pt: 0 }}>
           {/* <div style={{ textAlign: "center" }}>

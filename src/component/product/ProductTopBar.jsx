@@ -108,7 +108,11 @@ const ProductTopBar = ({ location, setLocation, handleCategory }) => {
         </ButtonGroup>
 
         {/* Modal */}
-        <Dialog open={isModalOpen} onClose={handleModalClose}>
+        <Dialog
+          open={isModalOpen}
+          onClose={handleModalClose}
+          PaperProps={{ sx: { width: "14rem", borderRadius: "1rem" } }}
+        >
           <DialogTitle>카테고리 선택</DialogTitle>
           <DialogContent sx={{ overflowY: "auto", maxHeight: "300px" }}>
             <DialogContentText>

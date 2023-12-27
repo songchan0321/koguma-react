@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { TextField, Button, Input } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { authInstance } from "../../apis/utils/instance";
@@ -8,6 +8,7 @@ import TopBar from "../../component/payment/TopBar";
 
 const UpdateMemberForm = ({ member, onUpdateSuccess }) => {
   const [newNickname, setNewNickname] = useState(member?.nickname || "");
+  const imageRef = useRef();
   const [imageId, setImageId] = useState(member?.profileURL || null);
   const [file, setFile] = useState(null);
 
@@ -15,6 +16,12 @@ const UpdateMemberForm = ({ member, onUpdateSuccess }) => {
     setNewNickname(member?.nickname || "");
     setImageId(member?.profileURL || null);
   }, [member]);
+
+  useEffect(() => {
+    (async () => {
+      await handleImageUpload();
+    })();
+  }, [file]);
 
   const handleNicknameChange = (e) => {
     setNewNickname(e.target.value);
@@ -37,7 +44,24 @@ const UpdateMemberForm = ({ member, onUpdateSuccess }) => {
     }
   };
 
-  const handleImageUpload = async () => {
+  const handleImageUpdate = async (imageId) => {
+    try {
+      const response = await authInstance.put("/member/update", {
+        nickname: newNickname,
+        profileURL: imageId,
+      });
+
+      if (response.status === 200) {
+        onUpdateSuccess(imageId);
+      } else {
+        console.error("업데이트 실패");
+      }
+    } catch (error) {
+      console.error("오류 발생: ", error);
+    }
+  };
+
+  const handleImageUpload = async (file) => {
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -50,7 +74,7 @@ const UpdateMemberForm = ({ member, onUpdateSuccess }) => {
 
       if (response.status === 200) {
         const uploadedImageId = response.data[0];
-        setImageId(uploadedImageId);
+        await handleImageUpdate(uploadedImageId);
       } else {
         console.error("이미지 업로드 실패");
       }
@@ -65,24 +89,31 @@ const UpdateMemberForm = ({ member, onUpdateSuccess }) => {
       <Back />
       <TopBar>회원 정보 수정</TopBar>
       <div style={{ textAlign: "center" }}>
-        <div style={{ marginTop: 10 }}>
+        <div>
+          <Input
+            id="upload-input"
+            type="file"
+            ref={imageRef}
+            style={{ display: "none" }}
+            onChange={(e) => {
+              handleImageUpload(e.target.files[0]);
+              // setFile(e.target.files[0])
+            }}
+          />
           <label htmlFor="upload-input">
-            <Input
-              id="upload-input"
-              type="file"
-              style={{ display: "none" }}
-              onChange={(e) => setFile(e.target.files[0])}
-            />
             <Button
               //   color="secondary"
               variant="text"
               component="label"
               htmlFor="upload-input"
-              startIcon={<CloudUploadIcon />}
-              onClick={handleImageUpload}
-              style={{ fontSize: "9px" }}
+              // startIcon={<CloudUploadIcon />}
+              onClick={() =>
+                // handleImageUpload
+                imageRef.current.click()
+              }
+              style={{ fontSize: "10px" }}
             >
-              프로필 업로드
+              <u>프로필 이미지 변경</u>
             </Button>
           </label>
         </div>

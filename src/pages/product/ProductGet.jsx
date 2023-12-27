@@ -71,7 +71,11 @@ const ProductGet = () => {
               avatar={
                 <Avatar
                   aria-label="recipe"
-                  style={{ width: "48px", height: "48px" }} // Avatar 크기 조정
+                  style={{
+                    width: "48px",
+                    height: "48px",
+                    border: "solid 1px rgba(120, 120, 120, 0.5)",
+                  }} // Avatar 크기 조정
                   src={data.sellerDTO?.profileURL}
                   alt=""
                 ></Avatar>
@@ -121,7 +125,7 @@ const ProductGet = () => {
       ) : (
         <LoadingProgress />
       )}
-      <MarginEmpty value={300} />
+      <MarginEmpty value={150} />
     </>
   );
 };
