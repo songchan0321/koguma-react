@@ -1,17 +1,9 @@
 import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SearchIcon from "@mui/icons-material/Search";
-import {
-  Chip,
-  Drawer,
-  ListItemText,
-  Paper,
-  Stack,
-  styled,
-} from "@mui/material";
+import { Chip, Drawer, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const chipStyle = {

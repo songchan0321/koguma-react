@@ -1,6 +1,6 @@
 import { Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   addClubPostCategory,
   listClubPostCategories,
@@ -11,7 +11,6 @@ import MarginEmpty from "../../../component/payment/MarginEmpty";
 
 const ListClubPostCategory = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const { clubId } = location.state;
   const [categories, setCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -8,7 +8,6 @@ import { getPostAPI } from "../../apis/api/community";
 const PostAavatarForm = () => {
   const { postId } = useParams();
   const [data, setData] = useState(null);
-  const [isMine, setIsMine] = useState();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 

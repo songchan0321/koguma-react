@@ -1,10 +1,7 @@
 import { IconButton, Typography, createTheme } from "@mui/material";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import LinearProgress from "@mui/material/LinearProgress";
-import CircularProgress from "@mui/material/CircularProgress";
 import { styled } from "@mui/system";
-import { linearProgressClasses } from "@mui/joy";
-import { red } from "@mui/material/colors";
 
 const theme = createTheme();
 const ScoreColor = ({ score }) => {

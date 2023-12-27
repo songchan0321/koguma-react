@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { addComment, listComment } from "../../../apis/api/club";
-import { Avatar, Grid, Paper, Typography } from "@mui/material";
+import { listComment } from "../../../apis/api/club";
+import { Avatar, Grid, Typography } from "@mui/material";
 import { formatTimeAgo } from "../../../apis/utils/timestamp";
 import MarginEmpty from "../../payment/MarginEmpty";
 

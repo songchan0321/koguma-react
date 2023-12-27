@@ -28,15 +28,7 @@ const StyledCardActions = styled(CardActions)({
 
 const GetProductBottomBar = ({ data, isMine, productId }) => {
   const navigate = useNavigate();
-  const [isExist, setIsExist] = useState();
   const [member, setMember] = useState();
-
-  const existChatRoomByProduct = async () => {
-    // 해당 구매자의 채팅기록이 있는지
-    const chatIsExist = await existChatRoomByProductAPI(data.id);
-    setIsExist(chatIsExist);
-  };
-
   useEffect(() => {
     (async () => {
       await getMemberAPI().then(setMember);

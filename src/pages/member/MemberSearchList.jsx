@@ -1,8 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import ListContainingProduct from "../../component/product/ListContainingProduct";
-import { ListProductAPI } from "../../apis/api/Product";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import NotData from "../../component/product/NotData";
 import { getMemberSearchByLocationAPI } from "../../apis/api/member";

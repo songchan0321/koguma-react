@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { listJoinMeetUpMemberAPI } from "../../../apis/api/club";
-import { Avatar, Button, Card, CardContent, Typography } from "@mui/material";
+import { Avatar, Card, CardContent, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const JoinedMeetUpMember = ({ meetUpId }) => {

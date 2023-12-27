@@ -1,5 +1,4 @@
 import { AppBar, Divider, Toolbar, Typography } from "@mui/material";
-import Back from "./Back";
 import Exit from "./Exit";
 
 const TopBarAddClub = ({ children, color = "none" }) => {

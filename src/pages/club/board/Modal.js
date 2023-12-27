@@ -1,5 +1,5 @@
 // Modal.js
-import React, { useState } from "react";
+import React from "react";
 import "./Modal.css";
 
 const Modal = ({ isOpen, onClose, children }) => {

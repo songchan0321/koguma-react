@@ -3,7 +3,6 @@ import { getClubMemberAPI } from "../../../apis/api/club";
 import { useParams } from "react-router-dom";
 import {
   Box,
-  Button,
   Card,
   CardContent,
   CardMedia,

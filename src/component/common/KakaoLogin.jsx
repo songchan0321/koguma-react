@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { kakaoLoginAPI } from "../../apis/api/authentication";
-import { Backdrop, createTheme } from "@mui/material";
+import { Backdrop } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/ModalContext";
 import { IsLoginContext } from "../../context/LoginContextProvider";
@@ -10,8 +10,6 @@ import Modal from "./Modal";
 const KakaoLogin = () => {
   const [loading, setLoading] = useState(false);
   const socket = React.useContext(SocketContext);
-  const [error, setError] = useState("");
-  const defaultTheme = createTheme();
   const { openModal } = useModal();
 
   const navigator = useNavigate();

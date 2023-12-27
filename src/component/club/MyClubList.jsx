@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Card, CardMedia, Grid, Typography } from "@mui/material";
+import { Box, Card, CardMedia, Grid, Typography } from "@mui/material";
 import { listMyClubAPI } from "../../apis/api/club";
 import { useNavigate } from "react-router-dom";
-import NotData from "../product/NotData";
 import ClubNotData from "./common/ClubNotData";
 
 const MyClubList = () => {

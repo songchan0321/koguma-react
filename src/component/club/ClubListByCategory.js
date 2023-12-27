@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Card,
   CardContent,
   CardMedia,
   Divider,
@@ -10,7 +9,6 @@ import {
 import { listClubByCategoryAPI } from "../../apis/api/club";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import NotData from "../product/NotData";
 import ClubNotData from "./common/ClubNotData";
 
 const ClubListByCategory = ({ categoryId, keyword }) => {
@@ -97,11 +95,6 @@ const ClubListByCategory = ({ categoryId, keyword }) => {
 };
 
 export default ClubListByCategory;
-
-const ClubCard = styled(Card)({
-  display: "flex",
-  flexDirection: "row",
-});
 
 const ClubContent = styled(CardContent)({
   flex: 1,

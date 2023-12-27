@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import PostThumbnail from "../../component/community/PostThumbnail";
 import { callPostListByCategoryAPI } from "../../apis/api/community";
-import { Divider, Fab, List, Typography } from "@mui/material";
+import { Divider, Fab, Typography } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import Back from "../../component/common/Back";

@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import TopBarClub from "../../component/club/common/TopBarClub";
 import { List, Paper, Typography } from "@mui/material";
 import { useEffect } from "react";

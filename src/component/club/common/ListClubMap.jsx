@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { nearClubMapAPI } from "../../../apis/api/club";
-import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 import EventMarkerContainer from "./EventMarkerContainer";
 import { getMemberAPI } from "../../../apis/api/member";
-import { Typography } from "@mui/material";
 
 const ListClubMap = () => {
   const [clubList, setClubList] = useState([]);

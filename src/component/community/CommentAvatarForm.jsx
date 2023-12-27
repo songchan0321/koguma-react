@@ -2,13 +2,11 @@ import * as React from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { CardHeader, Avatar, Typography, Box, Card } from "@mui/material";
+import { CardHeader, Avatar, Box } from "@mui/material";
 import { getCommentAPI } from "../../apis/api/community";
-import { formatTimeAgo } from "../../apis/utils/timestamp";
 
 const CommentAavatarForm = ({ comment }) => {
   const [data, setData] = useState(null);
-  const [isMine, setIsMine] = useState();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
@@ -62,7 +60,6 @@ const CommentAavatarForm = ({ comment }) => {
             title={data.memberDTO?.nickname}
             subheader={data.postDTO?.dong}
           />
-          
         </Box>
       )}
     </>

@@ -10,7 +10,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import { Badge, Drawer, Paper } from "@mui/material";
+import { Badge, Paper } from "@mui/material";
 import LocationBox from "../location/LocationBox";
 
 import { useEffect } from "react";

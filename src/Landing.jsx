@@ -11,7 +11,7 @@ import LandingPayment from "./landing/LandingPayment";
 import LandingCommunity from "./landing/LandingCommunity";
 import LandingClub from "./landing/LandingClub";
 import { Link } from "react-router-dom";
-import { Avatar, CardMedia } from "@mui/material";
+import { CardMedia } from "@mui/material";
 import LandingFooter from "./landing/LandingFooter";
 import TopBar from "./component/payment/TopBar";
 import MarginEmpty from "./component/payment/MarginEmpty";

@@ -9,7 +9,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { Fragment, forwardRef, useRef, useState } from "react";
+import { Fragment, forwardRef, useRef } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import PlaceIcon from "@mui/icons-material/Place";
 import { Map } from "react-kakao-maps-sdk";

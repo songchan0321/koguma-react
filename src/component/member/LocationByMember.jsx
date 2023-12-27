@@ -1,5 +1,5 @@
 import { Avatar, Box, Card, CardHeader, Typography } from "@mui/material";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ScoreColor from "../common/ScoreColor";
 
 const LocationByMember = ({ data }) => {

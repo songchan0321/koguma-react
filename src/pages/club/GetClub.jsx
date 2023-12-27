@@ -22,7 +22,6 @@ import GetClubChat from "./chat/GetClubChat";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 import Modal from "../../component/common/Modal";
 import { useModal } from "../../context/ModalContext";
-import Back from "../../component/club/common/Back";
 
 const GetClub = () => {
   const { openModal } = useModal();

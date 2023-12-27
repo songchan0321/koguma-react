@@ -17,9 +17,7 @@ import MarginEmpty from "../../payment/MarginEmpty";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { DateCalendar, DateTimePicker, TimePicker } from "@mui/x-date-pickers";
-import { DateRangeCalendar } from "@mui/x-date-pickers-pro";
+import { DateCalendar, TimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 
 const AddMeetUp = () => {

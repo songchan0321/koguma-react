@@ -4,7 +4,6 @@ import { Button, Grid } from "@mui/material";
 
 const AddClubCategory = ({ onCategorySelect, onNext }) => {
   const [categories, setCategories] = useState([]);
-  const [selectedCatrogyId, setSelectedCategoryId] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,9 +16,6 @@ const AddClubCategory = ({ onCategorySelect, onNext }) => {
     };
     fetchData();
   }, []);
-  const handleCategoryClick = (categoryId) => {
-    onCategorySelect(categoryId);
-  };
 
   return (
     <>

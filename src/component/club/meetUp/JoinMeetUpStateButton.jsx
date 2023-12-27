@@ -4,7 +4,7 @@ import {
   joinMeetUpCancelAPI,
   joinMeetUpRequestAPI,
 } from "../../../apis/api/club";
-import { Button, Divider } from "@mui/material";
+import { Button } from "@mui/material";
 import { useModal } from "../../../context/ModalContext";
 
 const JoinMeetUpStateButton = ({ clubId, meetUpId, clubMember }) => {

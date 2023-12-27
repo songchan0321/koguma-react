@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { callReplyListAPI } from "../../apis/api/community";
 import { Grid, Typography, CardContent, Box } from "@mui/material";
-import CommunityAavatarForm from "./PostAvatarFrom";
-import CommentOption from "./CommentOption";
 import CommentAavatarForm from "./CommentAvatarForm";
 import { formatTimeAgo } from "../../apis/utils/timestamp";
 

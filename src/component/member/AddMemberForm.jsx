@@ -351,7 +351,7 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
           <Typography component="h1" variant="h5" sx={{ marginBottom: 2 }}>
             가입하기
           </Typography>
-          <Modal/>
+          <Modal />
           <TextField
             label="닉네임"
             fullWidth
@@ -737,9 +737,9 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
             </DialogActions>
           </Dialog>
           <Dialog
-              onClose={handleCloseDialog4}
-              open={openDialog4}
-              aria-labelledby="customized-dialog-title"
+            onClose={handleCloseDialog4}
+            open={openDialog4}
+            aria-labelledby="customized-dialog-title"
           >
             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
               안내
@@ -756,9 +756,9 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
             </DialogActions>
           </Dialog>
           <Dialog
-              onClose={handleCloseDialog5}
-              open={openDialog5}
-              aria-labelledby="customized-dialog-title"
+            onClose={handleCloseDialog5}
+            open={openDialog5}
+            aria-labelledby="customized-dialog-title"
           >
             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
               안내
@@ -775,9 +775,9 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
             </DialogActions>
           </Dialog>
           <Dialog
-              onClose={handleCloseDialog6}
-              open={openDialog6}
-              aria-labelledby="customized-dialog-title"
+            onClose={handleCloseDialog6}
+            open={openDialog6}
+            aria-labelledby="customized-dialog-title"
           >
             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
               안내
@@ -794,9 +794,9 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
             </DialogActions>
           </Dialog>
           <Dialog
-              onClose={handleCloseDialog7}
-              open={openDialog7}
-              aria-labelledby="customized-dialog-title"
+            onClose={handleCloseDialog7}
+            open={openDialog7}
+            aria-labelledby="customized-dialog-title"
           >
             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
               안내
@@ -813,9 +813,9 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
             </DialogActions>
           </Dialog>
           <Dialog
-              onClose={handleCloseDialog8}
-              open={openDialog8}
-              aria-labelledby="customized-dialog-title"
+            onClose={handleCloseDialog8}
+            open={openDialog8}
+            aria-labelledby="customized-dialog-title"
           >
             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
               안내
@@ -832,9 +832,9 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
             </DialogActions>
           </Dialog>
           <Dialog
-              onClose={handleCloseDialog9}
-              open={openDialog9}
-              aria-labelledby="customized-dialog-title"
+            onClose={handleCloseDialog9}
+            open={openDialog9}
+            aria-labelledby="customized-dialog-title"
           >
             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
               안내
@@ -851,17 +851,15 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
             </DialogActions>
           </Dialog>
           <Dialog
-              onClose={handleCloseDialog10}
-              open={openDialog10}
-              aria-labelledby="customized-dialog-title"
+            onClose={handleCloseDialog10}
+            open={openDialog10}
+            aria-labelledby="customized-dialog-title"
           >
             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
               안내
             </DialogTitle>
             <DialogContent dividers>
-              <Typography gutterBottom>
-                휴대폰 인증이 필요합니다.
-              </Typography>
+              <Typography gutterBottom>휴대폰 인증이 필요합니다.</Typography>
             </DialogContent>
             <DialogActions>
               <Button autoFocus onClick={handleCloseDialog10}>
@@ -870,9 +868,9 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
             </DialogActions>
           </Dialog>
           <Dialog
-              onClose={handleCloseDialog11}
-              open={openDialog11}
-              aria-labelledby="customized-dialog-title"
+            onClose={handleCloseDialog11}
+            open={openDialog11}
+            aria-labelledby="customized-dialog-title"
           >
             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
               안내
@@ -889,17 +887,15 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
             </DialogActions>
           </Dialog>
           <Dialog
-              onClose={handleCloseDialog12}
-              open={openDialog12}
-              aria-labelledby="customized-dialog-title"
+            onClose={handleCloseDialog12}
+            open={openDialog12}
+            aria-labelledby="customized-dialog-title"
           >
             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
               안내
             </DialogTitle>
             <DialogContent dividers>
-              <Typography gutterBottom>
-                이용 약관에 동의해 주세요.
-              </Typography>
+              <Typography gutterBottom>이용 약관에 동의해 주세요.</Typography>
             </DialogContent>
             <DialogActions>
               <Button autoFocus onClick={handleCloseDialog12}>
@@ -908,9 +904,9 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
             </DialogActions>
           </Dialog>
           <Dialog
-              onClose={handleCloseDialog13}
-              open={openDialog13}
-              aria-labelledby="customized-dialog-title"
+            onClose={handleCloseDialog13}
+            open={openDialog13}
+            aria-labelledby="customized-dialog-title"
           >
             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
               안내
@@ -927,29 +923,25 @@ const AddMemberForm = ({ onSubmit, kakaoEmail }) => {
             </DialogActions>
           </Dialog>
           <Dialog
-              onClose={handleCloseDialog14}
-              open={openDialog14}
-              aria-labelledby="customized-dialog-title"
+            onClose={handleCloseDialog14}
+            open={openDialog14}
+            aria-labelledby="customized-dialog-title"
           >
             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
               안내
             </DialogTitle>
             <DialogContent dividers>
-              <Typography gutterBottom>
-                휴대폰 인증 성공!
-              </Typography>
+              <Typography gutterBottom>휴대폰 인증 성공!</Typography>
             </DialogContent>
             <DialogActions>
               <Button autoFocus onClick={handleCloseDialog14}>
                 확인
               </Button>
-
             </DialogActions>
           </Dialog>
         </Paper>
       </Grid>
     </Grid>
-
   );
 };
 

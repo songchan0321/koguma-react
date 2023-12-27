@@ -1,10 +1,8 @@
-import { useEffect, useState, useContext } from "react";
-import { IsLoginContext } from "../../context/LoginContextProvider";
+import { useEffect, useState } from "react";
 import { getPostAPI } from "../../apis/api/community";
 import { Container, Button, Typography, Box } from "@mui/material";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import { useNavigate, useParams } from "react-router-dom";
-import CommunityAavatarForm from "./PostAvatarFrom";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import { authInstance } from "../../apis/utils/instance";
@@ -13,7 +11,6 @@ import CommentCounts from "./CommentCounts";
 import { formatTimeAgo } from "../../apis/utils/timestamp";
 
 const GetPostForm = () => {
-  const { setIsLogin } = useContext(IsLoginContext);
   const { postId } = useParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);

@@ -1,8 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import Back from "../common/Back";
 import { Typography, Grid, Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -12,7 +10,6 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { addPostAPI } from "../../apis/api/community";
 import { uploadImageAPI } from "../../apis/api/common";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const PostForm = ({ text }) => {
   const categorys = [
@@ -95,9 +92,9 @@ const PostForm = ({ text }) => {
   //       onChange={handleFileChange}
   //     />
   //   </Button>,
-    // <Button key="two">
-    //   <LocationOnIcon /> 장소
-    // </Button>,
+  // <Button key="two">
+  //   <LocationOnIcon /> 장소
+  // </Button>,
   // ];
 
   return (

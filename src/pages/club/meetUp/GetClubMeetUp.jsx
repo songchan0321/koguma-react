@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { getClubMeetUp } from "../../../apis/api/club";
-import { Card, Divider, Paper, Stack, Typography } from "@mui/material";
+import { Divider, Stack, Typography } from "@mui/material";
 import JoinedMeetUpMember from "../../../component/club/meetUp/JoinedMeetUpMember";
 import TopBarClub from "../../../component/club/common/TopBarClub";
 import MarginEmpty from "../../../component/payment/MarginEmpty";

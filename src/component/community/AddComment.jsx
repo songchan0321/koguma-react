@@ -9,10 +9,9 @@ import {
 } from "@mui/material";
 import ReportIcon from "@mui/icons-material/Report";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { addCommentAPI } from "../../apis/api/community";
 import { useParams } from "react-router-dom";
-import { red } from "@mui/material/colors";
 
 const AddComment = () => {
   const { postId } = useParams();

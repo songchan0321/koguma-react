@@ -19,12 +19,7 @@ import {
 
 import { formatMoney } from "../../apis/services/product";
 import ImageList from "../common/ImageList";
-import { uploadImageAPI } from "../../apis/api/common";
-import {
-  addProductAPI,
-  getProductAPI,
-  updateProductAPI,
-} from "../../apis/api/Product";
+import { getProductAPI, updateProductAPI } from "../../apis/api/Product";
 import { useModal } from "../../context/ModalContext";
 import { useNavigate, useParams } from "react-router-dom";
 

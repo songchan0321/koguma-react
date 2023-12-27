@@ -11,7 +11,6 @@ import {
 import { useParams } from "react-router-dom";
 import ListReply from "./ListReply";
 import AddReply from "./AddReply";
-import CommentOption from "./CommentOption";
 import CommentAavatarForm from "./CommentAvatarForm";
 import { formatTimeAgo } from "../../apis/utils/timestamp";
 

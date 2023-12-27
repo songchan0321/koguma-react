@@ -1,5 +1,4 @@
-import axios from "axios";
-import { authInstance, defaultInstance } from "../utils/instance";
+import { authInstance } from "../utils/instance";
 
 const CLUB_API_URI = `/club`;
 

@@ -13,7 +13,7 @@ import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 import { Typography, Grid } from "@mui/material";
-import { addPostAPI, updatePostAPI } from "../../apis/api/community";
+import { updatePostAPI } from "../../apis/api/community";
 import Back from "../../component/common/Back";
 
 const UpdatePost = () => {

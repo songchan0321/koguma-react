@@ -1,6 +1,4 @@
-import { Avatar, Chip } from "@mui/material";
-import zIndex from "@mui/material/styles/zIndex";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { Chip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 const centerChipStyle = {

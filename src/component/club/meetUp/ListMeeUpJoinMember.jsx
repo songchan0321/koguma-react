@@ -1,4 +1,4 @@
-import { Avatar, Typography } from "@mui/material";
+import { Avatar } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { listJoinMeetUpMemberAPI } from "../../../apis/api/club";
 
