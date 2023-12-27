@@ -38,7 +38,7 @@ const JoinedMeetUpMember = ({ meetUpId }) => {
     <div>
       {/* 배열이 비어 있는지 확인 후 slice 메서드 사용 */}
       {joinMemberList.length > 0 &&
-        joinMemberList.slice(0, 3).map((meetUpMember, index) => (
+        joinMemberList.map((meetUpMember, index) => (
           <div
             style={{
               display: "flex",
@@ -69,14 +69,14 @@ const JoinedMeetUpMember = ({ meetUpId }) => {
             </Card>
           </div>
         ))}
-      <Button
+      {/* <Button
         variant="contained"
         color="secondary"
         style={fixedButtonStyle}
         onClick={listJoinMeetUpMember}
       >
         참여 모임원 전체 보기
-      </Button>
+      </Button> */}
     </div>
   );
 };

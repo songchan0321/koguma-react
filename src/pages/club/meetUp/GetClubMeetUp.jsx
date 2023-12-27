@@ -8,6 +8,7 @@ import MarginEmpty from "../../../component/payment/MarginEmpty";
 import JoinMeetUpStateButton from "../../../component/club/meetUp/JoinMeetUpStateButton";
 import GetMeetUpMap from "../../../component/club/common/GetMeetUpMap";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
+import Modal from "../../../component/common/Modal";
 
 const GetClubMeetUp = () => {
   const { meetUpId } = useParams();
@@ -32,6 +33,7 @@ const GetClubMeetUp = () => {
 
   return (
     <>
+      <Modal />
       <TopBarClub>일정 상세 정보</TopBarClub>
       <MarginEmpty value={80} />
       <div>
@@ -51,8 +53,9 @@ const GetClubMeetUp = () => {
         </div>
 
         <MarginEmpty value={30} />
-        <Divider style={{ height: 8, backgroundColor: "grey" }} />
-        <MarginEmpty value={15} />
+        <Divider style={{ height: 4, backgroundColor: "grey" }} />
+        <MarginEmpty value={5} />
+
         <div style={{ marginLeft: "10px" }}>
           <Typography variant="h5">일정 장소</Typography>
           <Stack spacing={2}>
@@ -60,6 +63,10 @@ const GetClubMeetUp = () => {
             <PlaceOutlinedIcon />
           </Stack>
         </div>
+        <MarginEmpty value={30} />
+
+        <MarginEmpty value={15} />
+
         <MarginEmpty />
       </div>
       <div style={fixedButtonStyle}>
