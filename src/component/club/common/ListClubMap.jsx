@@ -73,31 +73,12 @@ const ListClubMap = () => {
       >
         {!state.isLoading && (
           <>
-            <MapMarker
-              position={state.center}
-              image={{
-                src: getMember.profileURL,
-                size: {
-                  width: 64,
-                  height: 69,
-                }, // 마커이미지의 크기입니다
-                options: {
-                  offset: {
-                    x: 27,
-                    y: 69,
-                  }, // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-                },
-                style: {
-                  borderRadius: "50%",
-                },
-              }}
-              style={{
-                borderRadius: "50%",
-              }}
-              sx={{
-                borderRadius: "50%",
-              }}
-            ></MapMarker>
+            <MapMarker position={state.center}>
+              {" "}
+              <div style={{ padding: "5px", color: "#000" }}>
+                {state.errMsg ? state.errMsg : "   내 위치입니다 !!"}
+              </div>
+            </MapMarker>
             {/* <CustomOverlayMap position={state.center} yAnchor={1}>
               <div className="customoverlay">
                 <a

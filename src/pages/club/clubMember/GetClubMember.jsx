@@ -93,13 +93,13 @@ const GetClubMember = () => {
             {clubMember.content}
           </Typography>
           <MarginEmpty value={10}></MarginEmpty>
-          <Button
+          {/* <Button
             variant="contained"
             color="secondary"
             style={fixedButtonStyle}
           >
             상세 정보 수정하기{" "}
-          </Button>
+          </Button> */}
           <br />
 
           <br />
