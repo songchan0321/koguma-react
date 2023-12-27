@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CardHeader, Avatar } from "@mui/material";
 import { getPostAPI } from "../../apis/api/community";
+import { formatTimeAgo } from "../../apis/utils/timestamp";
 
 const PostAavatarForm = () => {
   const { postId } = useParams();
@@ -35,26 +36,17 @@ const PostAavatarForm = () => {
     <>
       {data && (
         <CardHeader
-          sx={{ maxWidth: "100%" }}
+          sx={{ pt: "1rem", pl: 0 }}
           avatar={
             <Avatar
               aria-label="recipe"
-              style={{ width: "48px", height: "48px" }} // Avatar 크기 조정
-            >
-              <img
-                src={data.memberDTO.profileURL}
-                alt="profile"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: "50%",
-                }} // 이미지 크기 및 모양 조정
-              />
-            </Avatar>
+              style={{ width: "2.3rem", height: "2.3rem" }} // Avatar 크기 조정
+              src={data.memberDTO.profileURL}
+            />
           }
           onClick={() => getMember(data.memberDTO?.id)}
           title={data.memberDTO?.nickname}
-          subheader={data.dong}
+          subheader={data.dong + " · " + formatTimeAgo(data.regDate)}
         />
       )}
     </>

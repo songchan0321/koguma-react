@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Back from "../common/Back";
-import { Typography, Grid, Box } from "@mui/material";
+import { Grid } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -10,6 +10,8 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { addPostAPI } from "../../apis/api/community";
 import { uploadImageAPI } from "../../apis/api/common";
+import TopBar from "../payment/TopBar";
+import MarginEmpty from "../payment/MarginEmpty";
 
 const PostForm = ({ text }) => {
   const categorys = [
@@ -100,20 +102,11 @@ const PostForm = ({ text }) => {
   return (
     <Fragment>
       <Back />
-      <Typography
-        variant="h6"
-        color="secondary"
-        component="h2"
-        sx={{ textAlign: "center", mb: 1.5 }}
-      >
-        <i>동네생활 글쓰기</i>
+      <TopBar>동네생활 글쓰기</TopBar>
+      <MarginEmpty value={"75px"} />
+      <div style={{ position: "fixed", top: "0.5rem", right: 0, zIndex: 1002 }}>
+        {/* <i>동네생활 글쓰기</i> */}
         <Button
-          style={{
-            position: "absolute",
-            right: "5px",
-            variant: "h8",
-            color: "ThreeDShadow",
-          }}
           variant="text"
           onClick={handleSubmit}
           component={Link}
@@ -121,8 +114,8 @@ const PostForm = ({ text }) => {
         >
           완료
         </Button>
-      </Typography>
-      <Grid item mt={2} xs={5}>
+      </div>
+      <Grid sx={{ m: "0 2rem" }}>
         <FormControl fullWidth>
           <InputLabel id="category">카테고리</InputLabel>
           <Select
@@ -154,51 +147,26 @@ const PostForm = ({ text }) => {
       <TextField
         name="title"
         id="title"
-        label="제목을 입력하세요."
-        variant="standard"
+        placeholder="제목을 입력하세요."
+        // label="제목을 입력하세요."
+        // variant="standard"
         value={formData.title}
         onChange={handleChange}
-        sx={{ width: "100%" }} // 좌우로 꽉 차게 설정
+        sx={{ p: "2rem 2rem 0rem 2rem", width: "100%" }} // 좌우로 꽉 차게 설정
       />
       <br />
       <TextField
         name="content"
         id="content"
-        label="궁금한 마을 이야기를 나누어보세요 "
+        placeholder="궁금한 마을 이야기를 나누어보세요."
+        // label="궁금한 마을 이야기를 나누어보세요."
         multiline
         rows={15}
-        variant="standard"
+        // variant="standard"
         value={formData.content}
         onChange={handleChange}
-        sx={{ width: "100%" }} // 좌우로 꽉 차게 설정
+        sx={{ width: "100%", p: "2rem 2rem" }} // 좌우로 꽉 차게 설정
       />
-
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "flex-end",
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          "& > *": {
-            m: 1,
-          },
-        }}
-      >
-        {/* <ButtonGroup
-          color="secondary"
-          aria-label="medium secondary button group"
-        >
-          {buttons}
-        </ButtonGroup> */}
-      </Box>
-      {/* <ImageList
-        images={images}
-        setImages={setImages}
-        imageRegHandler={imageRegHandler}
-        imageDelHandler={imageDelHandler}
-      /> */}
     </Fragment>
   );
 };

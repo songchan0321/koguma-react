@@ -3,6 +3,7 @@ import { callReplyListAPI } from "../../apis/api/community";
 import { Grid, Typography, CardContent, Box } from "@mui/material";
 import CommentAavatarForm from "./CommentAvatarForm";
 import { formatTimeAgo } from "../../apis/utils/timestamp";
+import AddReply from "./AddReply";
 
 const GetReply = ({ commentId }) => {
   const [listReply, setListReply] = useState([]);
@@ -43,19 +44,6 @@ const GetReply = ({ commentId }) => {
                   }}
                 >
                   <CommentAavatarForm comment={Reply} />
-                  <Box sx={{ marginLeft: "auto" }}>
-                    {/* <CommentOption /> */}
-                    <Typography
-                      variant="caption"
-                      color="text.secondary"
-                      sx={{ mb: 1 }}
-                    >
-                      {formatTimeAgo(Reply.regDate)}
-                    </Typography>
-                  </Box>
-                  {/* <Box sx={{ marginLeft: "auto" }}>
-                    <CommentOption />
-                  </Box> */}
                 </Box>
                 <CardContent sx={{ marginLeft: "30px" }}>
                   <Typography variant="body1">{Reply.content}</Typography>

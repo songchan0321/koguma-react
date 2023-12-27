@@ -1,23 +1,25 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import RateReviewIcon from "@mui/icons-material/RateReview";
 import {
   Box,
   Button,
-  Fab,
   Grid,
-  TextField,
   Collapse,
   Modal,
   Typography,
+  InputBase,
+  Divider,
+  IconButton,
+  Paper,
 } from "@mui/material";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import AddIcon from "@mui/icons-material/Add";
 import { addCommentAPI } from "../../apis/api/community";
 
 const AddReply = ({ commentId }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const { postId } = useParams();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     writerId: 0,
     postId: postId,
@@ -54,6 +56,7 @@ const AddReply = ({ commentId }) => {
       ...prevFormData,
       content: "",
     }));
+    navigate(`/post/${postId}`);
   };
 
   const handleChange = (e) => {
@@ -75,49 +78,100 @@ const AddReply = ({ commentId }) => {
   return (
     <Box
       sx={{
-        "& > :not(style)": { m: 1, width: "100%" },
+        "& > :not(style)": { m: 0, width: "100%" },
       }}
       component="form"
       noValidate
       autoComplete="off"
     >
-      <Grid container spacing={2} alignItems="flex-end">
-        <Grid item xs={9} sm={9}>
-          <Collapse in={isDropdownOpen}>
-            <TextField
+      <div style={{ position: "relative", marginLeft: 0 }}>
+        <Grid container alignItems="flex-end">
+          <Grid>
+            <Collapse in={isDropdownOpen}>
+              {/* <TextField
               id="content"
-              label="답글을 입력해보세요"
+              // label="답글을 입력해보세요"
               variant="standard"
               value={formData.content}
               onChange={handleChange}
-              fullWidth
+              // fullWidth
+              // sx={{ backgroundColor: "#E9ECEF", p: "2rem" }}
               InputProps={{
                 disableUnderline: true,
                 inputProps: { maxLength: 50 },
+                sx: {
+                  backgroundColor: "#E9ECEF",
+                  pl: "2rem",
+                  borderRadius: "3rem",
+                },
               }}
-            />
-          </Collapse>
+            /> */}
+              <Paper
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  height: "40px",
+                  width: "100%",
+                  backgroundColor: "#E7E3E3",
+                }}
+              >
+                <InputBase
+                  sx={{ ml: 1, pl: "0.3rem" }}
+                  id="content"
+                  placeholder="답글을 입력해주세요."
+                  value={formData.content}
+                  onChange={handleChange}
+                />
+                <Divider sx={{ height: 40, m: 0.5 }} orientation="vertical" />
+                <IconButton
+                  disabled={formData.content === ""}
+                  color="secondary"
+                  sx={{ p: "10px" }}
+                  aria-label="directions"
+                  onClick={handleSubmit}
+                >
+                  <RateReviewIcon />
+                </IconButton>
+              </Paper>
+            </Collapse>
+          </Grid>
         </Grid>
-        <Grid item xs={2} sm={1} style={{ textAlign: "right" }}>
-          <Fab
-            variant="contained"
-            color="secondary"
+        {!isDropdownOpen && (
+          <div
             style={{
-              height: "35px",
-              width: "35px",
-              borderRadius: "50%",
-              aspectRatio: 1,
+              position: "absolute",
+              right: "0",
+              bottom: "-1.3rem",
+              // backgroundColor: "black",
             }}
-            onClick={isDropdownOpen ? handleSubmit : handleDropdownToggle}
           >
-            {isDropdownOpen ? (
-              <ArrowUpwardIcon sx={{ fontSize: "2rem" }} />
-            ) : (
-              <AddIcon />
-            )}
-          </Fab>
-        </Grid>
-      </Grid>
+            <Button
+              onClick={isDropdownOpen ? handleSubmit : handleDropdownToggle}
+            >
+              답글 작성
+            </Button>
+          </div>
+          // <Grid item xs={2} sm={1} style={{ textAlign: "right" }}>
+          //   <Fab
+          //     variant="contained"
+          //     color="secondary"
+          //     style={{
+          //       height: "35px",
+          //       width: "35px",
+          //       borderRadius: "50%",
+          //       aspectRatio: 1,
+          //     }}
+          //     onClick={isDropdownOpen ? handleSubmit : handleDropdownToggle}
+          //   >
+          //     {isDropdownOpen ? (
+          //       <ArrowUpwardIcon sx={{ fontSize: "2rem" }} />
+          //     ) : (
+          //       <AddIcon />
+          //     )}
+          //   </Fab>
+          // </Grid>
+        )}
+      </div>
 
       {/* 모달 */}
       <Modal open={isModalOpen} onClose={handleCloseModal}>

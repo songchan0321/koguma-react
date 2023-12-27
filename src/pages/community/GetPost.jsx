@@ -1,11 +1,10 @@
 import React, { Fragment, useState, useEffect } from "react";
 import ListComment from "../../component/community/ListCommment";
-import DetailOption from "../../component/community/DetailOption";
 import GetPostForm from "../../component/community/GetPostForm";
 import Back from "../../component/common/Back";
 import MarginEmpty from "../../component/payment/MarginEmpty";
-import { Divider, Paper, CircularProgress } from "@mui/material";
-import AddComment from "../../component/community/AddComment";
+import { CircularProgress } from "@mui/material";
+import TopBar from "../../component/payment/TopBar";
 
 const GetPost = () => {
   const [loading, setLoading] = useState(true);
@@ -34,37 +33,39 @@ const GetPost = () => {
   }, []); // 빈 배열을 전달하여 컴포넌트 마운트 시에만 실행
 
   return (
-    <Fragment>
-      <Paper
+    <>
+      <Back url={"/post/list"} />
+      <MarginEmpty value={"70px"} />
+      <TopBar>동네생활</TopBar>
+      <Fragment>
+        {/* <Paper
         sx={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1100 }}
         elevation={3}
-      >
-        <Back />
+        >
         <DetailOption
-          editTo="update"
-          reportTo="/member/report/add"
-          title="게시글 관리"
+        editTo="update"
+        reportTo="/member/report/add"
+        title="게시글 관리"
         />
-      </Paper>
-      <div style={{ marginTop: "64px" }}>
-        <Divider />
-        <MarginEmpty />
+      </Paper> */}
+        <div>
+          {/* <Divider /> */}
 
-        {loading ? (
-          // 로딩 중이면 CircularProgress 표시
-          <CircularProgress />
-        ) : (
-          // 로딩이 완료되면 게시글 및 댓글 컴포넌트 랜더링
-          <Fragment>
-            <GetPostForm postData={postData} />
-            <Divider />
-            <AddComment />
-            <Divider />
-            <ListComment />
-          </Fragment>
-        )}
-      </div>
-    </Fragment>
+          {loading ? (
+            // 로딩 중이면 CircularProgress 표시
+            <CircularProgress />
+          ) : (
+            // 로딩이 완료되면 게시글 및 댓글 컴포넌트 랜더링
+            <Fragment>
+              <GetPostForm postData={postData} />
+              {/* <AddComment /> */}
+              <ListComment />
+              <MarginEmpty value={"66px"} />
+            </Fragment>
+          )}
+        </div>
+      </Fragment>
+    </>
   );
 };
 

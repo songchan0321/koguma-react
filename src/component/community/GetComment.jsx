@@ -13,10 +13,22 @@ import ListReply from "./ListReply";
 import AddReply from "./AddReply";
 import CommentAavatarForm from "./CommentAvatarForm";
 import { formatTimeAgo } from "../../apis/utils/timestamp";
+import AddComment from "./AddComment";
 
 const GetComment = () => {
   const [listComment, setListComment] = useState([]);
   const { postId } = useParams();
+
+  const callList = () => {
+    (async () => {
+      try {
+        const data = await callCommentListAPI(postId);
+        setListComment(data);
+      } catch (err) {
+        console.error(err);
+      }
+    })();
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,8 +50,6 @@ const GetComment = () => {
         listComment.map((comment) => (
           <div key={comment.id}>
             <Grid container spacing={0}>
-              {console.log("comment.id")}
-              {console.log(comment.id)}
               <Grid item xs={12}>
                 <Card sx={{ maxWidth: "100%" }}>
                   <Box
@@ -53,24 +63,20 @@ const GetComment = () => {
 
                     <Box sx={{ marginLeft: "auto" }}>
                       {/* <CommentOption /> */}
-                      <Typography
-                        variant="caption"
-                        color="text.secondary"
-                        sx={{ mb: 1 }}
-                      >
-                        {formatTimeAgo(comment.regDate)}
-                      </Typography>
                     </Box>
                   </Box>
-                  <CardContent sx={{ marginLeft: "30px", marginBottom: 0 }}>
-                    <Typography variant="body1">{comment.content}</Typography>
+                  <CardContent sx={{ marginLeft: "3.5rem", marginBottom: 0 }}>
+                    <Typography variant="subtitle1">
+                      {comment.content}
+                    </Typography>
                     <ListReply commentId={comment.id} />
                     <AddReply commentId={comment.id} />
-                    <Divider />
+                    {/* <Divider /> */}
                   </CardContent>
                 </Card>
               </Grid>
             </Grid>
+            <AddComment callList={callList} />
           </div>
         ))}
     </>

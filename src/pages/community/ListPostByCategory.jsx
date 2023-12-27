@@ -8,6 +8,7 @@ import Back from "../../component/common/Back";
 import BottomBar from "../../component/common/BottomBar";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import MarginEmpty from "../../component/payment/MarginEmpty";
+import TopBar from "../../component/payment/TopBar";
 
 const ListPostByCategory = () => {
   const categories = [
@@ -49,19 +50,30 @@ const ListPostByCategory = () => {
         <i>{title}</i>
       </Typography>
       <Divider />
+      <TopBar>
+        {/* {alert(categories[categoryId])} */}
+        {categories.filter((cat) => cat.id === parseInt(categoryId))[0][
+          "name"
+        ] + " 게시글"}
+      </TopBar>
       <PostThumbnail
         callAPI={callPostListByCategoryAPI}
         callParam={categoryId}
       ></PostThumbnail>
       <Fab
-        style={{ position: "fixed", bottom: "80px", right: "30px" }}
+        style={{
+          position: "fixed",
+          bottom: "80px",
+          right: "30px",
+          backgroundColor: "#D070FB",
+        }}
         variant="contained"
-        color="secondary"
+        // color="secondary"
         aria-label="add"
         component={Link}
         to="/post/add"
       >
-        <AddIcon />
+        <AddIcon sx={{ color: "white" }} />
       </Fab>
 
       <MarginEmpty />
