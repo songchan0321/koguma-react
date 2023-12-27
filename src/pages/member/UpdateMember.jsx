@@ -44,7 +44,7 @@ const UpdateMember = () => {
 
   return (
     <Box p={3} sx={{ overflowY: "auto", maxHeight: "calc(100vh - 64px)" }}>
-      <Grid container spacing={2}>
+      <Grid container>
         <Grid item xs={12} md={4}>
           {/* 로딩 중일 때 CircularProgress 표시 */}
           {loading ? (
@@ -68,11 +68,10 @@ const UpdateMember = () => {
             )
           )}
         </Grid>
-        <Grid item xs={12} md={8}>
-          {/* 닉네임 */}
-          <div style={{ textAlign: "center" }}>
+        <Grid xs={12} style={{ pt: 0 }}>
+          {/* <div style={{ textAlign: "center" }}>
             <Typography variant="h4" gutterBottom>
-              {/* 로딩 중일 때 CircularProgress 표시 */}
+              
               {loading ? (
                 <CircularProgress size={20} />
               ) : (
@@ -80,7 +79,7 @@ const UpdateMember = () => {
                 member?.nickname
               )}
             </Typography>
-          </div>
+          </div> */}
           {/* UpdateMemberForm 사용 */}
           <UpdateMemberForm
             member={member}
