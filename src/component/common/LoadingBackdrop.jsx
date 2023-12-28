@@ -1,4 +1,4 @@
-import { Backdrop, Button, CircularProgress } from "@mui/material";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const LoadingBackdrop = ({ open, progress }) => {
   return (

@@ -17,9 +17,7 @@ import MarginEmpty from "../../payment/MarginEmpty";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { DateCalendar, DateTimePicker, TimePicker } from "@mui/x-date-pickers";
-import { DateRangeCalendar } from "@mui/x-date-pickers-pro";
+import { DateCalendar, TimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 
 const AddMeetUp = () => {
@@ -200,6 +198,9 @@ const AddMeetUp = () => {
                             selectedDate: dayjs(newValue),
                           });
                         }}
+                        shouldDisableDate={(date) =>
+                          dayjs().isAfter(date, "day")
+                        } // 오늘 이전의 날짜 비활성화
                       />
                     </DemoItem>
                   </DemoContainer>
@@ -217,16 +218,29 @@ const AddMeetUp = () => {
 
             <div></div>
           </div>
-          <Button
-            variant="contained"
-            color="secondary"
-            style={fixedButtonStyle}
-            onClick={handleSubmit}
-          >
-            만들기
-          </Button>
         </Paper>
       </Box>
+      <MarginEmpty />
+      <div>
+        <MarginEmpty />
+        <Button
+          variant="contained"
+          color="secondary"
+          style={{
+            position: "fixed",
+            bottom: 10,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "90%",
+            padding: "10px",
+            textAlign: "center",
+            zIndex: 1000, // 화면 최상단에 위치하도록 zIndex 속성 추가
+          }}
+          onClick={handleSubmit}
+        >
+          만들기
+        </Button>
+      </div>
     </>
   );
 };

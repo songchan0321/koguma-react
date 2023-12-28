@@ -4,7 +4,7 @@ import {
   joinMeetUpCancelAPI,
   joinMeetUpRequestAPI,
 } from "../../../apis/api/club";
-import { Button, Divider } from "@mui/material";
+import { Button } from "@mui/material";
 import { useModal } from "../../../context/ModalContext";
 
 const JoinMeetUpStateButton = ({ clubId, meetUpId, clubMember }) => {
@@ -27,6 +27,7 @@ const JoinMeetUpStateButton = ({ clubId, meetUpId, clubMember }) => {
   const handleButtonJoin = async () => {
     try {
       await joinMeetUpRequestAPI(meetUpId, clubMember);
+      setJoinState(true);
       await openModal("일정 참여가 완료되었습니다.", true, () => {});
     } catch (err) {
       console.log(err);
@@ -36,6 +37,8 @@ const JoinMeetUpStateButton = ({ clubId, meetUpId, clubMember }) => {
   const handleButtonCancel = async () => {
     try {
       await joinMeetUpCancelAPI(clubId, meetUpId);
+      setJoinState(false);
+
       await openModal("일정 참여가 취소되었습니다.", true, () => {});
     } catch (err) {
       console.log(err);

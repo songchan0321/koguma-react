@@ -92,16 +92,24 @@ const GetClub = () => {
             <Typography variant="h4">{club.title}</Typography>
           </span>
           <div>
-            <Button
-              onClick={listClubMember}
-              variant="outlined"
-              color="secondary"
-            >
-              <Diversity3Icon sx={{ fontSize: "1.5rem" }} />
-            </Button>
-            <Button onClick={clubSetting} variant="outlined" color="secondary">
-              <SettingsIcon sx={{ fontSize: "1.5rem" }} />
-            </Button>
+            {clubMember.memberRole && (
+              <Button
+                onClick={listClubMember}
+                variant="outlined"
+                color="secondary"
+              >
+                <Diversity3Icon sx={{ fontSize: "1.5rem" }} />
+              </Button>
+            )}
+            {clubMember.memberRole && (
+              <Button
+                onClick={clubSetting}
+                variant="outlined"
+                color="secondary"
+              >
+                <SettingsIcon sx={{ fontSize: "1.5rem" }} />
+              </Button>
+            )}
           </div>
         </div>
 

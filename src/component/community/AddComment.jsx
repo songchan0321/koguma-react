@@ -1,20 +1,11 @@
-import {
-  Box,
-  Button,
-  Fab,
-  Grid,
-  TextField,
-  Modal,
-  Typography,
-} from "@mui/material";
-import ReportIcon from "@mui/icons-material/Report";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import { useState, useEffect } from "react";
+import { Paper, InputBase, Divider, IconButton } from "@mui/material";
+import RateReviewIcon from "@mui/icons-material/RateReview";
+import { useState } from "react";
 import { addCommentAPI } from "../../apis/api/community";
-import { useParams } from "react-router-dom";
-import { red } from "@mui/material/colors";
+import { useNavigate, useParams } from "react-router-dom";
 
-const AddComment = () => {
+const AddComment = ({ callList }) => {
+  const navigate = useNavigate();
   const { postId } = useParams();
   const [formData, setFormData] = useState({
     writerId: 0,
@@ -24,16 +15,7 @@ const AddComment = () => {
     parentId: null,
   });
 
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const red = "#FF0000";
   const handleSubmit = async (event) => {
-    if (formData.content.length === 0) {
-      // 텍스트 필드에 아무것도 입력되지 않았을 때 모달 열기
-      setModalOpen(true);
-      return;
-    }
-
     try {
       const { data } = await addCommentAPI(
         formData.postId,
@@ -52,6 +34,7 @@ const AddComment = () => {
         activeFlag: true,
         parentId: null,
       });
+      callList();
     } catch (err) {
       console.log(err);
     }
@@ -66,98 +49,46 @@ const AddComment = () => {
     }));
   };
 
-  const handleCloseModal = () => {
-    // 모달을 닫을 때 모달 상태 업데이트
-    setModalOpen(false);
-  };
-
   return (
-    <Box
-      component="form"
-      sx={{
-        "& > :not(style)": { m: 1, width: "100%" },
+    <div
+      style={{
+        position: "fixed",
+        bottom: 0,
+        zIndex: 2000,
+        display: "flex",
+        alignItems: "center",
+        width: "100%",
       }}
-      noValidate
-      autoComplete="off"
     >
-      <Grid container spacing={2} alignItems="flex-end">
-        <Grid item xs={9} sm={9}>
-          <TextField
-            id="content"
-            label="댓글을 입력해보세요"
-            variant="standard"
-            value={formData.content}
-            onChange={handleChange}
-            fullWidth
-            InputProps={{
-              disableUnderline: true,
-              inputProps: { maxLength: 50 },
-            }}
-          />
-        </Grid>
-        <Grid item xs={2} sm={1} style={{ textAlign: "right" }}>
-          <Fab
-            variant="contained"
-            color="secondary"
-            style={{
-              height: "35px",
-              width: "35px",
-              borderRadius: "60%",
-              aspectRatio: 1,
-            }}
-            onClick={handleSubmit}
-          >
-            <ArrowUpwardIcon sx={{ fontSize: "2rem" }} />
-          </Fab>
-        </Grid>
-      </Grid>
-
-      {/* 모달 */}
-      <Modal
-        open={modalOpen}
-        onClose={handleCloseModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+      <Paper
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          height: "60px",
+          width: "100%",
+          backgroundColor: "#E7E3E3",
+        }}
       >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            bgcolor: "white",
-            boxShadow: 24,
-            p: 4,
-          }}
+        <InputBase
+          sx={{ ml: 1, flex: 1, pl: "1rem" }}
+          id="content"
+          placeholder="댓글을 입력해주세요."
+          value={formData.content}
+          onChange={handleChange}
+          inputProps={{ "aria-label": "search google maps" }}
+        />
+        <Divider sx={{ height: 40, m: 0.5 }} orientation="vertical" />
+        <IconButton
+          disabled={formData.content === ""}
+          color="secondary"
+          sx={{ p: "10px" }}
+          aria-label="directions"
+          onClick={handleSubmit}
         >
-          <Typography
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-            sx={{
-              color: red,
-              fontWeight: "bold",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <ReportIcon sx={{ fontSize: "2rem", marginRight: "8px" }} />
-            주의!
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            한 글자 이상 작성해야합니다.
-          </Typography>
-          <Button
-            onClick={handleCloseModal}
-            variant="contained"
-            color="secondary"
-            sx={{ mt: 2 }}
-          >
-            확인
-          </Button>
-        </Box>
-      </Modal>
-    </Box>
+          <RateReviewIcon />
+        </IconButton>
+      </Paper>
+    </div>
   );
 };
 

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { getCommentCountsAPI } from "../../apis/api/community";
-import { Typography } from "@mui/material";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 
 const CommentCounts = ({ postId }) => {
@@ -20,11 +19,14 @@ const CommentCounts = ({ postId }) => {
   }, [postId]);
 
   // Conditionally render based on commentCount
-  return commentCount > 0 ? (
-    <Typography variant="body2" color="text.secondary">
-      <ChatBubbleOutlineIcon /> {commentCount}
-    </Typography>
-  ) : null;
+  return (
+    commentCount > 0 && (
+      <span style={{ display: "inline-block", paddingRight: "1rem" }}>
+        <ChatBubbleOutlineIcon sx={{ fontSize: "1rem" }} />{" "}
+        <span style={{ fontSize: "0.8rem" }}>{commentCount}</span>
+      </span>
+    )
+  );
 };
 
 export default CommentCounts;

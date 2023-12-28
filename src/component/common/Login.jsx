@@ -26,7 +26,6 @@ import Modal from "./Modal";
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const socket = React.useContext(SocketContext);
-  const [error, setError] = useState("");
   const defaultTheme = createTheme();
   const navigator = useNavigate();
   const { setIsLogin } = React.useContext(IsLoginContext);

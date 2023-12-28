@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import PostTopBar from "../../component/community/PostTopBar";
@@ -14,12 +14,11 @@ const ListPost = () => {
     <Fragment>
       <PostTopBar />
       <MarginEmpty />
-      <MarginEmpty />
       <PostThumbnail callAPI={callPostListAPI} />
 
       <div style={{ position: "fixed", bottom: "80px", right: "30px" }}>
         <Fab
-          sx={{ backgroundColor: "#D080FB" }}
+          sx={{ backgroundColor: "#D070FB" }}
           variant="contained"
           color="secondary"
           aria-label="add"

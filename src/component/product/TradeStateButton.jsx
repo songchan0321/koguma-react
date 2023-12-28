@@ -2,13 +2,20 @@ import { Button } from "@mui/material";
 
 const TradeStateButton = ({ type }) => {
   const tradeStatus = type && type.tradeStatus; // Extract tradeStatus from the object
-
+  const style = {
+    mr: 1,
+    // width: "4rem",
+    display: "inline-block",
+    padding: 0,
+    minHeight: 0,
+    minWidth: "3rem",
+  };
   if (tradeStatus === "RESERVATION") {
     return (
       <Button
         color="success"
         variant="contained"
-        sx={{ mr: 1 }}
+        sx={style}
         style={{
           fontSize: "9px",
           height: "24px",
@@ -23,7 +30,7 @@ const TradeStateButton = ({ type }) => {
       <Button
         color="secondary"
         variant="contained"
-        sx={{ mr: 1 }}
+        sx={style}
         style={{
           fontSize: "9px",
           height: "24px",
@@ -38,7 +45,7 @@ const TradeStateButton = ({ type }) => {
       <Button
         color="secondary"
         variant="contained"
-        sx={{ mr: 1 }}
+        sx={style}
         style={{
           fontSize: "9px",
           height: "24px",

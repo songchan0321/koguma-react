@@ -1,27 +1,18 @@
-import { useEffect, useState, useContext } from "react";
-import { IsLoginContext } from "../../context/LoginContextProvider";
+import { useEffect, useState } from "react";
 import { getPostAPI } from "../../apis/api/community";
-import { Container, Button, Typography, Box } from "@mui/material";
+import { Container, Typography, Box, Chip } from "@mui/material";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import { useNavigate, useParams } from "react-router-dom";
-import CommunityAavatarForm from "./PostAvatarFrom";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import { authInstance } from "../../apis/utils/instance";
 import PostAavatarForm from "./PostAvatarFrom";
-import CommentCounts from "./CommentCounts";
-import { formatTimeAgo } from "../../apis/utils/timestamp";
 
 const GetPostForm = () => {
-  const { setIsLogin } = useContext(IsLoginContext);
   const { postId } = useParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
-  const getMember = (memberId) => {
-    navigate(`/member/other/get/${memberId}`);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,39 +51,33 @@ const GetPostForm = () => {
         <LoadingProgress />
       ) : (
         <>
-          <Button
-            variant="outlined"
+          <Chip
+            icon={<LocationCityIcon />}
+            label={data.categoryName}
             sx={{
-              padding: "5px 10px",
-              fontSize: "0.8rem",
-              color: "secondary.main",
-              borderColor: "secondary.main",
+              fontSize: "0.6rem",
+              height: "1.3rem",
+              "& .MuiChip-label": {
+                padding: "0 0.5rem",
+              },
             }}
             onClick={() =>
               navigate(`/post/list/category/${data.categoryDTO?.id}`)
             }
-          >
-            <LocationCityIcon /> {data.categoryName}
-          </Button>
+          />
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <PostAavatarForm />
-            <Box sx={{ marginLeft: "auto" }}>
-              {/* <CommentOption /> */}
-              <Typography
-                variant="caption"
-                color="text.secondary"
-                sx={{ mb: 1, fontSize: "1.0rem" }}
-              >
-                {formatTimeAgo(data.regDate)}
-              </Typography>
-            </Box>
           </Box>
 
-          <h1>{data.title}</h1>
-          <Box sx={{ mb: 10, overflowY: "auto" }}>
-            <h3>{data.content}</h3>
+          <h3>
+            <b>{data.title}</b>
+          </h3>
+          <Box sx={{ mb: "3rem" }}>
+            <span>{data.content}</span>
           </Box>
-          <Typography sx={{ display: "flex", alignItems: "center" }}>
+          <Typography
+            sx={{ display: "flex", alignItems: "center", mb: "1.3rem" }}
+          >
             <RemoveRedEyeIcon
               sx={{
                 marginRight: 0.5,
@@ -110,7 +95,7 @@ const GetPostForm = () => {
               {data.views + 1}명이 봤어요
             </span>
           </Typography>
-          <CommentCounts postId={data.id} />
+          {/* <CommentCounts postId={data.id} /> */}
         </>
       )}
     </Container>

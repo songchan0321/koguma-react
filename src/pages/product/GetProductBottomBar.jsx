@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
-import { Paper } from "@mui/material";
+import { Paper, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import LikeProduct from "../../component/product/LikeProduct";
 import { CardActions, Typography } from "@mui/material";
@@ -28,15 +28,7 @@ const StyledCardActions = styled(CardActions)({
 
 const GetProductBottomBar = ({ data, isMine, productId }) => {
   const navigate = useNavigate();
-  const [isExist, setIsExist] = useState();
   const [member, setMember] = useState();
-
-  const existChatRoomByProduct = async () => {
-    // 해당 구매자의 채팅기록이 있는지
-    const chatIsExist = await existChatRoomByProductAPI(data.id);
-    setIsExist(chatIsExist);
-  };
-
   useEffect(() => {
     (async () => {
       await getMemberAPI().then(setMember);
@@ -68,40 +60,45 @@ const GetProductBottomBar = ({ data, isMine, productId }) => {
               <b>{formatMoney(data.price)}원</b>
             </Typography>
           </div>
-          {isMine ? (
-            <BottomButton
-              navTarget={() => navigate(`/product/suggest/list/${data.id}`)}
-              isBlock={true}
-              child={`가격제안 ${data.suggestCount}`}
-            />
-          ) : (
-            <BottomButton
-              navTarget={() => navigate(`/product/suggest/${data.id}`)}
-              isBlock={
-                data.tradeStatus === "SALED"
-                  ? false
-                  : true && data.validSuggest === false
-                  ? true
-                  : false
-              }
-              child={
-                data.validSuggest === false ? `가격제안 하기` : `가격제안 완료`
-              }
-            />
-          )}
-          {isMine ? (
-            <BottomButton
-              navTarget={() => navigate(`/chat/list/${data.id}`)}
-              isBlock={true}
-              child={`대화중인 채팅방 ${data.chatroomCount}`}
-            />
-          ) : (
-            <BottomButton
-              navTarget={startChatting}
-              isBlock={data.tradeStatus === "SALED" ? false : true}
-              child={`채팅하기`}
-            />
-          )}
+          <Stack direction={"row"}>
+            {isMine ? (
+              <BottomButton
+                navTarget={() => navigate(`/product/suggest/list/${data.id}`)}
+                isBlock={true}
+                child={`가격제안 보기 (${data.suggestCount})`}
+              />
+            ) : (
+              <BottomButton
+                navTarget={() => navigate(`/product/suggest/${data.id}`)}
+                isBlock={
+                  data.tradeStatus === "SALED"
+                    ? false
+                    : true && data.validSuggest === false
+                    ? true
+                    : false
+                }
+                child={
+                  data.validSuggest === false
+                    ? `가격제안 하기`
+                    : `가격제안 완료`
+                }
+              />
+            )}
+            &nbsp;&nbsp;
+            {isMine ? (
+              <BottomButton
+                navTarget={() => navigate(`/chat/list/${data.id}`)}
+                isBlock={true}
+                child={`채팅방 보기 (${data.chatroomCount})`}
+              />
+            ) : (
+              <BottomButton
+                navTarget={startChatting}
+                isBlock={data.tradeStatus === "SALED" ? false : true}
+                child={`채팅하기`}
+              />
+            )}
+          </Stack>
         </StyledCardActions>
       </Paper>
     </ThemeProvider>

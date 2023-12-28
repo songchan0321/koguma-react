@@ -1,13 +1,6 @@
 import { useEffect, useState } from "react";
 import { countMeetUpJoinMember, listMeetUpAPI } from "../../../apis/api/club";
-import {
-  Box,
-  CardContent,
-  CardMedia,
-  Grid,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { CardContent, Grid, Paper, Typography } from "@mui/material";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import MarginEmpty from "../../payment/MarginEmpty";

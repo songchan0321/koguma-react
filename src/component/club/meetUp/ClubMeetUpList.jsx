@@ -5,11 +5,9 @@ import {
   Box,
   Button,
   Card,
-  CardContent,
   Grid,
   MobileStepper,
   Paper,
-  Stack,
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";

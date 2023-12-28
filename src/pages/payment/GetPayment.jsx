@@ -41,13 +41,11 @@ const GetPayment = () => {
           <TopBar color="secondary">
             <i>Pay</i>
           </TopBar>
-          <Back
-            url={
-              state?.roomId != null
-                ? `/chat/get/${state.roomId}`
-                : "/product/list"
-            }
-          />
+          {state?.roomId != null ? (
+            <Back url={`/chat/get/${state.roomId}`} />
+          ) : (
+            <Back />
+          )}
           <MarginEmpty value={"70px"} />
           <PaymentInfo registered={existPayment} />
           <br />

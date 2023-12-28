@@ -1,4 +1,4 @@
-import { Avatar, Typography } from "@mui/material";
+import { Avatar } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { listJoinMeetUpMemberAPI } from "../../../apis/api/club";
 
@@ -21,7 +21,7 @@ const ListMeeUpJoinMember = ({ meetUpId }) => {
 
   return (
     <>
-      <div>
+      <div style={{ display: "flex" }}>
         {joinMemberList.map((joinMember) => (
           <div key={joinMember.id}>
             <Avatar
@@ -29,7 +29,6 @@ const ListMeeUpJoinMember = ({ meetUpId }) => {
               src={joinMember.clubMemberDTO.memberDTO.profileURL}
               sx={{ width: 30, height: 30 }}
             />
-            <p>{joinMember.clubMemberDTO.memberDTO.profileURL}</p>
           </div>
         ))}
       </div>

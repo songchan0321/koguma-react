@@ -1,13 +1,14 @@
 import { Fragment, useEffect, useState } from "react";
 import PostThumbnail from "../../component/community/PostThumbnail";
 import { callPostListByViewAPI } from "../../apis/api/community";
-import { Divider, Fab, Paper, Typography } from "@mui/material";
+import { Divider, Fab, Paper } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import Back from "../../component/common/Back";
 import BottomBar from "../../component/common/BottomBar";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import MarginEmpty from "../../component/payment/MarginEmpty";
+import TopBar from "../../component/payment/TopBar";
 
 const ListPostByViews = () => {
   const [postList, setPostList] = useState();
@@ -30,14 +31,14 @@ const ListPostByViews = () => {
         elevation={3}
       >
         <Back />
-
-        <Typography
+        <TopBar>인기 게시글</TopBar>
+        {/* <Typography
           variant="h6"
           component="h2"
           sx={{ textAlign: "center", mb: 1.5 }}
         >
           <i>인기글</i>
-        </Typography>
+        </Typography> */}
       </Paper>
       <Divider />
       <MarginEmpty />

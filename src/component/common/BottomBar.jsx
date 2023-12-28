@@ -10,7 +10,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Badge, Paper } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import { CHAT_EVENT, SocketContext } from "../../context/socket";
-import { getAllUnreadCount, getUnreadCount } from "../../apis/api/chat";
+import { getAllUnreadCount } from "../../apis/api/chat";
 
 // 테마 생성
 const theme = createTheme({

@@ -57,7 +57,12 @@ const ListContainingProduct = ({ data, index, type }) => {
                             : "/photo.png"
                         }
                         variant="square"
-                        sx={{ width: 100, height: 100, mr: 1 }}
+                        sx={{
+                          width: 100,
+                          height: 100,
+                          // mr: 1,
+                          border: "solid 1px rgba(120, 120, 120, 0.2)",
+                        }}
                       />
                     }
                     title={
@@ -70,7 +75,8 @@ const ListContainingProduct = ({ data, index, type }) => {
                     subheader={
                       <>
                         <Typography variant="subtitle2" color="textSecondary">
-                          {prod.productDTO.dong}{" "}
+                          {prod.productDTO.dong}
+                          {" · "}
                           {formatTimeAgo(prod.productDTO.regDate)}
                         </Typography>
                         <Box
@@ -107,26 +113,26 @@ const ListContainingProduct = ({ data, index, type }) => {
                             )}
                             {prod.productDTO.likeCount > 0 && (
                               <>
-                                {/* <span style={{ marginRight: "5px" }}>
+                                <span style={{ marginRight: "5px" }}>
                                   <FavoriteBorder sx={{ fontSize: 16 }} />
                                   &nbsp;
                                   {prod.productDTO.likeCount}
-                                </span> */}
+                                </span>
                               </>
                             )}
                           </div>
                         </Box>
                       </>
                     }
-                    action={
-                      type === "report" ? (
-                        <></>
-                      ) : (
-                        <IconButton>
-                          <LikeCheckButton />
-                        </IconButton>
-                      )
-                    }
+                    // action={
+                    //   type === "report" ? (
+                    //     <></>
+                    //   ) : (
+                    //     <IconButton>
+                    //       <LikeCheckButton />
+                    //     </IconButton>
+                    //   )
+                    // }
                   />
                 </Card>
               ))
@@ -146,7 +152,12 @@ const ListContainingProduct = ({ data, index, type }) => {
                             : "/photo.png"
                         }
                         variant="square"
-                        sx={{ width: 100, height: 100, mr: 1 }}
+                        sx={{
+                          width: 100,
+                          height: 100,
+                          // mr: 1,
+                          border: "solid 1px rgba(120, 120, 120, 0.2)",
+                        }}
                       />
                     }
                     title={
@@ -167,7 +178,7 @@ const ListContainingProduct = ({ data, index, type }) => {
                           color="textSecondary"
                           sx={{ mb: 1 }}
                         >
-                          {prod.dong} {formatTimeAgo(prod.regDate)}
+                          {prod.dong + " · " + formatTimeAgo(prod.regDate)}
                         </Typography>
                         <Box
                           sx={{

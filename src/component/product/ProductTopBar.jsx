@@ -10,7 +10,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import { Badge, Drawer, Paper } from "@mui/material";
+import { Badge, Paper } from "@mui/material";
 import LocationBox from "../location/LocationBox";
 
 import { useEffect } from "react";
@@ -108,7 +108,11 @@ const ProductTopBar = ({ location, setLocation, handleCategory }) => {
         </ButtonGroup>
 
         {/* Modal */}
-        <Dialog open={isModalOpen} onClose={handleModalClose}>
+        <Dialog
+          open={isModalOpen}
+          onClose={handleModalClose}
+          PaperProps={{ sx: { width: "14rem", borderRadius: "1rem" } }}
+        >
           <DialogTitle>카테고리 선택</DialogTitle>
           <DialogContent sx={{ overflowY: "auto", maxHeight: "300px" }}>
             <DialogContentText>

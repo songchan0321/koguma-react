@@ -1,11 +1,9 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 
-import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Card";
 import { Button } from "@mui/material";
 import styled from "styled-components";
 import { ReactComponent as Delete } from "../../delete.svg";
-import { addImageAPI } from "../../apis/api/common";
 
 const ImageList = ({ images, setImages, imageRegHandler, imageDelHandler }) => {
   // 이미지 상대경로 저장

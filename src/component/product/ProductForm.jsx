@@ -16,6 +16,7 @@ import {
   createTheme,
   ThemeProvider,
   InputAdornment,
+  Alert,
 } from "@mui/material";
 
 import ImageList from "../common/ImageList";
@@ -25,6 +26,7 @@ import { useNavigate } from "react-router-dom";
 import LoadingProgress from "../common/LoadingProgress";
 import { useModal } from "../../context/ModalContext";
 import Modal from "../common/Modal";
+import MarginEmpty from "../payment/MarginEmpty";
 
 const ProductForm = ({ text }) => {
   const categorys = [
@@ -168,22 +170,38 @@ const ProductForm = ({ text }) => {
       ) : (
         <ThemeProvider theme={defaultTheme}>
           <Modal />
+          <Alert
+            style={{
+              position: "absolute",
+              left: "50%",
+              transform: "translate(-50%, 0)",
+              borderRadius: "0.5rem",
+              top: "7rem",
+              width: "16rem",
+              fontSize: "1rem",
+            }}
+            severity="info"
+          >
+            가품 및 판매금지품목은
+            <br /> 게시가 제한될 수 있어요.
+          </Alert>
           <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Backdrop
               sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
               open={loading}
             ></Backdrop>
+            <MarginEmpty value={"12rem"} />
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                height: "100vh",
+                // height: "100vh",
               }}
             >
-              <br />
+              {/* <br /> */}
 
               <ImageList
                 images={images}
@@ -280,9 +298,10 @@ const ProductForm = ({ text }) => {
                 <Button
                   onClick={() => uploadProduct()}
                   fullWidth
-                  color="secondary"
+                  // color="secondary"
+
                   variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                  sx={{ mt: 3, mb: 2, backgroundColor: "#D070FB" }}
                 >
                   {text}
                 </Button>

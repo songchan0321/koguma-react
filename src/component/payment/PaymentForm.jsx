@@ -11,10 +11,12 @@ import { useEffect, useState } from "react";
 import BankForm from "./BankForm";
 import { addPaymentAPI, checkAccountNameAPI } from "../../apis/api/payment";
 import { useNavigate } from "react-router-dom";
+import { useModal } from "../../context/ModalContext";
+import Modal from "../common/Modal";
 
 const PaymentForm = () => {
   const navigator = useNavigate();
-
+  const { openModal } = useModal();
   const checkAccountName = () => {
     (async () => {
       try {
@@ -50,8 +52,7 @@ const PaymentForm = () => {
       )
         .then(() => {
           setLoading(false);
-          alert("페이 등록 성공");
-          navigator("/payment/get");
+          openModal("페이 등록 성공", true, () => navigator("/payment/get"));
         })
         .catch((err) => {
           console.log(err);
@@ -130,6 +131,7 @@ const PaymentForm = () => {
       noValidate
       autoComplete="off"
     >
+      <Modal />
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={loading}

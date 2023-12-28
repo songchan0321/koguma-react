@@ -5,12 +5,8 @@ import {
   Card,
   CardContent,
   Divider,
-  Checkbox,
   Box,
 } from "@mui/material";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { useEffect, useState } from "react";
 import { listMyClubPostAPI } from "../../../apis/api/club";
 import styled from "styled-components";
@@ -34,14 +30,6 @@ const MyClubPostList = () => {
     };
     fetchData();
   }, []);
-
-  const truncateText = (text, maxLength) => {
-    if (text.length <= maxLength) {
-      return text;
-    } else {
-      return text.slice(0, maxLength) + "...";
-    }
-  };
 
   return (
     <>
@@ -138,15 +126,6 @@ const MyClubPostList = () => {
 };
 
 export default MyClubPostList;
-const backgroundStyle = {
-  boxShadow: "0px 0px 1px rgba(0, 0, 0, 0.1)",
-  padding: "0.2px",
-};
-
-const ClubCard = styled(Card)({
-  display: "flex",
-  flexDirection: "row",
-});
 
 const ClubContent = styled(CardContent)({
   flex: 1,

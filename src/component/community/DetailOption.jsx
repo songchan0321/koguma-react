@@ -4,20 +4,14 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { deletePostAPI, updatePostAPI } from "../../apis/api/community";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@mui/material";
+import { Link, useParams } from "react-router-dom";
+import { deletePostAPI } from "../../apis/api/community";
+import { Dialog, DialogActions, DialogTitle } from "@mui/material";
 
 const DetailOption = ({ editTo, deleteTo, reportTo, title }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const { postId } = useParams();
-  const navigate = useNavigate();
 
   const handleMoreVertClick = () => {
     setIsModalOpen(true);

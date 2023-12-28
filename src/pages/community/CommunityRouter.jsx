@@ -8,7 +8,6 @@ import UpdatePost from "./UpdatePost";
 import ListPostByCategory from "./ListPostByCategory";
 import ListPostByView from "./ListPostByView";
 import DetailOption from "../../component/community/DetailOption";
-import CommentAavatarForm from "../../component/community/CommentAvatarForm";
 
 const CommunityRouter = () => {
   return (

@@ -2,13 +2,12 @@ import * as React from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { CardHeader, Avatar, Typography, Box, Card } from "@mui/material";
+import { CardHeader, Avatar, Box, Stack, Typography } from "@mui/material";
 import { getCommentAPI } from "../../apis/api/community";
 import { formatTimeAgo } from "../../apis/utils/timestamp";
 
 const CommentAavatarForm = ({ comment }) => {
   const [data, setData] = useState(null);
-  const [isMine, setIsMine] = useState();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
@@ -30,7 +29,7 @@ const CommentAavatarForm = ({ comment }) => {
       }
     };
 
-    if (!data || data.comment.id !== comment.id) {
+    if (!data || data?.comment?.id !== comment.id) {
       fetchData();
     }
   }, [comment]);
@@ -39,31 +38,47 @@ const CommentAavatarForm = ({ comment }) => {
   return (
     <>
       {data && (
-        <Box>
-          <CardHeader
-            sx={{ maxWidth: "100%" }}
-            avatar={
-              <Avatar
-                aria-label="recipe"
-                style={{ width: "48px", height: "48px" }}
-              >
-                <img
-                  src={data.memberDTO.profileURL}
-                  alt="profile"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "50%",
-                  }}
-                />
-              </Avatar>
-            }
+        // <Box>
+        <Stack direction={"row"} sx={{ ml: "1rem", mt: "1rem" }}>
+          <Avatar
+            style={{ width: "2.5rem", height: "2.5rem" }}
             onClick={() => getMember(data.memberDTO?.id)}
-            title={data.memberDTO?.nickname}
-            subheader={data.postDTO?.dong}
+            src={data.memberDTO.profileURL}
           />
-          
-        </Box>
+          <Stack>
+            <Typography sx={{ ml: "1rem" }}>
+              {data.memberDTO?.nickname}
+            </Typography>
+            <Typography color="gray" sx={{ fontSize: "0.8rem", ml: "1rem" }}>
+              {data.postDTO?.dong + " · " + formatTimeAgo(comment.regDate)}
+            </Typography>
+          </Stack>
+        </Stack>
+        // <CardHeader
+        //   sx={{ maxWidth: "100%", pb: 0 }}
+        //   avatar={
+        //     <Avatar
+        //       aria-label="recipe"
+        //       style={{ width: "2.5rem", height: "2.5rem" }}
+        //     >
+        //       <img
+        //         src={data.memberDTO.profileURL}
+        //         alt="profile"
+        //         style={{
+        //           width: "100%",
+        //           height: "100%",
+        //           borderRadius: "50%",
+        //         }}
+        //       />
+        //     </Avatar>
+        //   }
+        //   onClick={() => getMember(data.memberDTO?.id)}
+        //   title={data.memberDTO?.nickname}
+        //   subheader={
+        //     data.postDTO?.dong + " · " + formatTimeAgo(comment.regDate)
+        //   }
+        // />
+        // </Box>
       )}
     </>
   );

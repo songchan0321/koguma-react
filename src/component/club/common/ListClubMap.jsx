@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { nearClubMapAPI } from "../../../apis/api/club";
-import { Map } from "react-kakao-maps-sdk";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 import EventMarkerContainer from "./EventMarkerContainer";
+import { getMemberAPI } from "../../../apis/api/member";
 
 const ListClubMap = () => {
   const [clubList, setClubList] = useState([]);
+  const [getMember, setMember] = useState({});
   const [state, setState] = useState({
     center: {
       lat: 33.450701,
@@ -48,6 +50,9 @@ const ListClubMap = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const findMember = await getMemberAPI();
+      setMember(findMember);
+      console.log(findMember);
       const data = await nearClubMapAPI();
       setClubList(data);
     };
@@ -65,6 +70,27 @@ const ListClubMap = () => {
         }}
         level={4} // 지도의 확대 레벨
       >
+        {!state.isLoading && (
+          <>
+            <MapMarker position={state.center}>
+              {" "}
+              <div style={{ padding: "5px", color: "#000" }}>
+                {state.errMsg ? state.errMsg : "   내 위치입니다 !!"}
+              </div>
+            </MapMarker>
+            {/* <CustomOverlayMap position={state.center} yAnchor={1}>
+              <div className="customoverlay">
+                <a
+                  href="https://map.kakao.com/link/map/11394059"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="title">구의야구공원</span>
+                </a>
+              </div>
+            </CustomOverlayMap> */}
+          </>
+        )}
         {clubList.map((club, index) => (
           <EventMarkerContainer key={index} club={club} />
         ))}

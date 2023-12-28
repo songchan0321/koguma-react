@@ -5,15 +5,11 @@ import {
   Box,
   CardContent,
   CardMedia,
-  Checkbox,
   Divider,
   Grid,
   Typography,
 } from "@mui/material";
 import styled from "styled-components";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import MarginEmpty from "../../payment/MarginEmpty";
 import { formatTimeAgo } from "../../../apis/utils/timestamp";
 
@@ -139,8 +135,3 @@ const ClubContent = styled(CardContent)({
   flexDirection: "column",
   justifyContent: "space-between",
 });
-
-const backgroundStyle = {
-  boxShadow: "0px 0px 1px rgba(0, 0, 0, 0.1)",
-  padding: "0.2px",
-};

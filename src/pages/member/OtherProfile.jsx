@@ -8,9 +8,9 @@ const OtherProfile = () => {
   return (
     <div>
       <OtherProfileForm />
-      <Back url={`/product/list`} />
+      <Back />
       <BottomBar />
-        <TopBar> 프로필 조회 </TopBar>
+      <TopBar> 프로필 조회 </TopBar>
     </div>
   );
 };

@@ -1,11 +1,9 @@
-import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 import "./Chatcss.css";
 import { Divider, IconButton, InputBase, Paper } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import styled from "styled-components";
-import MarginEmpty from "../../../component/payment/MarginEmpty";
 
 const socket = io.connect(process.env.REACT_APP_GROUP_CHAT_URL);
 

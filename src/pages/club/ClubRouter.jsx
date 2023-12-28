@@ -14,8 +14,6 @@ import AddClubPost from "./board/AddClubPost";
 import MapTest from "../../component/club/common/MapTest";
 import AddClubForm from "./AddClubForm";
 import GetClubPost from "./board/GetClubPost";
-import ListClubMapMarker from "./ListClubMapMarker";
-import ListClubMap from "../../component/club/common/ListClubMap";
 import ListClubNear from "./ListClubNear";
 
 const ClubRouter = () => {

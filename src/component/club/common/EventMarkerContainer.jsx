@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { CustomOverlayMap, Map, MapMarker, useMap } from "react-kakao-maps-sdk";
-import { nearClubMapAPI } from "../../../apis/api/club";
+import React, { useRef, useState } from "react";
+import { CustomOverlayMap, MapMarker, useMap } from "react-kakao-maps-sdk";
 import {
   Box,
-  Card,
   CardContent,
   CardMedia,
   Chip,

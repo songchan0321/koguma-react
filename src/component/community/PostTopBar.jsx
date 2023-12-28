@@ -1,32 +1,19 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import Box from "@mui/material/Box";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
-import SearchIcon from "@mui/icons-material/Search";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import { Badge, Drawer, Paper, Typography } from "@mui/material";
-import LocationBox from "../location/LocationBox";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SearchDrawer from "../common/SearchDrawer";
+import TopBar from "../payment/TopBar";
 const PostTopBar = ({ location, setLocation }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const toggleDrawer = (open) => {
-    setIsDrawerOpen(open);
-  };
   const categories = [
     { id: "view", name: "인기글" },
     { id: 23, name: "동네소식" },
@@ -51,58 +38,37 @@ const PostTopBar = ({ location, setLocation }) => {
   };
 
   return (
-    <Paper
-      sx={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1100 }}
-      elevation={3}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          "& > *": {
-            m: 1,
-          },
-        }}
-      >
+    <>
+      <TopBar>동네생활</TopBar>
+      <div style={{ position: "fixed", top: "0.5rem", right: 0, zIndex: 1100 }}>
         <ButtonGroup variant="text" aria-label="text button group">
           <Button onClick={handleModalOpen}>
-            <MenuOpenIcon sx={{ fontSize: 30 }} color="secondary" />
+            <MenuOpenIcon sx={{ fontSize: 30, color: "black" }} />
           </Button>
         </ButtonGroup>
-
-        <Typography
-          variant="h5"
-          color="secondary"
-          align="center"
-          sx={{
-            flex: "1",
-            marginRight: "40px", // 아이콘 크기만큼 왼쪽으로 당기기
-          }}
-        >
-          동네생활
-        </Typography>
-
-        {/* Modal */}
-        <Dialog open={isModalOpen} onClose={handleModalClose}>
-          <DialogTitle>카테고리 선택</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              {categories.map((category) => (
-                <MenuItem
-                  key={category.id}
-                  onClick={() => handleCategorySelect(category)}
-                >
-                  {category.name}
-                </MenuItem>
-              ))}
-            </DialogContentText>
-          </DialogContent>
-        </Dialog>
-      </Box>
-
-      <SearchDrawer open={isDrawerOpen} toggleDrawer={toggleDrawer} />
-    </Paper>
+      </div>
+      <Dialog
+        open={isModalOpen}
+        onClose={handleModalClose}
+        PaperProps={{
+          sx: { p: "0rem 1.5rem 0.8rem 1.5rem", borderRadius: "1rem" },
+        }}
+      >
+        <DialogTitle>카테고리 선택</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {categories.map((category) => (
+              <MenuItem
+                key={category.id}
+                onClick={() => handleCategorySelect(category)}
+              >
+                {category.name}
+              </MenuItem>
+            ))}
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 

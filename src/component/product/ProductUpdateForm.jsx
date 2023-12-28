@@ -19,17 +19,13 @@ import {
 
 import { formatMoney } from "../../apis/services/product";
 import ImageList from "../common/ImageList";
-import { uploadImageAPI } from "../../apis/api/common";
-import {
-  addProductAPI,
-  getProductAPI,
-  updateProductAPI,
-} from "../../apis/api/Product";
+import { getProductAPI, updateProductAPI } from "../../apis/api/Product";
 import { useModal } from "../../context/ModalContext";
 import { useNavigate, useParams } from "react-router-dom";
 
 import LoadingProgress from "../common/LoadingProgress";
 import Modal from "../common/Modal";
+import MarginEmpty from "../payment/MarginEmpty";
 
 const ProductUpdateForm = () => {
   const categorys = [
@@ -208,7 +204,7 @@ const ProductUpdateForm = () => {
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
-                    height: "100vh",
+                    // height: "100vh",
                   }}
                 >
                   <br />
@@ -307,7 +303,7 @@ const ProductUpdateForm = () => {
                       fullWidth
                       color="secondary"
                       variant="contained"
-                      sx={{ mt: 3, mb: 2 }}
+                      sx={{ mt: 3, mb: 2, backgroundColor: "#D070FB" }}
                     >
                       상품 수정
                     </Button>

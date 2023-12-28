@@ -1,7 +1,6 @@
 import { AppBar, Divider, Toolbar, Typography } from "@mui/material";
-import Back from "./Back";
 
-const TopBarClub = ({ children, color }) => {
+const TopBar = ({ children, color }) => {
   return (
     <>
       <AppBar
@@ -23,9 +22,8 @@ const TopBarClub = ({ children, color }) => {
             component="div"
             color={color ? color : "black"}
           >
-            <Back url={children} />
-            {children}
             {/* <i>Pay</i> */}
+            {children}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -34,4 +32,4 @@ const TopBarClub = ({ children, color }) => {
   );
 };
 
-export default TopBarClub;
+export default TopBar;

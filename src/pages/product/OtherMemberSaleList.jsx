@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Button, CardHeader, Avatar, AppBar } from "@mui/material";
+import { Button, CardHeader, Avatar, AppBar, Divider } from "@mui/material";
 import Back from "../../component/common/Back";
 import MarginEmpty from "../../component/payment/MarginEmpty";
 import { getProfileAPI } from "../../apis/api/member";
 import OtherMemberProduct from "../../component/product/OtherMemberProduct";
 import LoadingProgress from "../../component/common/LoadingProgress";
 
-const OtherMemberSaleList = () => {
-  const { memberId } = useParams();
+const OtherMemberSaleList = ({ memberId }) => {
+  // const { memberId } = useParams();
   const navigate = useNavigate();
   const { state } = useLocation();
   const [selectedMenu, setSelectedMenu] = useState("거래 중");
@@ -48,32 +48,14 @@ const OtherMemberSaleList = () => {
         <LoadingProgress />
       ) : (
         <>
-          <Back url={`/member/other/get/${state.memberId}`} />
-          <AppBar
-            position="fixed"
+          <div
+            // position="fixed"
             style={{
               backgroundColor: "#ffffff",
               zIndex: 90,
             }}
           >
-            <MarginEmpty value={"50px"} />
-            <CardHeader
-              sx={{ m: 4, color: "black" }}
-              title={member && `${member.nickname}님 판매물품`}
-              action={
-                member && (
-                  <Avatar
-                    aria-label="recipe"
-                    sx={{
-                      width: "80px",
-                      height: "80px",
-                    }}
-                    src={member?.profileURL}
-                    alt=""
-                  ></Avatar>
-                )
-              }
-            />
+            <MarginEmpty value={"30px"} />
 
             <div style={{ display: "flex", width: "100%" }}>
               {menuList.map((menu, idx) => (
@@ -88,10 +70,8 @@ const OtherMemberSaleList = () => {
                 </Button>
               ))}
             </div>
-          </AppBar>
-
-          <hr></hr>
-
+          </div>
+          <hr />
           {selectedMenu === "거래 중" && (
             <OtherMemberProduct
               selectedMenuType={selectedMenuType}

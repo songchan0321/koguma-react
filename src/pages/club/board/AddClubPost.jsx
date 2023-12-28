@@ -4,7 +4,7 @@ import {
   getClubAPI,
   listClubPostCategories,
 } from "../../../apis/api/club";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AddPostCategoryModal from "../../../component/club/board/AddPostCategoryModal";
 import TopBarAddClubPost from "../../../component/club/common/TopBarAddClubPost";
 import MarginEmpty from "../../../component/payment/MarginEmpty";
@@ -13,7 +13,6 @@ import {
   Card,
   CardMedia,
   Divider,
-  Input,
   Paper,
   TextField,
 } from "@mui/material";
@@ -25,6 +24,7 @@ const AddClubPost = () => {
   const location = useLocation();
   const clubId = location.state.clubId;
   const clubMember = location.state.clubMember;
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState("제목을 입력하세요");
   const [content, setContent] = useState("내용을 입력하세요");
@@ -32,6 +32,7 @@ const AddClubPost = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] =
     useState("카테고리를 설정해주세요");
+
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [club, setClub] = useState({});
 
@@ -86,14 +87,14 @@ const AddClubPost = () => {
     // 서버로 데이터 전송
     try {
       setIsSubmitting(true);
-      const response = await addClubPost(clubId, formData, selectedCategory);
+      const response = await addClubPost(clubId, formData, selectedCategory.id);
 
       // 성공적으로 작성된 경우에 대한 처리
       console.log("게시글이 성공적으로 작성되었습니다.", response.data);
 
-      // 폼 초기화 또는 닫기 등의 작업 수행
       setTitle("제목을 입력하세요");
       setContent("내용을 입력하세요");
+      navigate(`/club/${clubId}`);
     } catch (error) {
       // 작성 실패 시 에러 처리
       console.error("게시글 작성 중 오류 발생:", error);
@@ -133,6 +134,7 @@ const AddClubPost = () => {
             clubId={clubId}
             onSelectCategory={handleCategoryChange}
             clubMember={clubMember}
+            selectedCategory={selectedCategory}
           />
         </div>
       </div>
