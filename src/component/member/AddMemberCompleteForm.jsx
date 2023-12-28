@@ -10,10 +10,11 @@ const AddMemberCompleteForm = ({ navigate }) => {
   return (
     <Box>
       <Button
+        fullWidth
         variant="contained"
         color="secondary"
         onClick={() => handleNavigate("/common/login")}
-        style={{ marginLeft: 10, marginTop: 200 }}
+        style={{ marginTop: 200, backgroundColor: "#D070FB" }}
       >
         로그인
       </Button>
