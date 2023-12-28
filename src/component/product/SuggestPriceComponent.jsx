@@ -88,24 +88,30 @@ const SuggestPriceComponent = (suggestData) => {
     <Card sx={{ maxWidth: "100%" }}>
       <CardHeader
         avatar={
+          // <Avatar
+          //   aria-label="recipe"
+          //   style={{ width: "48px", height: "48px" }} // Avatar 크기 조정
+          // >
+          //   <img
+          //     src={suggestData.data.memberDTO.profileURL}
+          //     alt="profile"
+          //     style={{
+          //       width: "100%",
+          //       height: "100%",
+          //       borderRadius: "50%",
+          //     }} // 이미지 크기 및 모양 조정
+          //   />
+          // </Avatar>
           <Avatar
             aria-label="recipe"
             style={{ width: "48px", height: "48px" }} // Avatar 크기 조정
-          >
-            <img
-              src={suggestData.data.memberDTO.profileURL}
-              alt="profile"
-              style={{
-                width: "100%",
-                height: "100%",
-                borderRadius: "50%",
-              }} // 이미지 크기 및 모양 조정
-            />
-          </Avatar>
+            src={suggestData.data.memberDTO?.profileURL}
+            alt=""
+          ></Avatar>
         }
         title={
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography variant="h6" color="textSecondary">
+            <Typography variant="body1" color="textPrimary" sx={{ mt: 2 }}>
               {suggestData.data.memberDTO.nickname}
             </Typography>
             <Typography variant="subtitle3" color="text">
@@ -116,12 +122,12 @@ const SuggestPriceComponent = (suggestData) => {
         subheader={
           <>
             <Typography variant="subtitle2" color="textSecondary">
-              {suggestData.data.dong} ·{" "}
+              {suggestData.data.locationDTO.dong} ·{" "}
               {formatTimeAgo(suggestData.data.regDate)}
             </Typography>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <div>
-                <Typography variant="h6" color="textSecondary">
+                <Typography variant="body1" color="textPrimary">
                   {formatMoney(suggestData.data.price)}원
                 </Typography>
               </div>

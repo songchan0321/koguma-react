@@ -75,6 +75,17 @@ export const deleteLocationAPI = async (locationId) => {
     alert(err);
   }
 };
+export const getLocationAPI = async (locationId) => {
+  console.log(locationId);
+  const { data } = await authInstance.get(`/location/${locationId}`);
+  console.log(data);
+  return data;
+};
+export const getLocationByMemberAPI = async (memberId) => {
+  const { data } = await authInstance.get(`/location/member/${memberId}`);
+  console.log(data);
+  return data;
+};
 
 export const updateRepLocationAPI = async (locationId) => {
   try {
