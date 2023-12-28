@@ -1,5 +1,10 @@
 import { authInstance } from "../utils/instance";
 import { countProductChatRoom } from "./chat";
+import {
+  getLocationAPI,
+  getLocationByMemberAPI,
+  getRepLocationAPI,
+} from "./common";
 
 const PRODUCT_API_URI = "/product";
 export const memberchecAPI = async () => {
@@ -100,11 +105,27 @@ export const addSuggestPriceAPI = async (suggest) => {
     console.log(err);
   }
 };
+// export const listSuggestPriceAPI = async (productId) => {
+//   const { data } = await authInstance.get(
+//     `${PRODUCT_API_URI}/suggest/list/${productId}`
+//   );
+//   return data;
+// };
 export const listSuggestPriceAPI = async (productId) => {
   const { data } = await authInstance.get(
     `${PRODUCT_API_URI}/suggest/list/${productId}`
   );
-  return data;
+  console.log(data);
+  const results = await Promise.all(
+    data.map(async (suggest) => {
+      return {
+        ...suggest,
+        locationDTO: await getLocationByMemberAPI(suggest.memberDTO.id),
+      };
+    })
+  );
+  console.log(results);
+  return results;
 };
 export const validSuggestAPI = async (productId) => {
   const { data } = await authInstance.get(
