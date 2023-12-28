@@ -76,9 +76,9 @@ const GetComment = () => {
                 </Card>
               </Grid>
             </Grid>
-            <AddComment callList={callList} />
           </div>
         ))}
+      <AddComment callList={callList} />
     </>
   );
 };
