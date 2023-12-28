@@ -97,14 +97,32 @@ const NewChatRoom = () => {
   ) : (
     <>
       <Back url={`/chat/list`} />
-      <div style={{ position: "fixed", right: 6, top: 12, zIndex: 1005 }}>
+      <div
+        style={{
+          position: "fixed",
+          right: "0.7rem",
+          top: "0.9rem",
+          zIndex: 1003,
+        }}
+      ></div>
+      <TopBar>
+        {product.sellerDTO.nickname}
         <Chip
-          icon={<ThermostatIcon fontSize="small" />}
-          color="primary"
+          // color="primary"
+          sx={{
+            width: "3.5rem",
+            height: "1.0rem",
+            fontSize: "0.6rem",
+            backgroundColor:
+              product.sellerDTO.score > "50.0"
+                ? "#DB4455"
+                : product.sellerDTO.score > "40.0"
+                ? "#FFD400"
+                : "#B0E0E6",
+          }}
           label={product.sellerDTO.score + "°C"}
         />
-      </div>
-      <TopBar>{product.sellerDTO.nickname}</TopBar>
+      </TopBar>
       <MarginEmpty />
       <ChatHeader product={product} member={member} price={product.price} />
       <div

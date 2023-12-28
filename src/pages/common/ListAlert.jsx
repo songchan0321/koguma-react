@@ -84,7 +84,7 @@ const ListAlert = () => {
           .then(setAlerts)
           .catch((err) => alert(err));
       })();
-    }, 10 * 1000);
+    }, process.env.REACT_APP_ALERT_TIMEOUT);
     clearInterval(listIntervalRef.current);
     return () => clearInterval(listIntervalRef.current);
   }, []);
