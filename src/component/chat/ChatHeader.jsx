@@ -27,6 +27,11 @@ const NavButton = ({ product, member, roomId, reviewId }) => {
           });
         };
       }
+    } else {
+      text = "상품 정보";
+      clickHandler = () => {
+        navigator(`/product/get/${product.id}`, { state: { roomId: roomId } });
+      };
     }
   } else {
     text = "상품 정보";
