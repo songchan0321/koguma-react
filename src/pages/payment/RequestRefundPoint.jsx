@@ -72,7 +72,7 @@ const RequestRefundPoint = () => {
                     balance.toLocaleString("ko-KR") + "원"
                   }`
                 : balance - point < 0
-                ? `환급은 0원 이상할 수 있어요...`
+                ? `잔액이 부족해요...`
                 : `환급 후 잔액: ${
                     (balance - point).toLocaleString("ko-KR") + "원"
                   }`
