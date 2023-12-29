@@ -3,10 +3,12 @@ import { authInstance } from "../utils/instance";
 const POST_API_URI = "/post";
 const COMMENT_API_URI = "/comment";
 
-export const callPostListAPI = async () => {
+export const callPostListAPI = async (keyword) => {
   try {
-    const { data } = await authInstance.get(`${POST_API_URI}/list`);
-    return data.content;
+    const { data } = await authInstance.get(
+      `${POST_API_URI}/list?keyword=${keyword || ""}`
+    );
+    return data;
   } catch (err) {
     console.log(err);
   }
@@ -17,7 +19,7 @@ export const callPostListByCategoryAPI = async (categoryId) => {
     const { data } = await authInstance.get(
       `${POST_API_URI}/list/category/${categoryId}`
     );
-    return data.content;
+    return data;
   } catch (err) {
     console.log(err);
   }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getPostAPI } from "../../apis/api/community";
-import { Container, Typography, Box, Chip } from "@mui/material";
+import { Container, Typography, Box, Chip, Avatar } from "@mui/material";
 import LoadingProgress from "../../component/common/LoadingProgress";
 import { useNavigate, useParams } from "react-router-dom";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
@@ -75,6 +75,24 @@ const GetPostForm = () => {
           <Box sx={{ mb: "3rem" }}>
             <span>{data.content}</span>
           </Box>
+
+          {data.imageDTO?.map((image, idx) => {
+            return (
+              <Avatar
+                alt="/photo.png"
+                src={image.url}
+                variant="square"
+                sx={{
+                  width: "100%",
+                  height: "100%", // 높이를 90%로 지정
+                  objectFit: "cover",
+                  border: "solid 1px rgba(120, 120, 120, 0.2)",
+                }}
+              />
+            );
+          })}
+          <br />
+          <br />
           <Typography
             sx={{ display: "flex", alignItems: "center", mb: "1.3rem" }}
           >
