@@ -15,6 +15,7 @@ import MemberSearchList from "../member/MemberSearchList";
 import { Paper } from "@mui/material";
 import ClubListByCategory from "../../component/club/ClubListByCategory";
 import MarginEmpty from "../../component/payment/MarginEmpty";
+import CommunitiySearchList from "../community/CommunitySearchList";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -130,7 +131,8 @@ const SearchTab = () => {
             </>
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            Item Two
+            <MarginEmpty value={5} />
+            <CommunitiySearchList query={query} />
           </TabPanel>
           <TabPanel value={value} index={2} dir={theme.direction}>
             <MarginEmpty value={5} />
