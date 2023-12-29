@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Chip, Divider, Grid, Typography } from "@mui/material";
+import { Avatar, Box, Chip, Divider, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import CommentCounts from "./CommentCounts";
 import { formatTimeAgo } from "../../apis/utils/timestamp";
@@ -85,6 +85,29 @@ const PostThumbnail = ({ callAPI, callParam }) => {
                     {post.dong} · 조회 {post.views} ·{" "}
                     {formatTimeAgo(post.regDate)}
                   </Typography>
+                  <div
+                    style={{ position: "absolute", bottom: "3rem", right: 10 }}
+                  >
+                    {post.imageDTO && post.imageDTO.length > 0 && (
+                      <>
+                        <Avatar
+                          alt="/photo.png"
+                          src={
+                            post.imageDTO && post.imageDTO.length > 0
+                              ? post.imageDTO[0].url
+                              : "/photo.png"
+                          }
+                          variant="square"
+                          sx={{
+                            width: 65,
+                            height: 65,
+                            // mr: 1,
+                            border: "solid 1px rgba(120, 120, 120, 0.2)",
+                          }}
+                        />
+                      </>
+                    )}
+                  </div>
                   <div
                     style={{ position: "absolute", bottom: "1.1rem", right: 0 }}
                   >

@@ -12,6 +12,7 @@ import { addPostAPI } from "../../apis/api/community";
 import { uploadImageAPI } from "../../apis/api/common";
 import TopBar from "../payment/TopBar";
 import MarginEmpty from "../payment/MarginEmpty";
+import ImageList from "../common/ImageList";
 
 const PostForm = ({ text }) => {
   const categorys = [
@@ -22,6 +23,7 @@ const PostForm = ({ text }) => {
     "일상",
     "분실/실종",
   ];
+  const [images, setImages] = useState([]);
 
   const navigate = useNavigate();
   const imageRegHandler = (images) => {
@@ -71,9 +73,23 @@ const PostForm = ({ text }) => {
     }
   };
 
+  const imageUrlParse = (imageList) => {
+    return uploadImageAPI(imageList);
+  };
   const handleSubmit = async () => {
     try {
-      const { data } = await addPostAPI(formData);
+      const imageList = new FormData();
+      formData.thumbnail.forEach((el) => {
+        imageList.append("file", el);
+      });
+
+      const imageUrlList = await imageUrlParse(imageList);
+
+      const postData = {
+        ...formData,
+        images: imageUrlList,
+      };
+      const { data } = await addPostAPI(postData);
       console.log(data);
 
       const postId = data.postId;
@@ -155,6 +171,12 @@ const PostForm = ({ text }) => {
         sx={{ p: "2rem 2rem 0rem 2rem", width: "100%" }} // 좌우로 꽉 차게 설정
       />
       <br />
+      <ImageList
+        images={images}
+        setImages={setImages}
+        imageRegHandler={imageRegHandler}
+        imageDelHandler={imageDelHandler}
+      />
       <TextField
         name="content"
         id="content"
