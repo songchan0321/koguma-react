@@ -44,7 +44,7 @@ const GetPayment = () => {
           {state?.roomId != null ? (
             <Back url={`/chat/get/${state.roomId}`} />
           ) : (
-            <Back />
+            <Back url={`member/profile`} />
           )}
           <MarginEmpty value={"70px"} />
           <PaymentInfo registered={existPayment} />
