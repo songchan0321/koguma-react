@@ -88,6 +88,7 @@ const ListFollowingForm = () => {
                       handleNavigateToFollowingDetail(following.targetMember.id)
                     }
                     aria-label="comment"
+                    sx={{ marginLeft: "200px" }}
                   >
                     <ArticleOutlinedIcon />
                   </IconButton>

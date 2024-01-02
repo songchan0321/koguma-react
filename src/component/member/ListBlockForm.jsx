@@ -93,6 +93,7 @@ const ListBlockForm = () => {
                       handleNavigateToBlockDetail(block.targetMember.id)
                     }
                     aria-label="comment"
+                    sx={{ marginLeft: "200px" }}
                   >
                     <ArticleOutlinedIcon />
                   </IconButton>
