@@ -78,17 +78,6 @@ const ListClubMap = () => {
                 {state.errMsg ? state.errMsg : "   내 위치입니다 !!"}
               </div>
             </MapMarker>
-            {/* <CustomOverlayMap position={state.center} yAnchor={1}>
-              <div className="customoverlay">
-                <a
-                  href="https://map.kakao.com/link/map/11394059"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <span className="title">구의야구공원</span>
-                </a>
-              </div>
-            </CustomOverlayMap> */}
           </>
         )}
         {clubList.map((club, index) => (
