@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import Back from "../../component/common/Back";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import HelpIcon from "@mui/icons-material/Help";
+import { Link } from "react-router-dom";
 // 테마 정의
 const theme = createTheme({
   palette: {
@@ -73,10 +74,15 @@ const ListFollowingForm = () => {
                       clipPath: "circle(50% at 50% 50%)",
                     }}
                   />
-                  <ListItemText
-                    primary={following.targetMember.nickname}
-                    sx={{ marginLeft: "15px" }}
-                  />
+                  <Link
+                      to={`/member/other/get/${following.targetMember.id}`}
+                      style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <ListItemText
+                        primary={following.targetMember.nickname}
+                        sx={{ marginLeft: "15px" }}
+                    />
+                  </Link>
                   <IconButton
                     onClick={() =>
                       handleNavigateToFollowingDetail(following.targetMember.id)
